@@ -7,22 +7,49 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\Swimmer;
+
 use GuzzleHttp\Client;
 
 class SwimmerController extends Controller
 {
-    public function jeroen()
-    {
-    	echo '<h1>Jeroen</h1>';
-    	echo $this->getPersonalBest('4295910');
 
-    }
+	public function index()
+	{
+		$data = [
+			'swimmers' => Swimmer::all(),
+		];
 
-    public function philippe()
-    {
-    	echo '<h1>Philippe</h1>';
-    	echo $this->getPersonalBest('4680497');
-    }
+		return view('swimmers.index', $data);
+	}
+
+	public function create()
+	{
+
+		return view('swimmers.create');
+	}
+
+	public function store(Request $request)
+	{
+		
+		return redirect()->route('swimmers.index');
+	}
+
+	public function show($id)
+	{
+		$swimmer = Swimmer::findOrFail($id);
+		echo '<h1>' . $swimmer->name . '</h1>';
+		$personalBests = $this->getPersonalBest($swimmer->swimrankings_id);
+		echo $personalBests;
+
+		$data = [
+			'swimmer' => $swimmer,
+			'personalBests' => $personalBests,
+		];
+
+		// return view('swimmers.show');
+
+	}
 
     private function getPersonalBest($athleteId)
     {

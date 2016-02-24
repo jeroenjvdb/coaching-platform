@@ -26,7 +26,16 @@ class CreateSwimmersTable extends Migration
             /*
             *   data
             */
-            $table->datetime('date_of_birth');            
+            $table->string('name');
+            $table->boolean('is_man');
+            $table->datetime('date_of_birth');
+
+            /*
+            * timestamps
+            */
+            $table->timestamps();
+            $table->softDeletes();
+
         });
     }
 
@@ -37,6 +46,6 @@ class CreateSwimmersTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::drop('swimmers');
     }
 }

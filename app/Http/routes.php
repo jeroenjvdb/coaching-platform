@@ -37,6 +37,16 @@ Route::group(['middleware' => 'web'], function () {
 
     Route::group(['middleware' => 'auth'], function()
     {
+	    
+
+    	Route::group(['prefix' => 'swimmers'], function()
+    	{
+    		Route::get('/', ['as' => 'swimmers.index', 'uses' => 'SwimmerController@index']);
+    		Route::post('/', ['as' => 'swimmers.store', 'uses' => 'SwimmerController@store']);
+    		Route::get('/{id}', ['as' => 'swimmers.show', 'uses' => 'SwimmerController@show']);
+
+    	});
+
 	    Route::get('/home', 'HomeController@index');
 	    Route::get('/jeroen', ['as' => 'swimmer.jeroen', 'uses' => 'SwimmerController@jeroen']);
 	    Route::get('/philippe', ['as' => 'swimmer.philippe', 'uses' => 'SwimmerController@philippe']);
