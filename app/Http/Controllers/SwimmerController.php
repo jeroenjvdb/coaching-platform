@@ -13,55 +13,123 @@ use GuzzleHttp\Client;
 
 class SwimmerController extends Controller
 {
+    /**
+     * @var Swimmer
+     */
+    private $swimmer;
 
-	public function index()
-	{
-		$data = [
-			'swimmers' => Swimmer::all(),
-		];
+    /**
+     * SwimmerController constructor.
+     * @param Swimmer $swimmer
+     */
+    public function __construct(Swimmer $swimmer)
+    {
+        $this->swimmer = $swimmer;
+    }
 
-		return view('swimmers.index', $data);
-	}
+    /**
+     * show all swimmers
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function index()
+    {
+        $data = [
+            'swimmers' => $this->swimmer->all(),
+        ];
 
-	public function create()
-	{
+        return view('swimmers.index', $data);
+    }
 
-		return view('swimmers.create');
-	}
+    /**
+     * get create view for swimmers
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function create()
+    {
 
-	public function store(Request $request)
-	{
-		
-		return redirect()->route('swimmers.index');
-	}
+        return view('swimmers.create');
+    }
 
-	public function show($id)
-	{
-		$swimmer = Swimmer::findOrFail($id);
-		echo '<h1>' . $swimmer->name . '</h1>';
-		$personalBests = $this->getPersonalBest($swimmer->swimrankings_id);
-		echo $personalBests;
+    /**
+     * store the swimmers in the database
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function store(Request $request)
+    {
+        $swimmer = $this->swimmer->create([
+            'name' => $request->input('first_name') . ' ' . $request->input('last_name'),
+            'profile_id' => $request->input('swimrankings'),
+        ]);
 
-		$data = [
-			'swimmer' => $swimmer,
-			'personalBests' => $personalBests,
-		];
+        return redirect()->route('swimmers.index');
+    }
 
-		// return view('swimmers.show');
+    /**
+     * show the profile of a swimmer
+     *
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function show($id)
+    {
+        $swimmer = $this->swimmer->findOrFail($id);
+        $personalBests = $this->getPersonalBest($swimmer->swimrankings_id);
 
-	}
+        $data = [
+            'swimmer' => $swimmer,
+            'personalBests' => $personalBests,
+        ];
 
+        return view('swimmers.show', $data);
+
+    }
+
+    /**
+     * open the edit page of this swimmer
+     *
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function edit($id)
+    {
+        $data = [
+            'swimmer' => $this->swimmer->findOrFail($id),
+        ];
+
+        return view('swimmers.edit', $data);
+    }
+
+    public function update($id)
+    {
+
+    }
+
+    public function delete()
+    {
+
+    }
+
+    /**
+     * get personal bests from swimrankings
+     *
+     * @param $athleteId
+     * @return mixed
+     */
     private function getPersonalBest($athleteId)
     {
-    	$client = new Client();
-    	$url = 'https://www.swimrankings.net/index.php?page=athleteDetail&athleteId=' . $athleteId;
-    	$parameters = [];
+        $url = config('swimrankings.url') . config('swimrankings.swimmersPage') . $athleteId;
+        $parameters = [];
 
-    	$res = $client->request('GET', $url, $parameters);
-		$pattern = '/<table class="athleteBest"[\s\S]*<\/table>/';
-		preg_match($pattern, $res->getBody(), $table);
+        $res = getCall($url, $parameters);
 
-		return $table[0] ;
+        $pattern = '/<table class="athleteBest"[\s\S]*<\/table>/';
+        preg_match($pattern, $res->getBody(), $table);
+
+        return $table[0];
     }
 }
 	

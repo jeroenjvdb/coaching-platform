@@ -16,23 +16,23 @@ class CreateSwimmersTable extends Migration
         {
             $table->increments('id');
 
-            /*
-            *   foreign keys
-            */
+            /**
+             * foreign keys
+             */
             $table->integer('swimrankings_id')->unsigned();
             $table->integer('group_id')->unsigned();
             $table->integer('profile_id')->unsigned();
 
-            /*
-            *   data
-            */
+            /**
+             * data
+             */
             $table->string('name');
             $table->boolean('is_man');
             $table->datetime('date_of_birth');
 
-            /*
-            * timestamps
-            */
+            /**
+             * timestamps
+             */
             $table->timestamps();
             $table->softDeletes();
 

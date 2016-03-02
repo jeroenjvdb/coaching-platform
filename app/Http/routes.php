@@ -41,9 +41,10 @@ Route::group(['middleware' => 'web'], function () {
 
     	Route::group(['prefix' => 'swimmers'], function()
     	{
-    		Route::get('/', ['as' => 'swimmers.index', 'uses' => 'SwimmerController@index']);
-    		Route::post('/', ['as' => 'swimmers.store', 'uses' => 'SwimmerController@store']);
-    		Route::get('/{id}', ['as' => 'swimmers.show', 'uses' => 'SwimmerController@show']);
+    		Route::get('/', 		['as' => 'swimmers.index', 'uses' => 'SwimmerController@index']);
+    		Route::get('/create', 	['as' => 'swimmers.create', 'uses' => 'SwimmerController@create']);
+    		Route::post('/', 		['as' => 'swimmers.store', 'uses' => 'SwimmerController@store']);
+    		Route::get('/{id}', 	['as' => 'swimmers.show', 'uses' => 'SwimmerController@show']);
 
     	});
 
