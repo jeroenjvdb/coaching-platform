@@ -48,6 +48,9 @@ class GroupController extends Controller
      */
     public function store(Request $request)
     {
+        $group = $this->group->create([
+            'name' => $request->input('name'),
+        ]);
 
         return redirect()->route('groups.index');
     }
@@ -83,7 +86,7 @@ class GroupController extends Controller
             'group' => $group,
         ];
 
-        return view('groups.edit');
+        return view('groups.edit', $data);
     }
 
     /**
