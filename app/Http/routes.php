@@ -45,11 +45,16 @@ Route::group(['middleware' => 'web'], function () {
 
     Route::group(['middleware' => 'auth'], function()
     {
-		Route::post('fire', ['uses' => 'ChatController@fire']);
+		Route::group(['prefix' => 'chat'], function()
+		{
+			Route::get('/', ['as' => 'chat.index', 'uses' => 'ChatController@index']);
+			//Route::get('chat', ['as' => 'chat', 'uses' => 'ChatController@chat']);
+			Route::post('/fire', ['as' => 'chat.fire', 'uses' => 'ChatController@fire']);
+			Route::get('/{name}', ['as' => 'chat.show', 'uses' => 'ChatController@show']);
+		});
 
-		Route::get('/', ['uses' => 'ChatController@index']);
-		Route::get('chat', ['as' => 'chat', 'uses' => 'ChatController@chat']);
-    	Route::group(['prefix' => 'zwemmer'], function()
+
+		Route::group(['prefix' => 'zwemmer'], function()
     	{
     		Route::get('/', 		['as' => 'swimmers.index', 	'uses' => 'SwimmerController@index']);
     		Route::get('/create', 	['as' => 'swimmers.create', 'uses' => 'SwimmerController@create']);

@@ -21,7 +21,8 @@ class Message extends Model
      */
     protected $fillable = [
         'user_id',
-        'message'
+        'message',
+        'chat_id',
     ];
 
     /**
@@ -32,5 +33,15 @@ class Message extends Model
     public function user()
     {
         return $this->belongsTo('App\User');
+    }
+
+    /**
+     * the chat where this message was posted
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function chat()
+    {
+        return $this->belongsTo('App\Chat');
     }
 }

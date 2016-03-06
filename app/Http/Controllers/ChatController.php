@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\chat;
+use App\Chat;
+use App\Events\chatEvent;
 use App\Message;
+use App\User;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use Auth;
+use Illuminate\Support\Facades\Hash;
 
 class ChatController extends Controller
 {
@@ -17,37 +20,39 @@ class ChatController extends Controller
      * @var Message
      */
     private $message;
+    /**
+     * @var chat
+     */
+    private $chat;
+    /**
+     * @var User
+     */
+    private $authUser;
 
     /**
      * ChatController constructor.
+     * @param Message $message
+     * @param chat $chat
      */
-    public function __construct(Message $message)
+    public function __construct(Message $message, Chat $chat)
     {
         $this->message = $message;
+        $this->chat = $chat;
+        $this->authUser = Auth::user();
     }
 
     /**
-     * doesn't do a thing
-     *
-     * @return string
-     */
-    public function index()
-    {
-        dd(Auth::user());
-        // this doesn't do anything other than to
-        // tell you to go to /fire
-        return "login and go to /fire";
-    }
-
-    /**
-     * open chatbox
+     * get the chatbox
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function chat()
+    public function index()
     {
-        // this checks for the event
-        return view('chat');
+        $data = [
+            'chats' => $this->chat->all(),
+        ];
+
+        return view('chat.index', $data);
     }
 
     /**
@@ -58,16 +63,43 @@ class ChatController extends Controller
      */
     public function fire(Request $request)
     {
+        var_dump($request->all());
+        $chat = $this->chat->where('name', $request->input('chatName'))->first();
+        if(! Hash::check($this->authUser->id . $chat->name, $request->input('chatToken') )) {
+            //dd();
+            return false;
+        }
         $message = $request->input('msg');
-        $user = Auth::user();
-
+        var_dump($message);
         $message = $this->message->create([
             'message' => $message,
-            'user_id' => $user->id,
+            'user_id' => $this->authUser->id,
+            'chat_id' => $chat->id,
         ]);
         //dd($request->input('msg'));
         // this fires the event
-        event(new chat($message->message, $user->name));
-        return redirect()->route('chat');
+        event(new chatEvent($message->message, $this->authUser->name));
+        return redirect()->route('chat.show', [$chat->name]);
+    }
+
+    public function create(Request $request)
+    {
+        $chat = $this->chat->create([
+            'name' => $request->input('name'),
+        ]);
+
+        return redirect()->route('chat.index');
+    }
+
+    public function show($name)
+    {
+        $chat = $this->chat->where('name', $name)->first();
+        $data = [
+            'chat' => $chat,
+            'messages' => $chat->messages()->orderBy('created_at', 'ASC')->get(),
+            'chatToken' => Hash::make(Auth::user()->id . $chat->name ),
+        ];
+
+        return view('chat.show', $data);
     }
 }
