@@ -28,7 +28,7 @@ class GroupController extends Controller
     public function index()
     {
         $data = [
-            'groups' => $this->groups->all(),
+            'groups' => $this->group->all(),
         ];
 
         return view('groups.index', $data);
@@ -73,7 +73,7 @@ class GroupController extends Controller
             'group' => $group,
         ];
 
-        return view('groups.show');
+        return view('groups.show', $data);
     }
 
     /**
@@ -103,6 +103,8 @@ class GroupController extends Controller
     {
         $group = $this->group->findOrFail($id);
 
+        //TODO: updaten
+
         $data = [
             'group' => $group,
         ];
@@ -116,9 +118,11 @@ class GroupController extends Controller
      * @param $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function delete($id)
+    public function destroy($id)
     {
         $group = $this->group->findOrFail($id);
+
+        //TODO: soft delete toevoegen
 
         $group->delete();
 

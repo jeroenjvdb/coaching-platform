@@ -6,11 +6,26 @@ use Illuminate\Database\Eloquent\Model;
 
 class Group extends Model
 {
+    /**
+     * the table of the model
+     *
+     * @var string
+     */
     protected $table = 'groups';
 
+    /**
+     * the attributes that are mass assignable
+     *
+     * @var array
+     */
     protected $fillable = [
         'name',
     ];
+
+    /**
+     * @var bool
+     */
+    public $timestamps = false;
 
     /**
      * get all the coaches for this group
@@ -29,6 +44,6 @@ class Group extends Model
      */
     public function swimmers()
     {
-        return $this->hasMany('App\Group');
+        return $this->hasMany('App\Swimmer');
     }
 }

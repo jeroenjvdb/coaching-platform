@@ -3,7 +3,8 @@
 @section('title', 'show all groups')
 
 @section('content')
-    {!! Form::open(['route' => 'groups.store', 'method' => 'post']) !!}
-        {!! Form::label('name') !!} {!! Form::text('name') !!}
+{!! Form::open(['method' => 'POST', 'route' => 'groups.store']) !!}
+        {!! Form::label('name') !!} {!! Form::text('name') !!}</br>
+        {!! Form::submit() !!}
     {!! Form::close() !!}
 @stop
