@@ -29,7 +29,9 @@ Route::get('/', function () {
 
 Route::group(['middleware' => ['web']], function () {
     Route::get('/test', function(){
-    	echo 'test';
+		$redis = app()->make('redis');
+		$redis->set('key1', 'test');
+    	return $redis->get('key1');
     });
 });
 
@@ -62,6 +64,30 @@ Route::group(['middleware' => 'web'], function () {
     		Route::get('/{id}', 	['as' => 'swimmers.show', 	'uses' => 'SwimmerController@show']);
 
     	});
+
+		Route::group(['prefix' => 'training'], function()
+		{
+			Route::get('/', 		['as' => 'trainings.index', 	'uses' => 'TrainingController@index']);
+			Route::get('/create', 	['as' => 'trainings.create', 	'uses' => 'TrainingController@create']);
+			Route::post('/', 		['as' => 'trainings.store', 	'uses' => 'TrainingController@store']);
+			Route::get('/{id}', 	['as' => 'trainings.show', 		'uses' => 'TrainingController@show']);
+
+			Route::post('/{id}/exercise/', [
+				'as' => 'exercises.store',
+				'uses' => 'ExerciseController@store'
+			]);
+
+			Route::get('/{training_id}/exercise/{id}', [
+				'as' => 'exercises.edit',
+				'uses' => 'ExerciseController@edit'
+			]);
+
+			Route::post('/{training_id}/exercise/{id}', [
+				'as' => 'exercises.update',
+				'uses' => 'ExerciseController@update'
+			]);
+
+		});
 
 		Route::group(['prefix' => 'groep'],function()
 		{

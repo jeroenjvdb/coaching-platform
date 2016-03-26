@@ -2,28 +2,20 @@
 
 function getCall($url, $parameters)
 {
-    	$client = new GuzzleHttp\Client();
+    $client = new GuzzleHttp\Client();
 
-    	$res = $client->request('GET', $url, $parameters);
+    $res = $client->request('GET', $url, $parameters);
 
-    	if($res->getStatusCode() == '200')
-    	{
-    		return $res;
-    	}
+    if ($res->getStatusCode() == '200') {
+        return $res;
+    }
+}
+
+function removeLinks($body)
+{
+    $pattern = '/<a*>/';
+    preg_replace($pattern, '<p>', $body);
+    return $body;
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-?>

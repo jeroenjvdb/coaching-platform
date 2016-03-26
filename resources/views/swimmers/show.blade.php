@@ -5,6 +5,6 @@
 @section('content')
 
 	<h1>{{ $swimmer->name }}</h1>
-	{!! $personalBests !!}
+	{{--	{!! $personalBests !!}--}}
 
 @stop

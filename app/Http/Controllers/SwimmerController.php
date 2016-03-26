@@ -77,11 +77,12 @@ class SwimmerController extends Controller
     public function show($id)
     {
         $swimmer = $this->swimmer->findOrFail($id);
-        $personalBests = $this->getPersonalBest($swimmer->swimrankings_id);
+        //$personalBests = $this->getPersonalBest($swimmer->swimrankings_id);
+        //$personalBests = removeLinks($personalBests);
 
         $data = [
             'swimmer' => $swimmer,
-            'personalBests' => $personalBests,
+            //'personalBests' => $personalBests,
         ];
 
         return view('swimmers.show', $data);
@@ -129,6 +130,8 @@ class SwimmerController extends Controller
         $pattern = '/<table class="athleteBest"[\s\S]*<\/table>/';
         preg_match($pattern, $res->getBody(), $table);
 
+
+        return $res->getBody();
         return $table[0];
     }
 }
