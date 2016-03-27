@@ -32,22 +32,34 @@
 
 @section('scripts')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.5/socket.io.min.js"></script>
-    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.js"></script>
     <script>
         $(document).ready(function(){
             scrollDown();
             var socket = io('http://192.168.56.101:3000');
             $('form').submit(function(e){
                 e.preventDefault();
-                $.post('/chat/fire', $(this).serialize());
-                console.log('fire!');
+                $.ajax({
+                    type: "POST",
+                    url: '/chat/fire',
+                    dataType: "json",
+                    data: $(this).serialize(),
+                    success: function(data){
+                        console.log(data);
+                    }
+                });
+                //$.post('/chat/fire', $(this).serialize(), 'json')
+                //        .done(function(data) {
+                //            console.log(data);
+                //        });
+                //console.log('fire!');
 
                 //socket.emit('chat message', $('#m').val());
                 $('#m').val('').focus();
                 scrollDown();
                 return false;
             });
-            socket.on('test-channel:App\\Events\\chatEvent', function(msg){
+            socket.on('chat-channel:App\\Events\\chatEvent', function(msg){
                 var bottom = false;
                 if($(window).scrollTop() + $(window).height() == $(document).height()) {
                     bottom = true

@@ -79,7 +79,8 @@ class ChatController extends Controller
         //dd($request->input('msg'));
         // this fires the event
         event(new chatEvent($message->message, $this->authUser->name));
-        return redirect()->route('chat.show', [$chat->name]);
+
+        return json_encode(['success']);
     }
 
     public function create(Request $request)

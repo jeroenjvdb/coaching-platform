@@ -32,6 +32,6 @@ class chatEvent extends Event implements ShouldBroadcast
      */
     public function broadcastOn()
 {
-    return ['test-channel'];
+    return ['chat-channel'];
 }
 }
