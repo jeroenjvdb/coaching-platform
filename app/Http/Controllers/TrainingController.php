@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
 
 class TrainingController extends Controller
 {
@@ -97,7 +98,7 @@ class TrainingController extends Controller
     {
         $training = $group->trainings()
             ->with(['exercises' => function ($query) {
-                $query->orderBy('position', 'asc');
+                $query->positioned();
             }])
             ->find($id);
 
@@ -137,5 +138,28 @@ class TrainingController extends Controller
         $training->delete();
 
         return redirect()->route('trainings.index');
+    }
+
+    public function download(Group $group, $training_id)
+    {
+        $training = $group->trainings()
+            ->with(['exercises' => function ($query) {
+                $query->positioned();
+            }])
+            ->find($training_id);
+
+        $data = [
+            'training' => $training,
+        ];
+
+        Excel::create('training', function($excel) use ($data) {
+
+            $excel->sheet('New sheet', function($sheet) use ($data) {
+
+                $sheet->loadView('excel.training', $data);
+
+            })->download('xls');
+
+        });
     }
 }

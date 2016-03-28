@@ -55,6 +55,11 @@ class Exercise extends Model
         return $this->belongsTo('App\Training');
     }
 
+    public function scopePositioned($query)
+    {
+        return $query->orderBy('position', 'asc');
+    }
+
     public function scopeLastExercise($query)
     {
         return $query->orderBy('position', 'desc')->first();

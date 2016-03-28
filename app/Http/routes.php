@@ -107,6 +107,11 @@ Route::group(['middleware' => 'web'], function () {
                     'uses' => 'ExerciseController@update'
                 ]);
 
+                Route::get('/{training_id}/download', [
+                    'as' => 'training.download',
+                    'uses' => 'TrainingController@download'
+                ]);
+
             });
         });
 
