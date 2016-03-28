@@ -65,4 +65,47 @@ class Exercise extends Model
     {
         return $this->sets * $this->meters;
     }
+
+    /**
+     * change positions of the exercises
+     *
+     * @param Training $training
+     * @param $newPos
+     * @param $oldPos
+     * @return bool
+     */
+    public function changePositions( Training $training, $newPos, $oldPos)
+    {
+        $exercise = $this;
+        $lastPos = $newPos;
+        $directionWhere = '<=';
+        $directionOrderBy = 'asc';
+        $directionPos = -1;
+
+        if ($newPos < $oldPos) {
+            $directionWhere = '>=';
+            $directionOrderBy = 'desc';
+            $directionPos = 1;
+        }
+
+        $allExercises = $training->exercises()
+            ->where('position', $directionWhere, $newPos)
+            ->whereNotIn('id', [$exercise->id])
+            ->orderBy('position', $directionOrderBy)
+            ->get();
+
+        foreach ($allExercises as $allExercise) {
+            $lastPos = $allExercise->position;
+            $allExercise->position += $directionPos;
+            $allExercise->save();
+        }
+
+        $exercise->position = $lastPos;
+        if( ! $allExercises->count() ) {
+            $exercise->position = 1;
+        }
+        $exercise->save();
+
+        return true;
+    }
 }

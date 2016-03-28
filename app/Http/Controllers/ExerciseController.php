@@ -103,51 +103,18 @@ class ExerciseController extends Controller
         $newPos = $request->position;
         $oldPos = $exercise->position;
 
+        $exercise->update($request->all());
+
         if ($newPos != $oldPos) {
-            $this->changePositions($exercise, $training, $newPos, $oldPos);
+            $exercise->changePositions($training, $newPos, $oldPos);
         }
+
+
 
         return redirect()->route('trainings.show',[
             'group' => $group->slug,
             'id' => $training_id
         ]);
-    }
-
-    /**
-     * change positions of the exercises
-     * TODO: set in ?Exercise? model
-     *
-     * @param Exercise $exercise
-     * @param Training $training
-     * @param $newPos
-     * @param $oldPos
-     */
-    private function changePositions(Exercise $exercise, Training $training, $newPos, $oldPos)
-    {
-        $lastPos = $newPos;
-        $directionWhere = '<=';
-        $directionOrderBy = 'asc';
-        $directionPos = -1;
-
-        if ($newPos < $oldPos) {
-            $directionWhere = '>=';
-            $directionOrderBy = 'desc';
-            $directionPos = 1;
-        }
-
-        $allExercises = $training->exercises()
-            ->where('position', $directionWhere, $newPos)
-            ->orderBy('position', $directionOrderBy)
-            ->get();
-
-        foreach ($allExercises as $allExercise) {
-            $lastPos = $allExercise->position;
-            $allExercise->position += $directionPos;
-            $allExercise->save();
-        }
-
-        $exercise->position = $lastPos;
-        $exercise->save();
     }
 
     /**
