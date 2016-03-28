@@ -26,6 +26,14 @@ class Exercise extends Model
         'position',
     ];
 
+//    protected $attributes = [
+//        'total',
+//    ];
+
+    protected $appends = [
+        'total',
+    ];
+
     /**
      * the dates
      *
@@ -45,5 +53,16 @@ class Exercise extends Model
     public function training()
     {
         return $this->belongsTo('App\Training');
+    }
+
+    public function scopeLastExercise($query)
+    {
+        return $query->orderBy('position', 'desc')->first();
+    }
+
+
+    public function getTotalAttribute()
+    {
+        return $this->sets * $this->meters;
     }
 }

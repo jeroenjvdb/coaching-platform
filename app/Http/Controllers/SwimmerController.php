@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Group;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -30,12 +31,14 @@ class SwimmerController extends Controller
     /**
      * show all swimmers
      *
+     * @param Group $group
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index()
+    public function index(Group $group)
     {
         $data = [
-            'swimmers' => $this->swimmer->all(),
+            'group' => $group,
+            'swimmers' => $group->swimmers,
         ];
 
         return view('swimmers.index', $data);
@@ -44,43 +47,54 @@ class SwimmerController extends Controller
     /**
      * get create view for swimmers
      *
+     * @param Group $group
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function create()
+    public function create(Group $group)
     {
+        $data = [
+            'group' => $group
+        ];
 
-        return view('swimmers.create');
+        return view('swimmers.create', $data);
     }
 
     /**
      * store the swimmers in the database
      *
      * @param Request $request
+     * @param Group $group
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(Request $request, Group $group)
     {
-        $swimmer = $this->swimmer->create([
+        $swimmer = $this->swimmer->fill([
             'name' => $request->input('first_name') . ' ' . $request->input('last_name'),
             'profile_id' => $request->input('swimrankings'),
         ]);
 
-        return redirect()->route('swimmers.index');
+        $group->swimmers()->save($swimmer);
+
+        return redirect()->route('swimmers.index', ['group' => $group->slug]);
     }
 
     /**
      * show the profile of a swimmer
      *
-     * @param $id
+     * @param Group $group
+     * @param Swimmer $swimmer
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function show($id)
+    public function show(Group $group, Swimmer $swimmer)
     {
-        $swimmer = $this->swimmer->findOrFail($id);
+        if( $group->id != $swimmer->group_id ) {
+            abort(404, 'page not found');
+        }
         //$personalBests = $this->getPersonalBest($swimmer->swimrankings_id);
         //$personalBests = removeLinks($personalBests);
 
         $data = [
+            'group' => $group,
             'swimmer' => $swimmer,
             //'personalBests' => $personalBests,
         ];
@@ -92,13 +106,19 @@ class SwimmerController extends Controller
     /**
      * open the edit page of this swimmer
      *
-     * @param $id
+     * @param Group $group
+     * @param Swimmer $swimmer
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function edit($id)
+    public function edit(Group $group, Swimmer $swimmer)
     {
+        if( $group->id != $swimmer->group_id ) {
+            abort(404, 'page not found');
+        }
+
         $data = [
-            'swimmer' => $this->swimmer->findOrFail($id),
+            'group' => $group,
+            'swimmer' => $group->swimmers()->findOrFail($swimmer->id),
         ];
 
         return view('swimmers.edit', $data);

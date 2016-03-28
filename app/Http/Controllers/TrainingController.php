@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Group;
 use App\Training;
 use Illuminate\Http\Request;
 
@@ -15,25 +16,34 @@ class TrainingController extends Controller
      * @var Training
      */
     private $training;
+    /**
+     * @var Group
+     */
+    private $group;
 
     /**
      * TrainingController constructor.
      * @param Training $training
+     * @param Group $group
      */
-    public function __construct(Training $training)
+    public function __construct(
+        Training $training,
+        Group $group)
     {
         $this->training = $training;
+        $this->group = $group;
     }
 
     /**
      * Get all the trainings
      *
+     * @param Group $group
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index()
+    public function index(Group $group)
     {
         $data = [
-            'trainings' => $this->training->all(),
+            'trainings' => $group->trainings,
         ];
 
         return view('trainings.index', $data);
@@ -42,51 +52,58 @@ class TrainingController extends Controller
     /**
      * get the create page for a new training
      *
+     * @param Group $group
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function create()
+    public function create(Group $group)
     {
-        return view('trainings.create');
+        $data = [
+            'group' => $group
+        ];
+
+        return view('trainings.create', $data);
     }
 
     /**
      * save the new training
      *
      * @param Request $request
+     * @param Group $group
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(Request $request, Group $group)
     {
-        $training = $this->training->create([
+        $training = $this->training->fill([
             'starttime' => $request->starttime,
-        ]);
 
-        return redirect()->route('trainings.show', $training->id);
+        ]);
+        $training = $group->trainings()->save($training);
+
+        return redirect()->route('trainings.show', [
+            'group' => $group->slug,
+            'training' => $training->id,
+        ]);
 
     }
 
     /**
      * show detail page of training
      *
+     * @param Group $group
      * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function show($id)
+    public function show(Group $group, $id)
     {
-        $training = $this->training->find($id);
-
-        $training->exercises = $training->exercises()
-                                    ->orderBy('position', 'asc')
-                                    ->get();
-        $training->total = 0;
-
-        foreach($training->exercises as $exercise) {
-            $exercise->distance = $exercise->meters * $exercise->sets;
-            $training->total += $exercise->distance;
-        }
+        $training = $group->trainings()
+            ->with(['exercises' => function ($query) {
+                $query->orderBy('position', 'asc');
+            }])
+            ->find($id);
 
         $data = [
             'training' => $training,
+            'group' => $group,
         ];
 
         return view('trainings.show', $data);

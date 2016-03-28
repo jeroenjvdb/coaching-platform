@@ -6,6 +6,7 @@
     {!! Form::model($exercise ,[
                         'route' => [
                             'exercises.update',
+                            'group' => $group->slug,
                             'training_id' => $training->id,
                             'id' => $exercise->id
                     ]]) !!}

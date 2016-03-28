@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exercise;
+use App\Group;
 use App\Training;
 use Illuminate\Http\Request;
 
@@ -33,27 +34,34 @@ class ExerciseController extends Controller
 
     /**
      * save the new exercise
-     * TODO: part to model
      *
      * @param Request $request
+     * @param Group $group
      * @param $training_id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request, $training_id)
+    public function store(Request $request, Group $group, $training_id)
     {
-        $last_exercise = $this->exercise
-            ->where('training_id', $training_id)
-            ->orderBy('position', 'desc')
-            ->first();
-        $position = $last_exercise->position + 1;
+        $training = $group
+            ->trainings()
+            ->find($training_id);
+        $lastExercise = $training
+            ->exercises()
+            ->lastExercise();
 
-        $this->exercise->create([
-            'training_id' => $training_id,
+        $position = 1;
+        if ($lastExercise->exists()) {
+            $position = $lastExercise->position + 1;
+        }
+
+        $exercise = $this->exercise->fill([
             'sets' => $request->sets,
             'meters' => $request->meters,
             'description' => $request->description,
             'position' => $position,
         ]);
+
+        $training->exercises()->save($exercise);
 
         return redirect()->back();
     }
@@ -61,15 +69,17 @@ class ExerciseController extends Controller
     /**
      * get edit page for exercise
      *
+     * @param Group $group
      * @param $training_id
      * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function edit($training_id, $id)
+    public function edit(Group $group, $training_id, $id)
     {
-        $training = $this->training->find($training_id);
-        $exercise = $training->exercises()->where('id', $id)->first();
+        $training = $group->trainings()->find($training_id);
+        $exercise = $training->exercises()->find($id);
         $data = [
+            'group' => $group,
             'training' => $training,
             'exercise' => $exercise,
         ];
@@ -81,22 +91,26 @@ class ExerciseController extends Controller
      * update the exercise
      *
      * @param Request $request
+     * @param Group $group
      * @param $training_id
      * @param $exercise_id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, $training_id, $exercise_id)
+    public function update(Request $request, Group $group, $training_id, $exercise_id)
     {
-        $training = $this->training->find($training_id);
+        $training = $group->trainings()->find($training_id);
         $exercise = $training->exercises()->find($exercise_id);
-        $newPos   = $request->position;
-        $oldPos   = $exercise->position;
+        $newPos = $request->position;
+        $oldPos = $exercise->position;
 
-        if($newPos != $oldPos) {
+        if ($newPos != $oldPos) {
             $this->changePositions($exercise, $training, $newPos, $oldPos);
         }
 
-        return redirect()->route('trainings.show', $training_id);
+        return redirect()->route('trainings.show',[
+            'group' => $group->slug,
+            'id' => $training_id
+        ]);
     }
 
     /**
@@ -115,7 +129,7 @@ class ExerciseController extends Controller
         $directionOrderBy = 'asc';
         $directionPos = -1;
 
-        if($newPos < $oldPos) {
+        if ($newPos < $oldPos) {
             $directionWhere = '>=';
             $directionOrderBy = 'desc';
             $directionPos = 1;
@@ -126,9 +140,9 @@ class ExerciseController extends Controller
             ->orderBy('position', $directionOrderBy)
             ->get();
 
-        foreach($allExercises as $allExercise) {
+        foreach ($allExercises as $allExercise) {
             $lastPos = $allExercise->position;
-            $allExercise->position+= $directionPos;
+            $allExercise->position += $directionPos;
             $allExercise->save();
         }
 
@@ -139,13 +153,19 @@ class ExerciseController extends Controller
     /**
      * soft delete the exercise
      *
+     * @param Group $group
+     * @param $training_id
      * @param $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy($id)
+    public function destroy(Group $group, $training_id, $id)
     {
-        $exercise = $this->exercise->find($id);
-
+        $training = $group
+            ->trainings()
+            ->find($training_id);
+        $exercise = $training
+            ->exercises()
+            ->find($id);
         $exercise->delete();
 
         return redirect()->back();

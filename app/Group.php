@@ -20,6 +20,7 @@ class Group extends Model
      */
     protected $fillable = [
         'name',
+        'slug',
     ];
 
     /**
@@ -45,5 +46,21 @@ class Group extends Model
     public function swimmers()
     {
         return $this->hasMany('App\Swimmer');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function trainings()
+    {
+        return $this->hasMany('App\Training');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     */
+    public function exercises()
+    {
+        return $this->hasManyThrough('App\Exercise', 'App\Training');
     }
 }

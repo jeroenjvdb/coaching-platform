@@ -2,4 +2,5 @@
 
 @section('content')
     edit
+    {{ $swimmer->name }}
 @stop

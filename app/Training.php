@@ -29,10 +29,13 @@ class Training extends Model
      * @var array
      */
     protected $dates = [
-        'date_of_birth',
         'created_at',
         'updated_at',
         'deleted_at',
+    ];
+
+    protected $appends = [
+        'total',
     ];
 
     /**
@@ -55,4 +58,13 @@ class Training extends Model
     {
         return $this->hasMany('App\Exercise');
     }
+
+
+    public function getTotalAttribute()
+    {
+        return $this->exercises->sum('total');
+    }
+
+
+
 }

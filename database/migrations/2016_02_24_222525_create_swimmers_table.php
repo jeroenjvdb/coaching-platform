@@ -15,6 +15,7 @@ class CreateSwimmersTable extends Migration
         Schema::create('swimmers', function(Blueprint $table)
         {
             $table->increments('id');
+            $table->string('slug');
 
             /**
              * foreign keys

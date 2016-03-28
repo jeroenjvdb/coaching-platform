@@ -4,7 +4,9 @@
 
     <h2>add exercise</h2>
     {!! Form::open(['route' => [
-                    'exercises.store', $training->id]
+                        'exercises.store',
+                        'group' => $training->group->slug,
+                        'id' => $training->id]
                     ]) !!}
         {!! Form::label('sets') !!}
         {!! Form::text('sets') !!} <br>
@@ -32,7 +34,7 @@
                     <td>* </td>
                     <td>{{ $exercise->meters }}</td>
                     <td>{{ $exercise->description }}</td>
-                    <td>{{ $exercise->distance }}</td>
+                    <td>{{ $exercise->total }}</td>
                 </tr>
             @endforeach
         <tr>
