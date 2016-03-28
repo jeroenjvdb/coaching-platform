@@ -29,7 +29,8 @@ class TrainingController extends Controller
      */
     public function __construct(
         Training $training,
-        Group $group)
+        Group $group
+    )
     {
         $this->training = $training;
         $this->group = $group;
@@ -102,9 +103,13 @@ class TrainingController extends Controller
             }])
             ->find($id);
 
+        $swimmers = $group->swimmers()->presences($training->id)->get();
+
+
         $data = [
             'training' => $training,
             'group' => $group,
+            'swimmers' => $swimmers,
         ];
 
         return view('trainings.show', $data);

@@ -34,6 +34,7 @@ class Training extends Model
         'deleted_at',
     ];
 
+
     protected $appends = [
         'total',
     ];
@@ -59,11 +60,18 @@ class Training extends Model
         return $this->hasMany('App\Exercise');
     }
 
+    public function swimmers()
+    {
+        return $this->belongsToMany('App\Swimmer', 'presences');
+    }
+
 
     public function getTotalAttribute()
     {
         return $this->exercises->sum('total');
     }
+
+    
 
 
 

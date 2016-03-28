@@ -82,8 +82,6 @@ Route::group(['middleware' => 'web'], function () {
                 Route::get('/{swimmer}', ['as' => 'swimmers.show', 'uses' => 'SwimmerController@show']);
                 Route::get('/{swimmer}/edit', ['as' => 'swimmers.edit', 'uses' => 'SwimmerController@edit']);
                 Route::post('/{swimmer}', ['as' => 'swimmers.update', 'uses' => 'SwimmerController@update']);
-
-
             });
 
             Route::group(['prefix' => 'training'], function () {
@@ -92,26 +90,30 @@ Route::group(['middleware' => 'web'], function () {
                 Route::post('/', ['as' => 'trainings.store', 'uses' => 'TrainingController@store']);
                 Route::get('/{id}', ['as' => 'trainings.show', 'uses' => 'TrainingController@show']);
 
+                Route::get('/{training_id}/download', [
+                    'as' => 'training.download',
+                    'uses' => 'TrainingController@download',
+                ]);
+
+                Route::post('/{training_id}/presences', [
+                    'as' => 'presences.store',
+                    'uses' => 'PresenceController@store',
+                ]);
+
                 Route::post('/{training_id}/exercise/', [
                     'as' => 'exercises.store',
-                    'uses' => 'ExerciseController@store'
+                    'uses' => 'ExerciseController@store',
                 ]);
 
                 Route::get('/{training_id}/exercise/{id}', [
                     'as' => 'exercises.edit',
-                    'uses' => 'ExerciseController@edit'
+                    'uses' => 'ExerciseController@edit',
                 ]);
 
                 Route::post('/{training_id}/exercise/{id}', [
                     'as' => 'exercises.update',
-                    'uses' => 'ExerciseController@update'
+                    'uses' => 'ExerciseController@update',
                 ]);
-
-                Route::get('/{training_id}/download', [
-                    'as' => 'training.download',
-                    'uses' => 'TrainingController@download'
-                ]);
-
             });
         });
 
