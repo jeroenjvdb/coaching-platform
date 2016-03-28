@@ -26,6 +26,7 @@
             <th>meters</th>
             <th>description</th>
             <th>distance</th>
+            <th></th>
         </thead>
         <tbody>
             @foreach($training->exercises as $exercise)
@@ -35,6 +36,11 @@
                     <td>{{ $exercise->meters }}</td>
                     <td>{{ $exercise->description }}</td>
                     <td>{{ $exercise->total }}</td>
+                    <td><a href="{{ route('exercises.edit', [
+                                                    'group' => $training->group->slug,
+                                                    'training_id' => $training->id,
+                                                    'id' => $exercise->id
+                                                ]) }}">update</a></td>
                 </tr>
             @endforeach
         <tr>
