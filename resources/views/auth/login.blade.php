@@ -1,66 +1,53 @@
-@extends('layouts.app')
+@extends('layouts.landing')
 
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Login</div>
-                <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
-                        {!! csrf_field() !!}
+    <div class="login-box ">
+        <div class="in clearfix">
+            {!! Form::open(['url' => '/login']) !!}
+            <div class="visual">
+                <!--<div class="face front"><img src="https://musketonmazda.com/resources/admin/images/login-user.gif">
+                </div>
+                <div class="face back">
+                    <a href="#"><i class="fa fa-times"></i></a>
+                    <img src="http://placehold.it/200x200">
+                </div>-->
+            </div>
+            <div class="field fixed-user">
+                Firstname Lastname
+            </div>
+            <div class="field user">
+                {!! Form::text('email', null, ['placeholder' => 'email', 'autofocus', 'required']) !!}
+            </div>
+            <div class="field user">
+                {!! Form::password('password', ['placeholder' => 'password', 'required']) !!}
+            </div>
 
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">E-Mail Address</label>
-
-                            <div class="col-md-6">
-                                <input type="email" class="form-control" name="email" value="{{ old('email') }}">
-
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">Password</label>
-
-                            <div class="col-md-6">
-                                <input type="password" class="form-control" name="password">
-
-                                @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="remember"> Remember Me
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fa fa-btn fa-sign-in"></i>Login
-                                </button>
-
-                                <a class="btn btn-link" href="{{ url('/password/reset') }}">Forgot Your Password?</a>
-                            </div>
-                        </div>
-                    </form>
+            <div class="field">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="remember"> Remember Me
+                    </label>
                 </div>
             </div>
+
+            <div class="field user">
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fa fa-btn fa-sign-in"></i> inloggen
+                    </button>
+
+                </div>
+            </div>
+
+            <div class="field user">
+                <a class="btn btn-danger" href="{{ url('/password/reset') }}" role="button">Forgot Your Password?</a>
+            </div>
+
+
+
+            {!! Form::close()  !!}
+
+
         </div>
     </div>
-</div>
-@endsection
+@stop

@@ -62,13 +62,11 @@ class GroupController extends Controller
     /**
      * show a specific group.
      *
-     * @param $id
+     * @param Group $group
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function show($id)
+    public function show(Group $group)
     {
-        $group = $this->group->findOrFail($id);
-
         $data = [
             'group' => $group,
         ];

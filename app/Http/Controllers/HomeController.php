@@ -2,19 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Group;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
     /**
-     * Create a new controller instance.
-     *
-     * @return void
+     * @var Group
      */
-    public function __construct()
+    private $group;
+
+    /**
+     * Create a new controller instance.
+     * @param Group $group
+     */
+    public function __construct(Group $group)
     {
         $this->middleware('auth');
+        $this->group = $group;
     }
 
     /**
@@ -24,6 +30,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $data = [
+            'groups' => $this->group->all(),
+        ];
+
+        return view('welcome', $data);
     }
 }

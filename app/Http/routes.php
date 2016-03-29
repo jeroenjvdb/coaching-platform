@@ -12,9 +12,7 @@
 */
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
 
 Route::bind('group', function($slug){
     return App\Group::where('slug', $slug)->firstOrFail();
@@ -50,9 +48,20 @@ Route::group(['middleware' => 'auth'], function () {
 
 
 Route::group(['middleware' => 'web'], function () {
+    Route::get('test', function(){
+        $strokes = App\Stroke::with('distances')->get();
+
+        $data = [
+            'strokes' => $strokes,
+        ];
+
+        return view('test', $data);
+    });
     Route::auth();
 
     Route::group(['middleware' => 'auth'], function () {
+        Route::get('/', 'HomeController@index');
+
         Route::group(['prefix' => 'chat'], function () {
             Route::get('/', ['as' => 'chat.index', 'uses' => 'ChatController@index']);
             //Route::get('chat', ['as' => 'chat', 'uses' => 'ChatController@chat']);
@@ -61,19 +70,14 @@ Route::group(['middleware' => 'web'], function () {
         });
 
         Route::group(['prefix' => 'groep'], function () {
-            Route::get('/', ['as' => 'groups.index', 'uses' => 'GroupController@index']);
-            Route::get('/create', ['as' => 'groups.create', 'uses' => 'GroupController@create']);
-            Route::post('/', ['as' => 'groups.store', 'uses' => 'GroupController@store']);
-            Route::get('/{id}', ['as' => 'groups.show', 'uses' => 'GroupController@show']);
-            Route::get('/{id}/edit', ['as' => 'groups.edit', 'uses' => 'GroupController@edit']);
-            Route::post('/{id}', ['as' => 'groups.update', 'uses' => 'GroupController@update']);
-            Route::get('/{id}/destroy', ['as' => 'groups.destroy', 'uses' => 'GroupController@destroy']);
+
         });
 
         Route::resource('coach', 'CoachController');
 
 
         Route::group(['prefix' => '{group}'], function () {
+
 
             Route::group(['prefix' => 'zwemmer'], function () {
                 Route::get('/', ['as' => 'swimmers.index', 'uses' => 'SwimmerController@index']);
@@ -115,6 +119,15 @@ Route::group(['middleware' => 'web'], function () {
                     'uses' => 'ExerciseController@update',
                 ]);
             });
+
+            //Route::get('/', ['as' => 'groups.index', 'uses' => 'GroupController@index']);
+            //Route::get('/create', ['as' => 'groups.create', 'uses' => 'GroupController@create']);
+            //Route::post('/', ['as' => 'groups.store', 'uses' => 'GroupController@store']);
+            Route::get('/', ['as' => 'groups.show', 'uses' => 'GroupController@show']);
+            Route::get('/edit', ['as' => 'groups.edit', 'uses' => 'GroupController@edit']);
+            Route::post('/', ['as' => 'groups.update', 'uses' => 'GroupController@update']);
+            Route::get('/destroy', ['as' => 'groups.destroy', 'uses' => 'GroupController@destroy']);
+
         });
 
 
