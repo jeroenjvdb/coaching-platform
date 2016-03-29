@@ -48,6 +48,15 @@
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
                     <li><a href="{{ url('/home') }}">Home</a></li>
+                    <li><a href="{{ route('trainings.index', [
+                            'group' => $group->slug,
+                     ]) }}"></a></li>
+                    <li><a href="{{ route('swimmers.index', [
+                        'group' => $group->slug,
+                    ]) }}"></a></li>
+                    <li><a href="{{ route('chat.index',[
+                        'group' => $group->slug,
+                    ]) }}"></a></li>
                 </ul>
 
                 <!-- Right Side Of Navbar -->

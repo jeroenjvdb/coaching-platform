@@ -39,6 +39,9 @@ class Swimmer extends Model
     protected $appends = [
         'presence',
     ];
+    /*
+     * relations
+     */
 
     public function group()
     {
@@ -67,6 +70,11 @@ class Swimmer extends Model
             });
     }
 
+    /**
+     * get presences of swimmer
+     *
+     * @return bool|float
+     */
     public function getPresenceAttribute()
     {
         $trainingCount = $this->group->trainings()->count();
@@ -79,10 +87,4 @@ class Swimmer extends Model
 
         return false;
     }
-
-    public function getPresencePercentageAttribute()
-    {
-
-    }
-
 }
