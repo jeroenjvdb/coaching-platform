@@ -8,7 +8,7 @@ class Message extends Model
 {
 
     /**
-     * the database table of the model
+     * the table this model is associated with
      *
      * @var string
      */

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Chat extends Model
 {
     /**
-     * the table associated with the moddle
+     * the table associated with the model
      *
      * @var string
      */
@@ -23,10 +23,17 @@ class Chat extends Model
     ];
 
     /**
+     * the presence of timestamps
+     *
      * @var bool
      */
     public $timestamps = true;
 
+    /**
+     * the messagesthis chat has
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function messages()
     {
         return $this->hasMany('App\Message');

@@ -37,6 +37,11 @@ class Swimmer extends Model
         'deleted_at',
     ];
 
+    /**
+     * the attributes to apend to json
+     *
+     * @var array
+     */
     protected $appends = [
         'presence',
     ];
@@ -55,6 +60,8 @@ class Swimmer extends Model
     }
 
     /**
+     * Get presences on training
+     *
      * @param $query
      * @param null $training_id
      * @return mixed

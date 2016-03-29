@@ -26,10 +26,11 @@ class Exercise extends Model
         'position',
     ];
 
-//    protected $attributes = [
-//        'total',
-//    ];
-
+    /**
+     * the attributes that are added to the json form
+     *
+     * @var array
+     */
     protected $appends = [
         'total',
     ];
@@ -50,22 +51,43 @@ class Exercise extends Model
      */
     public $timestamps = false;
 
+    /**
+     * get the training this belongs to
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo1
+     */
     public function training()
     {
         return $this->belongsTo('App\Training');
     }
 
+    /**
+     * position the exercises
+     *
+     * @param $query
+     * @return mixed
+     */
     public function scopePositioned($query)
     {
         return $query->orderBy('position', 'asc');
     }
 
+    /**
+     * get the last exercise
+     *
+     * @param $query
+     * @return mixed
+     */
     public function scopeLastExercise($query)
     {
         return $query->orderBy('position', 'desc')->first();
     }
 
-
+    /**
+     * calculate the total meters of an exercise
+     *
+     * @return mixed
+     */
     public function getTotalAttribute()
     {
         return $this->sets * $this->meters;
