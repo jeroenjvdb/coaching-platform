@@ -20,7 +20,8 @@ class Swimmer extends Model
      * @var array
      */
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
         'profile_id',
     ];
 
