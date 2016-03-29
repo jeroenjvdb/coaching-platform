@@ -71,9 +71,13 @@ class Swimmer extends Model
     {
         $trainingCount = $this->group->trainings()->count();
         $trainingPresences = $this->trainings()->count();
-        $presence = $trainingPresences/$trainingCount;
+        if( $trainingCount != 0 ) {
+            $presence = $trainingPresences/$trainingCount;
+            
+            return round($presence, 2);
+        } 
 
-        return round($presence, 2);
+        return false;
     }
 
     public function getPresencePercentageAttribute()

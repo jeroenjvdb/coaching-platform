@@ -58,7 +58,8 @@ class DistancesTableSeeder extends Seeder
                     ->first()->distances()->create([
                         'distance' => 400,
                     ]);
-            if( $stroke == 'crawl' )
+            }
+            if( $stroke == 'crawl' ) {
                 $this->stroke
                     ->where('name', $stroke)
                     ->first()->distances()->create([
