@@ -27,7 +27,8 @@ class CreateSwimmersTable extends Migration
             /**
              * data
              */
-            $table->string('name');
+            $table->string('first_name');
+            $table->string('last_name');
             $table->boolean('is_man');
             $table->datetime('date_of_birth');
 

@@ -16,7 +16,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Swimmer::creating(function ($swimmer) {
-            $swimmer->slug = createSlug($swimmer->name);
+            $name = $swimmer->first_name . ' ' . $swimmer->last_name;
+            $swimmer->slug = createSlug($name);
         });
 
         Group::creating(function ($group) {

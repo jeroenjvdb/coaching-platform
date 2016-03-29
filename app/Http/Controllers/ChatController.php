@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Chat;
 use App\Events\chatEvent;
+use App\Group;
 use App\Message;
 use App\User;
 use Illuminate\Http\Request;
@@ -42,14 +43,16 @@ class ChatController extends Controller
     }
 
     /**
-     * get the chatbox
+     * get the chatBox
      *
+     * @param Group $group
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index()
+    public function index(Group $group)
     {
         $data = [
             'chats' => $this->chat->all(),
+            'group' => $group
         ];
 
         return view('chat.index', $data);
@@ -83,13 +86,20 @@ class ChatController extends Controller
         return json_encode(['success']);
     }
 
-    public function create(Request $request)
+    /**
+     * @param Request $request
+     * @param Group $group
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function create(Request $request, Group $group)
     {
         $chat = $this->chat->create([
             'name' => $request->input('name'),
         ]);
 
-        return redirect()->route('chat.index');
+        return redirect()->route('chat.index', [
+            'group' => $group->slug,
+        ]);
     }
 
     public function show($name)
@@ -99,6 +109,7 @@ class ChatController extends Controller
             'chat' => $chat,
             'messages' => $chat->messages()->orderBy('created_at', 'ASC')->get(),
             'chatToken' => Hash::make(Auth::user()->id . $chat->name ),
+            'group' => $group,
         ];
 
         return view('chat.show', $data);

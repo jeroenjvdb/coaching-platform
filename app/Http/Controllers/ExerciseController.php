@@ -76,8 +76,14 @@ class ExerciseController extends Controller
      */
     public function edit(Group $group, $training_id, $id)
     {
-        $training = $group->trainings()->find($training_id);
+        $training = $group->trainings()
+            ->where('id', $training_id)
+            ->with(['exercises' => function($query) {
+                $query->positioned();
+            }])->first();
+        //dd($training->exercises);
         $exercise = $training->exercises()->find($id);
+        // dd($exercise->first());
         $data = [
             'group' => $group,
             'training' => $training,

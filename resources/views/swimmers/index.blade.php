@@ -6,7 +6,7 @@
 	<a href="{{ route('swimmers.show', [
 							'group' => $group->slug,
 							'swimmer'  => $swimmer->slug
-						]) }}">{{ $swimmer->name }}</a></br>
+						]) }}">{{ $swimmer->first_name }} {{ $swimmer->last_name }}</a></br>
 @endforeach
 
 @stop

@@ -30,62 +30,80 @@ class SwimmersTableSeeder extends Seeder
         $swimmers = $group->swimmers();
 
         $swimmers->create([
-            'name' => 'Philippe Dricot',
+            'first_name' => 'Philippe',
+            'last_name' => 'Dricot',
             'profile_id' => 'azer'
         ]);
 
         $swimmers->create([
-            'name' => 'Enya Moerbeek',
+            'first_name' => 'Enya',
+            'last_name' => 'Moerbeek',
             'profile_id' => 'azer'
         ]);
 
         $swimmers->create([
-            'name' => 'Frederik Van den Abeele',
+            'first_name' => 'Frederik',
+            'last_name' => 'Van den Abeele',
             'profile_id' => 'azer'
         ]);
 
         $swimmers->create([
-            'name' => 'Stef vaes',
+            'first_name' => 'Stef',
+            'last_name' => 'vaes',
             'profile_id' => 'azer'
         ]);
 
         $swimmers->create([
-            'name' => 'Jelle Kruytzer',
+            'first_name' => 'Jelle',
+            'last_name' => 'Kruytzer',
             'profile_id' => 'azer'
         ]);
 
         $swimmers->create([
-            'name' => 'Nathalie Verzele',
+            'first_name' => 'Nathalie',
+            'last_name' => 'Verzele',
             'profile_id' => 'azer'
         ]);
 
         $swimmers->create([
-            'name' => 'Magali Buys',
+            'first_name' => 'Magali',
+            'last_name' => 'Buys',
             'profile_id' => 'azer'
         ]);
 
         $swimmers->create([
-            'name' => 'Lara Stevens',
+            'first_name' => 'Lara',
+            'last_name' => 'Stevens',
             'profile_id' => 'azer'
         ]);
         $swimmers->create([
-            'name' => 'Yara Bouckaert',
+            'first_name' => 'Yara',
+            'last_name' => 'Bouckaert',
             'profile_id' => 'azer'
         ]);
         $swimmers->create([
-            'name' => 'Caroline Dricot',
+            'first_name' => 'Caroline',
+            'last_name' => 'Dricot',
             'profile_id' => 'azer'
         ]);
         $swimmers->create([
-            'name' => 'Karen Cop',
+            'first_name' => 'Karen',
+            'last_name' => 'Cop',
             'profile_id' => 'azer'
         ]);
         $swimmers->create([
-            'name' => 'Andres De jonge',
+            'first_name' => 'Andres',
+            'last_name' => 'De jonge',
             'profile_id' => 'azer'
         ]);
         $swimmers->create([
-            'name' => 'Marie Dionysoupoulou',
+            'first_name' => 'Marie',
+            'last_name' => 'Dionysoupoulou',
+            'profile_id' => 'azer'
+        ]);
+        $swimmers->create([
+            'first_name' => 'Robbe',
+            'last_name' => 'DeMuynck',
             'profile_id' => 'azer'
         ]);
     }

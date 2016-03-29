@@ -45,7 +45,8 @@ class TrainingController extends Controller
     public function index(Group $group)
     {
         $data = [
-            'trainings' => $group->trainings,
+            'trainings' => $group->trainings()->with('group', 'exercises')->get(),
+            'group' => $group
         ];
 
         return view('trainings.index', $data);

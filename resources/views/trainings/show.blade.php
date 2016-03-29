@@ -58,7 +58,7 @@
         <ul>
             @foreach($swimmers as $swimmer)
                 <li>{{ Form::checkbox('swimmers[]', $swimmer->id, $swimmer->present) }}
-                    {{ $swimmer->name }}</li>
+                    {{ $swimmer->first_name }} {{ $swimmer->last_name }}</li>
             @endforeach
 
         </ul>

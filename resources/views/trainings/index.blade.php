@@ -4,7 +4,7 @@
     <ul>
         @foreach($trainings as $training)
             <li><a href="{{ route('trainings.show', [
-                                        'group' => $training->group->slug,
+                                        'group' => $group->slug,
                                         'id' => $training->id
                                     ]) }}">{{ $training->starttime }}</a> - {{ $training->total }}m</li>
         @endforeach
