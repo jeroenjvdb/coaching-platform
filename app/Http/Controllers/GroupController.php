@@ -77,13 +77,11 @@ class GroupController extends Controller
     /**
      * Get the edit page of a specific group.
      *
-     * @param $id
+     * @param Group $group
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function edit($id)
+    public function edit(Group $group)
     {
-        $group = $this->group->findOrFail($id);
-
         $data = [
             'group' => $group,
         ];
@@ -94,32 +92,28 @@ class GroupController extends Controller
     /**
      * Update a specific group.
      *
-     * @param $id
+     * @param Group $group
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update($id)
+    public function update(Group $group)
     {
-        $group = $this->group->findOrFail($id);
-
         //TODO: updaten
 
         $data = [
             'group' => $group,
         ];
 
-        return redirect()->route('groups.show', [$id]);
+        return redirect()->route('groups.show', [$group->slug]);
     }
 
     /**
      * Delete a specific group.
      *
-     * @param $id
+     * @param Group $group
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy($id)
+    public function destroy(Group $group)
     {
-        $group = $this->group->findOrFail($id);
-
         //TODO: soft delete toevoegen
 
         $group->delete();

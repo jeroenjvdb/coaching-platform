@@ -66,4 +66,9 @@ class Group extends Model
     {
         return $this->hasManyThrough('App\Exercise', 'App\Training');
     }
+
+    public function stopwatches()
+    {
+        return $this->hasManyThrough('App\Stopwatch', 'App\Swimmer');
+    }
 }

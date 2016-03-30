@@ -45,6 +45,7 @@ class Swimmer extends Model
     protected $appends = [
         'presence',
     ];
+
     /*
      * relations
      */
@@ -57,6 +58,11 @@ class Swimmer extends Model
     public function trainings()
     {
         return $this->belongsToMany('App\Training', 'presences');
+    }
+
+    public function stopwatches()
+    {
+        return $this->hasMany('App\Stopwatch');
     }
 
     /**

@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="_token" content="{{ csrf_token() }}">
 
     <title>@yield('title') | coaching platform | KAZSC</title>
 
@@ -57,6 +58,9 @@
                     <li><a href="{{ route('chat.index',[
                         'group' => $group->slug,
                     ]) }}">chat</a></li>
+                    <li><a href="{{ route('stopwatches.index',[
+                        'group' => $group->slug,
+                    ]) }}">stopwatch</a></li>
                 </ul>
 
                 <!-- Right Side Of Navbar -->

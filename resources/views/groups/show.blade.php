@@ -4,7 +4,7 @@
 
 @section('content')
     <h1>{{ $group->name }}</h1>
-    <a href="{{ route('groups.edit', [$group->id]) }}">edit</a>
+    <a href="{{ route('groups.edit', [$group->slug]) }}">edit</a>
     <h2>zwemmers:</h2>
     @foreach($group->swimmers as $swimmer)
 

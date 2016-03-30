@@ -69,14 +69,19 @@ Route::group(['middleware' => 'web'], function () {
             Route::get('/{name}', ['as' => 'chat.show', 'uses' => 'ChatController@show']);
         });
 
-        Route::group(['prefix' => 'groep'], function () {
 
-        });
 
         Route::resource('coach', 'CoachController');
 
 
         Route::group(['prefix' => '{group}'], function () {
+            //Route::get('/', ['as' => 'groups.index', 'uses' => 'GroupController@index']);
+            //Route::get('/create', ['as' => 'groups.create', 'uses' => 'GroupController@create']);
+            //Route::post('/', ['as' => 'groups.store', 'uses' => 'GroupController@store']);
+            Route::get('/', ['as' => 'groups.show', 'uses' => 'GroupController@show']);
+            Route::get('/edit', ['as' => 'groups.edit', 'uses' => 'GroupController@edit']);
+            Route::post('/', ['as' => 'groups.update', 'uses' => 'GroupController@update']);
+            Route::get('/destroy', ['as' => 'groups.destroy', 'uses' => 'GroupController@destroy']);
 
 
             Route::group(['prefix' => 'zwemmer'], function () {
@@ -120,13 +125,13 @@ Route::group(['middleware' => 'web'], function () {
                 ]);
             });
 
-            //Route::get('/', ['as' => 'groups.index', 'uses' => 'GroupController@index']);
-            //Route::get('/create', ['as' => 'groups.create', 'uses' => 'GroupController@create']);
-            //Route::post('/', ['as' => 'groups.store', 'uses' => 'GroupController@store']);
-            Route::get('/', ['as' => 'groups.show', 'uses' => 'GroupController@show']);
-            Route::get('/edit', ['as' => 'groups.edit', 'uses' => 'GroupController@edit']);
-            Route::post('/', ['as' => 'groups.update', 'uses' => 'GroupController@update']);
-            Route::get('/destroy', ['as' => 'groups.destroy', 'uses' => 'GroupController@destroy']);
+            Route::group(['prefix' => 'stopwatch'], function() {
+                Route::get('/', ['as' => 'stopwatches.index', 'uses' => 'StopwatchController@index']);
+                Route::get('/{id}', ['as' => 'stopwatches.show', 'uses' => 'StopwatchController@show']);
+                Route::post('/{id}/time', ['as' => 'stopwatches.storeTime', 'uses' => 'StopwatchTimeController@store']);
+            });
+
+
 
         });
 
