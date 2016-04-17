@@ -1,0 +1,45 @@
+.container{
+	width: 100%;
+	max-width : 900px;
+	margin-left:auto;
+    margin-right: auto;
+    overflow:hidden;
+}
+
+ /*-- our cleafix hack -- */ 
+.row:before, 
+.row:after {
+        content:"";
+        display: table ;
+         clear:both;
+}
+
+.row {
+	margin-left: 0;
+}
+
+[class*='col-'] {
+        float: left;
+        min-height: 1px; 
+}
+
+@for $i from 1 through 12 {
+	.col-#{$i} {
+		width: #{($i*100/12) - 2.5}%;
+		/*-- our gutter --*/
+		padding: 1.25%;
+	}
+}
+
+ .outline, .outline *{
+    outline: 1px solid #F6A1A1; 
+}
+
+/*-- some extra column content styling --*/
+[class*='col-'] > p {
+ background-color: #FFC2C2; 
+ padding: 0;
+ margin: 0;
+ text-align: center; 
+ color: white; 
+}

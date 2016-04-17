@@ -1,23 +1,7 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Document</title>
+.variation {
+	background-color: $color-variation;
 
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel='stylesheet'
-          type='text/css'>
-    <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700" rel='stylesheet' type='text/css'>
-
-    <!-- Styles -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/resources/css/main.css" rel="stylesheet">
-    <style>
-   /*     body.variation {
-            background: #32323A;
-            font-size: 1.5em;
-        }
-
-        .login-box {
+	.login-box {
             width: 100%;
             max-width: 350px;
             margin: 150px auto;
@@ -63,12 +47,13 @@
             display: block;
             width: 100%;
             text-align: center;
+            height: $btn-size-m;
         }
 
         .btn, .dataTables_wrapper .dataTables_paginate a {
             display: inline-block;
             padding: 15px 20px;
-            //background: #e11b22;
+            //background-color: #e11b22;
             color: #fff;
             border: none;
             outline: none;
@@ -86,13 +71,5 @@
 
         .groups{
             color:white;
-        }*/
-    </style>
-
-</head>
-<body class="variation">
-
-@yield('content')
-
-</body>
-</html>
+        }
+}

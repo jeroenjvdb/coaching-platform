@@ -1,3 +1,5 @@
+@extends('layouts.master')
+
 @section('title')
     pomodoro
 @stop

@@ -22,6 +22,7 @@ Route::bind('swimmer', function($slug){
     return App\Swimmer::where('slug', $slug)->first();
 });
 
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -34,11 +35,14 @@ Route::bind('swimmer', function($slug){
 */
 
 Route::group(['middleware' => ['web']], function () {
-    Route::get('/test', function () {
-        $redis = app()->make('redis');
-        $redis->set('key1', 'test');
-        return $redis->get('key1');
+    Route::get('/test', function() {
+        return view('test');
     });
+    // Route::get('/test', function () {
+    //     $redis = app()->make('redis');
+    //     $redis->set('key1', 'test');
+    //     return $redis->get('key1');
+    // });
 });
 
 
@@ -127,6 +131,8 @@ Route::group(['middleware' => 'web'], function () {
 
             Route::group(['prefix' => 'stopwatch'], function() {
                 Route::get('/', ['as' => 'stopwatches.index', 'uses' => 'StopwatchController@index']);
+                Route::get('/create', ['as' => 'stopwatches.create', 'uses' => 'stopwatchController@create']);
+                Route::post('/', ['as' => 'stopwatches.store', 'uses' => 'StopwatchController@store']);
                 Route::get('/{id}', ['as' => 'stopwatches.show', 'uses' => 'StopwatchController@show']);
                 Route::post('/{id}/time', ['as' => 'stopwatches.storeTime', 'uses' => 'StopwatchTimeController@store']);
             });

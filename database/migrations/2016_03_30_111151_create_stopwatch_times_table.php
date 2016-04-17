@@ -18,6 +18,8 @@ class CreateStopwatchTimesTable extends Migration
             $table->integer('stopwatch_id');
 
             $table->integer('time');
+            $table->timestamp('created')->nullable();
+            $table->boolean('is_paused')->default(0);
 
             $table->timestamps();
         });

@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class StopwatchTime extends Model
 {
@@ -10,6 +11,21 @@ class StopwatchTime extends Model
 
     protected $fillable = [
         'time',
+        'created',
+        'is_paused',
+    ];
+
+    protected $dates = [
+        ];
+
+    protected $casts = [
+        'is_paused' => 'boolean',
+        'full_time' => 'array',
+    ];
+
+    protected $appends = [
+        //'time',
+        'full_time',
     ];
 
     public function stopwatch()
@@ -19,21 +35,23 @@ class StopwatchTime extends Model
 
     public function scopeOrdered($query)
     {
-        $query->orderBy('time', 'asc');
+        $query
+            ->orderBy('time', 'desc')
+            ->orderBy('created_at', 'desc');
     }
 
     /**
      * make the timeAttribute readable
      *
-     * @param $value
      * @return \Illuminate\Support\Collection
      */
-    public function getTimeAttribute($value)
+    public function getFullTimeAttribute()
     {
         $data = collect([]);
-        $input = $value;
+        $input = $this->attributes['time'];
 
         $data->milliseconds = $input % 1000;
+        $data->hundredth = $input % 100;
         $input = floor($input / 1000);
 
         $data->seconds = $input % 60;
@@ -42,8 +60,13 @@ class StopwatchTime extends Model
         $data->minutes = $input % 60;
         $input = floor($input / 60);
 
-        $data->toString = $data->minutes . ':' . sprintf('%02d', $data->seconds ) . '.' . $data->milliseconds;
+        $data->hours = $input%24;
+        $input = floor($input/24);
 
+        $data->toText = sprintf('%02d', $data->hours) . ':' .
+            sprintf('%02d', $data->minutes ) . ':' .
+            sprintf('%02d', $data->seconds ) . '.' .
+            sprintf('%02d', $data->milliseconds / 10);
 
         return $data;
     }

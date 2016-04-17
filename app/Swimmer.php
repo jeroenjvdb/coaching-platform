@@ -95,10 +95,15 @@ class Swimmer extends Model
         $trainingPresences = $this->trainings()->count();
         if( $trainingCount != 0 ) {
             $presence = $trainingPresences/$trainingCount;
-            
+
             return round($presence, 2);
-        } 
+        }
 
         return false;
+    }
+
+    public function getFullNameAttribute()
+    {
+        return $this->first_name . ' ' . $this->last_name;
     }
 }

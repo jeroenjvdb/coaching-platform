@@ -3,35 +3,49 @@
 namespace App\Http\Controllers;
 
 use App\Group;
+use App\StopwatchTime;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class StopwatchTimeController extends Controller
 {
-    public function __construct()
+    /**
+     * @var StopwatchTime
+     */
+    private $time;
+
+    public function __construct(StopwatchTime $time)
     {
+        $this->time = $time;
     }
 
 
     /**
      * @param Request $request
      * @param Group $group
+     * @return string
      */
     public function store(Request $request, Group $group)
     {
-//        dd($request->all());
-        $time = $group->stopwatches()->find($request->stopwatch_id)->times()->create([
+        $is_paused = false;
+        if( json_decode($request->is_paused) ) {
+            //return json_encode('stop');
+            $is_paused = true;
+        }
+        //return json_encode($request->dt);
+        $time = $this->time->fill([
             'time' => $request->clock,
+            'created' => $request->dt,
+            'is_paused' => $is_paused,
         ]);
 
-        return json_encode($time->time->toString);
+        $time = Auth::user()->stopwatches()->find($request->stopwatch_id)->times()->save( $time );
 
-//        return $data;
-    }
+        Log::info('stored time: ', [$time]);
 
-    public function endTimer()
-    {
-
+        return json_encode($time);
     }
 }

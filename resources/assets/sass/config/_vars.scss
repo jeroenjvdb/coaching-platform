@@ -1,0 +1,76 @@
+// - PATHS
+
+	$path-images: 	'../images';
+	$path-svg: 		'../images/svg';
+	$path-fonts: 	'../fonts';
+
+// COLORS
+
+	$color-main-darker: 		#161b1e;
+	$color-main: 				#909090;
+	$color-main-light: 			#fff;
+
+	$color-action:				#00e0fb;
+	$color-action-darker:		darken(#00e0fb, 7);
+	$color-action-darkest:		#0066b7;
+								
+	$color-primary:				#00e3fd;
+	$color-secondary:			#0064b5;
+
+	$color-variation: 			rgb(198, 49, 36);
+
+ 
+// FONTS
+
+	$font-main: 		'Interstate-r';
+	$font-special: 		'Bryant-400';
+	$font-special-bold: 'Interstate-b';
+
+	$fs-1: 4.1rem;
+	$fs-2: 3rem;
+	$fs-3: 2.4rem;
+	$fs-4: 1.8rem;
+	$fs-5: 1.5rem;
+	$fs-6: 1.4rem;
+
+// - BUTTONS
+
+	$btn-size-s:	2.5rem;
+	$btn-size-m:	5rem;
+	$btn-size-l:	10rem;
+
+	// - $btn-color-primary: 
+	$btn-color-secondary: #444; 
+	// - $btn-color-primary: 
+
+// - BOXING
+	
+	$max-width-xsmall: 48rem;
+	$max-width-small:  55rem;
+	$max-width-medium: 80rem;
+	$max-width-large:  118rem;
+
+	$border-size: .1rem;
+
+	$space-xsmall: .4rem;
+	$space-small:  1.5rem;
+	$space-medium: 3.5rem;
+	$space-large:  7.5rem;
+	$space-xlarge: 12rem;
+
+// BREAKPOINTS
+
+	$bp-xs:				28.9rem;
+	$bp-s:				47.9rem;
+	$bp-m:				76.7rem;
+	$bp-l:				102.3rem;
+	$bp-xl:				125rem;
+
+// - MISC
+
+	$speed-fast:   150ms;
+	$speed-medium: 250ms;
+	$speed-slow:   500ms;
+
+// - GRID
+	$container:		1200px;
