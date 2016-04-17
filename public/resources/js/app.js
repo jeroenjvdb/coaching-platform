@@ -163,10 +163,11 @@ $(function () {
         }
 
         function appendSplit(time) {
-            console.log(time);
             var splits = $('ul#splits');
-            console.log(splits);
-            splits.prepend('<li>' + timeToString(time) + '</li>');
+            var firstSplit = $('ul#splits li');
+            if(firstSplit.first().data('time') != time) {
+                splits.prepend('<li data-time="' + time + '">' + timeToString(time) + '</li>');
+            }
         }
 
         this.clock = function(){
@@ -181,7 +182,6 @@ $(function () {
     };
 
     var elems = $(".stopwatch");
-    console.log(elems);
     var stopwatches = [];
 
     for (var i=0, len=elems.length; i<len; i++) {

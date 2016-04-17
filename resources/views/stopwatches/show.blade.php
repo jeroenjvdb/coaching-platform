@@ -7,7 +7,7 @@
     <div class="stopwatch" data-base3="false"></div>
     <ul id="splits">
         @foreach($stopwatch->times as $time)
-            <li>{{ $time->full_time->toText }}</li>
+            <li data-time="{{ $time->time }}">{{ $time->full_time->toText }}</li>
         @endforeach
     </ul>
 
