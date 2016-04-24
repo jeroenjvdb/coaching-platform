@@ -18,14 +18,19 @@ class SwimmerController extends Controller
      * @var Swimmer
      */
     private $swimmer;
+    /**
+     * @var Group
+     */
+    private $group;
 
     /**
      * SwimmerController constructor.
      * @param Swimmer $swimmer
      */
-    public function __construct(Swimmer $swimmer)
+    public function __construct(Swimmer $swimmer, Group $group)
     {
         $this->swimmer = $swimmer;
+        $this->group = $group;
     }
 
     /**
@@ -90,13 +95,13 @@ class SwimmerController extends Controller
         if( $group->id != $swimmer->group_id ) {
             abort(404, 'page not found');
         }
-        //$personalBests = $this->getPersonalBest($swimmer->swimrankings_id);
-        //$personalBests = removeLinks($personalBests);
+        $personalBests = $this->getPersonalBest($swimmer->swimrankings_id);
+        $personalBests = removeLinks($personalBests);
 
         $data = [
             'group' => $group,
             'swimmer' => $swimmer,
-            //'personalBests' => $personalBests,
+            'personalBests' => $personalBests,
         ];
 
         return view('swimmers.show', $data);
@@ -150,9 +155,13 @@ class SwimmerController extends Controller
         $pattern = '/<table class="athleteBest"[\s\S]*<\/table>/';
         preg_match($pattern, $res->getBody(), $table);
 
+        $pattern = '/<script[\s\S]*?<\/script>/';
+        $body = "not found";
+        if(isset($table[0])) {
+            $body = preg_replace($pattern, '', $table[0]);
+        }
 
-        return $res->getBody();
-        return $table[0];
+        return $body;
     }
 }
 	
