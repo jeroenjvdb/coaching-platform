@@ -13,8 +13,11 @@ function getCall($url, $parameters)
 
 function removeLinks($body)
 {
-    $pattern = '/<a*>/';
-    preg_replace($pattern, '<p>', $body);
+    $pattern = '/(<a\s*?href[\s\S]*?>)|(<a[\s]*?class="[\s\S]*?">)/';
+    $body = preg_replace($pattern, '', $body);
+
+    $pattern = '/<\/a>/';
+    $body = preg_replace($pattern, '', $body);
     return $body;
 }
 

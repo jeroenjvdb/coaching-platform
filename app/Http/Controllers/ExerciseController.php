@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exercise;
 use App\Group;
+use App\Http\Requests\ExerciseRequest;
 use App\Training;
 use Illuminate\Http\Request;
 
@@ -40,7 +41,7 @@ class ExerciseController extends Controller
      * @param $training_id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request, Group $group, $training_id)
+    public function store(ExerciseRequest $request, Group $group, $training_id)
     {
         $training = $group
             ->trainings()
@@ -96,13 +97,13 @@ class ExerciseController extends Controller
     /**
      * update the exercise
      *
-     * @param Request $request
+     * @param ExerciseRequest $request
      * @param Group $group
      * @param $training_id
      * @param $exercise_id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, Group $group, $training_id, $exercise_id)
+    public function update(ExerciseRequest $request, Group $group, $training_id, $exercise_id)
     {
         $training = $group->trainings()->find($training_id);
         $exercise = $training->exercises()->find($exercise_id);
