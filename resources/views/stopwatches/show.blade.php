@@ -14,3 +14,8 @@
 
 
 @stop
+
+@section('scripts')
+
+
+@stop
