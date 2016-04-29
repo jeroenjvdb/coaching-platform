@@ -3,7 +3,7 @@
 @section('title', $swimmer->name . ' profile')
 
 @section('content')
-    <h1>{{ $swimmer->first_name }}</h1>
+    <h1>{{ $swimmer->first_name }} {{ $swimmer->last_name }}</h1>
 
     <button class="btn page" data-page="about">about</button>
     <button class="btn page" data-page="PR">PR's</button>

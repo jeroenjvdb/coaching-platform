@@ -29,5 +29,10 @@ class Distance extends Model
      */
     public $timestamps = false;
 
+    public function stroke()
+    {
+        return $this->belongsTo('App\Stroke');
+    }
+
 
 }

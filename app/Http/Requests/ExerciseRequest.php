@@ -26,7 +26,7 @@ class ExerciseRequest extends Request
         return [
             'sets' => 'required|int',
             'meters' => 'required|int',
-            'description' => 'required|int',
+            'description' => 'required',
         ];
     }
 }

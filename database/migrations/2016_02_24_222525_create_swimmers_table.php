@@ -31,6 +31,10 @@ class CreateSwimmersTable extends Migration
             $table->string('last_name');
             $table->boolean('is_man');
             $table->datetime('date_of_birth');
+            $table->string('email');
+            $table->string('phone');
+            $table->string('parent1')->nullable();
+            $table->string('parent2')->nullable();
 
             /**
              * timestamps
