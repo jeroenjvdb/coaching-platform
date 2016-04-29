@@ -62,8 +62,11 @@ class StopwatchController extends Controller
 
     public function store(Request $request, Group $group)
     {
-        $swimmer = $group->swimmers()->find($request->swimmer);
+        $swimmer = $group->swimmers()->findOrFail($request->swimmer);
         $distance = $this->distance->find($request->distance);
+
+//        var_dump($distance);
+//        dd();
 
         $stopwatchData = $this->stopwatch->fill([
             'swimmer_id' => $swimmer->id,

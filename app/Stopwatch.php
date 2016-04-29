@@ -10,6 +10,9 @@ class Stopwatch extends Model
 
     protected $fillable = [
         'is_running',
+        'swimmer_id',
+        'distance_id',
+
     ];
 
     protected $casts = [
