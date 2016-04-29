@@ -93,8 +93,12 @@ var Stopwatch = function(elem, options ) {
         if(! options.is_base3) {
             if (options.startClock) {
                 clock = parseInt(options.startClock);
+                console.log(options.startClock);
+                console.log(clock);
                 if (options.lastTime && !options.is_paused) {
                     clock = clock + ( new Date().getTime() - options.lastTime );
+                    console.log(new Date().getTime());
+                    console.log(options.lastTime);
                 }
             }
             if (!options.is_paused) {

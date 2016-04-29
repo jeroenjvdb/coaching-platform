@@ -1,1 +1,271 @@
-$(function(){function t(){$.ajaxSetup({headers:{"X-CSRF-TOKEN":$('meta[name="_token"]').attr("content")}}),$(".page").each(function(t){$(this).on("click",e)}),$(".pages div").hide().first().show(),a()}function e(t){pageName=$(t.target).data("page"),$(".pages div").hide(),$(".pages div#"+pageName).show()}function a(){for(var t=$(".stopwatch"),e=[],a=0,n=t.length;n>a;a++){var i={stopwatch_id:stopwatch_id,user_id:user_id,url:stopwatch_store,startClock:clock,lastTime:lastTime,is_paused:is_paused,is_base3:$(t[a]).data("base3")};e[a]=new Stopwatch(t[a],i)}}t()});var Stopwatch=function(t,e){function a(){return document.createElement("span")}function n(t,e){var a=document.createElement("a");return a.href="#"+t,a.setAttribute("class",t),a.innerHTML=t,a.addEventListener("click",function(t){e(),t.preventDefault()}),a}function i(){_||(v=Date.now(),_=setInterval(o,e.delay),e.is_paused&&(e.is_paused=!1,h()))}function s(){_&&(w=m,clearInterval(_),_=null,e.is_paused=!0,h())}function r(){m=0,e.is_base3||(e.startClock&&(m=parseInt(e.startClock),e.lastTime&&!e.is_paused&&(m+=(new Date).getTime()-e.lastTime)),e.is_paused||i()),c()}function o(){m+=u(),d(),c()}function c(){var t=Math.round(m);e.is_base3?t>1e3?(strokes=180/(t/1e3),k.innerHTML=Math.round(strokes)):k.innerHTML=180:k.innerHTML=p(t)}function u(){var t=Date.now(),e=t-v;return v=t,e}function p(t){var e=t%1e3,a=Math.round(e/10);t=(t-e)/1e3;var n=t%60;t=(t-n)/60;var i=t%60,s=(t-i)/60;return s+":"+i+":"+n+"."+a}function d(){this.clock=m}function l(){h()}function h(){e.is_base3||(e.clock=m,e.dt=Date.now(),$.post(b,e,function(t){f(t.time)},"json"))}function f(t){var e=$("ul#splits"),a=$("ul#splits li");a.first().data("time")!=t&&e.prepend('<li data-time="'+t+'">'+p(t)+"</li>")}var v,m,_,w,k=a(),g=n("start",i),T=n("stop",s),C=n("reset",r),M=n("split",l),b=e.url||"/s3/stopwatch/1/time";this.clock=0,e=e||{},e.delay=e.delay||1,t.appendChild(k),t.appendChild(g),t.appendChild(T),t.appendChild(C),t.appendChild(M),r(),this.start=i,this.stop=s,this.reset=r,this.split=l};
+$(function () {
+    init();
+
+    function init() {
+        $.ajaxSetup({
+            headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') }
+        });
+
+        $('.page').each(function(item) {
+            console.log($(this));
+            $(this).on('click', showPage);
+        });
+
+        $('.pages div').hide().first().show();
+
+        createTimers();
+    }
+
+    function showPage(page) {
+        pageName = $(page.target).data('page');
+        console.log(pageName);
+
+        $('.pages div').hide();
+        $('.pages div#' + pageName).show();
+    }
+
+    function createTimers() {
+        var elems = $(".stopwatch");
+        var stopwatches = [];
+        var sWatch;
+
+        for (var i=0, len=elems.length; i<len; i++) {
+            console.log();
+            var swOptions = {
+                stopwatch_id: stopwatch_id,
+                user_id: user_id,
+                url: stopwatch_store,
+                startClock: clock,
+                lastTime: lastTime,
+                is_paused: is_paused,
+                is_base3: $(elems[i]).data('base3'),
+            };
+
+            stopwatches[i] = new Stopwatch(elems[i], swOptions);
+        }
+    }
+});
+var Stopwatch = function(elem, options ) {
+
+    var timer       = createTimer(),
+        startButton = createButton("start", start),
+        stopButton  = createButton("stop", stop),
+        resetButton = createButton("reset", reset),
+        splitButton = createButton("split", split),
+        offset,
+        clock,
+        interval,
+        url = options.url || '/s3/stopwatch/1/time';//,
+
+    var time;
+    this.clock   = 0;
+
+
+
+    // default options
+    options = options || {};
+    options.delay = options.delay || 1;
+
+    // append elements
+    elem.appendChild(timer);
+    elem.appendChild(startButton);
+    elem.appendChild(stopButton);
+    elem.appendChild(resetButton);
+    elem.appendChild(splitButton);
+
+    // initialize
+    reset();
+
+    /**
+     * create timer element
+     *
+     * @returns {Element}
+     */
+    function createTimer() {
+        return document.createElement("span");
+    }
+
+    /**
+     * create button elements
+     *
+     * @param action
+     * @param handler
+     * @returns {Element}
+     */
+    function createButton(action, handler) {
+        var a = document.createElement("a");
+        a.href = "#" + action;
+        a.setAttribute('class',  action);
+        a.innerHTML = action;
+        a.addEventListener("click", function(event) {
+            handler();
+            event.preventDefault();
+        });
+        return a;
+    }
+
+    /**
+     * start the timer
+     */
+    function start() {
+        if (!interval) {
+            offset = Date.now();
+            interval = setInterval(update, options.delay);
+            if( options.is_paused ) {
+                options.is_paused = false;
+                send();
+            }
+        }
+    }
+
+    /**
+     * stop the timer
+     */
+    function stop() {
+        if (interval) {
+            time = clock;
+            clearInterval(interval);
+            interval = null;
+            options.is_paused = true;
+            send();
+        }
+    }
+
+    /**
+     * reset the timer
+     */
+    function reset() {
+        clock = 0;
+
+        if(! options.is_base3) {
+            if (options.startClock) {
+                clock = parseInt(options.startClock);
+                console.log(options.startClock);
+                console.log(clock);
+                if (options.lastTime && !options.is_paused) {
+                    clock = clock + ( new Date().getTime() - options.lastTime );
+                    console.log(new Date().getTime());
+                    console.log(options.lastTime);
+                }
+            }
+            if (!options.is_paused) {
+                start();
+            }
+        }
+
+        render();
+    }
+
+    /**
+     * update the clock
+     */
+    function update() {
+        clock += delta();
+        getTime();
+        render();
+    }
+
+    /**
+     * render the clock to the page
+     */
+    function render() {
+        var s = Math.round(clock);
+
+        if(options.is_base3) {
+            if(s > 1000)  {
+                strokes = 180 / (s/1000);
+                timer.innerHTML = Math.round(strokes);
+
+            } else {
+                timer.innerHTML = 180;
+            }
+        } else {
+
+
+            timer.innerHTML = timeToString(s);
+        }
+    }
+
+    /**
+     * calculate the time difference
+     *
+     * @returns {number}
+     */
+    function delta() {
+        var now = Date.now(),
+            d   = now - offset;
+
+        offset = now;
+        return d;
+    }
+
+    /**
+     * create a formatted time string
+     *
+     * @param s
+     * @returns {string}
+     */
+    function timeToString(s) {
+        var ms = s % 1000;
+        var hundredth = Math.round(ms/10);
+        s = (s - ms) / 1000;
+        var secs = s % 60;
+        s = (s - secs) / 60;
+        var mins = s % 60;
+        var hrs = (s - mins) / 60;
+
+        return hrs + ':' + mins + ':' + secs + '.' + hundredth;
+
+    }
+
+    /**
+     * get the clock
+     */
+    function getTime() {
+        //console.log(clock);
+        this.clock = clock;
+    }
+
+    /**
+     * create a time split
+     */
+    function split() {
+        send();
+    }
+
+    /**
+     * send the request
+     */
+    function send() {
+        if(! options.is_base3) {
+            options.clock = clock;
+            options.dt = Date.now();
+
+            $.post(url, options, function(data){
+                console.log(data);
+                appendSplit(data.time)
+            }, 'json');
+        }
+    }
+
+    /**
+     * add split to html
+     *
+     * @param time
+     */
+    function appendSplit(time) {
+        var splits = $('ul#splits');
+        var firstSplit = $('ul#splits li');
+        if(firstSplit.first().data('time') != time) {
+            splits.prepend('<li data-time="' + time + '">' + timeToString(time) + '</li>');
+        }
+    }
+
+
+    // public API
+    this.start  = start;
+    this.stop   = stop;
+    this.reset  = reset;
+    this.split  = split;
+};
+//# sourceMappingURL=app.js.map

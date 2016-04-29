@@ -9,7 +9,7 @@ $(function () {
         $('.page').each(function(item) {
             console.log($(this));
             $(this).on('click', showPage);
-        })
+        });
 
         $('.pages div').hide().first().show();
 
@@ -17,7 +17,7 @@ $(function () {
     }
 
     function showPage(page) {
-        pageName = $(page.target).data('page')
+        pageName = $(page.target).data('page');
         console.log(pageName);
 
         $('.pages div').hide();
