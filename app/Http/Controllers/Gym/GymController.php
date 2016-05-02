@@ -29,8 +29,11 @@ class GymController extends Controller
 
     public function index(Group $group)
     {
+        $gyms = $this->gym->all();
+
         $data = [
-            'group' => $group
+            'group' => $group,
+            'gyms' => $gyms,
         ];
 
         return view('gym.index', $data);
