@@ -11,17 +11,45 @@ $(function () {
             $(this).on('click', showPage);
         });
 
-        $('.pages div').hide().first().show();
+        $('.pages>div').hide().first().show();
 
+        addEventListeners();
         createTimers();
     }
 
-    function showPage(page) {
+    function addEventListeners()
+    {
+        $('.upload-image').on('change', renderImage);
+    }
+
+    function renderImage()
+    {
+        console.log(this);
+    }
+
+    function readURL(input)
+    {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                if($(input).data('img') == 'start') {
+                    $('#image-start').attr('src', e.target.result);
+                } else {
+                    $('#image-end').attr('src', e.target.result);
+                }
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    function showPage(page)
+    {
         pageName = $(page.target).data('page');
         console.log(pageName);
-
-        $('.pages div').hide();
-        $('.pages div#' + pageName).show();
+        $('.pages>div').hide();
+        $('.pages>div#' + pageName).show();
     }
 
     function createTimers() {
@@ -32,12 +60,12 @@ $(function () {
         for (var i=0, len=elems.length; i<len; i++) {
             console.log();
             var swOptions = {
-                stopwatch_id: stopwatch_id,
-                user_id: user_id,
-                url: stopwatch_store,
-                startClock: clock,
-                lastTime: lastTime,
-                is_paused: is_paused,
+                stopwatch_id: 0,// stopwatch_id ? stopwatch_id : 0,
+                user_id: 0,//user_id ||0,
+                url: 0,//stopwatch_store ||0,
+                startClock: 0,//clock || 0,
+                lastTime: 0,//lastTime || 0,
+                is_paused:false,// is_paused ||false,
                 is_base3: $(elems[i]).data('base3'),
             };
 

@@ -13,6 +13,6 @@ var elixir = require('laravel-elixir');
 
 elixir(function(mix) {
     mix.sass('style.scss', 'public/resources/css/main.css')
-        .scripts(['app.js', 'Stopwatch.js'], 'public/resources/js/app.js')
+        .scripts(['jquery.js', 'app.js', 'Stopwatch.js'], 'public/resources/js/app.js')
         .copy('resources/assets/fonts', 'public/resources/fonts');
 });

@@ -97,7 +97,7 @@ class SwimmerController extends Controller
             abort(404, 'page not found');
         }
 
-        $stopwatches = $swimmer->stopwatches()->orderBy('created_at', 'desc')->get();
+        $stopwatches = $swimmer->stopwatches()->orderBy('created_at', 'desc')->with('distance', 'distance.stroke')->get();
 
         $personalBests = $this->getPersonalBest($swimmer->swimrankings_id);
         $personalBests = removeLinks($personalBests);

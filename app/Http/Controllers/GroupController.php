@@ -28,7 +28,9 @@ class GroupController extends Controller
     public function index()
     {
         $data = [
-            'groups' => $this->group->all(),
+            'groups' => $this->group->with(['swimmers' => function($query) {
+                $query->ordered()->get();
+            }]),
         ];
 
         return view('groups.index', $data);
@@ -67,8 +69,11 @@ class GroupController extends Controller
      */
     public function show(Group $group)
     {
+        $swimmers = $group->swimmers()->ordered()->get();
+
         $data = [
             'group' => $group,
+            'swimmers' => $swimmers,
         ];
 
         return view('groups.show', $data);

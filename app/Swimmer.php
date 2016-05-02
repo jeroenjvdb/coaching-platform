@@ -84,6 +84,11 @@ class Swimmer extends Model
             });
     }
 
+    public function scopeOrdered($query)
+    {
+        return $query->orderBy('last_name', 'asc');
+    }
+
     /**
      * get presences of swimmer
      *
