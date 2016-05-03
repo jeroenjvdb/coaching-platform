@@ -1,3 +1,7 @@
+
+/*!
+ * main javascript
+ */
 $(function () {
     init();
 
@@ -20,11 +24,32 @@ $(function () {
     function addEventListeners()
     {
         $('.upload-image').on('change', renderImage);
+        $('form').on('submit', formRequest);
+    }
+
+    function formRequest(e)
+    {
+        if($(e.target).data('ajax')) {
+            e.preventDefault();
+            var form = $(e.target);
+
+            $.post(form[0].action,
+                form.serialize(),
+                formResponse,
+                'json'
+            );
+        }
+    }
+
+    function formResponse(data)
+    {
+        console.log(data);
     }
 
     function renderImage()
     {
         console.log(this);
+        readURL(this);
     }
 
     function readURL(input)

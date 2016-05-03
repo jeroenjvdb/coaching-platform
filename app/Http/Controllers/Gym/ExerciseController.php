@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Gym;
 
 use App\GExercise;
 use App\Group;
+use App\GymCategory;
 use App\Http\Requests\GExerciseRequest;
 use Illuminate\Http\Request;
 
@@ -21,11 +22,16 @@ class ExerciseController extends Controller
      * @var GExercise
      */
     private $gExercise;
+    /**
+     * @var GymCategory
+     */
+    private $category;
 
-    public function __construct(Group $group, GExercise $gExercise)
+    public function __construct(Group $group, GExercise $gExercise, GymCategory $category)
     {
         $this->group = $group;
         $this->gExercise = $gExercise;
+        $this->category = $category;
     }
 
     public function index(Group $group)
@@ -77,11 +83,12 @@ class ExerciseController extends Controller
 
     public function show(Group $group, $id)
     {
-        $gExercise = $this->gExercise->find($id);
+        $gExercise = $this->gExercise->where('id', $id)->with('categories')->first();
 
         $data = [
             'group' => $group,
             'gExercise' => $gExercise,
+            'categories' => $this->category->all(),
         ];
 
         return view('gym.exercise.show', $data);

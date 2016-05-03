@@ -22,4 +22,9 @@ class GExercise extends Model
         return $this->hasMany('App\Gym');
     }
 
+    public function categories()
+    {
+        return $this->belongsToMany('App\GymCategory', 'gym_exercises_categories', 'exercise_id', 'category_id');
+    }
+
 }

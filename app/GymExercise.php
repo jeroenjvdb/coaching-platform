@@ -29,4 +29,5 @@ class GymExercise extends Model
     }
 
 
+
 }

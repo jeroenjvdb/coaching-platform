@@ -68,7 +68,6 @@ class GymController extends Controller
     {
         $gym = $this->gym->find($id);
         $exercises = $gym->exercises()->with('exercise')->get();
-//        dd($exercises);
 
         $data = [
             'group' => $group,

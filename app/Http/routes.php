@@ -145,7 +145,10 @@ Route::group(['middleware' => 'web'], function () {
                     Route::get('/create', ['as' => 'gym.exercises.create', 'uses' => 'ExerciseController@create']);
                     Route::post('/', ['as' => 'gym.exercises.store', 'uses' => 'ExerciseController@store']);
                     Route::get('/{id}', ['as' => 'gym.exercises.show', 'uses' => 'ExerciseController@show']);
+                    Route::post('/{id}/category', ['as' => 'gym.exercises.category', 'uses' => 'CategoryController@add']);
                 });
+
+                Route::post('/category', ['as' => 'gym.categories.store', 'uses' => 'CategoryController@store']);
 
 
                 Route::get('/', ['as' => 'gyms.index', 'uses' => 'GymController@index']);
