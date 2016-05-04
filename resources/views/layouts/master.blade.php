@@ -11,7 +11,7 @@
     <link rel="manifest" href="/manifest.json">
     <meta name="viewport" content="width=device-width">
     <meta name="mobile-web-app-capable" content="yes">
-    <link rel="icon" sizes="128x128" href="/icon128-2x.png">
+    <link rel="icon" sizes="400x400" href="/icon.png">
 
 
 

@@ -1,7 +1,7 @@
 {
-  "name": "Web Application Manifest Sample",
+  "name": "Kazsc coaching",
 
   "start_url": "s3",
-  "display": "standalone",
-  "orientation": "landscape"
+  "display": "standalone"
+
 }
