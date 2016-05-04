@@ -8,6 +8,9 @@
 
     <title>@yield('title') | coaching platform | KAZSC</title>
 
+    <link rel="manifest" href="/manifest.json">
+
+
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700" rel='stylesheet' type='text/css'>
 

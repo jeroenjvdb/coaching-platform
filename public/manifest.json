@@ -1,0 +1,7 @@
+{
+  "name": "Web Application Manifest Sample",
+
+  "start_url": "s3",
+  "display": "standalone",
+  "orientation": "landscape"
+}
