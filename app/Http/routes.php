@@ -131,7 +131,7 @@ Route::group(['middleware' => 'web'], function () {
 
             Route::group(['prefix' => 'stopwatch'], function() {
                 Route::get('/', ['as' => 'stopwatches.index', 'uses' => 'StopwatchController@index']);
-                Route::get('/create', ['as' => 'stopwatches.create', 'uses' => 'stopwatchController@create']);
+                Route::get('/create', ['as' => 'stopwatches.create', 'uses' => 'StopwatchController@create']);
                 Route::post('/', ['as' => 'stopwatches.store', 'uses' => 'StopwatchController@store']);
                 Route::get('/{id}', ['as' => 'stopwatches.show', 'uses' => 'StopwatchController@show']);
                 Route::post('/{id}/time', ['as' => 'stopwatches.storeTime', 'uses' => 'StopwatchTimeController@store']);
