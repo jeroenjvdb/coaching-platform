@@ -9,6 +9,7 @@
     <title>@yield('title') | coaching platform | KAZSC</title>
 
     <link rel="manifest" href="/manifest.json">
+    <meta name="mobile-web-app-capable" content="yes">
 
 
     <!-- Fonts -->
