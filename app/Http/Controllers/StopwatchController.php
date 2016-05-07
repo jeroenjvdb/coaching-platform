@@ -133,6 +133,13 @@ class StopwatchController extends Controller
         $data = [
             'group' => $group,
             'stopwatch' => $stopwatch,
+            'url' => route('stopwatches.storeTime', [
+                'group' => $group->slug,
+                'id' => $id,
+            ]),
+            'is_paused' => $is_paused,
+            'clock' => $clock,
+            'lastTime' => $lastTime,
         ];
 
         return view('stopwatches.show', $data);

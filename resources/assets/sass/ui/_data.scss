@@ -1,0 +1,28 @@
+.data {
+  width: 80%;
+  float: left;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 5px;
+  background-color: #CCC;
+
+  a {
+    color: white;
+  }
+
+
+  &.chrono {
+    background-color: #00AA00;
+  }
+
+  &.response {
+    float:right;
+  }
+
+  img {
+    max-width: 80%;
+    display: block;
+    margin: auto;
+  }
+}

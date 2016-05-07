@@ -21,6 +21,7 @@ var Stopwatch = function(elem, options ) {
 
     // append elements
     elem.appendChild(timer);
+    elem.appendChild(document.createElement("br"));
     elem.appendChild(startButton);
     elem.appendChild(stopButton);
     elem.appendChild(resetButton);
@@ -50,6 +51,7 @@ var Stopwatch = function(elem, options ) {
         a.href = "#" + action;
         a.setAttribute('class',  action);
         a.innerHTML = action;
+        a.className = "btn btn-primary"
         a.addEventListener("click", function(event) {
             handler();
             event.preventDefault();
@@ -127,10 +129,18 @@ var Stopwatch = function(elem, options ) {
         if(options.is_base3) {
             if(s > 1000)  {
                 strokes = 180 / (s/1000);
-                timer.innerHTML = Math.round(strokes);
+                hundred = Math.floor(strokes/100);
+                strokes = strokes%100;
+                ten     = Math.floor(strokes/10);
+                strokes = strokes%10;
+                one     = Math.floor(strokes);
+                timer.innerHTML = '<div class="cell">'+ hundred +'</div><div class="cell">' +
+                    ten + '</div><div class="cell">' +
+                    one
+                    + '</div>';
 
             } else {
-                timer.innerHTML = 180;
+                timer.innerHTML = '<div class="cell">1</div><div class="cell">8</div><div class="cell">0</div>';
             }
         } else {
 
@@ -167,8 +177,13 @@ var Stopwatch = function(elem, options ) {
         var mins = s % 60;
         var hrs = (s - mins) / 60;
 
-        return hrs + ':' + mins + ':' + secs + '.' + hundredth;
-
+        return '<div class="cell">' + Math.floor(hrs/10) + '</div><div class="cell">' + hrs % 10  + '</div>' +
+            '<div class="cell">:</div>' +
+            '<div class="cell">' + Math.floor(mins/10) + '</div><div class="cell">' + mins%10 + '</div>' +
+            '<div class="cell">:</div>' +
+            '<div class="cell">' + Math.floor(secs/10) + '</div><div class="cell">' + secs%10 + '</div>' +
+            '<div class="cell">.</div>' +
+            '<div class="cell">' + Math.floor(hundredth/10) + '</div><div class="cell">' + hundredth%10 + '</div>';
     }
 
     /**

@@ -1,0 +1,23 @@
+.stopwatch {
+  span {
+    font-family: digital-7;
+    font-size: $font-large;
+
+    .cell {
+      display: inline-block;
+      width: 13px;
+      top: 3px;
+    }
+
+  }
+}
+
+#splits {
+  font-family: digital-7;
+  font-size: $font-large;
+
+  .cell {
+    display: inline-block;
+    width: 13px;
+  }
+}

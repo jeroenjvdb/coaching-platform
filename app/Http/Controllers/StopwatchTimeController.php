@@ -28,7 +28,7 @@ class StopwatchTimeController extends Controller
      * @param Group $group
      * @return string
      */
-    public function store(Request $request, Group $group)
+    public function store(Request $request, Group $group, $id)
     {
         $is_paused = false;
         if( json_decode($request->is_paused) ) {
@@ -42,7 +42,7 @@ class StopwatchTimeController extends Controller
             'is_paused' => $is_paused,
         ]);
 
-        $time = Auth::user()->stopwatches()->find($request->stopwatch_id)->times()->save( $time );
+        $time = Auth::user()->stopwatches()->find($id)->times()->save( $time );
 
         Log::info('stored time: ', [$time]);
 

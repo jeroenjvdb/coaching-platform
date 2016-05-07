@@ -63,7 +63,7 @@ $(function () {
                 } else {
                     $('#image-end').attr('src', e.target.result);
                 }
-            }
+            };
 
             reader.readAsDataURL(input.files[0]);
         }
@@ -83,15 +83,16 @@ $(function () {
         var sWatch;
 
         for (var i=0, len=elems.length; i<len; i++) {
+            var elem = $(elems[i]);
             console.log();
             var swOptions = {
-                stopwatch_id: 0,// stopwatch_id ? stopwatch_id : 0,
-                user_id: 0,//user_id ||0,
-                url: 0,//stopwatch_store ||0,
-                startClock: 0,//clock || 0,
-                lastTime: 0,//lastTime || 0,
-                is_paused:false,// is_paused ||false,
-                is_base3: $(elems[i]).data('base3'),
+                stopwatch_id:   elem.data('stopwatch_id'),// ? stopwatch_id : 0,
+                user_id:        elem.data('user_id') , //||0,
+                url:            elem.data('url'),//stopwatch_store, // ||0,
+                startClock:     elem.data('clock'), // || 0, clock
+                lastTime:       elem.data('last'), // || 0, lastTime
+                is_paused:      elem.data('paused'), // ||false, is_paused
+                is_base3:       elem.data('base3'),
             };
 
             stopwatches[i] = new Stopwatch(elems[i], swOptions);

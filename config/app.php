@@ -163,6 +163,8 @@ return [
         'Maatwebsite\Excel\ExcelServiceProvider',
         Barryvdh\Debugbar\ServiceProvider::class,
         'Laracasts\Utilities\JavaScript\JavaScriptServiceProvider',
+        'Phoenix\EloquentMeta\ServiceProvider'
+
 
 
     ],

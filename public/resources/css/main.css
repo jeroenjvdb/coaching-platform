@@ -2165,6 +2165,18 @@
   overflow: visible;
   clip: auto; }
 
+/* digital-7 */
+@font-face {
+  font-family: 'digital-7';
+  src: url("/resources/fonts/digital-7.ttf");
+  /*src: url('../fonts/fontawesome-webfont.eot?#iefix&v=4.6.1') format('embedded-opentype'),
+  url('../fonts/fontawesome-webfont.woff2?v=4.6.1') format('woff2'),
+  url('../fonts/fontawesome-webfont.woff?v=4.6.1') format('woff'),
+  url('../fonts/fontawesome-webfont.ttf?v=4.6.1') format('truetype'),
+  url('../fonts/fontawesome-webfont.svg?v=4.6.1#fontawesomeregular') format('svg');*/
+  font-weight: normal;
+  font-style: normal; }
+
 .container {
   width: 100%;
   max-width: 900px;
@@ -8055,5 +8067,39 @@ button.close {
     transition: background-color, 125ms; }
   .variation .groups {
     color: white; }
+
+.data {
+  width: 80%;
+  float: left;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 5px;
+  background-color: #CCC; }
+  .data a {
+    color: white; }
+  .data.chrono {
+    background-color: #00AA00; }
+  .data.response {
+    float: right; }
+  .data img {
+    max-width: 80%;
+    display: block;
+    margin: auto; }
+
+.stopwatch span {
+  font-family: digital-7;
+  font-size: 30px; }
+  .stopwatch span .cell {
+    display: inline-block;
+    width: 13px;
+    top: 3px; }
+
+#splits {
+  font-family: digital-7;
+  font-size: 30px; }
+  #splits .cell {
+    display: inline-block;
+    width: 13px; }
 
 /*# sourceMappingURL=main.css.map */

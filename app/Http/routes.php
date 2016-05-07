@@ -88,13 +88,16 @@ Route::group(['middleware' => 'web'], function () {
             Route::get('/destroy', ['as' => 'groups.destroy', 'uses' => 'GroupController@destroy']);
 
 
-            Route::group(['prefix' => 'zwemmer'], function () {
+            Route::group(['prefix' => 'zwemmer', 'namespace' => 'Swimmer'], function () {
                 Route::get('/', ['as' => 'swimmers.index', 'uses' => 'SwimmerController@index']);
                 Route::get('/create', ['as' => 'swimmers.create', 'uses' => 'SwimmerController@create']);
                 Route::post('/', ['as' => 'swimmers.store', 'uses' => 'SwimmerController@store']);
-                Route::get('/{swimmer}', ['as' => 'swimmers.show', 'uses' => 'SwimmerController@show']);
-                Route::get('/{swimmer}/edit', ['as' => 'swimmers.edit', 'uses' => 'SwimmerController@edit']);
-                Route::post('/{swimmer}', ['as' => 'swimmers.update', 'uses' => 'SwimmerController@update']);
+                Route::group(['prefix' => '{swimmer}'], function() {
+                    Route::get('/', ['as' => 'swimmers.show', 'uses' => 'SwimmerController@show']);
+                    Route::get('edit', ['as' => 'swimmers.edit', 'uses' => 'SwimmerController@edit']);
+                    Route::post('/', ['as' => 'swimmers.update', 'uses' => 'SwimmerController@update']);
+                    Route::post('meta', ['as' => 'swimmers.meta.store', 'uses' => 'MetaController@store']);
+                });
             });
 
             Route::group(['prefix' => 'training'], function () {

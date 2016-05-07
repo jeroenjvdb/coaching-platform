@@ -17,6 +17,9 @@ class CreateUsersTable extends Migration
 
             $table->integer('group_id')->unsigned();
 
+            $table->boolean('is_admin');
+            $table->boolean('is_swimmer');
+
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
