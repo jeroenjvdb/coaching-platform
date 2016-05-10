@@ -44,8 +44,6 @@ class StopwatchTimeController extends Controller
 
         $time = Auth::user()->stopwatches()->find($id)->times()->save( $time );
 
-        Log::info('stored time: ', [$time]);
-
         return json_encode($time);
     }
 }

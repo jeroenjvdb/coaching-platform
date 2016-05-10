@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\Swimmer;
 
+use App\Classes\SwimmerProfile;
 use App\Group;
 use App\Swimmer;
-use Carbon\Carbon;
+use App\User;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Log;
 
 class SwimmerController extends Controller
 {
@@ -21,15 +21,20 @@ class SwimmerController extends Controller
      * @var Group
      */
     private $group;
+    /**
+     * @var User
+     */
+    private $user;
 
     /**
      * SwimmerController constructor.
      * @param Swimmer $swimmer
      */
-    public function __construct(Swimmer $swimmer, Group $group)
+    public function __construct(Swimmer $swimmer, Group $group, User $user)
     {
         $this->swimmer = $swimmer;
         $this->group = $group;
+        $this->user = $user;
     }
 
     /**
@@ -73,11 +78,15 @@ class SwimmerController extends Controller
     public function store(Request $request, Group $group)
     {
         $swimmer = $this->swimmer->fill([
-            'name' => $request->input('first_name') . ' ' . $request->input('last_name'),
-            'profile_id' => $request->input('swimrankings'),
+            'first_name'    => $request->first_name ,
+            'last_name'     => $request->input('last_name'),
+            'profile_id'    => $request->input('swimrankings'),
+            'email'         =>$request->email,
         ]);
 
-        $group->swimmers()->save($swimmer);
+        $swimmer = $group->swimmers()->save($swimmer);
+
+        $this->createLogin($swimmer);
 
         return redirect()->route('swimmers.index', ['group' => $group->slug]);
     }
@@ -95,84 +104,12 @@ class SwimmerController extends Controller
             abort(404, 'page not found');
         }
 
-        $stopwatches = $swimmer->stopwatches()->orderBy('created_at', 'desc')->with('distance', 'distance.stroke')->get();
+        $profile = new SwimmerProfile($swimmer);
+        $data = $profile->get();
+//        dd($data);
 
-
-
-        $personalBests = $this->getPersonalBest($swimmer->swimrankings_id);
-        $personalBests = removeLinks($personalBests);
-
-//        $collection = collect([]);
-
-       /* $collection->type = 'data';
-        $collection->message = 'owla';
-        $collection->media = null;
-        $collection->date = date("Y-m-d H:i:s");*/
-
-//        dd($this->swimmer->all());
-
-        $collecting = [
-            'type' => 'data',
-            'message' => 'alo',
-            'media' => null,
-            'date' => date('Y-m-d H:i:s'),
-            'response' => false,
-        ];
-
-        $collection = collect($collecting);
-
-//        dd($collection);
-
-
-//        $swimmer->addMeta(date("Y-m-d H:i:s"), $collection);
-//        dd($allMeta);
-        $allMeta = $swimmer->getAllMeta();
-        $meta = collect([]);
-
-        $allMeta->each(function($item, $key) use ($meta){
-            if(isset($item->type) && $item->type = 'data') {
-                $item->date = Carbon::createFromFormat('Y-m-d H:i:s',$item->date);
-                $meta->push($item);
-            }
-        });
-
-//        var_dump($meta->first());
-
-
-        foreach($stopwatches as $stopwatch) {
-            $newMeta = [
-                'type' => 'chrono',
-                'message' => $stopwatch,
-                'media' => null,
-                'date' => $stopwatch->created_at,
-                'response' => false,
-            ];
-
-            $item = (object)$newMeta;
-
-                /*collect([
-                'type' => 'chrono',
-                'message' => $stopwatch,
-                'media' => null,
-                'date' => $stopwatch->created_at,
-            ]);*/
-
-
-
-
-            $meta->push($item);
-        }
-
-//        dd($meta->sortBy('date'));
-
-        $data = [
-            'group' => $group,
-            'swimmer' => $swimmer,
-            'personalBests' => $personalBests,
-            'stopwatches' => $stopwatches,
-            'meta' => $meta->sortByDesc('date'),
-        ];
-
+        $data['group'] = $group;
+        $data['myProfile'] = false;
 
         return view('swimmers.show', $data);
 
@@ -209,34 +146,30 @@ class SwimmerController extends Controller
 
     }
 
-    /**
-     * get personal bests from swimrankings
-     *
-     * @param $athleteId
-     * @return mixed
-     */
-    private function getPersonalBest($athleteId)
+
+    private function createLogin($swimmer)
     {
-        $url = config('swimrankings.url') . config('swimrankings.swimmersPage') . $athleteId;
-        $parameters = [];
-        try {
-            $res = getCall($url, $parameters);
+//        dd($swimmer);
+        $user = $this->user->create([
+            'clearance_level' => config('clearance.swimmer'),
+            'email' => $swimmer->email,
+            'name' => $swimmer->first_name . ' ' . $swimmer->last_name,
+//            'last_name' => $swimmer->last_name,
+            'password' => bcrypt(random_string(10)),
+        ]);
 
-            $pattern = '/<table class="athleteBest"[\s\S]*<\/table>/';
-            preg_match($pattern, $res->getBody(), $table);
+        $user->addMeta('swimmer_id', $swimmer->id);
 
-            $pattern = '/<script[\s\S]*?<\/script>/';
-            $body = "not found";
-            if(isset($table[0])) {
-                $body = preg_replace($pattern, '', $table[0]);
-            }
+//        $client = new Client(['base_uri' => config('app.url')]);
+//        $request = $client->post('/password/reset', [
+//            'form_params' => [
+//                'email' => $user->email,
+//                '_token' =>
+//            ]
+//        ]);
 
-            return $body;
-        } catch (\Exception $e) {
-            Log::info('couldn\'t connect to url', [ $e ] );
-
-            return "not found";
-        }
-
+        /*return redirect()->action('Auth\PasswordController@postReset', [
+            'email' => $user->email,
+        ]);*/
     }
 }

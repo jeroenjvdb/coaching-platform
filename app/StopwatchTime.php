@@ -68,6 +68,8 @@ class StopwatchTime extends Model
             sprintf('%02d', $data->seconds ) . '.' .
             sprintf('%02d', $data->milliseconds / 10);
 
+        $data->arr = str_split($data->toText);
+
         return $data;
     }
 }

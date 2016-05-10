@@ -1,7 +1,12 @@
-{!! Form::open(['route' => ['swimmers.meta.store',
-    'group' => $group->slug,
-    'swimmer' => $swimmer->slug
-],'files' => true]) !!}
+{{ $myProfile }}
+@if(!$myProfile)
+    {!! Form::open(['route' => ['swimmers.meta.store',
+        'group' => $group->slug,
+        'swimmer' => $swimmer->slug
+    ],'files' => true]) !!}
+@else
+    {!! Form::open(['route' => ['me.reaction.store'], 'files' => true]) !!}
+@endif
 
 {!! Form::label('message') !!}
 {!! Form::textarea('message') !!}<br>
@@ -11,22 +16,24 @@
 
 {!! Form::close() !!}
 
-@foreach($meta as $data)
-    <div class="data {{ $data->type }} {{ ($data->response) ? 'response' : '' }}">
-        @if($data->type == 'data' )
-            {{ $data->message }}
-            @if($data->media)
-            <hr>
-            <img src="{{ $data->media }}" alt="" >
-            @endif
-        @elseif($data->type == 'chrono')
-            <a href="{{ route('stopwatches.show', [
+@if(isset($meta))
+    @foreach($meta as $data)
+        <div class="data {{ $data->type }} {{ ($data->response) ? 'response' : '' }}">
+            @if($data->type == 'data' )
+                {{ $data->message }}
+                @if($data->media)
+                    <hr>
+                    <img src="{{ $data->media }}" alt="">
+                @endif
+            @elseif($data->type == 'chrono')
+                <a href="{{ route('stopwatches.show', [
                         'group' => $group->slug,
                         'id' => $data->message->id,
                         ]) }}">
-                {{ $data->message->distance->distance }}
-                {{ $data->message->distance->stroke->name }}
-            </a>
-        @endif
-    </div>
-@endforeach
+                    {{ $data->message->distance->distance }}
+                    {{ $data->message->distance->stroke->name }}
+                </a>
+            @endif
+        </div>
+    @endforeach
+@endif

@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Classes\SwimmerProfile;
 use App\Group;
 use App\Http\Requests;
+use App\Swimmer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -19,7 +22,7 @@ class HomeController extends Controller
      */
     public function __construct(Group $group)
     {
-        $this->middleware('auth');
+//        $this->middleware('auth');
         $this->group = $group;
     }
 
@@ -35,5 +38,21 @@ class HomeController extends Controller
         ];
 
         return view('welcome', $data);
+    }
+
+    public function me()
+    {
+//        dd(Auth::user()->getAllMeta());
+        if(! Auth::user()->getMeta('swimmer_id')) {
+            abort('404', 'page not found');
+        }
+        $swimmer = Swimmer::find(Auth::user()->getMeta('swimmer_id'));
+        $profile = new SwimmerProfile($swimmer);
+        $data = $profile->get();
+
+        $data['group'] = $swimmer->group;
+        $data['myProfile'] = true;
+
+        return view('swimmers.show', $data);
     }
 }

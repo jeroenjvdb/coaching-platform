@@ -97,6 +97,8 @@ class SwimmerController extends Controller
             abort(404, 'page not found');
         }
 
+
+
         $stopwatches = $swimmer->stopwatches()->orderBy('created_at', 'desc')->with('distance', 'distance.stroke')->get();
 
         $personalBests = $this->getPersonalBest($swimmer->swimrankings_id);
@@ -144,35 +146,6 @@ class SwimmerController extends Controller
 
     }
 
-    /**
-     * get personal bests from swimrankings
-     *
-     * @param $athleteId
-     * @return mixed
-     */
-    private function getPersonalBest($athleteId)
-    {
-        $url = config('swimrankings.url') . config('swimrankings.swimmersPage') . $athleteId;
-        $parameters = [];
-        try {
-            $res = getCall($url, $parameters);
 
-            $pattern = '/<table class="athleteBest"[\s\S]*<\/table>/';
-            preg_match($pattern, $res->getBody(), $table);
-
-            $pattern = '/<script[\s\S]*?<\/script>/';
-            $body = "not found";
-            if(isset($table[0])) {
-                $body = preg_replace($pattern, '', $table[0]);
-            }
-
-            return $body;
-        } catch (\Exception $e) {
-            Log::info('couldn\'t connect to url', [ $e ] );
-
-            return "not found";
-        }
-
-    }
 }
 	

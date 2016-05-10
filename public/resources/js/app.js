@@ -2594,7 +2594,7 @@ var Stopwatch = function(elem, options ) {
      * render the clock to the page
      */
     function render() {
-        var s = Math.round(clock);
+        var s = Math.floor(clock);
 
         if(options.is_base3) {
             if(s > 1000)  {
@@ -2613,8 +2613,6 @@ var Stopwatch = function(elem, options ) {
                 timer.innerHTML = '<div class="cell">1</div><div class="cell">8</div><div class="cell">0</div>';
             }
         } else {
-
-
             timer.innerHTML = timeToString(s);
         }
     }
@@ -2640,7 +2638,7 @@ var Stopwatch = function(elem, options ) {
      */
     function timeToString(s) {
         var ms = s % 1000;
-        var hundredth = Math.round(ms/10);
+        var hundredth = Math.floor(ms/10);
         s = (s - ms) / 1000;
         var secs = s % 60;
         s = (s - secs) / 60;
@@ -2660,7 +2658,6 @@ var Stopwatch = function(elem, options ) {
      * get the clock
      */
     function getTime() {
-        //console.log(clock);
         this.clock = clock;
     }
 
@@ -2678,11 +2675,14 @@ var Stopwatch = function(elem, options ) {
         if(! options.is_base3) {
             options.clock = clock;
             options.dt = Date.now();
+            console.log(options.clock);
 
             $.post(url, options, function(data){
                 console.log(data);
-                appendSplit(data.time)
+                //appendSplit(data.time)
             }, 'json');
+
+            appendSplit(options.clock);
         }
     }
 

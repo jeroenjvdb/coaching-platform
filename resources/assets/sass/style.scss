@@ -8,8 +8,10 @@
 
 @import "ui/grid";
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+@import "ui/normalize";
 
 @import "ui/variation";
 @import "ui/data";
 
 @import "layouts/stopwatch";
+@import "layouts/profile";

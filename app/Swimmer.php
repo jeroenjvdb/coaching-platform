@@ -26,6 +26,7 @@ class Swimmer extends Model
         'first_name',
         'last_name',
         'profile_id',
+        'email',
     ];
 
     /**
