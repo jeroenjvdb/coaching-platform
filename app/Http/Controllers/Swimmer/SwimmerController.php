@@ -81,14 +81,16 @@ class SwimmerController extends Controller
             'first_name'    => $request->first_name ,
             'last_name'     => $request->input('last_name'),
             'profile_id'    => $request->input('swimrankings'),
-            'email'         =>$request->email,
+            'email'         => $request->email,
         ]);
 
         $swimmer = $group->swimmers()->save($swimmer);
 
         $this->createLogin($swimmer);
 
-        return redirect()->route('swimmers.index', ['group' => $group->slug]);
+        return redirect()->route('swimmers.index', [
+            'group' => $group->slug
+        ]);
     }
 
     /**
@@ -104,9 +106,7 @@ class SwimmerController extends Controller
             abort(404, 'page not found');
         }
 
-        $profile = new SwimmerProfile($swimmer);
-        $data = $profile->get();
-//        dd($data);
+        $data = $swimmer->get();
 
         $data['group'] = $group;
         $data['myProfile'] = false;
@@ -146,20 +146,23 @@ class SwimmerController extends Controller
 
     }
 
-
+    /**
+     * create login for new swimmer.
+     *
+     * @param $swimmer
+     */
     private function createLogin($swimmer)
     {
-//        dd($swimmer);
         $user = $this->user->create([
             'clearance_level' => config('clearance.swimmer'),
             'email' => $swimmer->email,
             'name' => $swimmer->first_name . ' ' . $swimmer->last_name,
-//            'last_name' => $swimmer->last_name,
             'password' => bcrypt(random_string(10)),
         ]);
 
         $user->addMeta('swimmer_id', $swimmer->id);
 
+        //TODO: fix this shit
 //        $client = new Client(['base_uri' => config('app.url')]);
 //        $request = $client->post('/password/reset', [
 //            'form_params' => [

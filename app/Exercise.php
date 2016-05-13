@@ -129,7 +129,7 @@ class Exercise extends Model
 
         $exercise->position = $lastPos;
         if( ! $allExercises->count() ) {
-            $exercise->position = 1;
+            $exercise->position = 0;
         }
         $exercise->save();
 

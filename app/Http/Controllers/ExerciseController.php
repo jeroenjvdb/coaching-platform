@@ -50,7 +50,7 @@ class ExerciseController extends Controller
             ->exercises()
             ->lastExercise();
 
-        $position = 1;
+        $position = 0;
         if ($lastExercise->exists()) {
             $position = $lastExercise->position + 1;
         }
@@ -121,6 +121,25 @@ class ExerciseController extends Controller
         return redirect()->route('trainings.show',[
             'group' => $group->slug,
             'id' => $training_id
+        ]);
+    }
+
+    public function updatePosition(Request $request, Group $group, $training_id)
+    {
+        $training = $group->trainings()->find($training_id);
+
+        $exercise = $training->exercises()->find($request->exercise_id);
+        $newPos = $request->position;
+        $oldPos = $exercise->position;
+
+        $exercise->update($request->all());
+
+        if ($newPos != $oldPos) {
+            $exercise->changePositions($training, $newPos, $oldPos);
+        }
+
+        return json_encode([
+            'type' => 'success',
         ]);
     }
 

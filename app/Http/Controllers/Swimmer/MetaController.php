@@ -36,10 +36,16 @@ class MetaController extends Controller
 
     }
 
+    /**
+     * store meta for swimmer
+     *
+     * @param Request $request
+     * @param Group $group
+     * @param Swimmer $swimmer
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(Request $request, Group $group, Swimmer $swimmer)
     {
-//        dd($request->media);
-
         $media = null;
         if(isset($request->media)) {
             $media = $this->storeImage($request->media);
@@ -54,13 +60,7 @@ class MetaController extends Controller
         ];
 
         $collection = collect($collecting);
-
-//        dd($collection);
-
-
         $swimmer->addMeta(date("Y-m-d H:i:s"), $collection);
-//        dd($allMeta);
-//        $allMeta = $swimmer->getAllMeta();
 
         return redirect()->route('swimmers.show', [
             'group' => $group->slug,
@@ -88,6 +88,12 @@ class MetaController extends Controller
 
     }
 
+    /**
+     * store meta image
+     *
+     * @param $img
+     * @return string
+     */
     protected function storeImage($img)
     {
         $destinationPath   = "uploads/data/";

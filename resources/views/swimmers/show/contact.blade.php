@@ -10,7 +10,7 @@
                     <div class="col-xs-4">
                         <strong>phone:</strong>
                     </div>
-                    <div class="col-xs-8">
+                    <div class="col-xs-8 contact-data" data-contact="swimmer.phone">
                         {{ $contact['phone'] }}
                     </div>
                 </div>
@@ -18,21 +18,23 @@
                     <div class="col-xs-4">
                         <strong>email:</strong>
                     </div>
-                    <div class="col-xs-8">
+                    <div class="col-xs-8 contact-data" data-contact="swimmer.email">
                         {{ $swimmer->email }}
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-xs-4"><strong>adres:</strong></div>
-                    <div class="col-xs-8">
+                    <div class="col-xs-8 contact-data" data-contact="address">
+                        @if($contact['address'])
                         {{ $contact['address']->street }} {{ $contact['address']->number }}, <br>
                         {{ $contact['address']->zipcode }} {{ $contact['address']->city }}
+                        @endif
                     </div>
                 </div>
             </div>
             <div class="col-md-6 col-xs-12">
                 <div class="row">
-                    <div class="col-xs-4">
+                    <div class="col-xs-4 contact-data" data-contact="email">
                         <strong>email ouders:</strong>
                     </div>
                     <div class="col-xs-8">
@@ -48,7 +50,10 @@
         {!! Form::open(['route' => ['swimmers.contact.update',
             'group' => $group->slug,
             'swimmer' => $swimmer->slug,
-        ]]) !!}
+            ],
+            'data-ajax' => 'true',
+
+        ]) !!}
         <div class="row">
             <div class="col-md-6 col-xs-12">
                 <div class="row">

@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Classes;
+namespace App\Traits;
 
 use App\Swimmer;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 
-class SwimmerProfile
+trait SwimmerProfile
 {
     /**
      * @var Swimmer
@@ -17,19 +17,17 @@ class SwimmerProfile
      * SwimmerProfile constructor.
      * @param Swimmer $swimmer
      */
-    public function __construct(Swimmer $swimmer)
-    {
-        $this->swimmer = $swimmer;
-    }
+//    public function __construct(Swimmer $swimmer)
+//    {
+//        $this->swimmer = $swimmer;
+//    }
 
     /**
      * @return array
      */
     public function get()
     {
-        $swimmer = $this->swimmer;
-
-        $stopwatches = $swimmer->stopwatches()
+        $stopwatches = $this->stopwatches()
             ->orderBy('created_at', 'desc')
             ->with('distance', 'distance.stroke')
             ->get();
@@ -42,10 +40,10 @@ class SwimmerProfile
         $personalBests = "not found";
 
         $data = [
-            'swimmer'       => $swimmer,
+            'swimmer'       => $this,
             'personalBests' => $personalBests,
             'stopwatches'   => $stopwatches,
-            'meta'          => $this->getMeta($stopwatches),
+            'meta'          => $this->getSwimmerMeta($stopwatches),
             'contact'       => $this->contact(),
         ];
 
@@ -75,7 +73,7 @@ class SwimmerProfile
         ];
 
         $collection = collect($collecting);
-        $this->swimmer->addMeta(date("Y-m-d H:i:s"), $collection);
+        $this->addMeta(date("Y-m-d H:i:s"), $collection);
 
         return true;
     }
@@ -98,7 +96,7 @@ class SwimmerProfile
 
         $collection = collect($collecting);
 
-        $this->swimmer->addMeta(date("Y-m-d H:i:s"), $collection);
+        $this->addMeta(date("Y-m-d H:i:s"), $collection);
 
         return true;
     }
@@ -106,19 +104,24 @@ class SwimmerProfile
     public function storeContact($data)
     {
         $address = collect($data['address']);
-        $this->swimmer->updateMeta('address', $address);
-        $this->swimmer->updateMeta('phone', $data['phone']);
-        $this->swimmer->updateMeta('email', []);
+        $this->updateMeta('address', $address);
+        $this->updateMeta('phone', $data['phone']);
+        $this->updateMeta('email', []);
         foreach($data['email'] as $email) {
-            $this->swimmer->appendMeta('email', $email);
+            $this->appendMeta('email', $email);
         }
 
         return true;
     }
 
+    /**
+     * check if a heartrate is filled in
+     *
+     * @return bool
+     */
     public function checkHeartRate()
     {
-        $meta = $this->swimmer->getAllMeta();
+        $meta = $this->getAllMeta();
         $hasHeartRate = false;
         foreach($meta as $data) {
             if($data->type && $data->type == 'heartRate' && $data->date > Carbon::today()) {
@@ -129,6 +132,12 @@ class SwimmerProfile
         return $hasHeartRate;
     }
 
+    /**
+     * store new heartRate
+     *
+     * @param $rate
+     * @param $forgot
+     */
     public function storeHeartRate($rate, $forgot)
     {
         $collecting = [
@@ -141,10 +150,16 @@ class SwimmerProfile
 
         $collection = collect($collecting);
 
-        $this->swimmer->addMeta(date("Y-m-d H:i:s"), $collection);
+        $this->addMeta(date("Y-m-d H:i:s"), $collection);
 
     }
 
+    /**
+     * Get all heartRates
+     *
+     * @param $meta
+     * @return static
+     */
     public function getHeartRates($meta) {
         $heartRate = collect([]);
 
@@ -190,11 +205,23 @@ class SwimmerProfile
         }
     }
 
+    /**
+     * remove width of table
+     *
+     * @param $records
+     * @return mixed
+     */
     private function removeWidth($records)
     {
         return preg_replace('/width="[\s\S]*?"/', '', $records);
     }
 
+    /**
+     * hide columns on mobile view
+     *
+     * @param $records
+     * @return mixed
+     */
     private function mobileHidden($records)
     {
         $hidden = [
@@ -218,18 +245,15 @@ class SwimmerProfile
      * @param $stopwatches
      * @return \Illuminate\Support\Collection
      */
-    private function getMeta($stopwatches)
+    private function getSwimmerMeta($stopwatches)
     {
-        $allMeta = $this->swimmer->getAllMeta();
+        $allMeta = $this->getAllMeta();
         $meta = collect([]);
-//        $heartRate = collect([
-//        ]);
-        $heartRate = [];
 
+        $heartRate = [];
         $dateArr = [];
         $rateArr = [];
 
-//        dd($heartRate['x']);
         $allMeta = $allMeta->sortByDesc('date');
 
         $allMeta->each(function($item, $key) use ($meta, $dateArr, $rateArr){
@@ -239,11 +263,6 @@ class SwimmerProfile
             } else if(isset($item->type) && $item->type == 'heartRate') {
                 $item->date = Carbon::createFromFormat('Y-m-d H:i:s',$item->date);
                 $meta->push($item);
-                /*var_dump($item);
-                echo '<br>';
-                array_push($dateArr, $item->date);
-                var_dump($dateArr);
-                array_push($rateArr, $item->message);*/
             }
         });
 
@@ -255,12 +274,9 @@ class SwimmerProfile
                     'x' => $item->date,
                     'y' => $item->message,
                 ]);
-//                $heartRate->push($hr);
                 array_push($heartRate, $hr);
             }
         }
-
-//        $heartRate->put('y', $rateArr);
 
         foreach($stopwatches as $stopwatch) {
             $newMeta = [
@@ -272,14 +288,6 @@ class SwimmerProfile
             ];
 
             $item = (object)$newMeta;
-
-            /*collect([
-            'type' => 'chrono',
-            'message' => $stopwatch,
-            'media' => null,
-            'date' => $stopwatch->created_at,
-        ]);*/
-
             $meta->push($item);
         }
 
@@ -315,11 +323,11 @@ class SwimmerProfile
      */
     private function contact()
     {
-        $swimmer = $this->swimmer;
+        $swimmer = $this;
 
         $address = $swimmer->getMeta('address');
         $addressText = null;
-//        dd($address);
+
         if($address) {
             $address->street = htmlentities($address->street);
             $address->number = htmlentities($address->number);

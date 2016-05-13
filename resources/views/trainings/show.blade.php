@@ -28,9 +28,12 @@
         <th>distance</th>
         <th></th>
         </thead>
-        <tbody>
+        <tbody class="sortable" id="exercises" data-url="{{ route('exercises.update.position', [
+            'group' => $group->slug,
+            'training_id' => $training->id,
+        ]) }}">
         @foreach($training->exercises as $exercise)
-            <tr>
+            <tr data-id="{{ $exercise->id }}" class="exercise" data-class="exercise" data-table="exercises">
                 <td>{{ $exercise->sets }}</td>
                 <td>*</td>
                 <td>{{ $exercise->meters }}</td>

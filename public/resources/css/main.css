@@ -8022,6 +8022,9 @@ button.close {
 img {
   max-width: 100%; }
 
+h3 {
+  text-align: center; }
+
 .variation {
   background-color: #c63124; }
   .variation .login-box {
@@ -8070,6 +8073,9 @@ img {
     transition: background-color, 125ms; }
   .variation .groups {
     color: white; }
+  .variation .btn-lg, .variation .btn-group-lg > .btn {
+    font-size: 2em;
+    padding: 20px 30px; }
 
 .data {
   width: 80%;
@@ -8079,10 +8085,11 @@ img {
   padding: 10px;
   margin: 5px;
   background-color: #CCC; }
-  .data a {
-    color: white; }
   .data.chrono {
-    background-color: #00AA00; }
+    background-color: #FFFC19; }
+  .data.heartRate {
+    background-color: #8A0707;
+    color: white; }
   .data.response {
     float: right; }
   .data img {

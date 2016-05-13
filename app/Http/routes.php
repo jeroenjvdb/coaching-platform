@@ -69,8 +69,11 @@ Route::group(['middleware' => 'web'], function () {
 
     Route::group(['middleware' => 'auth'], function () {
         Route::get('/', 'HomeController@index');
-        Route::get('/me', 'HomeController@me');
+        Route::get('/me', 'myController@me');
         Route::post('/me', ['as' => 'me.reaction.store', 'uses' => 'MyController@store']);
+        Route::post('/me/heartRate', ['as' => 'me.heartRate', 'uses' => 'MyController@heartRate']);
+        Route::get('/me/heartRate', ['as' => 'profile.heartRate', 'uses' => 'MyController@getHeartRate']);
+
 
 
         Route::group(['middleware' => 'coach'], function () {
@@ -105,6 +108,10 @@ Route::group(['middleware' => 'web'], function () {
                         Route::get('edit', ['as' => 'swimmers.edit', 'uses' => 'SwimmerController@edit']);
                         Route::post('/', ['as' => 'swimmers.update', 'uses' => 'SwimmerController@update']);
                         Route::post('meta', ['as' => 'swimmers.meta.store', 'uses' => 'MetaController@store']);
+                        Route::post('contact', ['as' => 'swimmers.contact.update', 'uses' => 'ContactController@update']);
+
+                        Route::post('heartRate', ['as' => 'swimmers.heartRate', 'uses' => 'ApiController@heartRate']);
+
                     });
                 });
 
@@ -119,25 +126,34 @@ Route::group(['middleware' => 'web'], function () {
                         'uses' => 'TrainingController@download',
                     ]);
 
-                    Route::post('/{training_id}/presences', [
-                        'as' => 'presences.store',
-                        'uses' => 'PresenceController@store',
-                    ]);
 
-                    Route::post('/{training_id}/exercise/', [
-                        'as' => 'exercises.store',
-                        'uses' => 'ExerciseController@store',
-                    ]);
+                    Route::group(['prefix' => '{training_id}'], function(){
+                        Route::post('presences', [
+                            'as' => 'presences.store',
+                            'uses' => 'PresenceController@store',
+                        ]);
 
-                    Route::get('/{training_id}/exercise/{id}', [
-                        'as' => 'exercises.edit',
-                        'uses' => 'ExerciseController@edit',
-                    ]);
+                        Route::post('exercise/', [
+                            'as' => 'exercises.store',
+                            'uses' => 'ExerciseController@store',
+                        ]);
 
-                    Route::post('/{training_id}/exercise/{id}', [
-                        'as' => 'exercises.update',
-                        'uses' => 'ExerciseController@update',
-                    ]);
+                        Route::post('exercise/position', [
+                            'as' => 'exercises.update.position',
+                            'uses' => 'ExerciseController@updatePosition',
+                        ]);
+
+                        Route::get('exercise/{id}', [
+                            'as' => 'exercises.edit',
+                            'uses' => 'ExerciseController@edit',
+                        ]);
+
+                        Route::post('exercise/{id}', [
+                            'as' => 'exercises.update',
+                            'uses' => 'ExerciseController@update',
+                        ]);
+                    });
+
                 });
 
                 Route::group(['prefix' => 'stopwatch'], function () {

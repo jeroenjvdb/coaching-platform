@@ -5,10 +5,12 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Phoenix\EloquentMeta\MetaTrait;
+use App\Traits\SwimmerProfile;
 
 class Swimmer extends Model
 {
     use MetaTrait;
+    use SwimmerProfile;
 
     /**
      * the table associated with the model

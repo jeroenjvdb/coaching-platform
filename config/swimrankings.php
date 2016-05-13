@@ -3,6 +3,6 @@
 return [
     'url' => 'www.swimrankings.net/index.php',
 
-    'swimmersPage' => '?page=athleteDetail&athleteId=',
+    'swimmersPage' => '?&points=rudolph_2015&page=athleteDetail&athleteId=',
 
 ];

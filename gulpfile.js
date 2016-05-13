@@ -19,6 +19,7 @@ elixir(function(mix) {
     mix.sass('style.scss', 'public/resources/css/main.css')
         .scripts([
             'jquery.min.js',
+            'jquery-ui.js',
             paths.bootstrap + "javascripts/bootstrap.js",
             'app.js',
             'Stopwatch.js'], 'public/resources/js/app.js')

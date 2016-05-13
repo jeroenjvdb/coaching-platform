@@ -8,12 +8,17 @@
   background-color: #CCC;
 
   a {
-    color: white;
+    //color: white;
   }
 
 
   &.chrono {
-    background-color: #00AA00;
+    background-color: #FFFC19;
+  }
+
+  &.heartRate {
+    background-color: #8A0707;
+    color: white;
   }
 
   &.response {
