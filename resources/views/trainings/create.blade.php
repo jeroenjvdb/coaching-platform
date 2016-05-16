@@ -4,7 +4,7 @@
 
     {!! Form::open(['route' => ['trainings.store', 'group' => $group->slug]]) !!}
         {!! Form::label('starttime') !!}
-        {!! Form::text('starttime') !!}
+        {!! Form::input('datetime', 'starttime') !!}
         {!! Form::submit() !!}
     {!! Form::close() !!}
 

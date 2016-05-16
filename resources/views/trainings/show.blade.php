@@ -9,11 +9,11 @@
                         'id' => $training->id]
                     ]) !!}
     {!! Form::label('sets') !!}
-    {!! Form::text('sets') !!} <br>
+    {!! Form::input('number', 'sets') !!} <br>
     {!! Form::label('meters') !!}
-    {!! Form::text('meters') !!} <br>
+    {!! Form::input('number', 'meters') !!} <br>
     {!! Form::label('description') !!}
-    {!! Form::text('description') !!} <br>
+    {!! Form::textarea('description') !!} <br>
     {!! Form::submit() !!}
 
     {!! Form::close() !!}
