@@ -69,7 +69,7 @@ Route::group(['middleware' => 'web'], function () {
 
     Route::group(['middleware' => 'auth'], function () {
         Route::get('/', 'HomeController@index');
-        Route::get('/me', 'myController@me');
+        Route::get('/me', 'MyController@me');
         Route::post('/me', ['as' => 'me.reaction.store', 'uses' => 'MyController@store']);
         Route::post('/me/heartRate', ['as' => 'me.heartRate', 'uses' => 'MyController@heartRate']);
         Route::get('/me/heartRate', ['as' => 'profile.heartRate', 'uses' => 'MyController@getHeartRate']);
