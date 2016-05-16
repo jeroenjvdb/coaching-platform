@@ -2,26 +2,45 @@
 
 @section('content')
 
-    <h2>add exercise</h2>
-    {!! Form::open(['route' => [
-                        'exercises.store',
-                        'group' => $group->slug,
-                        'id' => $training->id]
-                    ]) !!}
-    {!! Form::label('sets') !!}
-    {!! Form::input('number', 'sets') !!} <br>
-    {!! Form::label('meters') !!}
-    {!! Form::input('number', 'meters') !!} <br>
-    {!! Form::label('description') !!}
-    {!! Form::textarea('description') !!} <br>
-    {!! Form::submit() !!}
-
-    {!! Form::close() !!}
-    <h2>training {{ $training->starttime }}</h2>
-    <a href="{{ route('training.download', [
+    <h2>training {{ $training->starttime }} <a href="{{ route('training.download', [
         'group' => $group->slug,
         'training_id' => $training->id,
-    ]) }}"><i class="fa fa-download"></i></a>
+    ]) }}"><i class="fa fa-download"></i></a></h2>
+
+
+    <div >
+        <h2>add exercise</h2>
+        {!! Form::open(['route' => [
+                            'exercises.store',
+                            'group' => $group->slug,
+                            'id' => $training->id]
+                        ]) !!}
+        <fieldset class="form-group col-md-6">
+            {!! Form::label('sets') !!}
+            {!! Form::input('number', 'sets', null, [
+                'class' => 'form-control',
+            ]) !!}
+        </fieldset>
+        <fieldset class="form-group col-md-6">
+            {!! Form::label('meters') !!}
+            {!! Form::input('number', 'meters', null, [
+                'class' => 'form-control',
+            ]) !!}
+        </fieldset>
+        <fieldset class="form-group col-md-12">
+            {!! Form::label('description') !!}
+            {!! Form::textarea('description', null, [
+                'class' => 'form-control',
+            ]) !!}
+        </fieldset>
+        <fieldset class="form-group col-md-12">
+            {!! Form::submit('verzenden', [
+            'class' => 'btn btn-primary'
+        ]) !!}
+        </fieldset>
+        {!! Form::close() !!}
+    </div>
+
 
     <table>
         <thead>
@@ -62,16 +81,16 @@
                                     'group' => $group->slug,
                                     'training_id' => $training->id,
                                 ]]) }}
-        <ul>
-            @foreach($swimmers as $swimmer)
-                <li>{{ Form::checkbox('swimmers[]', $swimmer->id, $swimmer->present, ['id' => $swimmer->id]) }}
-                    {{ Form::label($swimmer->id, $swimmer->first_name . ' ' . $swimmer->last_name) }}
+    <ul>
+        @foreach($swimmers as $swimmer)
+            <li>{{ Form::checkbox('swimmers[]', $swimmer->id, $swimmer->present, ['id' => $swimmer->id]) }}
+                {{ Form::label($swimmer->id, $swimmer->first_name . ' ' . $swimmer->last_name) }}
 
-                </li>
-            @endforeach
+            </li>
+        @endforeach
 
-        </ul>
-        {{ Form::submit() }}
+    </ul>
+    {{ Form::submit() }}
     {{ Form::close() }}
 
 @stop

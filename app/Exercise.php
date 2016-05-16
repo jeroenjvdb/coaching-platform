@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
 
 class Exercise extends Model
 {
@@ -101,37 +102,44 @@ class Exercise extends Model
      * @param $oldPos
      * @return bool
      */
-    public function changePositions( Training $training, $newPos, $oldPos)
+    public function changePositions( Training $training, $newPos)
     {
+        $oldPos = $this->position;
+
         $exercise = $this;
-        $lastPos = $newPos;
         $directionWhere = '<=';
-        $directionOrderBy = 'asc';
+        $otherDirection = '>';
+        $directionOrderBy = 'desc';
         $directionPos = -1;
 
-        if ($newPos < $oldPos) {
-            $directionWhere = '>=';
-            $directionOrderBy = 'desc';
-            $directionPos = 1;
-        }
+        if($newPos != $oldPos) {
+            if ($newPos < $oldPos) {
+                $directionWhere = '>=';
+                $otherDirection = '<';
+                $directionOrderBy = 'asc';
+                $directionPos = 1;
+            }
 
-        $allExercises = $training->exercises()
-            ->where('position', $directionWhere, $newPos)
-            ->whereNotIn('id', [$exercise->id])
-            ->orderBy('position', $directionOrderBy)
-            ->get();
+            $allExercises = $training->exercises()
+                ->where('position', $directionWhere, $newPos)
+                ->where('position', $otherDirection, $oldPos)
+                ->orderBy('position', $directionOrderBy)
+                ->get();
 
-        foreach ($allExercises as $allExercise) {
-            $lastPos = $allExercise->position;
-            $allExercise->position += $directionPos;
-            $allExercise->save();
-        }
+            $counter = $allExercises->first()->position;
+            $exercise->position = $counter;
 
-        $exercise->position = $lastPos;
-        if( ! $allExercises->count() ) {
-            $exercise->position = 0;
+            if (!$allExercises->count()) {
+                $exercise->position = 0;
+            }
+            $exercise->save();
+
+            foreach ($allExercises as $allExercise) {
+                $counter += $directionPos;
+                $allExercise->position = $counter;
+                $allExercise->save();
+            }
         }
-        $exercise->save();
 
         return true;
     }

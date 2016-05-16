@@ -4,6 +4,7 @@ namespace App\Traits;
 
 use App\Swimmer;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 
 trait SwimmerProfile
@@ -32,16 +33,9 @@ trait SwimmerProfile
             ->with('distance', 'distance.stroke')
             ->get();
 
-//        $personalBests = $this->getPersonalBest($swimmer->swimrankings_id);
-//        $personalBests = removeLinks($personalBests);
-//        $personalBests = $this->mobileHidden($personalBests);
-//        $personalBests = $this->removeWidth($personalBests);
-//
-        $personalBests = "not found";
-
         $data = [
             'swimmer'       => $this,
-            'personalBests' => $personalBests,
+            'personalBests' => Cache::get('PB.' . $this->id),
             'stopwatches'   => $stopwatches,
             'meta'          => $this->getSwimmerMeta($stopwatches),
             'contact'       => $this->contact(),
@@ -181,8 +175,10 @@ trait SwimmerProfile
      * @param $athleteId
      * @return mixed
      */
-    private function getPersonalBest($athleteId)
+    public function getPersonalBest()
     {
+        $athleteId = $this->swimrankings_id;
+
         $url = config('swimrankings.url') . config('swimrankings.swimmersPage') . $athleteId;
         $parameters = [];
         try {
@@ -196,6 +192,14 @@ trait SwimmerProfile
             if(isset($table[0])) {
                 $body = preg_replace($pattern, '', $table[0]);
             }
+
+            $body = removeLinks($body);
+            $body = $this->mobileHidden($body);
+            $body = $this->removeWidth($body);
+
+            $expiresAt = Carbon::now()->addDays(7);
+
+            Cache::put('PB.' . $this->id, $body, $expiresAt);
 
             return $body;
         } catch (\Exception $e) {

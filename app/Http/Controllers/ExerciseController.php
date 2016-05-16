@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Log;
 
 class ExerciseController extends Controller
 {
@@ -36,7 +37,7 @@ class ExerciseController extends Controller
     /**
      * save the new exercise
      *
-     * @param Request $request
+     * @param ExerciseRequest $request
      * @param Group $group
      * @param $training_id
      * @return \Illuminate\Http\RedirectResponse
@@ -79,12 +80,12 @@ class ExerciseController extends Controller
     {
         $training = $group->trainings()
             ->where('id', $training_id)
-            ->with(['exercises' => function($query) {
+            ->with(['exercises' => function ($query) {
                 $query->positioned();
             }])->first();
-        //dd($training->exercises);
+
         $exercise = $training->exercises()->find($id);
-        // dd($exercise->first());
+
         $data = [
             'group' => $group,
             'training' => $training,
@@ -108,35 +109,31 @@ class ExerciseController extends Controller
         $training = $group->trainings()->find($training_id);
         $exercise = $training->exercises()->find($exercise_id);
         $newPos = $request->position;
-        $oldPos = $exercise->position;
 
-        $exercise->update($request->all());
+        $exercise->changePositions($training, $newPos);
 
-        if ($newPos != $oldPos) {
-            $exercise->changePositions($training, $newPos, $oldPos);
-        }
-
-
-
-        return redirect()->route('trainings.show',[
+        return redirect()->route('trainings.show', [
             'group' => $group->slug,
             'id' => $training_id
         ]);
     }
 
+    /**
+     * update position of exercise
+     *
+     * @param Request $request
+     * @param Group $group
+     * @param $training_id
+     * @return string
+     */
     public function updatePosition(Request $request, Group $group, $training_id)
     {
         $training = $group->trainings()->find($training_id);
 
         $exercise = $training->exercises()->find($request->exercise_id);
         $newPos = $request->position;
-        $oldPos = $exercise->position;
 
-        $exercise->update($request->all());
-
-        if ($newPos != $oldPos) {
-            $exercise->changePositions($training, $newPos, $oldPos);
-        }
+        $exercise->changePositions($training, $newPos);
 
         return json_encode([
             'type' => 'success',
