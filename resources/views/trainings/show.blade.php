@@ -18,6 +18,10 @@
 
     {!! Form::close() !!}
     <h2>training {{ $training->starttime }}</h2>
+    <a href="{{ route('training.download', [
+        'group' => $group->slug,
+        'training_id' => $training->id,
+    ]) }}"><i class="fa fa-download"></i></a>
 
     <table>
         <thead>
@@ -60,8 +64,10 @@
                                 ]]) }}
         <ul>
             @foreach($swimmers as $swimmer)
-                <li>{{ Form::checkbox('swimmers[]', $swimmer->id, $swimmer->present) }}
-                    {{ $swimmer->first_name }} {{ $swimmer->last_name }}</li>
+                <li>{{ Form::checkbox('swimmers[]', $swimmer->id, $swimmer->present, ['id' => $swimmer->id]) }}
+                    {{ Form::label($swimmer->id, $swimmer->first_name . ' ' . $swimmer->last_name) }}
+
+                </li>
             @endforeach
 
         </ul>
