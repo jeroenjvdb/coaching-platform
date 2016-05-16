@@ -53,14 +53,14 @@ class MyController extends Controller
         $swimmer = Swimmer::find($id);
 
         $data = $swimmer->get();
-        $data['hasHeartRate'] = $swimmer->checkHeartRate();
+//        $data['hasHeartRate'] = $swimmer->checkHeartRate();
         $data['group'] = $swimmer->group;
         $data['myProfile'] = true;
 
 
-        JavaScript::put([
+        /*JavaScript::put([
             'HR' => $data['meta']['heartRate'],
-        ]);
+        ]);*/
 
         return view('swimmers.show', $data);
     }

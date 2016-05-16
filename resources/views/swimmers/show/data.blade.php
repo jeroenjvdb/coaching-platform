@@ -6,12 +6,22 @@
 @else
     {!! Form::open(['route' => ['me.reaction.store'], 'files' => true]) !!}
 @endif
+<fieldset class="form-group">
+    {!! Form::label('message') !!}
+    {!! Form::textarea('message', null, [
+        'class' => 'form-control'
+    ]) !!}
+</fieldset>
+<fieldset class="form-group">
+    <span class="btn btn-default btn-file">
+        <i class="fa fa-upload"></i> upload media {!! Form::file('media') !!}
+    </span>
 
-{!! Form::label('message') !!}
-{!! Form::textarea('message') !!}<br>
-{!! Form::file('media') !!}
+</fieldset>
 
-{!! Form::submit() !!}
+{!! Form::submit('verzenden', [
+    'class' => 'btn btn-primary',
+]) !!}
 
 {!! Form::close() !!}
 

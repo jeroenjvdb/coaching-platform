@@ -39,6 +39,7 @@ trait SwimmerProfile
             'stopwatches'   => $stopwatches,
             'meta'          => $this->getSwimmerMeta($stopwatches),
             'contact'       => $this->contact(),
+            'hasHeartRate'  => $this->checkHeartRate(),
         ];
 
         return $data;
@@ -118,7 +119,7 @@ trait SwimmerProfile
         $meta = $this->getAllMeta();
         $hasHeartRate = false;
         foreach($meta as $data) {
-            if($data->type && $data->type == 'heartRate' && $data->date > Carbon::today()) {
+            if(isset($data->type) && $data->type == 'heartRate' && $data->date > Carbon::today()) {
                 $hasHeartRate = true;
             }
         }
@@ -177,6 +178,7 @@ trait SwimmerProfile
      */
     public function getPersonalBest()
     {
+        Log::warning('cache');
         $athleteId = $this->swimrankings_id;
 
         $url = config('swimrankings.url') . config('swimrankings.swimmersPage') . $athleteId;

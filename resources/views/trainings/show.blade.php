@@ -19,12 +19,14 @@
             {!! Form::label('sets') !!}
             {!! Form::input('number', 'sets', null, [
                 'class' => 'form-control',
+                'autocomplete' => 'off',
             ]) !!}
         </fieldset>
         <fieldset class="form-group col-md-6">
             {!! Form::label('meters') !!}
             {!! Form::input('number', 'meters', null, [
                 'class' => 'form-control',
+                'autocomplete' => 'off',
             ]) !!}
         </fieldset>
         <fieldset class="form-group col-md-12">

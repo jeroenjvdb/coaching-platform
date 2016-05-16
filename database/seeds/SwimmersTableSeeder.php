@@ -106,5 +106,11 @@ class SwimmersTableSeeder extends Seeder
             'last_name' => 'De Muynck',
             'swimrankings_id' => '4894194',
         ]);
+
+        $swimmers->create([
+            'first_name' => 'Vincent',
+            'last_name' => 'Aluisio',
+            'swimrankings_id' => '4524125',
+        ]);
     }
 }

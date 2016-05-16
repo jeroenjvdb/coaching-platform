@@ -41,7 +41,7 @@ class getPersonalBests extends Command
 
         foreach($swimmers as $swimmer) {
             $swimmer->getPersonalBest();
-            $this->info('swimmer added: ' . $swimmer->id);
+            $this->comment('swimmer added: ' . $swimmer->id);
         }
     }
 }
