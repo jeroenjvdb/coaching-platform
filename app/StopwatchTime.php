@@ -70,7 +70,7 @@ class StopwatchTime extends Model
         $data->hours = $input%24;
         $input = floor($input/24);
 
-        $data->toText = sprintf('%02d', $data->hours) . ':' .
+        $data->toText = //sprintf('%02d', $data->hours) . ':' .
             sprintf('%02d', $data->minutes ) . ':' .
             sprintf('%02d', $data->seconds ) . '.' .
             sprintf('%02d', $data->milliseconds / 10);
