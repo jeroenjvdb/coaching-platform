@@ -8085,10 +8085,10 @@ h3 {
     width: 13px;
     top: 3px; }
 
-#splits {
+#splits, .stopwatch-ui {
   font-family: digital-7;
   font-size: 30px; }
-  #splits .cell {
+  #splits .cell, .stopwatch-ui .cell {
     display: inline-block;
     width: 13px;
     margin: 0; }

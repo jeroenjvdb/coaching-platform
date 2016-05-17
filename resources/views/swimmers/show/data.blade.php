@@ -42,6 +42,13 @@
                     {{ $data->message->distance->distance }}
                     {{ $data->message->distance->stroke->name }}
                 </a>
+                <div class="row stopwatch-ui">
+                    @foreach($data->message->times as $time)
+                        <div class="col-md-3 col-xs-6">
+                            @foreach($time->full_time->arr as $char)<div class="cell">{{ $char }}</div>@endforeach
+                        </div>
+                    @endforeach
+                </div>
             @elseif($data->type == 'heartRate')
                 {{ $data->message }}
             @endif

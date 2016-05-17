@@ -28,10 +28,7 @@ trait SwimmerProfile
      */
     public function get()
     {
-        $stopwatches = $this->stopwatches()
-            ->orderBy('created_at', 'desc')
-            ->with('distance', 'distance.stroke')
-            ->get();
+        $stopwatches = $this->getStopwatches();
 
         $data = [
             'swimmer'       => $this,
@@ -168,6 +165,32 @@ trait SwimmerProfile
         dd($heartRate);
 
         return $heartRate->sortBy('date');
+    }
+
+    private function getStopwatches()
+    {
+        $stopwatches = $this->stopwatches()
+//            ->where('stopwatches.id', $id)
+            ->with(['times' => function($query){
+                    $query->orderedRev();
+                },
+                'distance',
+                'distance.stroke',
+            ])->get();
+
+        $lastRecord = null;
+        foreach($stopwatches as $stopwatch) {
+            foreach ($stopwatch->times as $key => $time) {
+                if ($lastRecord == $time->time) {
+                    $stopwatch->times->pull($key);
+                } else {
+                    $lastRecord = $time->time;
+
+                }
+            }
+        }
+
+        return $stopwatches;
     }
 
     /**

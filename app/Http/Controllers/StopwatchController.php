@@ -65,9 +65,6 @@ class StopwatchController extends Controller
         $swimmer = $group->swimmers()->findOrFail($request->swimmer);
         $distance = $this->distance->find($request->distance);
 
-//        var_dump($distance);
-//        dd();
-
         $stopwatchData = $this->stopwatch->fill([
             'swimmer_id' => $swimmer->id,
             'distance_id' => $distance->id,
@@ -75,8 +72,6 @@ class StopwatchController extends Controller
         ]);
 
         $stopwatch = Auth::user()->stopwatches()->save( $stopwatchData );
-
-
 
         return redirect()->route('stopwatches.show', [
             'group' => $group->slug,
@@ -93,7 +88,7 @@ class StopwatchController extends Controller
                             ->with(['times' => function($query){
                                 $query->ordered();
                             }])->first();
-        //dd($stopwatch);
+
         $lastRecord = null;
         foreach($stopwatch->times as $key => $time)
         {

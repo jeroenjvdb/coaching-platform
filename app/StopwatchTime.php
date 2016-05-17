@@ -40,6 +40,13 @@ class StopwatchTime extends Model
             ->orderBy('created_at', 'desc');
     }
 
+    public function scopeOrderedRev($query)
+    {
+        $query
+            ->orderBy('time', 'asc')
+            ->orderBy('created_at', 'desc');
+    }
+
     /**
      * make the timeAttribute readable
      *
