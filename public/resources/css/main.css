@@ -8078,7 +8078,8 @@ h3 {
     padding: 20px 30px; }
 
 .form-control {
-  border-radius: 0; }
+  border-radius: 0;
+  max-width: 100%; }
 
 .btn {
   border-radius: 0; }
@@ -8142,21 +8143,5 @@ table {
   background: white;
   cursor: inherit;
   display: block; }
-
-.training .exercise, .training .exercise-ui {
-  font-size: 1.5em;
-  width: 100%;
-  background-color: #AAAAAA;
-  border-bottom: 1px solid #000; }
-  .training .exercise td, .training .exercise-ui td {
-    padding: 5px; }
-
-.training table {
-  width: 100%; }
-  .training table tr {
-    border-spacing: 20px; }
-
-.training tbody tr:last-child {
-  border-bottom: none; }
 
 /*# sourceMappingURL=main.css.map */

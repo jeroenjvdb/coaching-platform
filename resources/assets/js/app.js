@@ -41,6 +41,11 @@ $(function () {
         var position = $('.' + tableClass).index(ui.item);
         var url = $('#' + ui.item.data('table')).data('url');
         $('.sortable').sortable('disable');
+        console.log(ui.item);
+        console.log(tableClass);
+        console.log(id);
+        console.log(position);
+        console.log(url);
 
         updatePosition(id, position, url);
     }
