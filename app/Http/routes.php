@@ -152,6 +152,11 @@ Route::group(['middleware' => 'web'], function () {
                             'as' => 'exercises.update',
                             'uses' => 'ExerciseController@update',
                         ]);
+
+                        Route::get('exercise/{id}/delete', [
+                            'as' => 'exercises.delete',
+                            'uses' => 'ExerciseController@destroy',
+                        ]);
                     });
 
                 });

@@ -8,7 +8,7 @@
     ]) }}"><i class="fa fa-download"></i></a></h2>
 
 
-    <div >
+    <div>
         <h2>add exercise</h2>
         {!! Form::open(['route' => [
                             'exercises.store',
@@ -42,56 +42,85 @@
         </fieldset>
         {!! Form::close() !!}
     </div>
-
-
-    <table>
-        <thead>
-        <th>sets</th>
-        <th></th>
-        <th>meters</th>
-        <th>description</th>
-        <th>distance</th>
-        <th></th>
-        </thead>
-        <tbody class="sortable" id="exercises" data-url="{{ route('exercises.update.position', [
+    {{--</div>--}}
+        <div class="training">
+            <table>
+                <thead>
+                <th>sets</th>
+                <th></th>
+                <th>meters</th>
+                <th>description</th>
+                <th>distance</th>
+                <th></th>
+                </thead>
+                <tbody class="sortable" id="exercises" data-url="{{ route('exercises.update.position', [
             'group' => $group->slug,
             'training_id' => $training->id,
         ]) }}">
-        @foreach($training->exercises as $exercise)
-            <tr data-id="{{ $exercise->id }}" class="exercise" data-class="exercise" data-table="exercises">
-                <td>{{ $exercise->sets }}</td>
-                <td>*</td>
-                <td>{{ $exercise->meters }}</td>
-                <td>{{ $exercise->description }}</td>
-                <td>{{ $exercise->total }}</td>
-                <td><a href="{{ route('exercises.edit', [
+                @foreach($training->exercises as $exercise)
+                    <tr data-id="{{ $exercise->id }}" class="exercise exercise-row-{{ $exercise->id }}" data-class="exercise" data-table="exercises">
+                        <td>{{ $exercise->sets }}</td>
+                        <td>*</td>
+                        <td>{{ $exercise->meters }}</td>
+                        <td>{{ $exercise->description }}</td>
+                        <td>{{ $exercise->total }}</td>
+                        <td><a href="#" data-toggle="exercise-row-{{ $exercise->id }}">
+                                {{--{{ route('exercises.edit', [--}}
+                                                    {{--'group' => $group->slug,--}}
+                                                    {{--'training_id' => $training->id,--}}
+                                {{--'id' => $exercise->id--}}
+                                                {{--]) }}--}}
+                                <i class="fa fa-pencil"></i>
+                                <span class="sr-only">update</span>
+                            </a>
+                            <a href="{{ route('exercises.delete', [
                                                     'group' => $group->slug,
                                                     'training_id' => $training->id,
                                                     'id' => $exercise->id
-                                                ]) }}">update</a></td>
-            </tr>
-        @endforeach
-        <tr>
-            <td colspan="3">total:</td>
-            <td>{{ $training->total ? $training->total : 0 }}</td>
-        </tr>
-        </tbody>
-    </table>
+                                                ]) }}"><i class="fa fa-times"></i><span class="sr-only">delete</span></a>
+                        </td>
+                    </tr>
+                    <tr class="exercise-ui exercise-row-{{ $exercise->id }}" data-is_form="true" hidden>
+                        {!! Form::open(['route' => [
+                            'exercises.update',
+                            'group' => $group->slug,
+                            'training_id' => $training->id,
+                            'id' => $exercise->id]]) !!}
+                        <td>{!! Form::number('sets', $exercise->sets) !!} </td>
+                        <td>*</td>
+                        <td>{!! Form::number('meters', $exercise->meters) !!}</td>
+                        <td>{!! Form::textarea('description', $exercise->description) !!}</td>
+                        <td>{{ $exercise->total }}</td>
+                        <td>{!! Form::submit() !!}</td>
+                        {!! Form::close() !!}
+                    </tr>
+                @endforeach
+
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td colspan="3">total:</td>
+                    <td>{{ $training->total ? $training->total : 0 }}</td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    {{--<div class="container">--}}
 
     <h2>presences</h2>
-    {{ Form::open(['route' => ['presences.store',
-                                    'group' => $group->slug,
-                                    'training_id' => $training->id,
-                                ]]) }}
-    <ul>
-        @foreach($swimmers as $swimmer)
-            <li>{{ Form::checkbox('swimmers[]', $swimmer->id, $swimmer->present, ['id' => $swimmer->id]) }}
-                {{ Form::label($swimmer->id, $swimmer->first_name . ' ' . $swimmer->last_name) }}
+        {{ Form::open(['route' => ['presences.store',
+                                        'group' => $group->slug,
+                                        'training_id' => $training->id,
+                                    ]]) }}
+        <ul>
+            @foreach($swimmers as $swimmer)
+                <li>{{ Form::checkbox('swimmers[]', $swimmer->id, $swimmer->present, ['id' => $swimmer->id]) }}
+                    {{ Form::label($swimmer->id, $swimmer->first_name . ' ' . $swimmer->last_name) }}
 
-            </li>
-        @endforeach
+                </li>
+            @endforeach
 
-    </ul>
+        </ul>
     {{ Form::submit() }}
     {{ Form::close() }}
 

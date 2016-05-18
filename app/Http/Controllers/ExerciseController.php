@@ -108,9 +108,12 @@ class ExerciseController extends Controller
     {
         $training = $group->trainings()->find($training_id);
         $exercise = $training->exercises()->find($exercise_id);
-        $newPos = $request->position;
 
-        $exercise->changePositions($training, $newPos);
+        $exercise->sets = $request->sets;
+        $exercise->meters = $request->meters;
+        $exercise->description = $request->description;
+
+        $exercise->save();
 
         return redirect()->route('trainings.show', [
             'group' => $group->slug,

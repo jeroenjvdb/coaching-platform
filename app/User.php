@@ -38,4 +38,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Stopwatch');
     }
+
+    public function group()
+    {
+        return $this->belongsTo('App\Group');
+    }
 }

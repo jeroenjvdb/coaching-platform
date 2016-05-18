@@ -33,6 +33,7 @@ class HomeController extends Controller
      */
     public function index()
     {
+//        dd(Auth::user()->group);
         $data = [
             'groups' => $this->group->all(),
         ];
