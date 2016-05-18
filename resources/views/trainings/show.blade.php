@@ -46,6 +46,7 @@
         <div class="training">
             <table>
                 <thead>
+                <th></th>
                 <th>sets</th>
                 <th></th>
                 <th>meters</th>
@@ -59,8 +60,9 @@
         ]) }}">
                 @foreach($training->exercises as $exercise)
                     <tr data-id="{{ $exercise->id }}" class="exercise exercise-row-{{ $exercise->id }}" data-class="exercise" data-table="exercises">
-                        <td>{{ $exercise->sets }}</td>
-                        <td>*</td>
+                        <td class="sort-bars"><i class="fa fa-bars"></i></td>
+                        <td>{{ $exercise->sets }} </td>
+                        <td><i class="fa fa-times"></i></td>
                         <td>{{ $exercise->meters }}</td>
                         <td>{{ $exercise->description }}</td>
                         <td>{{ $exercise->total }}</td>
@@ -72,8 +74,8 @@
                                                 {{--]) }}--}}
                                 <i class="fa fa-pencil"></i>
                                 <span class="sr-only">update</span>
-                            </a>
-                            <a href="{{ route('exercises.delete', [
+                            </a></td>
+                            <td><a href="{{ route('exercises.delete', [
                                                     'group' => $group->slug,
                                                     'training_id' => $training->id,
                                                     'id' => $exercise->id
@@ -86,8 +88,7 @@
                             'group' => $group->slug,
                             'training_id' => $training->id,
                             'id' => $exercise->id]]) !!}
-                        <td>{!! Form::number('sets', $exercise->sets) !!} </td>
-                        <td>*</td>
+                        <td>{!! Form::number('sets', $exercise->sets) !!} <i class="fa fa-times"></i></td>
                         <td>{!! Form::number('meters', $exercise->meters) !!}</td>
                         <td>{!! Form::textarea('description', $exercise->description) !!}</td>
                         <td>{{ $exercise->total }}</td>

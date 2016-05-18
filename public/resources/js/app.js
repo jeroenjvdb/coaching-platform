@@ -19183,7 +19183,9 @@ $(function () {
 
         $('.pages>div').hide().first().show();
 
-        $('.sortable').sortable();
+        var sortable = $('.sortable');
+        sortable.sortable();
+        sortable.sortable('disable');
         addEventListeners();
         createTimers();
     }
@@ -19193,15 +19195,18 @@ $(function () {
         $('.upload-image').on('change', renderImage);
         $('form').on('submit', formRequest);
         $('a').on('click', links);
+        //$('.sort-bars').on('mousedown', function(e) { $('.sortable').sortable('enable'); console.log(e); })
+        $('.sort-bars').on('touchstart mousedown', function(e) { $('.sortable').sortable('enable'); console.log(e); })
         $('.sortable').on('sortupdate', sort);
     }
 
     function sort(event, ui)
     {
         var id = ui.item.data('id');
-        var tableClass = ui.item.data('class')
+        var tableClass = ui.item.data('class');
         var position = $('.' + tableClass).index(ui.item);
         var url = $('#' + ui.item.data('table')).data('url');
+        $('.sortable').sortable('disable');
 
         updatePosition(id, position, url);
     }
