@@ -30,7 +30,7 @@ $(function () {
         $('.sort-bars').on('touchstart mousedown', function(e) { $('.sortable').sortable('enable'); console.log(e); })
         $('.sortable').on('sortupdate', sort);
         $('.btn-page').on('click', showPage);
-        var page = $(document);
+        var page = $('.page');
         page.on('swipeleft', swipePageLeft);
         page.on('swiperight', swipePageRight);
     }
@@ -38,14 +38,17 @@ $(function () {
     function swipePageLeft(e)
     {
         console.log(e);
-        alert('swipe left');
+        var nextPage = $(e.currentTarget).data('next');
+        console.log(nextPage);
+        $('#' + nextPage).trigger('click');
     }
 
     function swipePageRight(e)
     {
         console.log(e);
-        alert('swipe right');
-    }
+        var nextPage = $(e.currentTarget).data('previous');
+        console.log(nextPage);
+        $('#' + nextPage).trigger('click');    }
 
     function sort(event, ui)
     {

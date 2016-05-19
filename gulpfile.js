@@ -20,6 +20,7 @@ elixir(function(mix) {
         .scripts([
             'jquery.min.js',
             'jquery-ui.js',
+            'jquery.mobile-1.4.5.min.js',
             'touch-punch.js',
             paths.bootstrap + "javascripts/bootstrap.js",
             'app.js',
