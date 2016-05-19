@@ -7927,7 +7927,7 @@ button.close {
   .hidden-print {
     display: none !important; } }
 
-img {
+img, video {
   max-width: 100%; }
 
 h3 {
