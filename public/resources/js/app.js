@@ -19196,8 +19196,8 @@ $(function () {
         $('.sort-bars').on('touchstart mousedown', function(e) { $('.sortable').sortable('enable'); console.log(e); })
         $('.sortable').on('sortupdate', sort);
         $('.btn-page').on('click', showPage);
-        var page = $(document);
-        page.on('swipeleft', swipePageLeft);
+        var page = $('body');
+        $('body').on('swipeleft', swipePageLeft);
         page.on('swiperight', swipePageRight);
     }
 
