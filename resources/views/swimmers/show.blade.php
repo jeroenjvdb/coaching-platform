@@ -3,17 +3,19 @@
 @section('title', $swimmer->name . ' profile')
 
 @section('content')
+    <button id="data" class="btn btn-page" data-page="data">data</button>
+    <button id="about" class="btn btn-page" data-page="about">about</button>
+    <button id="PR" class="btn btn-page" data-page="PR">PR's</button>
+    <button id="chrono" class="btn btn-page" data-page="chrono">chrono</button>
+    <button id="contact" class="btn btn-page" data-page="contact">contact</button>
+
     <h1>{{ $swimmer->first_name }} {{ $swimmer->last_name }}</h1>
 
     @if(! $hasHeartRate)
         @include('swimmers.show.heartRate') <br>
     @endif
 
-    <button id="data" class="btn btn-page" data-page="data">data</button>
-    <button id="about" class="btn btn-page" data-page="about">about</button>
-    <button id="PR" class="btn btn-page" data-page="PR">PR's</button>
-    <button id="chrono" class="btn btn-page" data-page="chrono">chrono</button>
-    <button id="contact" class="btn btn-page" data-page="contact">contact</button>
+
     <div class="pages">
         <div id="data" class="page" data-next="about">
             @include('swimmers.show.data')

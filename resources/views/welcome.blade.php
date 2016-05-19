@@ -6,7 +6,7 @@
         <h1>mijn groepen</h1>
         @foreach($groups as $group)
             <div class="col-md-4">
-                <a href="{{ route('groups.show', ['group' => $group->slug]) }}" class="btn btn-lg btn-primary" role="button" width="100%">
+                <a rel="external" href="{{ route('groups.show', ['group' => $group->slug]) }}" class="btn btn-lg btn-primary" role="button" width="100%">
                     {{ $group->name }}
                 </a>
             </div>

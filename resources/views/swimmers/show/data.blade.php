@@ -2,7 +2,8 @@
     {!! Form::open(['route' => ['swimmers.meta.store',
         'group' => $group->slug,
         'swimmer' => $swimmer->slug
-    ],'files' => true]) !!}
+    ],'files' => true,
+    'data-ajax' => "false"]) !!}
 @else
     {!! Form::open(['route' => ['me.reaction.store'], 'files' => true]) !!}
 @endif
@@ -30,9 +31,13 @@
         <div class="data {{ $data->type }} {{ ($data->response) ? 'response' : '' }}">
             @if($data->type == 'data' )
                 {{ $data->message }}
-                @if($data->media)
+                @if($data->media && isset($data->media->type))
                     <hr>
-                    <img src="{{ $data->media }}" alt="">
+                    @if( $data->media->type == 'img')
+                        <img src="{{ $data->media->url }}" alt="">
+                    @elseif( $data->media->type == 'vid' )
+                        <video src="{{ $data->media->url }}" controls></video>
+                    @endif
                 @endif
             @elseif($data->type == 'chrono')
                 <a href="{{ route('stopwatches.show', [
@@ -45,7 +50,8 @@
                 <div class="row stopwatch-ui">
                     @foreach($data->message->times as $time)
                         <div class="col-md-3 col-xs-6">
-                            @foreach($time->full_time->arr as $char)<div class="cell">{{ $char }}</div>@endforeach
+                            @foreach($time->full_time->arr as $char)
+                                <div class="cell">{{ $char }}</div>@endforeach
                         </div>
                     @endforeach
                 </div>

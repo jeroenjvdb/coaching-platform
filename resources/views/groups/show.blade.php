@@ -8,7 +8,7 @@
     <h2>zwemmers:</h2>
     @foreach($swimmers as $swimmer)
 
-        <a href="{{ route('swimmers.show', ['group' => $group->slug, $swimmer->slug]) }}">{{ $swimmer->first_name }} {{ $swimmer->last_name }}</a></br>
+        <a rel="external" href="{{ route('swimmers.show', ['group' => $group->slug, $swimmer->slug]) }}">{{ $swimmer->first_name }} {{ $swimmer->last_name }}</a></br>
 
     @endforeach
 @stop

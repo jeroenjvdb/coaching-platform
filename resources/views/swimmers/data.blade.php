@@ -26,7 +26,7 @@
                     <img src="{{ $data->media }}" alt="">
                 @endif
             @elseif($data->type == 'chrono')
-                <a href="{{ route('stopwatches.show', [
+                <a rel="external" href="{{ route('stopwatches.show', [
                         'group' => $group->slug,
                         'id' => $data->message->id,
                         ]) }}">

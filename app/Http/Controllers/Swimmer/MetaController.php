@@ -48,7 +48,16 @@ class MetaController extends Controller
     {
         $media = null;
         if(isset($request->media)) {
+            $type = 'img';
+            if($request->media->getMimeType() == 'video/mp4') {
+                $type = 'vid';
+            }
             $media = $this->storeImage($request->media);
+            $mediaCollect = [
+                'url' => $media,
+                'type' => $type,
+            ];
+            $media = collect($mediaCollect);
         }
 
         $collecting = [

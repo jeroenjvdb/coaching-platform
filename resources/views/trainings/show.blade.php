@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <h2>training {{ $training->starttime }} <a href="{{ route('training.download', [
+    <h2>training {{ $training->starttime }} <a rel="external" href="{{ route('training.download', [
         'group' => $group->slug,
         'training_id' => $training->id,
     ]) }}"><i class="fa fa-download"></i></a></h2>
@@ -97,7 +97,7 @@
                             </a>
                         </div>
                         <div class="col-xs-6">
-                            <a href="{{ route('exercises.delete', [
+                            <a rel="external" href="{{ route('exercises.delete', [
                                                     'group' => $group->slug,
                                                     'training_id' => $training->id,
                                                     'id' => $exercise->id
@@ -133,7 +133,11 @@
                         'exercises.update',
                         'group' => $group->slug,
                         'training_id' => $training->id,
-                        'id' => $exercise->id]]) !!}
+                        'id' => $exercise->id,
+                        ],
+                        'data-ajax' => "false",
+
+                        ]) !!}
                     <div class="col-xs-6 col-md-4">
                         <div class="row">
                             <div class="col-xs-5">
@@ -168,7 +172,9 @@
                 {!! Form::open(['route' => [
                                     'exercises.store',
                                     'group' => $group->slug,
-                                    'id' => $training->id]
+                                    'id' => $training->id
+                                ],
+                                'data-ajax' => "false",
                                 ]) !!}
                 <fieldset class="form-group col-xs-7">
                     <div class="col-xs-5">

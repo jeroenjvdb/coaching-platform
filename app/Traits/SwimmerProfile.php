@@ -53,7 +53,11 @@ trait SwimmerProfile
     {
         $media = null;
         if($data['media']) {
-            $media = $this->storeImage($data['media']);
+            $mediaCollect = [
+                'url' => $this->storeImage($data['media']),
+                'type' => 'image'
+            ];
+            $media = collect($mediaCollect);
         }
 
         $collecting = [

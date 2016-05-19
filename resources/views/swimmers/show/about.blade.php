@@ -8,7 +8,7 @@
     </div>
 </div>
 
-<canvas id="canvas" class="chart" data-url="/me/heartRate" width="800" height="400"></canvas>
+<canvas id="canvas" class="chart" data-url="/me/heartRate" height="100px"></canvas>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.2/Chart.min.js"></script>

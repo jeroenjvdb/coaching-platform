@@ -173,12 +173,12 @@ $(function () {
 
     function createTimers() {
         var elems = $(".stopwatch");
+        console.log(elems);
         var stopwatches = [];
         var sWatch;
 
         for (var i=0, len=elems.length; i<len; i++) {
             var elem = $(elems[i]);
-            console.log();
             var swOptions = {
                 stopwatch_id:   elem.data('stopwatch_id'),// ? stopwatch_id : 0,
                 user_id:        elem.data('user_id') , //||0,
@@ -197,7 +197,7 @@ $(function () {
     {
         console.log($(e.currentTarget).data('toggle'));
         var toggle = $(e.currentTarget).data('toggle');
-        if (toggle) {
+        if (toggle && toggle != 'dropdown') {
             //console.log($('.' + toggle));
             var elems = $('.' + toggle);
             $.each(elems, function(index, value) {

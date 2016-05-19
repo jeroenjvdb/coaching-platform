@@ -18,12 +18,13 @@ var paths = {
 elixir(function(mix) {
     mix.sass('style.scss', 'public/resources/css/main.css')
         .scripts([
-            'jquery.min.js',
+            'jquery.js',
             'jquery-ui.js',
             'jquery.mobile-1.4.5.min.js',
             'touch-punch.js',
             paths.bootstrap + "javascripts/bootstrap.js",
-            'app.js',
-            'Stopwatch.js'], 'public/resources/js/app.js')
+            'Stopwatch.js',
+            'app.js'
+        ], 'public/resources/js/app.js')
         .copy('resources/assets/fonts', 'public/resources/fonts');
 });

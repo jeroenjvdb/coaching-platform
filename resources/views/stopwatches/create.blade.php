@@ -2,7 +2,7 @@
 
 @section('content')
 
-    {!! Form::open(['route' => ['stopwatches.store', 'group' => $group->slug]]) !!}
+    {!! Form::open(['route' => ['stopwatches.store', 'group' => $group->slug], 'data-ajax' => "false"]) !!}
 
         {!! Form::select('swimmer', $swimmers) !!}
         <select name="distance" id="">

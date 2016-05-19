@@ -5,7 +5,7 @@
 
 @section('content')
     <h1>stopwatches</h1>
-    <a href="{{ route('stopwatches.create', [
+    <a rel="external" href="{{ route('stopwatches.create', [
         'group' => $group->slug,
     ]) }}">create</a>
     <h2>base 3</h2>
