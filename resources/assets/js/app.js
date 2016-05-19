@@ -10,10 +10,7 @@ $(function () {
             headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') }
         });
 
-        $('.page').each(function(item) {
-            //console.log($(this));
-            $(this).on('click', showPage);
-        });
+
 
         $('.pages>div').hide().first().show();
 
@@ -32,6 +29,22 @@ $(function () {
         //$('.sort-bars').on('mousedown', function(e) { $('.sortable').sortable('enable'); console.log(e); })
         $('.sort-bars').on('touchstart mousedown', function(e) { $('.sortable').sortable('enable'); console.log(e); })
         $('.sortable').on('sortupdate', sort);
+        $('.btn-page').on('click', showPage);
+        var page = $(document);
+        page.on('swipeleft', swipePageLeft);
+        page.on('swiperight', swipePageRight);
+    }
+
+    function swipePageLeft(e)
+    {
+        console.log(e);
+        alert('swipe left');
+    }
+
+    function swipePageRight(e)
+    {
+        console.log(e);
+        alert('swipe right');
     }
 
     function sort(event, ui)

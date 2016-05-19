@@ -8144,4 +8144,17 @@ table {
   cursor: inherit;
   display: block; }
 
+.training .exercise, .training .exercise-ui {
+  font-size: 1.2em;
+  background-color: #AAAAAA;
+  padding: 10px 0; }
+
+.training table {
+  width: 100%; }
+  .training table tr {
+    border-spacing: 20px; }
+
+.training tbody div:last-child {
+  border-bottom: none; }
+
 /*# sourceMappingURL=main.css.map */
