@@ -13,7 +13,7 @@
                     <div class="col-xs-10">
                         <div class="row phone contact-form" data-is_form="false">
                             <div class="col-xs-10 contact-data" data-contact="swimmer.phone">
-                                {{ $contact['phone'] }}
+                                <a href="tel://{{ $contact['phone'] }}">{{ $contact['phone'] }}</a>
                             </div>
                             <div class="col-xs-1">
                                 <a href="#" data-toggle="phone"><i class="fa fa-pencil"></i></a>
