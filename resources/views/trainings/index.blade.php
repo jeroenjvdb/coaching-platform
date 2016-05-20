@@ -1,6 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
+    {!! Breadcrumbs::render('trainings.index', $group) !!}
     <h1>trainingen</h1>
     <a rel="external" href="{{ route('trainings.create', [
         'group' => $group->slug,

@@ -163,7 +163,8 @@ return [
         'Maatwebsite\Excel\ExcelServiceProvider',
         Barryvdh\Debugbar\ServiceProvider::class,
         'Laracasts\Utilities\JavaScript\JavaScriptServiceProvider',
-        'Phoenix\EloquentMeta\ServiceProvider'
+        'Phoenix\EloquentMeta\ServiceProvider',
+        DaveJamesMiller\Breadcrumbs\ServiceProvider::class,
 
 
 
@@ -221,7 +222,7 @@ return [
         'Html' => Collective\Html\HtmlFacade::class,
         'Excel' => 'Maatwebsite\Excel\Facades\Excel',
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
-
+        'Breadcrumbs' => DaveJamesMiller\Breadcrumbs\Facade::class,
     ],
 
 ];

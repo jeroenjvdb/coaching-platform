@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
-
+    {!! Breadcrumbs::render('trainings.show', $group, $training) !!}
     <h2>training {{ $training->starttime }} <a rel="external" href="{{ route('training.download', [
         'group' => $group->slug,
         'training_id' => $training->id,

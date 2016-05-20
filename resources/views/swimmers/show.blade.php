@@ -3,6 +3,7 @@
 @section('title', $swimmer->name . ' profile')
 
 @section('content')
+    {!! Breadcrumbs::render('swimmer', $group, $swimmer) !!}
     <button id="data" class="btn btn-page" data-page="data">data</button>
     <button id="about" class="btn btn-page" data-page="about">about</button>
     <button id="PR" class="btn btn-page" data-page="PR">PR's</button>

@@ -4,6 +4,7 @@
 @stop
 
 @section('content')
+    {!! Breadcrumbs::render('stopwatch.index', $group) !!}
     <h1>stopwatches</h1>
     <a rel="external" href="{{ route('stopwatches.create', [
         'group' => $group->slug,

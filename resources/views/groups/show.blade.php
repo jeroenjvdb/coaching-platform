@@ -3,6 +3,7 @@
 @section('title', 'show all groups')
 
 @section('content')
+    {!! Breadcrumbs::render('group', $group) !!}
     <h1>{{ $group->name }}</h1>
     <a href="{{ route('groups.edit', [$group->slug]) }}">edit</a>
     <h2>zwemmers:</h2>
