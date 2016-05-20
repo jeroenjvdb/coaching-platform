@@ -8079,4 +8079,8 @@ table {
 .training tbody div:last-child {
   border-bottom: none; }
 
+.contact {
+  border-bottom: 1px solid black;
+  padding: 5px 0; }
+
 /*# sourceMappingURL=main.css.map */

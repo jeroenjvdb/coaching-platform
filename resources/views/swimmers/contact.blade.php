@@ -1,9 +1,9 @@
 <h2>contact <small><a href="#" data-toggle="contact-form"><i class="fa fa-pencil"></i></a></small></h2>
 <div class="row swimmer">
-    <div class="col-md-2 col-xs-4">
+    <div class="col-md-2 col-xs-3">
         <img src="{{ $contact['picture'] }}" alt="">
     </div>
-    <div class="col-md-10 col-xs-8 contact-form" data-is_form="false">
+    <div class="col-md-10 col-xs-12 contact-form" data-is_form="false">
         <div class="row">
             <div class="col-md-6 col-xs-12">
                 <div class="row">

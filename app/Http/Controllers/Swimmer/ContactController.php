@@ -32,6 +32,7 @@ class ContactController extends Controller
      */
     public function update(Request $request, Group $group, Swimmer $swimmer)
     {
+
         $store = [
             'address' => [
                 'street' => $request->street,
@@ -43,12 +44,17 @@ class ContactController extends Controller
             'email' => [
                 $request->emailMother,
                 $request->emailFather,
-            ]
+            ],
+            'sEmail' => $request->sEmail,
         ];
 
-        $swimmer->storeContact($store);
+//        dd($store);
 
-        $swimmer->email = $request->email;
+
+        $swimmer->storeContact($store);
+        if($request->email) {
+            $swimmer->email = $request->email;
+        }
         $swimmer->save();
 
 

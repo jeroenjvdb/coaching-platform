@@ -100,9 +100,12 @@ trait SwimmerProfile
     public function storeContact($data)
     {
         $address = collect($data['address']);
-        $this->updateMeta('address', $address);
-        $this->updateMeta('phone', $data['phone']);
-        $this->updateMeta('email', []);
+        if($data['address']['street']) {
+            $this->updateMeta('address', $address);
+        }
+        if($data['phone']) {
+            $this->updateMeta('phone', $data['phone']);
+        }
         foreach($data['email'] as $email) {
             $this->appendMeta('email', $email);
         }

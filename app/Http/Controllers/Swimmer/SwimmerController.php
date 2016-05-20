@@ -107,6 +107,7 @@ class SwimmerController extends Controller
         }
 
         $data = $swimmer->get();
+//        dd($data);
 
         $data['group'] = $group;
         $data['myProfile'] = false;

@@ -78,7 +78,7 @@
                         <div class="row">
                             <div class="col-xs-3">{{ $exercise->sets }}</div>
                             <div class="col-xs-1"><i class="fa fa-times"></i></div>
-                            <div class="col-xs-7">{{ $exercise->meters }}</div>
+                            <div class="col-xs-6">{{ $exercise->meters }}</div>
                         </div>
                     </div>
                     <div class="col-xs-5">
@@ -167,7 +167,7 @@
                     {!! Form::close() !!}
                 </div>
             @endforeach
-            <div class="add-exercise exercise-ui" hidden data-is_form="true">
+            <div class="add-exercise " hidden data-is_form="true">
                 <h2>add exercise</h2>
                 {!! Form::open(['route' => [
                                     'exercises.store',

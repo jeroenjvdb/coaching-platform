@@ -28689,7 +28689,7 @@ $(function () {
 
     function formResponse(data)
     {
-        //console.log(data);
+        console.log(data);
         switch(data.form){
             case "contact":
                 updateContact(data);
