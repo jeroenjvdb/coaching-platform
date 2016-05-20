@@ -28711,7 +28711,8 @@ $(function () {
                     elem.text(data.data.swimmer.email);
                     break;
                 case 'swimmer.phone':
-                    elem.text(data.data.contact.phone);
+                    elem.html('<a href="tel://' + data.data.contact.phone + '">' +
+                        data.data.contact.phone + '</a>');
                     break;
                 case 'address':
                     elem.html(data.data.contact.address.toString);
