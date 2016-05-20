@@ -5,8 +5,9 @@
 
     .cell {
       display: inline-block;
-      width: 8px;
+      width: 6px;
       top: 3px;
+      margin: 0;
     }
 
   }
@@ -14,11 +15,11 @@
 
 #splits, .stopwatch-ui {
   font-family: digital-7;
-  font-size: $font-large;
+  font-size: $fs-4;
 
   .cell {
     display: inline-block;
-    width: 8px;
+    width: 6px;
     margin: 0;
   }
 }

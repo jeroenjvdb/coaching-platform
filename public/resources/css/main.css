@@ -8006,15 +8006,16 @@ h3 {
   font-size: 30px; }
   .stopwatch span .cell {
     display: inline-block;
-    width: 8px;
-    top: 3px; }
+    width: 6px;
+    top: 3px;
+    margin: 0; }
 
 #splits, .stopwatch-ui {
   font-family: digital-7;
-  font-size: 30px; }
+  font-size: 1.8rem; }
   #splits .cell, .stopwatch-ui .cell {
     display: inline-block;
-    width: 8px;
+    width: 6px;
     margin: 0; }
 
 table {
