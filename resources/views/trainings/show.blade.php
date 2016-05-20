@@ -9,62 +9,7 @@
 
     <a href="#" data-toggle="add-exercise"><i class="fa fa-plus"></i><span class="sr-only">Add new exercise</span></a>
 
-    {{--</div>--}}
     <div class="training">
-        {{--<table>--}}
-        {{--<thead>--}}
-        {{--<th></th>--}}
-        {{--<th>sets</th>--}}
-        {{--<th></th>--}}
-        {{--<th>meters</th>--}}
-        {{--<th>description</th>--}}
-        {{--<th>distance</th>--}}
-        {{--<th></th>--}}
-        {{--</thead>--}}
-        {{--<tbody class="sortable" id="exercises" data-url="{{ route('exercises.update.position', [--}}
-        {{--'group' => $group->slug,--}}
-        {{--'training_id' => $training->id,--}}
-        {{--]) }}">--}}
-        {{--@foreach($training->exercises as $exercise)
-            <tr data-id="{{ $exercise->id }}" class="exercise exercise-row-{{ $exercise->id }}"
-                data-class="exercise" data-table="exercises">
-                <td class="sort-bars"><i class="fa fa-bars"></i></td>
-                <td>{{ $exercise->sets }} </td>
-                <td><i class="fa fa-times"></i></td>
-                <td>{{ $exercise->meters }}</td>
-                <td>{{ $exercise->description }}</td>
-                <td>{{ $exercise->total }}</td>
-                <td><a href="#" data-toggle="exercise-row-{{ $exercise->id }}">
-                        {{--{{ route('exercises.edit', [--}}
-        {{--'group' => $group->slug,--}}
-        {{--'training_id' => $training->id,--}}
-        {{--'id' => $exercise->id--}}
-        {{--]) }}--}}
-        {{--<i class="fa fa-pencil"></i>
-        <span class="sr-only">update</span>
-    </a></td>
-<td><a href="{{ route('exercises.delete', [
-                                'group' => $group->slug,
-                                'training_id' => $training->id,
-                                'id' => $exercise->id
-                            ]) }}"><i class="fa fa-times"></i><span
-                class="sr-only">delete</span></a>
-</td>
-</tr>
-<tr class="exercise-ui exercise-row-{{ $exercise->id }}" data-is_form="true" hidden>
-{!! Form::open(['route' => [
-    'exercises.update',
-    'group' => $group->slug,
-    'training_id' => $training->id,
-    'id' => $exercise->id]]) !!}
-<td>{!! Form::number('sets', $exercise->sets) !!} <i class="fa fa-times"></i></td>
-<td>{!! Form::number('meters', $exercise->meters) !!}</td>
-<td>{!! Form::textarea('description', $exercise->description) !!}</td>
-<td>{{ $exercise->total }}</td>
-<td>{!! Form::submit() !!}</td>
-{!! Form::close() !!}
-</tr>
-@endforeach--}}
         <div id="exercises" class="sortable" data-url="{{ route('exercises.update.position', [
             'group' => $group->slug,
             'training_id' => $training->id,
@@ -85,48 +30,23 @@
                         {{ $exercise->description }}
                     </div>
                     <div class="col-xs-2">
-                        <div class="col-xs-6">
-                            <a href="#" data-toggle="exercise-row-{{ $exercise->id }}">
-                                {{--{{ route('exercises.edit', [--}}
-                                {{--'group' => $group->slug,--}}
-                                {{--'training_id' => $training->id,--}}
-                                {{--'id' => $exercise->id--}}
-                                {{--]) }}--}}
-                                <i class="fa fa-pencil"></i>
-                                <span class="sr-only">update</span>
-                            </a>
-                        </div>
-                        <div class="col-xs-6">
-                            <a rel="external" href="{{ route('exercises.delete', [
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <a href="#" data-toggle="exercise-row-{{ $exercise->id }}">
+                                    <i class="fa fa-pencil"></i>
+                                    <span class="sr-only">update</span>
+                                </a>
+                            </div>
+                            <div class="col-xs-6">
+                                <a rel="external" href="{{ route('exercises.delete', [
                                                     'group' => $group->slug,
                                                     'training_id' => $training->id,
                                                     'id' => $exercise->id
                                                 ]) }}"><i class="fa fa-times"></i><span
-                                        class="sr-only">delete</span></a>
+                                            class="sr-only">delete</span></a>
+                            </div>
                         </div>
                     </div>
-
-                    {{--                    <td>{{ $exercise->sets }} </td>--}}
-                    {{--<td><i class="fa fa-times"></i></td>--}}
-                    {{--                    <td>{{ $exercise->meters }}</td>--}}
-                    {{--                    <td>{{ $exercise->description }}</td>--}}
-                    {{--<td>{{ $exercise->total }}</td>--}}
-                    {{--<td><a href="#" data-toggle="exercise-row-{{ $exercise->id }}">--}}
-                    {{--{{ route('exercises.edit', [--}}
-                    {{--'group' => $group->slug,--}}
-                    {{--'training_id' => $training->id,--}}
-                    {{--'id' => $exercise->id--}}
-                    {{--]) }}--}}
-                    {{--<i class="fa fa-pencil"></i>--}}
-                    {{--<span class="sr-only">update</span>--}}
-                    {{--</a></td>--}}
-                    {{--<td><a href="{{ route('exercises.delete', [--}}
-                    {{--'group' => $group->slug,--}}
-                    {{--'training_id' => $training->id,--}}
-                    {{--'id' => $exercise->id--}}
-                    {{--]) }}"><i class="fa fa-times"></i><span--}}
-                    {{--class="sr-only">delete</span></a>--}}
-                    {{--</td>--}}
                 </div>
                 <div class="exercise-ui exercise-row-{{ $exercise->id }} row" data-is_form="true" hidden>
                     {!! Form::open(['route' => [
@@ -144,9 +64,10 @@
                                 {!! Form::number('sets', $exercise->sets, [
                                     'class' => 'form-control number'
                                 ]) !!}
-                            </div>
-                            <div class="col-xs-2"><i class="fa fa-times"></i></div>
-                            <div class="col-xs-5">
+                            </div><!--
+                            --><div class="col-xs-1 no-gutter"><i class="fa fa-times"></i>
+                            </div><!--
+                            --><div class="col-xs-6">
                                 {!! Form::number('meters', $exercise->meters, [
                                     'class' => 'form-control number',
                                 ] ) !!}
@@ -219,16 +140,7 @@
                 {!! Form::close() !!}
             </div>
         </div>
-        {{--</tbody>--}}
-        {{--<tfoot>--}}
-        {{--<tr>--}}
-        {{--<td colspan="3">total:</td>--}}
-        {{--<td>{{ $training->total ? $training->total : 0 }}</td>--}}
-        {{--</tr>--}}
-        {{--</tfoot>--}}
-        {{--</table>--}}
     </div>
-    {{--<div class="container">--}}
     <div class="row">
         <div class="col-xs-12">
             <h2>presences</h2>
