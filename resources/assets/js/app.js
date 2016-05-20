@@ -37,17 +37,17 @@ $(function () {
 
     function swipePageLeft(e)
     {
-        console.log(e);
+        //console.log(e);
         var nextPage = $(e.currentTarget).data('next');
-        console.log(nextPage);
+        //console.log(nextPage);
         $('#' + nextPage).trigger('click');
     }
 
     function swipePageRight(e)
     {
-        console.log(e);
+        //console.log(e);
         var nextPage = $(e.currentTarget).data('previous');
-        console.log(nextPage);
+        //console.log(nextPage);
         $('#' + nextPage).trigger('click');    }
 
     function sort(event, ui)
@@ -165,8 +165,11 @@ $(function () {
 
     function showPage(page)
     {
+        $('.btn-page').removeClass('active');
         pageName = $(page.target).data('page');
-        //console.log(pageName);
+        //page.addClass('active');
+        $(page.target).addClass('active');
+        console.log(page.target);
         $('.pages>div').hide();
         $('.pages>div#' + pageName).show();
     }

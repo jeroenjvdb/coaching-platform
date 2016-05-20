@@ -7999,7 +7999,7 @@ h3 {
   font-size: 30px; }
   .stopwatch span .cell {
     display: inline-block;
-    width: 13px;
+    width: 8px;
     top: 3px; }
 
 #splits, .stopwatch-ui {
@@ -8007,11 +8007,25 @@ h3 {
   font-size: 30px; }
   #splits .cell, .stopwatch-ui .cell {
     display: inline-block;
-    width: 13px;
+    width: 8px;
     margin: 0; }
 
 table {
   width: 100%; }
+
+.btn-page {
+  margin: 0;
+  width: 20%;
+  border-right: 1px solid black;
+  padding: 10px; }
+  .btn-page.last {
+    border-right: none; }
+
+.btn-pages {
+  position: relative;
+  top: -20px;
+  left: -15px;
+  width: calc(100% + 30px); }
 
 .data {
   width: 80%;

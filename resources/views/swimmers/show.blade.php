@@ -3,12 +3,15 @@
 @section('title', $swimmer->name . ' profile')
 
 @section('content')
+    <div class="btn-pages">
+    <button id="data" class="btn btn-page active" data-page="data">data</button><!--
+    --><button id="about" class="btn btn-page" data-page="about">about</button><!--
+    --><button id="PR" class="btn btn-page" data-page="PR">PR's</button><!--
+    --><button id="chrono" class="btn btn-page" data-page="chrono">chrono</button><!--
+    --><button id="contact" class="btn btn-page last" data-page="contact">contact</button>
+    </div>
+
     {!! Breadcrumbs::render('swimmer', $group, $swimmer) !!}
-    <button id="data" class="btn btn-page" data-page="data">data</button>
-    <button id="about" class="btn btn-page" data-page="about">about</button>
-    <button id="PR" class="btn btn-page" data-page="PR">PR's</button>
-    <button id="chrono" class="btn btn-page" data-page="chrono">chrono</button>
-    <button id="contact" class="btn btn-page" data-page="contact">contact</button>
 
     <h1>{{ $swimmer->first_name }} {{ $swimmer->last_name }}</h1>
 
