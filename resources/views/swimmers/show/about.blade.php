@@ -7,8 +7,8 @@
         {{ $swimmer->presence * 100 }}%
     </div>
 </div>
-
-<canvas id="canvas" class="chart" data-url="/me/heartRate" height="100px"></canvas>
+<h3>ochtendpolsen</h3>
+<canvas id="canvas" class="chart" data-url="/me/heartRate"></canvas>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.2/Chart.min.js"></script>
@@ -87,17 +87,17 @@
                 datasets: [{
                     label: "pols ",
                     data: heartRates,
-                    fill: true
+                    fill: false,
                 }]
             },
             options: {
                 responsive: true,
                 title:{
-                    display:true,
-                    fontSize: 24,
-                    fontStyle: 'normal',
-                    fontColor: 'black',
-                    text:"ochtendpolsen"
+                    display:false,
+//                    fontSize: 24,
+//                    fontStyle: 'normal',
+//                    fontColor: 'black',
+//                    text:"ochtendpolsen"
                 },
                 scales: {
                     yAxes: [{
@@ -124,7 +124,7 @@
                             tooltipFormat: 'DD MMM'
                         },
                         scaleLabel: {
-                            display: true,
+                            display: false,
                             labelString: 'Datum'
                         }
                     }, ]

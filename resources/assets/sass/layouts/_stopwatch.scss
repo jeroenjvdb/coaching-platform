@@ -5,7 +5,7 @@
 
     .cell {
       display: inline-block;
-      width: 6px;
+      width: 13px;
       top: 3px;
       margin: 0;
     }
@@ -19,7 +19,14 @@
 
   .cell {
     display: inline-block;
-    width: 6px;
+    width: 12px;
     margin: 0;
+  }
+}
+
+//data
+.data .stopwatch-ui {
+  .cell {
+    width: 6px;
   }
 }

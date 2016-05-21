@@ -373,6 +373,23 @@ trait SwimmerProfile
             $toString = $address->street . ' ' . $address->number . ',<br>' .
                 $address->zipcode . ' ' . $address->city;
             $address->toString = $toString;
+        } else {
+            /*$address = collect([
+                'street' => "",
+                'number' => "",
+                'city' => "",
+                'zipcode' => "",
+                'toString' => "",
+            ]);*/
+            $address = collect([]);
+            $address->street = null;//htmlentities($address->street);
+            $address->number = null;//htmlentities($address->number);
+            $address->city = null;//htmlentities($address->city);
+            $address->zipcode = null;//htmlentities($address->zipcode);
+
+//            $toString = $address->street . ' ' . $address->number . ',<br>' .
+//                $address->zipcode . ' ' . $address->city;
+            $address->toString = null;//$toString;
         }
 
         return [

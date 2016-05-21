@@ -20,3 +20,12 @@ table {
   //margin-bottom: 20px;
   width: calc(100% + 30px);
 }
+
+@media(max-width: 768px) {
+  .chart {
+    height: 400px;
+  }
+}
+//.chart {
+  //min-height: 400px;
+//}

@@ -159,10 +159,10 @@
                 <div class="row">
                     <div class="col-xs-4"><strong>adres:</strong></div>
                     <div class="col-xs-8">
-                        {!! Form::text('street', $contact['address']->street) !!}
-                        {!! Form::text('number', $contact['address']->number) !!} <br>
-                        {!! Form::text('zipcode', $contact['address']->zipcode) !!}
-                        {!! Form::text('city', $contact['address']->city) !!}
+{{--                        {!! Form::text('street', $contact['address']->street) !!}--}}
+{{--                        {!! Form::text('number', $contact['address']->number) !!} <br>--}}
+{{--                        {!! Form::text('zipcode', $contact['address']->zipcode) !!}--}}
+{{--                        {!! Form::text('city', $contact['address']->city) !!}--}}
                         {{--{{ $contact['address']->street }} {{ $contact['address']->number }}, <br>--}}
                         {{--{{ $contact['address']->zipcode }} {{ $contact['address']->city }}--}}
                     </div>

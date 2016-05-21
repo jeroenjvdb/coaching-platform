@@ -8006,7 +8006,7 @@ h3 {
   font-size: 30px; }
   .stopwatch span .cell {
     display: inline-block;
-    width: 6px;
+    width: 13px;
     top: 3px;
     margin: 0; }
 
@@ -8015,8 +8015,11 @@ h3 {
   font-size: 2.4rem; }
   #splits .cell, .stopwatch-ui .cell {
     display: inline-block;
-    width: 6px;
+    width: 12px;
     margin: 0; }
+
+.data .stopwatch-ui .cell {
+  width: 6px; }
 
 table {
   width: 100%; }
@@ -8034,6 +8037,10 @@ table {
   top: -20px;
   left: -15px;
   width: calc(100% + 30px); }
+
+@media (max-width: 768px) {
+  .chart {
+    height: 400px; } }
 
 .data {
   width: 80%;
