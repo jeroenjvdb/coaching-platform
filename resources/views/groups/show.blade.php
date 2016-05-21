@@ -9,7 +9,7 @@
     <h2>zwemmers:</h2>
     <div class="row">
         @foreach($swimmers as $swimmer)
-            <div class="col-md-6 col-xs-12">
+            <div class="col-md-4 col-sm-6 col-xs-12">
                 <a rel="external" href="{{ route('swimmers.show', ['group' => $group->slug, $swimmer->slug]) }}">
                     <span class="thumbnail col-xs-4">
 {{--                        @if(isset($swimmer->getMeta('picture')))--}}
