@@ -50,15 +50,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 
 Route::group(['middleware' => 'web'], function () {
-    Route::get('test', function () {
-        $strokes = App\Stroke::with('distances')->get();
-
-        $data = [
-            'strokes' => $strokes,
-        ];
-
-        return view('test', $data);
-    });
+    Route::get('test', 'HomeController@test');
     Route::auth();
 
     Route::get('password/email', 'Auth\PasswordController@getEmail');
@@ -103,6 +95,7 @@ Route::group(['middleware' => 'web'], function () {
                     Route::get('/', ['as' => 'swimmers.index', 'uses' => 'SwimmerController@index']);
                     Route::get('/create', ['as' => 'swimmers.create', 'uses' => 'SwimmerController@create']);
                     Route::post('/', ['as' => 'swimmers.store', 'uses' => 'SwimmerController@store']);
+                    Route::get('/download', ['as' => 'swimmers.download.pr', 'uses' => 'SwimmerController@download']);
                     Route::group(['prefix' => '{swimmer}'], function () {
                         Route::get('/', ['as' => 'swimmers.show', 'uses' => 'SwimmerController@show']);
                         Route::get('edit', ['as' => 'swimmers.edit', 'uses' => 'SwimmerController@edit']);
@@ -115,7 +108,7 @@ Route::group(['middleware' => 'web'], function () {
                     });
                 });
 
-                Route::group(['prefix' => 'training'], function () {
+                Route::group(['prefix' => 'training', 'namespace' => 'Training'], function () {
                     Route::get('/', ['as' => 'trainings.index', 'uses' => 'TrainingController@index']);
                     Route::get('/create', ['as' => 'trainings.create', 'uses' => 'TrainingController@create']);
                     Route::post('/', ['as' => 'trainings.store', 'uses' => 'TrainingController@store']);
@@ -143,6 +136,11 @@ Route::group(['middleware' => 'web'], function () {
                             'uses' => 'ExerciseController@updatePosition',
                         ]);
 
+                        Route::post('exercise/position/category', [
+                            'as' => 'exercises.update.cat.position',
+                            'uses' => 'ExerciseController@updateCatPosition',
+                        ]);
+
                         Route::get('exercise/{id}', [
                             'as' => 'exercises.edit',
                             'uses' => 'ExerciseController@edit',
@@ -156,6 +154,11 @@ Route::group(['middleware' => 'web'], function () {
                         Route::get('exercise/{id}/delete', [
                             'as' => 'exercises.delete',
                             'uses' => 'ExerciseController@destroy',
+                        ]);
+
+                        Route::post('category', [
+                            'as' => 'category.exercise.store',
+                            'uses' => 'ExerciseController@addCategory',
                         ]);
                     });
 

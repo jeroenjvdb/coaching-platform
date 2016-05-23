@@ -25,6 +25,7 @@ class Exercise extends Model
         'meters',
         'description',
         'position',
+        'category_exercise_id',
     ];
 
     /**
@@ -105,6 +106,7 @@ class Exercise extends Model
     public function changePositions( Training $training, $newPos)
     {
         $oldPos = $this->position;
+        $category_id = $this->category_exercise_id;
 
         $exercise = $this;
         $directionWhere = '<=';
@@ -120,11 +122,13 @@ class Exercise extends Model
                 $directionPos = 1;
             }
 
-            $allExercises = $training->exercises()
+            $allExercises = $training->categoryExercises()->find($category_id)->exercises()
                 ->where('position', $directionWhere, $newPos)
                 ->where('position', $otherDirection, $oldPos)
                 ->orderBy('position', $directionOrderBy)
                 ->get();
+
+            Log::info('', [$allExercises]);
 
             $counter = $allExercises->first()->position;
             $exercise->position = $counter;
@@ -142,5 +146,10 @@ class Exercise extends Model
         }
 
         return true;
+    }
+
+    public function categories()
+    {
+        return $this->belongsToMany('App\Category', 'App\ExerciseCategory');
     }
 }

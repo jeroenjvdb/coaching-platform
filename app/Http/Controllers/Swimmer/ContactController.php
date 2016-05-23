@@ -67,4 +67,33 @@ class ContactController extends Controller
             ]
         ]);
     }
+
+    public function updatePicture(Request $request, Group $group, Swimmer $swimmer)
+    {
+        $image = $request->profilePicture;
+        $swimmer->updateMeta('picture', $this->storeImage($image, $group, $swimmer));
+
+        return redirect()->back();
+    }
+
+    /**
+     * store meta image
+     *
+     * @param $img
+     * @param Group $group
+     * @param Swimmer $swimmer
+     * @return string
+     */
+    protected function storeImage($img, Group $group, Swimmer $swimmer)
+    {
+        $destinationPath   = "uploads/profilePics/" . $group-> slug . '/';
+        $extension         = $img->getClientOriginalExtension();
+        $filename = $swimmer->slug;
+        $filename .= "." . $extension;
+        //fullpath = path to picture + filename + extension
+        $fullPath          = $destinationPath . $filename;
+        $img->move($destinationPath , $filename);
+
+        return '/' . $fullPath;
+    }
 }

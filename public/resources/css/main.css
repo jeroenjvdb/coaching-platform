@@ -8026,7 +8026,7 @@ table {
 
 .btn-page {
   margin: 0;
-  width: 20%;
+  width: 25%;
   border-right: 1px solid black;
   padding: 10px; }
   .btn-page.last {
@@ -8085,6 +8085,9 @@ table {
   font-size: 1.2em;
   background-color: #AAAAAA;
   padding: 10px 0; }
+
+.training .category {
+  background-color: #999; }
 
 .training table {
   width: 100%; }

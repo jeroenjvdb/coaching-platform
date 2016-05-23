@@ -2,7 +2,7 @@
 
 @section('content')
 
-    {!! Form::open(['route' => ['trainings.store', 'group' => $group->slug]]) !!}
+    {!! Form::open(['route' => ['trainings.store', 'group' => $group->slug], 'data-ajax' => 'false']) !!}
     <fieldset class="form-group">
         {!! Form::label('starttime') !!}
         {!! Form::input('datetime-local', 'starttime', null, [

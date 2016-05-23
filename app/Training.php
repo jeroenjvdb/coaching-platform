@@ -80,6 +80,11 @@ class Training extends Model
         return $this->belongsToMany('App\Swimmer', 'presences');
     }
 
+    public function categoryExercises()
+    {
+        return $this->hasMany('App\CategoryExercise', 'training_id', 'id');
+    }
+
     /**
      * the total number of meters
      *

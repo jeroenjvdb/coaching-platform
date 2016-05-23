@@ -6,6 +6,7 @@ use App\Swimmer;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 trait SwimmerProfile
 {
@@ -97,6 +98,12 @@ trait SwimmerProfile
         return true;
     }
 
+    /**
+     * save contact data
+     *
+     * @param $data
+     * @return bool
+     */
     public function storeContact($data)
     {
         $address = collect($data['address']);
@@ -174,6 +181,11 @@ trait SwimmerProfile
         return $heartRate->sortBy('date');
     }
 
+    /**
+     * get all the stopwatches
+     *
+     * @return mixed
+     */
     private function getStopwatches()
     {
         $stopwatches = $this->stopwatches()
@@ -203,7 +215,6 @@ trait SwimmerProfile
     /**
      * get personal bests from swimrankings
      *
-     * @param $athleteId
      * @return mixed
      */
     public function getPersonalBest()
@@ -229,11 +240,35 @@ trait SwimmerProfile
             $body = $this->mobileHidden($body);
             $body = $this->removeWidth($body);
 
-            $expiresAt = Carbon::now()->addDays(7);
+            $expiresAt = Carbon::now()->addDays(31);
 
-            Cache::put('PB.' . $this->id, $body, $expiresAt);
+            Cache::forever('PB.' . $this->id, $body, $expiresAt);
 
             return $body;
+        } catch (\Exception $e) {
+            Log::info('couldn\'t connect to url', [ $e ] );
+
+            return "not found";
+        }
+    }
+
+    public function seedPDF()
+    {
+        $athleteId = $this->swimrankings_id;
+        $group = $this->group->slug;
+
+        $filename = $group . '/bestTimes/' . $this->slug . '.pdf';
+
+        $url = config('swimrankings.url') . config('swimrankings.pdf') . $athleteId;
+        $parameters = [];
+        try {
+//            $res = getCall($url, $parameters);
+
+            $file = file_get_contents($url);
+            Storage::put($filename, $file);
+
+            return true;
+//            return $body;
         } catch (\Exception $e) {
             Log::info('couldn\'t connect to url', [ $e ] );
 

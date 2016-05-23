@@ -165,7 +165,7 @@ return [
         'Laracasts\Utilities\JavaScript\JavaScriptServiceProvider',
         'Phoenix\EloquentMeta\ServiceProvider',
         DaveJamesMiller\Breadcrumbs\ServiceProvider::class,
-
+        'GrahamCampbell\Flysystem\FlysystemServiceProvider'
 
 
     ],
@@ -223,6 +223,8 @@ return [
         'Excel' => 'Maatwebsite\Excel\Facades\Excel',
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Breadcrumbs' => DaveJamesMiller\Breadcrumbs\Facade::class,
+        'Flysystem' => 'GrahamCampbell\Flysystem\Facades\Flysystem'
+
     ],
 
 ];

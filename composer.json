@@ -14,7 +14,10 @@
         "barryvdh/laravel-debugbar": "^2.2",
         "laracasts/utilities": "~2.0",
         "phoenix/eloquent-meta": "1.4.*",
-        "davejamesmiller/laravel-breadcrumbs": "^3.0"
+        "davejamesmiller/laravel-breadcrumbs": "^3.0",
+        "league/flysystem": "^1.0",
+        "graham-campbell/flysystem": "^3.4",
+        "league/flysystem-ziparchive": "^1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

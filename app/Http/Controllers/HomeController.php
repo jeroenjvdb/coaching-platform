@@ -41,5 +41,15 @@ class HomeController extends Controller
         return view('welcome', $data);
     }
 
+    public function test()
+    {
+        $training = \App\Training::find(1);
 
+        $categories = $training->categoryExercises;
+        $data = [
+            'categories' => $categories,
+        ];
+
+        return view('test', $data);
+    }
 }

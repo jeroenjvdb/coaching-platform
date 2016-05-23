@@ -18,6 +18,7 @@ class CreateExerciseTable extends Migration
             $table->increments('id');
 
             $table->integer('training_id')->unsigned();
+            $table->integer('category_exercise_id')->unsigned();
 
             $table->integer('sets');
             $table->integer('meters');

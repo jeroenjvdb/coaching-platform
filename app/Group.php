@@ -59,7 +59,6 @@ class Group extends Model
 
     /**
      *
-     *
      * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
      */
     public function exercises()

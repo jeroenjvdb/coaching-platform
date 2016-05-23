@@ -41,6 +41,7 @@ class getPersonalBests extends Command
 
         foreach($swimmers as $swimmer) {
             $swimmer->getPersonalBest();
+            $swimmer->seedPDF();
             $this->comment('swimmer added: ' . $swimmer->id);
         }
     }

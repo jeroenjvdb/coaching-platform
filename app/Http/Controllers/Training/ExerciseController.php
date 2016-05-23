@@ -1,7 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Training;
 
+use App\Category;
+use App\CategoryExercise;
 use App\Exercise;
 use App\Group;
 use App\Http\Requests\ExerciseRequest;
@@ -22,16 +24,22 @@ class ExerciseController extends Controller
      * @var Exercise
      */
     private $exercise;
+    /**
+     * @var CategoryExercise
+     */
+    private $categoryExercise;
 
     /**
      * ExerciseController constructor.
+     *
      * @param Training $training
      * @param Exercise $exercise
      */
-    public function __construct(Training $training, Exercise $exercise)
+    public function __construct(Training $training, Exercise $exercise, CategoryExercise $categoryExercise)
     {
         $this->training = $training;
         $this->exercise = $exercise;
+        $this->categoryExercise = $categoryExercise;
     }
 
     /**
@@ -47,7 +55,10 @@ class ExerciseController extends Controller
         $training = $group
             ->trainings()
             ->find($training_id);
-        $lastExercise = $training
+        $category = $training
+            ->categoryExercises()
+            ->find($request->cat_id);
+        $lastExercise = $category
             ->exercises()
             ->lastExercise();
 
@@ -61,6 +72,7 @@ class ExerciseController extends Controller
             'meters' => $request->meters,
             'description' => $request->description,
             'position' => $position,
+            'category_exercise_id' => $category->id
         ]);
 
         $training->exercises()->save($exercise);
@@ -144,6 +156,29 @@ class ExerciseController extends Controller
     }
 
     /**
+     * update category position
+     *
+     * @param Request $request
+     * @param Group $group
+     * @param $training_id
+     */
+    public function updateCatPosition(Request $request, Group $group, $training_id)
+    {
+        Log::info('request: ', [$request->all()]);
+
+//        return json_encode([
+//            'type' => 'success',
+//        ]);
+
+        $training = $group->trainings()->find($training_id);
+
+        $category = $training->categoryExercises()->find($request->exercise_id);
+        Log::info('category: ', [$category]);
+        $category->changePosition($training, $request->position);
+        $newPos = $request->position;
+    }
+
+    /**
      * soft delete the exercise
      *
      * @param Group $group
@@ -160,6 +195,37 @@ class ExerciseController extends Controller
             ->exercises()
             ->find($id);
         $exercise->delete();
+
+        return redirect()->back();
+    }
+
+    /**
+     * add category to training
+     *
+     * @param Request $request
+     * @param Group $group
+     * @param $training_id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function addCategory(Request $request, Group $group, $training_id)
+    {
+        $training = $group
+            ->trainings()
+            ->find($training_id);
+
+        $cat = Category::where('name', $request->category)
+            ->first();
+
+        $position = $training->categoryExercises()
+            ->orderBy('position', 'desc')
+            ->first()
+            ->position;
+
+        $this->categoryExercise->create([
+            'training_id' => $training->id,
+            'category_id' => $cat->id,
+            'position' => $position + 1,
+        ]);
 
         return redirect()->back();
     }

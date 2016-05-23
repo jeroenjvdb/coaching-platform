@@ -13,12 +13,60 @@ $(function () {
 
 
         $('.pages>div').hide().first().show();
+        //paging();
 
         var sortable = $('.sortable');
         sortable.sortable();
         sortable.sortable('disable');
         addEventListeners();
         createTimers();
+    }
+
+    function paging()
+    {
+        console.log('paging');
+        var page = "#" + $( this ).attr( "id");
+
+        // Get the filename of the next page that we stored in the data-next attribute
+        //    next = $(  ).next( 'div[data-role="page"]' ),
+        // Get the filename of the previous page that we stored in the data-prev attribute
+        //    prev = $( this ).jqmData( "prev" );
+        // Check if we did set the data-next attribute
+            // Prefetch the next page
+            //$.mobile.loadPage( next + ".html" );
+            // Navigate to next page on swipe left
+            $( '.page' ).on( "swipeleft", function() {
+                next = $( this ).data( 'next' );
+                $.mobile.changePage( '#' + next , { transition: "slide",
+                                                allowSamePageTransition: true,
+
+                });
+            }).on( "swiperight", function() {
+                prev = $( this ).data( 'prev' );
+                $.mobile.changePage( '#' + prev , { transition: "slide",
+                    allowSamePageTransition: true,
+                });
+    });
+            // Navigate to next page when the "next" button is clicked
+            $( ".control .next", page ).on( "click", function() {
+                $.mobile.changePage( next + ".html", { transition: "slide" } );
+            });
+        // Disable the "next" button if there is no next page
+        //else {
+        //    $( ".control .next", page ).addClass( "ui-disabled" );
+        //}
+        // The same for the previous page (we set data-dom-cache="true" so there is no need to prefetch)
+        if ( prev ) {
+            $( document ).on( "swiperight", page, function() {
+                $.mobile.changePage( prev + ".html", { transition: "slide", reverse: true } );
+            });
+            $( ".control .prev", page ).on( "click", function() {
+                $.mobile.changePage( prev + ".html", { transition: "slide", reverse: true } );
+            });
+        }
+        else {
+            $( ".control .prev", page ).addClass( "ui-disabled" );
+        }
     }
 
     function addEventListeners()
@@ -46,8 +94,8 @@ $(function () {
     function swipePageRight(e)
     {
         //console.log(e);
-        var nextPage = $(e.currentTarget).data('previous');
-        //console.log(nextPage);
+        var nextPage = $(e.currentTarget).data('prev');
+        console.log('right');
         $('#' + nextPage).trigger('click');    }
 
     function sort(event, ui)
@@ -58,10 +106,10 @@ $(function () {
         var url = $('#' + ui.item.data('table')).data('url');
         $('.sortable').sortable('disable');
         console.log(ui.item);
-        console.log(tableClass);
-        console.log(id);
-        console.log(position);
-        console.log(url);
+        console.log('class ' + tableClass);
+        console.log('id ' + id);
+        console.log('position ' + position);
+        console.log('url ' + url);
 
         updatePosition(id, position, url);
     }

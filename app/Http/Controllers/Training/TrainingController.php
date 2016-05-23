@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Training;
 
 use App\Group;
 use App\Training;
@@ -8,11 +8,9 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use Maatwebsite\Excel\Facades\Excel;
 
 class TrainingController extends Controller
 {
-
     /**
      * @var Training
      */
@@ -98,17 +96,22 @@ class TrainingController extends Controller
      */
     public function show(Group $group, $id)
     {
-        $training = $group->trainings()
-            ->with(['exercises' => function ($query) {
+        $training = $group->trainings()->find($id);
+//            ->with(['exercises' => function ($query) {
+//                $query->positioned();
+//            }])
+        $categories = $training->categoryExercises()->positioned()
+            ->with(['exercises' => function($query) {
                 $query->positioned();
-            }])
-            ->find($id);
+            }])->get();
+
 
         $swimmers = $group->swimmers()->presences($training->id)->get();
 
 
         $data = [
             'training' => $training,
+            'categories' => $categories,
             'group' => $group,
             'swimmers' => $swimmers,
         ];

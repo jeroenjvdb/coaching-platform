@@ -16,6 +16,6 @@ class Category extends Model
 
     public function exercises()
     {
-        return $this->belongsToMany('App\Exercise', 'category_exercises');
+        return $this->belongsToMany('App\Exercise', 'App\CategoryExercise');
     }
 }

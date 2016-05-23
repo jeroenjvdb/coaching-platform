@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
+use ZipArchive;
 
 class SwimmerController extends Controller
 {
@@ -175,5 +177,45 @@ class SwimmerController extends Controller
         /*return redirect()->action('Auth\PasswordController@postReset', [
             'email' => $user->email,
         ]);*/
+    }
+
+    public function download(Group $group)
+    {
+        $groupPath = $group->slug;
+        $path = '../storage/app/' . $groupPath ;
+        if (!file_exists($path)) {
+            mkdir($path, 0777, true);
+            mkdir($path . '/bestTimes', 0777, true);
+        }
+        $path = $path . '/';
+        $zipname = $path . 'bestTimes.zip';
+        if(file_exists($zipname)) {
+            unlink($zipname);
+        }
+
+        $zip = new ZipArchive();
+        $zip->open($zipname, ZipArchive::CREATE);
+//        $zip->addFile('resources/js/app.js');
+        //var_dump(Storage::allFiles('designs'));
+
+        foreach (Storage::allFiles($groupPath . '/bestTimes') as $file) { /* Add appropriate path to read content of zip */
+            $toZip = '../storage/app/' . $file;
+            $zip->addFile($toZip, $file);
+        }
+
+//        Storage::put('bestTimes.zip', $zip);
+        $zip->close();
+//        dd(Storage::get('bestTimes.zip'));
+
+//        var_dump();
+//        dd();
+        $headers = [
+            'Content-Disposition: attachment',
+            'filename: ' . $zipname,
+//            'content-Length: ' . filesize($zipname),
+        ];
+
+
+        return response()->download( $zipname, 'BestTimes.zip', $headers );
     }
 }

@@ -1,8 +1,9 @@
 <?php
 
 return [
-    'url' => 'www.swimrankings.net/index.php',
+    'url' => 'http://www.swimrankings.net/',
 
-    'swimmersPage' => '?&points=rudolph_2015&page=athleteDetail&athleteId=',
+    'swimmersPage' => 'index.php?&points=rudolph_2016&page=athleteDetail&athleteId=',
+    'pdf' => 'services/AthletePBestPdf/pbest.pdf?Language=nl&AthleteId=',
 
 ];
