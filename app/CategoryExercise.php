@@ -37,6 +37,11 @@ class CategoryExercise extends Model
         return $query->orderBy('position', 'asc');
     }
 
+    public function getTotalAttribute()
+    {
+        return $this->exercises->sum('total');
+    }
+
     public function changePosition($training, $newPos)
     {
         $oldPos = $this->position;

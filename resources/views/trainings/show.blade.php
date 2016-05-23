@@ -22,8 +22,11 @@
         ]) }}">
                     <div class="category exercise-ui row">
                         <div class="sort-bars col-xs-1"><i class="fa fa-bars"></i></div>
-                        <div class="col-xs-10">
+                        <div class="col-xs-4">
                             <div class="">{{ $category->category->name }}</div>
+                        </div>
+                        <div class="col-xs-6">
+                            {{ $category->total }}m
                         </div>
                         <div class="col-xs-1">
                             <a href="#" data-toggle="add-exercise-{{ $category->id }}"><i class="fa fa-plus"></i><span class="sr-only">Add new exercise</span></a>
@@ -162,6 +165,12 @@
                 </div>
 
             @endforeach
+            <div class="exercise-ui total row">
+                <div class="col-xs-8 col-xs-offset-1">
+                    totaal: {{ $training->total }}m
+
+                </div>
+            </div>
             <div class="add-exercise " hidden data-is_form="true">
                 <h2>add category</h2>
                 {!! Form::open(['route' => [

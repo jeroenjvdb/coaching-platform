@@ -8089,6 +8089,10 @@ table {
 .training .category {
   background-color: #999; }
 
+.training .total {
+  background-color: #555;
+  color: white; }
+
 .training table {
   width: 100%; }
   .training table tr {

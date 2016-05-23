@@ -220,7 +220,7 @@ class ExerciseController extends Controller
         $catEx = $training->categoryExercises()
             ->orderBy('position', 'desc')
             ->first();
-        
+
         $position = 0;
         if($catEx) {
             $position = $catEx->position + 1;
