@@ -216,15 +216,21 @@ class ExerciseController extends Controller
         $cat = Category::where('name', $request->category)
             ->first();
 
-        $position = $training->categoryExercises()
+
+        $catEx = $training->categoryExercises()
             ->orderBy('position', 'desc')
-            ->first()
-            ->position;
+            ->first();
+        
+        $position = 0;
+        if($catEx) {
+            $position = $catEx->position + 1;
+        }
+
 
         $this->categoryExercise->create([
             'training_id' => $training->id,
             'category_id' => $cat->id,
-            'position' => $position + 1,
+            'position' => $position,
         ]);
 
         return redirect()->back();
