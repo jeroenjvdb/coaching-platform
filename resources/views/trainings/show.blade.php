@@ -2,7 +2,7 @@
 
 @section('content')
     {!! Breadcrumbs::render('trainings.show', $group, $training) !!}
-    <h2>training {{ $training->starttime }} <a rel="external" href="{{ route('training.download', [
+    <h2>training {{ $training->starttime->formatLocalized('%A %d %B %P') }} <a rel="external" href="{{ route('training.download', [
         'group' => $group->slug,
         'training_id' => $training->id,
     ]) }}"><i class="fa fa-download"></i></a></h2>
@@ -46,7 +46,7 @@
                                     </div>
                                 </div>
                                 <div class="col-xs-5">
-                                    {{ $exercise->description }}
+                                    {!! $exercise->description !!}
                                 </div>
                                 <div class="col-xs-2">
                                     <div class="row">

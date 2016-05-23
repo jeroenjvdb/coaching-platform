@@ -76,7 +76,9 @@ $(function () {
         $('a').on('click', links);
         //$('.sort-bars').on('mousedown', function(e) { $('.sortable').sortable('enable'); console.log(e); })
         $('.sort-bars').on('touchstart mousedown', function(e) { $('.sortable').sortable('enable'); console.log(e); })
+        $('.sort-bars').on('touchend mouseup', function(e) { $('.sortable').sortable('disable'); console.log(e); })
         $('.sortable').on('sortupdate', sort);
+        //$('.sortable').on('sortstop', sortStop);
         $('.btn-page').on('click', showPage);
         var page = $('.page');
         page.on('swipeleft', swipePageLeft);
@@ -112,6 +114,12 @@ $(function () {
         console.log('url ' + url);
 
         updatePosition(id, position, url);
+    }
+
+    function sortStop(event, ui)
+    {
+        //console.log(sortStop);
+        $('.sortable').sortable('disable');
     }
 
     function updatePosition(id, position, url)

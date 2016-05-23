@@ -223,7 +223,6 @@ return [
         'Excel' => 'Maatwebsite\Excel\Facades\Excel',
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Breadcrumbs' => DaveJamesMiller\Breadcrumbs\Facade::class,
-        'Flysystem' => 'GrahamCampbell\Flysystem\Facades\Flysystem'
 
     ],
 

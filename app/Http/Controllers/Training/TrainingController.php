@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Training;
 
 use App\Group;
 use App\Training;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
 
 class TrainingController extends Controller
 {
@@ -100,6 +102,12 @@ class TrainingController extends Controller
 //            ->with(['exercises' => function ($query) {
 //                $query->positioned();
 //            }])
+        setLocale(LC_TIME, 'nl_NL.utf8');
+        $starttime = new Carbon($training->starttime);
+//        dd($starttime);
+
+        $training->starttime = $starttime;
+
         $categories = $training->categoryExercises()->positioned()
             ->with(['exercises' => function($query) {
                 $query->positioned();
@@ -170,5 +178,6 @@ class TrainingController extends Controller
             })->download('xls');
 
         });
+        //TODO make choice between pdf/xls
     }
 }

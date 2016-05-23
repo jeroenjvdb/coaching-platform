@@ -52,6 +52,14 @@ class ExerciseController extends Controller
      */
     public function store(ExerciseRequest $request, Group $group, $training_id)
     {
+        $description = htmlentities($request->description);
+
+        $order   = array("\r\n", "\n", "\r");
+        $replace = '<br />';
+
+        // Processes \r\n's first so they aren't converted twice.
+        $descr = str_replace($order, $replace, $description);
+
         $training = $group
             ->trainings()
             ->find($training_id);
@@ -70,7 +78,7 @@ class ExerciseController extends Controller
         $exercise = $this->exercise->fill([
             'sets' => $request->sets,
             'meters' => $request->meters,
-            'description' => $request->description,
+            'description' => $descr,
             'position' => $position,
             'category_exercise_id' => $category->id
         ]);
@@ -121,9 +129,17 @@ class ExerciseController extends Controller
         $training = $group->trainings()->find($training_id);
         $exercise = $training->exercises()->find($exercise_id);
 
+        $description = htmlentities($request->description);
+
+        $order   = array("\r\n", "\n", "\r");
+        $replace = '<br />';
+
+        // Processes \r\n's first so they aren't converted twice.
+        $descr = str_replace($order, $replace, $description);
+
         $exercise->sets = $request->sets;
         $exercise->meters = $request->meters;
-        $exercise->description = $request->description;
+        $exercise->description = $descr;
 
         $exercise->save();
 
