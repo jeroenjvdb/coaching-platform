@@ -48,13 +48,17 @@ class ContactController extends Controller
             'sEmail' => $request->sEmail,
         ];
 
-//        dd($store);
-
+        if($request->picture && $request->picture->isValid()) {
+//            dd($request->picture);
+            $swimmer->addMeta('picture', $this->storeImage($request->picture, $group, $swimmer));
+        }
+//        dd($request->all());
 
         $swimmer->storeContact($store);
         if($request->email) {
             $swimmer->email = $request->email;
         }
+
         $swimmer->save();
 
 

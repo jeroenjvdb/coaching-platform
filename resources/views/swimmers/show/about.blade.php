@@ -8,7 +8,16 @@
     </div>
 </div>
 <h3>ochtendpolsen</h3>
-<canvas id="canvas" class="chart" data-url="/me/heartRate"></canvas>
+<canvas id="canvas" class="chart"
+        @if($myProfile)
+            data-url="{{ route('me.heartRate') }}"
+        @else
+            data-url="{{ route('swimmers.heartRate', [
+                'group' => $group->slug,
+                'swimmer' => $swimmer->slug,
+            ]) }}"
+        @endif
+></canvas>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.2/Chart.min.js"></script>

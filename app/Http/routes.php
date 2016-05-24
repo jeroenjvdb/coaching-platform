@@ -67,7 +67,6 @@ Route::group(['middleware' => 'web'], function () {
         Route::get('/me/heartRate', ['as' => 'profile.heartRate', 'uses' => 'MyController@getHeartRate']);
 
 
-
         Route::group(['middleware' => 'coach'], function () {
 
             Route::group(['prefix' => 'chat'], function () {
@@ -104,6 +103,7 @@ Route::group(['middleware' => 'web'], function () {
                         Route::post('contact', ['as' => 'swimmers.contact.update', 'uses' => 'ContactController@update']);
 
                         Route::post('heartRate', ['as' => 'swimmers.heartRate', 'uses' => 'ApiController@heartRate']);
+                        Route::get('heartRate', ['as' => 'swimmers.heartRate', 'uses' => 'ApiController@getHeartRate']);
 
                     });
                 });
@@ -120,7 +120,7 @@ Route::group(['middleware' => 'web'], function () {
                     ]);
 
 
-                    Route::group(['prefix' => '{training_id}'], function(){
+                    Route::group(['prefix' => '{training_id}'], function () {
                         Route::post('presences', [
                             'as' => 'presences.store',
                             'uses' => 'PresenceController@store',

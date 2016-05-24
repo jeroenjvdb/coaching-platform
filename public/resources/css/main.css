@@ -8105,4 +8105,13 @@ table {
   border-bottom: 1px solid black;
   padding: 5px 0; }
 
+.swimmers .swimmer-thumb {
+  border-radius: 100%;
+  overflow: hidden;
+  padding: 0;
+  display: inline-block; }
+
+.swimmers .center {
+  text-align: center; }
+
 /*# sourceMappingURL=main.css.map */

@@ -44064,58 +44064,60 @@ $(function () {
         sortable.sortable();
         sortable.sortable('disable');
         addEventListeners();
+        $(window).trigger('resize');
         createTimers();
     }
 
-    function paging()
-    {
-        console.log('paging');
-        var page = "#" + $( this ).attr( "id");
-
-        // Get the filename of the next page that we stored in the data-next attribute
-        //    next = $(  ).next( 'div[data-role="page"]' ),
-        // Get the filename of the previous page that we stored in the data-prev attribute
-        //    prev = $( this ).jqmData( "prev" );
-        // Check if we did set the data-next attribute
-            // Prefetch the next page
-            //$.mobile.loadPage( next + ".html" );
-            // Navigate to next page on swipe left
-            $( '.page' ).on( "swipeleft", function() {
-                next = $( this ).data( 'next' );
-                $.mobile.changePage( '#' + next , { transition: "slide",
-                                                allowSamePageTransition: true,
-
-                });
-            }).on( "swiperight", function() {
-                prev = $( this ).data( 'prev' );
-                $.mobile.changePage( '#' + prev , { transition: "slide",
-                    allowSamePageTransition: true,
-                });
-    });
-            // Navigate to next page when the "next" button is clicked
-            $( ".control .next", page ).on( "click", function() {
-                $.mobile.changePage( next + ".html", { transition: "slide" } );
-            });
-        // Disable the "next" button if there is no next page
-        //else {
-        //    $( ".control .next", page ).addClass( "ui-disabled" );
-        //}
-        // The same for the previous page (we set data-dom-cache="true" so there is no need to prefetch)
-        if ( prev ) {
-            $( document ).on( "swiperight", page, function() {
-                $.mobile.changePage( prev + ".html", { transition: "slide", reverse: true } );
-            });
-            $( ".control .prev", page ).on( "click", function() {
-                $.mobile.changePage( prev + ".html", { transition: "slide", reverse: true } );
-            });
-        }
-        else {
-            $( ".control .prev", page ).addClass( "ui-disabled" );
-        }
-    }
+    //function paging()
+    //{
+    //    console.log('paging');
+    //    var page = "#" + $( this ).attr( "id");
+    //
+    //    // Get the filename of the next page that we stored in the data-next attribute
+    //    //    next = $(  ).next( 'div[data-role="page"]' ),
+    //    // Get the filename of the previous page that we stored in the data-prev attribute
+    //    //    prev = $( this ).jqmData( "prev" );
+    //    // Check if we did set the data-next attribute
+    //        // Prefetch the next page
+    //        //$.mobile.loadPage( next + ".html" );
+    //        // Navigate to next page on swipe left
+    //        $( '.page' ).on( "swipeleft", function() {
+    //            next = $( this ).data( 'next' );
+    //            $.mobile.changePage( '#' + next , { transition: "slide",
+    //                                            allowSamePageTransition: true,
+    //
+    //            });
+    //        }).on( "swiperight", function() {
+    //            prev = $( this ).data( 'prev' );
+    //            $.mobile.changePage( '#' + prev , { transition: "slide",
+    //                allowSamePageTransition: true,
+    //            });
+    //});
+    //        // Navigate to next page when the "next" button is clicked
+    //        $( ".control .next", page ).on( "click", function() {
+    //            $.mobile.changePage( next + ".html", { transition: "slide" } );
+    //        });
+    //    // Disable the "next" button if there is no next page
+    //    //else {
+    //    //    $( ".control .next", page ).addClass( "ui-disabled" );
+    //    //}
+    //    // The same for the previous page (we set data-dom-cache="true" so there is no need to prefetch)
+    //    if ( prev ) {
+    //        $( document ).on( "swiperight", page, function() {
+    //            $.mobile.changePage( prev + ".html", { transition: "slide", reverse: true } );
+    //        });
+    //        $( ".control .prev", page ).on( "click", function() {
+    //            $.mobile.changePage( prev + ".html", { transition: "slide", reverse: true } );
+    //        });
+    //    }
+    //    else {
+    //        $( ".control .prev", page ).addClass( "ui-disabled" );
+    //    }
+    //}
 
     function addEventListeners()
     {
+        $(window).on('resize', resize);
         $('.upload-image').on('change', renderImage);
         $('form').on('submit', formRequest);
         $('a').on('click', links);
@@ -44128,6 +44130,13 @@ $(function () {
         var page = $('.page');
         page.on('swipeleft', swipePageLeft);
         page.on('swiperight', swipePageRight);
+    }
+
+    function resize(e)
+    {
+        console.log(resize);
+        var cw = $('.swimmer-thumb').width();
+        $('.swimmer-thumb').css({'height':cw+'px'});
     }
 
     function swipePageLeft(e)
@@ -44244,16 +44253,18 @@ $(function () {
 
     function renderImage()
     {
-        //console.log(this);
+        console.log(this);
         readURL(this);
     }
 
     function readURL(input)
     {
+        console.log('readURL')
         if (input.files && input.files[0]) {
             var reader = new FileReader();
-
+            console.log('input.files');
             reader.onload = function (e) {
+                console.log($(input).data('img'));
                 if($(input).data('img') == 'start') {
                     $('#image-start').attr('src', e.target.result);
                 } else {
@@ -44310,6 +44321,8 @@ $(function () {
                 if($(value).data('is_form')) {
                     //console.log('show');
                     $(value).show();
+                    console.log($(value).find('input')[0]);
+                    $(value).find('input')[1].focus();
                 } else {
                     //console.log('hide');
                     $(value).hide();

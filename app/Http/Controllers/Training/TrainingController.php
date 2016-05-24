@@ -47,8 +47,8 @@ class TrainingController extends Controller
     {
         $trainings = $group->trainings()->with('group', 'exercises')->get();
         foreach($trainings as $training) {
-            $starttime = new Carbon($training->starttime);
-            $training->starttime = $starttime;
+            $startTime = new Carbon($training->starttime);
+            $training->starttime = $startTime;
         }
 
         $data = [

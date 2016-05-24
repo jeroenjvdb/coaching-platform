@@ -276,6 +276,8 @@ trait SwimmerProfile
         }
     }
 
+
+
     /**
      * remove width of table
      *

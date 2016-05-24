@@ -1,8 +1,33 @@
 <h2>contact</h2>
 <div class="row swimmer">
-    {{--<div class="col-md-2 col-xs-4">--}}
-    {{--<img src="{{ $contact['picture'] }}" alt="">--}}
-    {{--</div>--}}
+    <div class="col-md-2 col-xs-4">
+        <a href="#" data-toggle="picture">
+    <img id="image-start"
+        @if($contact['picture'])
+            src="{{ $contact['picture'] }}"
+        @else
+            src="http://library.unn.edu.ng/wp-content/uploads/sites/42/2016/03/prifile-pic.png"
+        @endif
+            alt=""></a>
+        {!! Form::open([
+            'route' => ['swimmers.contact.update',
+            'group' => $group->slug,
+            'swimmer' => $swimmer->slug,
+            ],
+            'class' => 'picture',
+            'data-is_form' => 'true',
+            'data-form' => 'picture',
+            'data-ajax' => 'false',
+            'files' => 'true',
+            'hidden'
+        ]) !!}
+        {!! Form::file('picture', [
+            'class' => 'upload-image',
+            'data-img' => 'start',
+        ]) !!}
+        {!! Form::submit() !!}
+        {!! Form::close() !!}
+    </div>
     <div class="col-md-10 col-xs-12" data-is_form="false">
         <div class="row">
             <div class="col-md-6 col-xs-12">

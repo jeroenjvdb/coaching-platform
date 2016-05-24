@@ -8,16 +8,24 @@
     <a href="{{ route('swimmers.download.pr', ['group' => $group->slug]) }}">download</a>
     <a href="{{ route('groups.edit', [$group->slug]) }}">edit</a>
     <h2>zwemmers:</h2>
-    <div class="row">
+    <div class="row swimmers">
         @foreach($swimmers as $swimmer)
-            <div class="col-md-4 col-sm-6 col-xs-12">
+            <div class="col-md-4 col-sm-6 col-xs-6 center">
                 <a rel="external" href="{{ route('swimmers.show', ['group' => $group->slug, $swimmer->slug]) }}">
-                    <span class="thumbnail col-xs-4">
-{{--                        @if(isset($swimmer->getMeta('picture')))--}}
-                            <img src="http://archive.eyebeam.org/sites/default/files/imagecache/node_size/people/images/blank_image_17.png" alt="">
-                        {{--@endif--}}
+                    <span class="col-xs-12 col-sm-10 col-sm-offset-1">
+                        <span class="thumbnail center swimmer-thumb" style="; ">
+                        @if($swimmer->getMeta('picture'))
+                                <img src="{{ $swimmer->getMeta('picture') }}" alt="">
+                        @else
+                            <img src="http://library.unn.edu.ng/wp-content/uploads/sites/42/2016/03/prifile-pic.png"
+                                 alt="">
+                        @endif
                     </span>
+                    <span class="col-xs-12 center">
                      {{ $swimmer->first_name }} {{ $swimmer->last_name }}
+                    </span>
+                    </span>
+
                 </a>
             </div>
 
