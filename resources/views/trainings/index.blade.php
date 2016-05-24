@@ -11,7 +11,7 @@
             <li><a rel="external" href="{{ route('trainings.show', [
                                         'group' => $group->slug,
                                         'id' => $training->id
-                                    ]) }}">{{ $training->starttime }}</a> - {{ $training->total }}m</li>
+                                    ]) }}">{{ $training->starttime->formatLocalized('%A %d %B %P') }}</a> - {{ $training->total }}m</li>
         @endforeach
     </ul>
 @stop

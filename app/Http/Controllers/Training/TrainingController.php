@@ -34,6 +34,7 @@ class TrainingController extends Controller
     {
         $this->training = $training;
         $this->group = $group;
+        setLocale(LC_TIME, 'nl_NL.utf8');
     }
 
     /**
@@ -44,8 +45,14 @@ class TrainingController extends Controller
      */
     public function index(Group $group)
     {
+        $trainings = $group->trainings()->with('group', 'exercises')->get();
+        foreach($trainings as $training) {
+            $starttime = new Carbon($training->starttime);
+            $training->starttime = $starttime;
+        }
+
         $data = [
-            'trainings' => $group->trainings()->with('group', 'exercises')->get(),
+            'trainings' => $trainings,
             'group' => $group
         ];
 
