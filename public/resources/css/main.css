@@ -8117,8 +8117,9 @@ table {
 .swimmers .swimmer-thumb {
   border-radius: 100%;
   overflow: hidden;
-  padding: 0;
-  display: inline-block; }
+  padding: 0; }
+  .swimmers .swimmer-thumb img {
+    width: 100%; }
 
 .swimmers .center {
   text-align: center; }
