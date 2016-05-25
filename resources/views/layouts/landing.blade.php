@@ -14,6 +14,7 @@
     <link rel="icon" sizes="400x400" href="/icon.png">
 
     <!-- Styles -->
+    <link href="/resources/css/main.css" rel="stylesheet">
 
 
 </head>
