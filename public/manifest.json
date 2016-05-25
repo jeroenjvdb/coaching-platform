@@ -1,7 +1,16 @@
 {
   "name": "Kazsc coaching",
 
-  "start_url": "",
-  "display": "standalone"
+  "start_url": "/",
+  "display": "standalone",
+
+  "icons": [
+    {
+      "src": "icon128-2x.png",
+      "sizes": "36x36",
+      "type": "image/png",
+      "density": 1
+    }
+  ]
 
 }
