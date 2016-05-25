@@ -9,7 +9,13 @@
     <a href="{{ route('groups.edit', [$group->slug]) }}">edit</a>
     <h2>zwemmers:</h2>
     <div class="row swimmers">
-        @foreach($swimmers as $swimmer)
+        @foreach($swimmers as $key => $swimmer)
+            @if($key > 0 && $key % 2 == 0)
+                <div class="clearfix visible-xs visible-sm"></div>
+            @endif
+            @if($key > 0 && $key % 3 == 0)
+                <div class="clearfix visible-md"></div>
+            @endif
             <div class="col-md-4 col-sm-6 col-xs-6 center">
                 <a rel="external" href="{{ route('swimmers.show', ['group' => $group->slug, $swimmer->slug]) }}">
                     <span class="col-xs-12 col-sm-10 col-sm-offset-1">
@@ -28,6 +34,7 @@
 
                 </a>
             </div>
+
 
         @endforeach
     </div>

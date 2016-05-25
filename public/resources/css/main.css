@@ -8101,6 +8101,15 @@ table {
 .training tbody div:last-child {
   border-bottom: none; }
 
+.presences label {
+  line-height: 15px; }
+
+.presences img {
+  height: 100px; }
+
+.presences .checked {
+  opacity: 0.5; }
+
 .contact {
   border-bottom: 1px solid black;
   padding: 5px 0; }

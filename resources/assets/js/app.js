@@ -21,6 +21,26 @@ $(function () {
         addEventListeners();
         $(window).trigger('resize');
         createTimers();
+        checkboxes();
+    }
+
+    function checkboxes()
+    {
+        $('.input_change_checkbox').each(function(){
+            console.log($(this));
+            var checked = "";
+            if ($(this).is(':checked')) {
+                checked = "checked";
+            }
+            $(this).hide().after('<div class="change_checkbox '+ checked
+                +'"><img src="' + $(this).data('image') +
+                '" alt=""></div>');
+
+        });
+
+        $('.change_checkbox').on('click',function(){
+            $(this).toggleClass('checked').prev().prop('checked',$(this).is('.checked'))
+        });
     }
 
     //function paging()
