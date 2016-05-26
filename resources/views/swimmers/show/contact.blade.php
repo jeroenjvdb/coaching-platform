@@ -17,7 +17,7 @@
             'class' => 'picture',
             'data-is_form' => 'true',
             'data-form' => 'picture',
-            'data-ajax' => 'true',
+            'data-ajax' => 'false',
             'files' => 'true',
             'hidden'
         ]) !!}

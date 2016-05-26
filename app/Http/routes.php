@@ -79,11 +79,11 @@ Route::group(['middleware' => 'web'], function () {
 
             Route::resource('coach', 'CoachController');
 
-
+            Route::get('/create', ['as' => 'groups.create', 'uses' => 'GroupController@create']);
+            Route::post('/', ['as' => 'groups.store', 'uses' => 'GroupController@store']);
             Route::group(['prefix' => '{group}'], function () {
                 //Route::get('/', ['as' => 'groups.index', 'uses' => 'GroupController@index']);
-                //Route::get('/create', ['as' => 'groups.create', 'uses' => 'GroupController@create']);
-                //Route::post('/', ['as' => 'groups.store', 'uses' => 'GroupController@store']);
+
                 Route::get('/', ['as' => 'groups.show', 'uses' => 'GroupController@show']);
                 Route::get('/edit', ['as' => 'groups.edit', 'uses' => 'GroupController@edit']);
                 Route::post('/', ['as' => 'groups.update', 'uses' => 'GroupController@update']);

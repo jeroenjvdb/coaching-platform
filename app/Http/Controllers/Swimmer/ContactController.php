@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Swimmer;
 
 use App\Classes\SwimmerProfile;
 use App\Group;
+use App\Http\Requests\ContactRequest;
 use App\Swimmer;
 use Illuminate\Http\Request;
 
@@ -30,7 +31,7 @@ class ContactController extends Controller
      * @param Swimmer $swimmer
      * @return string
      */
-    public function update(Request $request, Group $group, Swimmer $swimmer)
+    public function update(ContactRequest $request, Group $group, Swimmer $swimmer)
     {
 
         $store = [
@@ -49,10 +50,8 @@ class ContactController extends Controller
         ];
 
         if($request->picture && $request->picture->isValid()) {
-//            dd($request->picture);
             $swimmer->addMeta('picture', $this->storeImage($request->picture, $group, $swimmer));
         }
-//        dd($request->all());
 
         $swimmer->storeContact($store);
         if($request->email) {
