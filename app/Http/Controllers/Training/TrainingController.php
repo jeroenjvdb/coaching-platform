@@ -172,9 +172,20 @@ class TrainingController extends Controller
             }])
             ->find($training_id);
 
+        $categories = $training->categoryExercises()->positioned()
+            ->with(['exercises' => function($query) {
+                $query->positioned();
+            }])->get();
+
+        $training->starttime = Carbon::createFromTimestamp(strtotime($training->starttime));
+
         $data = [
             'training' => $training,
+            'categories' => $categories,
         ];
+
+//        dd($training->starttime);
+//        return view('excel.training', $data);
 
         Excel::create('training', function($excel) use ($data) {
 
@@ -182,7 +193,7 @@ class TrainingController extends Controller
 
                 $sheet->loadView('excel.training', $data);
 
-            })->download('xls');
+            })->download('pdf');
 
         });
         //TODO make choice between pdf/xls
