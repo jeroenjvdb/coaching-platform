@@ -6,6 +6,25 @@
     <a rel="external" href="{{ route('trainings.create', [
         'group' => $group->slug,
     ]) }}">create</a>
+
+    {!! Form::open(['route' => ['trainings.store', 'group' => $group->slug],
+        'data-ajax' => 'false',
+        'hidden',
+        'data-is_form' => 'true',
+        'data-form' => ''
+    ]) !!}
+    <fieldset class="form-group">
+        {!! Form::label('starttime') !!}
+        {!! Form::input('datetime-local', 'starttime', null, [
+            'class' => 'form-control',
+        ]) !!}
+    </fieldset>
+    <fieldset class="form-group">
+        {!! Form::submit('verzenden', [
+            'class' => 'btn btn-primary',
+        ]) !!}
+    </fieldset>
+    {!! Form::close() !!}
     <ul>
         @foreach($trainings as $training)
             <li><a rel="external" href="{{ route('trainings.show', [

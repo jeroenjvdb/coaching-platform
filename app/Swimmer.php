@@ -27,7 +27,7 @@ class Swimmer extends Model
     protected $fillable = [
         'first_name',
         'last_name',
-        'profile_id',
+        'swimrankings_id',
         'email',
     ];
 

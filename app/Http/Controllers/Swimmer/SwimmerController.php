@@ -82,15 +82,17 @@ class SwimmerController extends Controller
         $swimmer = $this->swimmer->fill([
             'first_name'    => $request->first_name ,
             'last_name'     => $request->input('last_name'),
-            'profile_id'    => $request->input('swimrankings'),
+            'swimrankings_id'    => $request->input('swimrankings'),
             'email'         => $request->email,
         ]);
 
         $swimmer = $group->swimmers()->save($swimmer);
 
         $this->createLogin($swimmer);
+        $swimmer->getPersonalBest();
+        $swimmer->seedPDF();
 
-        return redirect()->route('swimmers.index', [
+        return redirect()->route('groups.show', [
             'group' => $group->slug
         ]);
     }
