@@ -8,10 +8,10 @@
 
     <title>@yield('title') | coaching platform | KAZSC</title>
 
-    <link rel="manifest" href="/manifest.json">
     <meta name="viewport" content="width=device-width">
     <meta name="mobile-web-app-capable" content="yes">
     <link rel="icon" sizes="400x400" href="/icon.png">
+    <!--<link rel="manifest" href="/manifest.json">-->
 
     <!-- Styles -->
     <link href="/resources/css/main.css" rel="stylesheet">
