@@ -2,28 +2,11 @@
 <style>
     table {
         width: 15px;
-        /*max-width: 100%;*/
         border-spacing: 0;
-        /*cellspacing: 5px;*/
     }
-
-    td {
-        /*border: 1px solid black;*/
-        /*border-bottom: none;*/
-        /*width: 10px;*/
-        /*margin: 0;*/
-        /*padding: 100px;*/
-        /*cellpadding: 5px;*/
-    }
-
     tr {
         min-height: 5px;
     }
-
-    .h1 {
-        font-size: 2em;
-    }
-
     .colored {
         background-color: #FF0000;
     }
