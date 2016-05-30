@@ -48,6 +48,11 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Coach');
     }
+    
+    public function coach()
+    {
+        return $this->hasOne('App\Coach');
+    }
 
     public function chats()
     {
