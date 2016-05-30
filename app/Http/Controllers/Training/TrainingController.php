@@ -200,9 +200,12 @@ class TrainingController extends Controller
         //TODO make choice between pdf/xls
     }
 
-    function get(Group $group)
+    function get(Request $request, Group $group)
     {
-        $trainings = $this->training->all();
+        $trainings = $this->training
+            ->where('starttime', '>', $request->start)
+            ->where('starttime', '<', $request->end)
+            ->get();
         $trainingsArr = [];
 
         foreach($trainings as $training) {
@@ -222,6 +225,7 @@ class TrainingController extends Controller
 
             array_push($trainingsArr, $data);
         }
+//        Log::info('request: ', [$request->all()]);
 
         Log::info($trainingsArr);
 

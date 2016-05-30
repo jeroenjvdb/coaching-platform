@@ -44818,7 +44818,6 @@ var Stopwatch = function(elem, options ) {
     this.reset  = reset;
     this.split  = split;
 };
-
 /*!
  * main javascript
  */
@@ -44852,6 +44851,11 @@ $(function () {
             var url = $(this).data('url');
             console.log(url);
             $(this).fullCalendar({
+                header: {
+                    left: 'prev,next',
+                    center: 'title',
+                    right: 'today'
+                },
                 events: {
                     url: url,
                     error: function() {

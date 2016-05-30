@@ -230,7 +230,9 @@ class ExerciseController extends Controller
             ->find($training_id);
 
         $cat = Category::where('name', $request->category)
-            ->first();
+            ->firstOrCreate([
+                'name' => $request->category,
+            ]);
 
 
         $catEx = $training->categoryExercises()

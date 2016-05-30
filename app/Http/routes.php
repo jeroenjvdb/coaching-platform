@@ -143,7 +143,7 @@ Route::group(['middleware' => 'web'], function () {
 
                         Route::post('exercise/position/category', [
                             'as' => 'exercises.update.cat.position',
-                            'uses' => 'ExerciseController@updateCatPosition',
+                            'uses' => 'CategoryController@updateCatPosition',
                         ]);
 
                         Route::get('exercise/{id}', [
@@ -163,7 +163,7 @@ Route::group(['middleware' => 'web'], function () {
 
                         Route::post('category', [
                             'as' => 'category.exercise.store',
-                            'uses' => 'ExerciseController@addCategory',
+                            'uses' => 'CategoryController@store',
                         ]);
                     });
 

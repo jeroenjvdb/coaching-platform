@@ -60,7 +60,7 @@
         </div>
     </div>
     <div class="col-xs-6">
-        {!! Form::textarea('description', $exercise->description, [
+        {!! Form::textarea('description', $exercise->textarea, [
             'class' => 'form-control',
             'rows' => 1
         ]) !!}

@@ -152,4 +152,13 @@ class Exercise extends Model
     {
         return $this->belongsToMany('App\Category', 'App\ExerciseCategory');
     }
+
+    public function getTextareaAttribute()
+    {
+        $description = $this->description;
+        $breaks = array("<br />","<br>","<br/>");
+        $text = str_ireplace($breaks, "\r\n", $description);
+
+        return $text;
+    }
 }
