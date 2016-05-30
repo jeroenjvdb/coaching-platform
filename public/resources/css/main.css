@@ -8036,20 +8036,26 @@ table {
 .btn-page {
   margin: 0;
   width: 25%;
-  border-right: 1px solid black;
   padding: 10px; }
-  .btn-page.last {
-    border-right: none; }
 
 .btn-pages {
-  position: relative;
-  top: -5px;
-  left: -5px;
-  width: calc(100% + 10px); }
+  position: relative; }
 
 @media (max-width: 768px) {
   .chart {
     height: 400px; } }
+
+.nav-tabs-custom {
+  position: relative;
+  top: -5px;
+  left: -5px;
+  border-radius: 0;
+  width: calc(100% + 10px); }
+
+.nav-tabs-custom > .nav-tabs > li {
+  margin-right: 0; }
+  .nav-tabs-custom > .nav-tabs > li.active {
+    border-top-color: #dd4b39; }
 
 .data {
   width: 80%;

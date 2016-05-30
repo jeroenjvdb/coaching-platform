@@ -5,20 +5,20 @@ table {
 .btn-page {
   margin: 0;
   width: 25%;
-  border-right: 1px solid black;
+  //border-right: 1px solid black;
   padding: 10px;
-  &.last {
-    border-right: none;
-  }
+  //&.last {
+  //  border-right: none;
+  //}
 }
 
 .btn-pages {
   position: relative;
-  top: -5px;
-  left: -5px;
+  //top: -5px;
+  //left: -5px;
 
   //margin-bottom: 20px;
-  width: calc(100% + 10px);
+  //width: calc(100% + 10px);
 }
 
 @media(max-width: 768px) {
@@ -29,3 +29,19 @@ table {
 //.chart {
   //min-height: 400px;
 //}
+.nav-tabs-custom {
+  position: relative;
+  top: -5px;
+  left: -5px;
+  border-radius: 0;
+  width: calc(100% + 10px);
+
+}
+
+.nav-tabs-custom > .nav-tabs > li {
+  margin-right: 0;
+
+  &.active{
+    border-top-color: #dd4b39;
+  }
+}

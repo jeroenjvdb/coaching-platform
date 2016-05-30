@@ -19,7 +19,7 @@
     {{--</ul>--}}
     <div class="row">
         <div class="col-md-4">
-            <div class="box box-primary">
+            <div class="box box-danger">
                 <div class="box-body">
                     <h3>training toevoegen</h3>
                     {!! Form::open(['route' => ['trainings.store', 'group' => $group->slug],
@@ -30,8 +30,9 @@
                     <fieldset class="form-group">
                         {!! Form::label('starttime') !!}
                         {!! Form::input('datetime-local', 'starttime', date('Y-m-d\Th:i'), [
-                            'class' => 'form-control',
+                            'class' => 'form-control datetimepicker',
                         ]) !!}
+
                     </fieldset>
                     <fieldset class="form-group">
                         {!! Form::submit('verzenden', [
@@ -44,7 +45,7 @@
             </div>
         </div>
         <div class="col-md-8">
-            <div class="box box-primary">
+            <div class="box box-danger">
                 <div class="box-body box-no-padding">
                     <div class="calendar" data-url="{{ route('trainings.get', [
         'group' => $group->slug

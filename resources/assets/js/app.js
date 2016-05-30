@@ -13,7 +13,8 @@ $(function () {
 
         $('.pages>div').hide().first().show();
         //paging();
-
+        //$('.datetimepicker').datetimepicker();
+        //$('#datetimepicker1').datetimepicker();
         var sortable = $('.sortable');
         sortable.sortable();
         sortable.sortable('disable');
