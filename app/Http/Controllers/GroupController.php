@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class GroupController extends Controller
 {
@@ -58,7 +59,14 @@ class GroupController extends Controller
             'name' => $request->input('name'),
         ]);
 
-        return redirect()->route('groups.index');
+        $user = Auth::user();
+        $coach = $user->coach;
+        $group->coaches()->attach($coach->id);
+
+        return redirect()->route('groups.show',
+        [
+            'group' => $group->slug,
+        ]);
     }
 
     /**
