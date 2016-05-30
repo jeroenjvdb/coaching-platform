@@ -8047,7 +8047,7 @@ table {
 
 .nav-tabs-custom {
   position: relative;
-  top: -5px;
+  top: 0px;
   left: -5px;
   border-radius: 0;
   width: calc(100% + 10px); }
