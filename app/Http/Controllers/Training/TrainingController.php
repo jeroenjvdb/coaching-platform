@@ -202,7 +202,7 @@ class TrainingController extends Controller
 
     function get(Request $request, Group $group)
     {
-        $trainings = $this->training
+        $trainings = $group->trainings()
             ->where('starttime', '>', $request->start)
             ->where('starttime', '<', $request->end)
             ->get();
