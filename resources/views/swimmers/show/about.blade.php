@@ -10,7 +10,9 @@
 <h3>ochtendpolsen</h3>
 <canvas id="canvas" class="chart"
         @if($myProfile)
-            data-url="{{ route('me.heartRate') }}"
+            data-url="{{ route('me.heartRate', [
+                'group' => $swimmer->group->slug,
+            ]) }}"
         @else
             data-url="{{ route('swimmers.heartRate', [
                 'group' => $group->slug,

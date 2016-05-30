@@ -11,12 +11,15 @@
     <div class="row swimmers">
         @foreach($swimmers as $key => $swimmer)
             @if($key > 0 && $key % 2 == 0)
-                <div class="clearfix visible-xs visible-sm"></div>
+                <div class="clearfix visible-xs"></div>
             @endif
             @if($key > 0 && $key % 3 == 0)
-                <div class="clearfix visible-md"></div>
+                    <div class="clearfix visible-sm"></div>
+                @endif
+            @if($key > 0 && $key % 4 == 0)
+                <div class="clearfix visible-md visible-lg"></div>
             @endif
-            <div class="col-md-4 col-sm-6 col-xs-6 center">
+            <div class="col-md-3 col-sm-4 col-xs-6 center">
                 <a rel="external" href="{{ route('swimmers.show', ['group' => $group->slug, $swimmer->slug]) }}">
                     <span class="col-xs-12 col-sm-10 col-sm-offset-1">
                         <span class="thumbnail center swimmer-thumb" style="; ">

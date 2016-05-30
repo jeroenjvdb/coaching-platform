@@ -19,7 +19,7 @@ class CoachMiddleware
         if(!Auth::check()) {
             return redirect()->route('auth.login');
         } else if (! Auth::user()->clearance_level > 0) {
-            return redirect('/me');
+            return redirect('/');
         }
 
         return $next($request);

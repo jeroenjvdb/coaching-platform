@@ -2,9 +2,8 @@
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Support\Facades\Schema;
 
-class CreateCoachGroupTable extends Migration
+class CreateChatUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +12,10 @@ class CreateCoachGroupTable extends Migration
      */
     public function up()
     {
-        Schema::create('coach_group', function(Blueprint $table)
-        {
-            $table->integer('coach_id')->unsigned();
-            $table->integer('group_id')->unsigned();
+        Schema::create('chat_users', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('user_id')->unsigned();
+            $table->integer('chat_id')->unsigned();
         });
     }
 
@@ -27,6 +26,6 @@ class CreateCoachGroupTable extends Migration
      */
     public function down()
     {
-        Schema::drop('coach_group');
+        Schema::drop('chat_users');
     }
 }

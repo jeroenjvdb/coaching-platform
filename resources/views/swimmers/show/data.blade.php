@@ -5,7 +5,7 @@
     ],'files' => true,
     'data-ajax' => "false"]) !!}
 @else
-    {!! Form::open(['route' => ['me.reaction.store'], 'files' => true]) !!}
+    {!! Form::open(['route' => ['me.reaction.store', 'group' => $swimmer->group->slug], 'files' => true]) !!}
 @endif
 <fieldset class="form-group">
     {!! Form::label('message') !!}

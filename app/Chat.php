@@ -38,4 +38,9 @@ class Chat extends Model
     {
         return $this->hasMany('App\Message');
     }
+
+    public function users()
+    {
+        return $this->belongsToMany('App\User');
+    }
 }

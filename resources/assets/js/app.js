@@ -18,10 +18,29 @@ $(function () {
         var sortable = $('.sortable');
         sortable.sortable();
         sortable.sortable('disable');
+        calendar();
         addEventListeners();
         $(window).trigger('resize');
         createTimers();
         checkboxes();
+    }
+
+
+    function calendar()
+    {
+        $('.calendar').each(function(){
+            var url = $(this).data('url');
+            console.log(url);
+            $(this).fullCalendar({
+                events: {
+                    url: url,
+                    error: function() {
+                        alert('error')
+                    }
+                },
+            });
+        })
+
     }
 
     function checkboxes()
@@ -43,53 +62,6 @@ $(function () {
         });
     }
 
-    //function paging()
-    //{
-    //    console.log('paging');
-    //    var page = "#" + $( this ).attr( "id");
-    //
-    //    // Get the filename of the next page that we stored in the data-next attribute
-    //    //    next = $(  ).next( 'div[data-role="page"]' ),
-    //    // Get the filename of the previous page that we stored in the data-prev attribute
-    //    //    prev = $( this ).jqmData( "prev" );
-    //    // Check if we did set the data-next attribute
-    //        // Prefetch the next page
-    //        //$.mobile.loadPage( next + ".html" );
-    //        // Navigate to next page on swipe left
-    //        $( '.page' ).on( "swipeleft", function() {
-    //            next = $( this ).data( 'next' );
-    //            $.mobile.changePage( '#' + next , { transition: "slide",
-    //                                            allowSamePageTransition: true,
-    //
-    //            });
-    //        }).on( "swiperight", function() {
-    //            prev = $( this ).data( 'prev' );
-    //            $.mobile.changePage( '#' + prev , { transition: "slide",
-    //                allowSamePageTransition: true,
-    //            });
-    //});
-    //        // Navigate to next page when the "next" button is clicked
-    //        $( ".control .next", page ).on( "click", function() {
-    //            $.mobile.changePage( next + ".html", { transition: "slide" } );
-    //        });
-    //    // Disable the "next" button if there is no next page
-    //    //else {
-    //    //    $( ".control .next", page ).addClass( "ui-disabled" );
-    //    //}
-    //    // The same for the previous page (we set data-dom-cache="true" so there is no need to prefetch)
-    //    if ( prev ) {
-    //        $( document ).on( "swiperight", page, function() {
-    //            $.mobile.changePage( prev + ".html", { transition: "slide", reverse: true } );
-    //        });
-    //        $( ".control .prev", page ).on( "click", function() {
-    //            $.mobile.changePage( prev + ".html", { transition: "slide", reverse: true } );
-    //        });
-    //    }
-    //    else {
-    //        $( ".control .prev", page ).addClass( "ui-disabled" );
-    //    }
-    //}
-
     function addEventListeners()
     {
         $(window).on('resize', resize);
@@ -105,11 +77,17 @@ $(function () {
         var page = $('.page');
         page.on('swipeleft', swipePageLeft);
         page.on('swiperight', swipePageRight);
+        $('.sidebar-toggle').on('click', function(){
+            setTimeout(function(){
+                $(window).trigger('resize');
+            }, 250);
+        })
     }
 
     function resize(e)
     {
-        console.log(resize);
+        //delay(1000);
+        console.log('resize');
         var cw = $('.swimmer-thumb').width();
         $('.swimmer-thumb').css({'height':cw+'px'});
     }

@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
 
 class TrainingController extends Controller
@@ -197,5 +198,33 @@ class TrainingController extends Controller
 
         });
         //TODO make choice between pdf/xls
+    }
+
+    function get(Group $group)
+    {
+        $trainings = $this->training->all();
+        $trainingsArr = [];
+
+        foreach($trainings as $training) {
+            $starttime = Carbon::parse($training->starttime);
+            $start = $starttime->toDateTimeString();
+            $endtime = $starttime->addHours(2)->toDateTimeString();
+            $url = route('trainings.show', [
+                'group' => $group->slug,
+                'training_id' => $training->id,
+            ]);
+
+            $data = [
+                'start' => $start,
+                'end' => $endtime,
+                'url' => $url,
+            ];
+
+            array_push($trainingsArr, $data);
+        }
+
+        Log::info($trainingsArr);
+
+        return json_encode($trainingsArr);
     }
 }

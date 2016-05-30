@@ -61,20 +61,17 @@ Route::group(['middleware' => 'web'], function () {
 
     Route::group(['middleware' => 'auth'], function () {
         Route::get('/', 'HomeController@index');
-        Route::get('/me', 'MyController@me');
-        Route::post('/me', ['as' => 'me.reaction.store', 'uses' => 'MyController@store']);
-        Route::post('/me/heartRate', ['as' => 'me.heartRate', 'uses' => 'MyController@heartRate']);
-        Route::get('/me/heartRate', ['as' => 'profile.heartRate', 'uses' => 'MyController@getHeartRate']);
+        Route::group(['prefix' => '{group}'], function() {
+            Route::get('/me', ['as' => 'me.profile', 'uses' => 'MyController@me']);
+            Route::post('/me', ['as' => 'me.reaction.store', 'uses' => 'MyController@store']);
+            Route::post('/me/heartRate', ['as' => 'me.heartRate', 'uses' => 'MyController@heartRate']);
+            Route::get('/me/heartRate', ['as' => 'profile.heartRate', 'uses' => 'MyController@getHeartRate']);
+        });
 
 
         Route::group(['middleware' => 'coach'], function () {
 
-            Route::group(['prefix' => 'chat'], function () {
-                Route::get('/', ['as' => 'chat.index', 'uses' => 'ChatController@index']);
-                //Route::get('chat', ['as' => 'chat', 'uses' => 'ChatController@chat']);
-                Route::post('/fire', ['as' => 'chat.fire', 'uses' => 'ChatController@fire']);
-                Route::get('/{name}', ['as' => 'chat.show', 'uses' => 'ChatController@show']);
-            });
+
 
 
             Route::resource('coach', 'CoachController');
@@ -88,6 +85,13 @@ Route::group(['middleware' => 'web'], function () {
                 Route::get('/edit', ['as' => 'groups.edit', 'uses' => 'GroupController@edit']);
                 Route::post('/', ['as' => 'groups.update', 'uses' => 'GroupController@update']);
                 Route::get('/destroy', ['as' => 'groups.destroy', 'uses' => 'GroupController@destroy']);
+
+                Route::group(['prefix' => 'chat'], function () {
+                    Route::get('/', ['as' => 'chat.index', 'uses' => 'ChatController@index']);
+                    //Route::get('chat', ['as' => 'chat', 'uses' => 'ChatController@chat']);
+                    Route::post('/{name}/message', ['as' => 'chat.fire', 'uses' => 'ChatController@fire']);
+                    Route::get('/{name}', ['as' => 'chat.show', 'uses' => 'ChatController@show']);
+                });
 
 
                 Route::group(['prefix' => 'zwemmer', 'namespace' => 'Swimmer'], function () {
@@ -112,6 +116,7 @@ Route::group(['middleware' => 'web'], function () {
                     Route::get('/', ['as' => 'trainings.index', 'uses' => 'TrainingController@index']);
                     Route::get('/create', ['as' => 'trainings.create', 'uses' => 'TrainingController@create']);
                     Route::post('/', ['as' => 'trainings.store', 'uses' => 'TrainingController@store']);
+                    Route::get('/get', ['as' => 'trainings.get', 'uses' => 'TrainingController@get']);
                     Route::get('/{id}', ['as' => 'trainings.show', 'uses' => 'TrainingController@show']);
 
                     Route::get('/{training_id}/download', [

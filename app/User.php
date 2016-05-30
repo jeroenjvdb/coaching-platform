@@ -43,4 +43,14 @@ class User extends Authenticatable
     {
         return $this->belongsTo('App\Group');
     }
+
+    public function coaches()
+    {
+        return $this->hasMany('App\Coach');
+    }
+
+    public function chats()
+    {
+        return $this->belongsToMany('App\Chat', 'chat_users');
+    }
 }

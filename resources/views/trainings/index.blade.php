@@ -33,4 +33,21 @@
                                     ]) }}">{{ $training->starttime->formatLocalized('%A %d %B %P') }}</a> - {{ $training->total }}m</li>
         @endforeach
     </ul>
+
+    <div class="calendar" data-url="{{ route('trainings.get', [
+        'group' => $group->slug
+    ]) }}"></div>
+
+
+@stop
+
+@section('scripts')
+   {{-- <script src="/resources/js/jquery.min.js"></script>
+    <script src="/resources/js/jquery-ui.custom.min.js"></script>
+    <script src="/resources/js/moment.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            console.log('ready');
+        });
+    </script>--}}
 @stop

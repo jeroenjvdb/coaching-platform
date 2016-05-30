@@ -2,7 +2,11 @@
 
 @section('content')
     @foreach($chats as $chat)
-        <a href="{{ route('chat.show', [$chat->name]) }}">{{ $chat->name }}</a></br>
+        <a href="{{ route('chat.show', [
+            $chat->name,
+            'group' => $group->slug,
+        ]) }}"
+        rel="external">{{ $chat->name }}</a></br>
     @endforeach
 @stop
 

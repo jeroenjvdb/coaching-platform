@@ -51,7 +51,7 @@ class ChatController extends Controller
     public function index(Group $group)
     {
         $data = [
-            'chats' => $this->chat->all(),
+            'chats' => Auth::user()->chats,
             'group' => $group
         ];
 
@@ -66,17 +66,19 @@ class ChatController extends Controller
      */
     public function fire(Request $request)
     {
-        var_dump($request->all());
-        $chat = $this->chat->where('name', $request->input('chatName'))->first();
-        if(! Hash::check($this->authUser->id . $chat->name, $request->input('chatToken') )) {
-            //dd();
-            return false;
-        }
+//        var_dump($request->all());
+//        $chat = $this->chat->where('name', $request->input('chatName'))->first();
+//        if(! Hash::check($this->authUser->id . $chat->name, $request->input('chatToken') )) {
+//            //dd();
+//            return false;
+//        }
+
         $message = $request->input('msg');
+        $chat = Chat::where('name', $request->name)->first();
         var_dump($message);
         $message = $this->message->create([
             'message' => $message,
-            'user_id' => $this->authUser->id,
+            'user_id' => Auth::user()->id,
             'chat_id' => $chat->id,
         ]);
         //dd($request->input('msg'));
@@ -102,12 +104,12 @@ class ChatController extends Controller
         ]);
     }
 
-    public function show($name)
+    public function show(Group $group, $name)
     {
         $chat = $this->chat->where('name', $name)->first();
         $data = [
             'chat' => $chat,
-            'messages' => $chat->messages()->orderBy('created_at', 'ASC')->get(),
+            'messages' => $chat->messages()->orderBy('created_at', 'DESC')->get(),
             'chatToken' => Hash::make(Auth::user()->id . $chat->name ),
             'group' => $group,
         ];

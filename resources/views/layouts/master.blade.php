@@ -21,6 +21,7 @@
     {{--<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">--}}
 
     <link href="/resources/css/main.css" rel="stylesheet">
+    <link href="/resources/css/adminLTE.css" rel="stylesheet">
     <link href="/resources/css/skin.css" rel="stylesheet">
 
     @yield('style')
@@ -86,6 +87,8 @@
         @endif
         @yield('content')
     </div>
+
+    @yield('right')
 
     @include('includes.footer')
 </div>
