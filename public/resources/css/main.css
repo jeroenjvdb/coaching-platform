@@ -8047,10 +8047,14 @@ table {
 
 .nav-tabs-custom {
   position: relative;
-  top: 0px;
+  top: -5px;
   left: -5px;
   border-radius: 0;
   width: calc(100% + 10px); }
+
+@media (max-width: 768px) {
+  .nav-tabs-custom {
+    top: 0; } }
 
 .nav-tabs-custom > .nav-tabs > li {
   margin-right: 0; }
