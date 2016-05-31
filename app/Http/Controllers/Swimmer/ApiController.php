@@ -18,6 +18,7 @@ class ApiController extends Controller
 
         return json_encode([
             'type' => 'success',
+            'datatype' => 'heartRate',
             'hr' => $hr
         ]);
     }

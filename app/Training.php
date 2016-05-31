@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Training extends Model
@@ -95,8 +96,9 @@ class Training extends Model
         return $this->exercises->sum('total');
     }
 
-    
-
-
+    public function getStarttimeAttribute($value)
+    {
+        return Carbon::parse($value);
+    }
 
 }

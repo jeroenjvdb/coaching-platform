@@ -19,11 +19,30 @@ $(function () {
         sortable.sortable();
         sortable.sortable('disable');
         calendar();
+        charts();
         addEventListeners();
         $(window).trigger('resize');
         createTimers();
         checkboxes();
     }
+
+    function charts()
+    {
+        var charts = $('.chart');
+        var url = charts.data('url');
+        console.log(url);
+        $.getJSON(url, function(data) {
+            console.log(data);
+            console.log(charts[0]);
+            new ChartConfig(charts[0] , data)
+        });
+        //$('.chart').each(function(elem)
+        //{
+        //    console.log($(elem));
+        //});
+    }
+
+
 
 
     function calendar()

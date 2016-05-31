@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Group;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -77,10 +78,22 @@ class GroupController extends Controller
      */
     public function show(Group $group)
     {
-        $swimmers = $group->swimmers()->ordered()->get();
+        $swimmers = $group
+            ->swimmers()
+            ->ordered()
+            ->get();
+        $today = Carbon::today();
+        $tomorrow = Carbon::today()
+            ->addDay();
+
+        $trainings = $group->trainings()
+            ->where('starttime', '>', $today)
+            ->where('starttime', '<', $tomorrow)
+            ->get();
 
         $data = [
             'group' => $group,
+            'trainings' => $trainings,
             'swimmers' => $swimmers,
         ];
 

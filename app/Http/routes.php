@@ -165,6 +165,11 @@ Route::group(['middleware' => 'web'], function () {
                             'as' => 'category.exercise.store',
                             'uses' => 'CategoryController@store',
                         ]);
+
+                        Route::get('distances', [
+                            'as' => 'trainings.show.distances',
+                            'uses' => 'ApiController@individualDistance',
+                        ]);
                     });
 
                 });

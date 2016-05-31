@@ -17,6 +17,11 @@ class CategoryExercise extends Model
         'position',
     ];
 
+    protected $appends = [
+        'total',
+        'name',
+    ];
+
     public function exercises()
     {
         return $this->hasMany('App\Exercise', 'category_exercise_id');
@@ -40,6 +45,11 @@ class CategoryExercise extends Model
     public function getTotalAttribute()
     {
         return $this->exercises->sum('total');
+    }
+
+    public function getNameAttribute()
+    {
+        return $this->category->name;
     }
 
     public function changePosition($training, $newPos)
