@@ -58,4 +58,8 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('App\Chat', 'chat_users');
     }
+
+    public function setPasswordAttribute($password){
+        $this->attributes['password'] = bcrypt($password);
+    }
 }

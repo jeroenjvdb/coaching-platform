@@ -1,80 +1,99 @@
 .variation {
-	background-color: $color-variation;
-
-	.login-box {
-            width: 100%;
-            max-width: 350px;
-            margin: 150px auto;
-            background: #eaeaec;
-            position: relative;
-            overflow: hidden;
-            -moz-border-radius: 8px;
-            -webkit-border-radius: 8px;
-            border-radius: 8px;
-        }
-
-        .login-box .in {
-            padding: 20px;
-        }
-
-        .login-box .field {
-            width: 100%;
-            float: left;
-            margin: 10px 0 0 0;
-        }
-
-        input[type=text], input[type=password], input[type=email], input[type=url], textarea {
-            padding: 10px;
-            height: 40px;
-            width: 100%;
-            max-width: 100%;
-            background: #fff;
-            border: 1px solid #d6d6d6;
-            -moz-border-radius: 8px;
-            -webkit-border-radius: 8px;
-            border-radius: 8px;
-        }
-
-        .login-box .visual {
-            width: 50%;
-            overflow: hidden;
-            margin: 0 auto 10px;
-        }
-
-        .login-box .field .btn,
-        .login-box .field .dataTables_wrapper .dataTables_paginate a,
-        .dataTables_wrapper .dataTables_paginate .login-box .field a {
-            display: block;
-            width: 100%;
-            text-align: center;
-            height: $btn-size-m;
-        }
-
-        .btn, .dataTables_wrapper .dataTables_paginate a {
-            display: inline-block;
-            padding: 15px 20px;
-            //background-color: #e11b22;
-            color: #fff;
-            border: none;
-            outline: none;
-            font-size: 13px;
-            line-height: 18px;
-            -webkit-font-smoothing: antialiased !important;
-            -moz-border-radius: 8px;
-            -webkit-border-radius: 8px;
-            border-radius: 8px;
-            -moz-transition: background-color, 125ms;
-            -o-transition: background-color, 125ms;
-            -webkit-transition: background-color, 125ms;
-            transition: background-color, 125ms;
-        }
-
-        .groups{
-            color:white;
-        }
-
-      .btn-lg {
-        font-size: 2em;
-        padding: 20px 30px;
+  background-color: $color-variation;
+  a {
+    color: black;
+    &:hover {
+      text-decoration: none;
+      .return {
+        background-color: #AAA;
       }
+    }
+
+    .return {
+      border-right: 1px solid #AAA;
+      border-bottom: 1px solid #AAA;
+      position: absolute;
+      top: 0;
+      left: 0;
+      padding-left: 10px;
+      padding-right: 10px;
+
+    }
+  }
+
+  .title-center {
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    top: -10px;
+  }
+
+  .login-box {
+    width: 100%;
+    max-width: 350px;
+    margin: 150px auto;
+    background: #eaeaec;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 2px 0 10px 2px #333;
+  }
+
+  .login-box .in {
+    padding: 20px;
+  }
+
+  .login-box .field {
+    width: 100%;
+    float: left;
+    margin: 10px 0 0 0;
+  }
+
+  input[type=text], input[type=password], input[type=email], input[type=url], textarea {
+    padding: 10px;
+    height: 40px;
+    width: 100%;
+    max-width: 100%;
+    background: #fff;
+    border: 1px solid #d6d6d6;
+  }
+
+  .login-box .visual {
+    width: 50%;
+    overflow: hidden;
+    margin: 0 auto 10px;
+  }
+
+  .login-box .field .btn,
+  .login-box .field .dataTables_wrapper .dataTables_paginate a,
+  .dataTables_wrapper .dataTables_paginate .login-box .field a {
+    display: block;
+    width: 100%;
+    text-align: center;
+    height: $btn-size-m;
+  }
+
+  .btn, .dataTables_wrapper .dataTables_paginate a {
+    display: inline-block;
+    padding: 15px 20px;
+    //background-color: #e11b22;
+    color: #fff;
+    border: none;
+    outline: none;
+    font-size: 13px;
+    line-height: 18px;
+    -webkit-font-smoothing: antialiased !important;
+    -moz-transition: background-color, 125ms;
+    -o-transition: background-color, 125ms;
+    -webkit-transition: background-color, 125ms;
+    transition: background-color, 125ms;
+  }
+
+  .groups {
+    color: white;
+  }
+
+  .btn-lg {
+    font-size: 2em;
+    padding: 20px 30px;
+  }
 }

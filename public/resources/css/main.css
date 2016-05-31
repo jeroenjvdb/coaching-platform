@@ -7944,6 +7944,25 @@ h3 {
 
 .variation {
   background-color: #d73925; }
+  .variation a {
+    color: black; }
+    .variation a:hover {
+      text-decoration: none; }
+      .variation a:hover .return {
+        background-color: #AAA; }
+    .variation a .return {
+      border-right: 1px solid #AAA;
+      border-bottom: 1px solid #AAA;
+      position: absolute;
+      top: 0;
+      left: 0;
+      padding-left: 10px;
+      padding-right: 10px; }
+  .variation .title-center {
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    top: -10px; }
   .variation .login-box {
     width: 100%;
     max-width: 350px;
@@ -7951,7 +7970,7 @@ h3 {
     background: #eaeaec;
     position: relative;
     overflow: hidden;
-    border-radius: 8px; }
+    box-shadow: 2px 0 10px 2px #333; }
   .variation .login-box .in {
     padding: 20px; }
   .variation .login-box .field {
@@ -7964,8 +7983,7 @@ h3 {
     width: 100%;
     max-width: 100%;
     background: #fff;
-    border: 1px solid #d6d6d6;
-    border-radius: 8px; }
+    border: 1px solid #d6d6d6; }
   .variation .login-box .visual {
     width: 50%;
     overflow: hidden;
@@ -7986,7 +8004,6 @@ h3 {
     font-size: 13px;
     line-height: 18px;
     -webkit-font-smoothing: antialiased !important;
-    border-radius: 8px;
     transition: background-color, 125ms; }
   .variation .groups {
     color: white; }

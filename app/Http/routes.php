@@ -61,6 +61,14 @@ Route::group(['middleware' => 'web'], function () {
 
     Route::group(['middleware' => 'auth'], function () {
         Route::get('/', 'HomeController@index');
+        Route::get('/password', [
+            'as' => 'auth.password.edit',
+            'uses' => 'UserController@getUpdatePassword',
+            ]);
+        Route::post('/password', [
+            'as' => 'auth.password.update',
+            'uses' => 'UserController@postUpdatePassword',
+        ]);
         Route::group(['prefix' => '{group}'], function() {
             Route::get('/me', ['as' => 'me.profile', 'uses' => 'MyController@me']);
             Route::post('/me', ['as' => 'me.reaction.store', 'uses' => 'MyController@store']);
