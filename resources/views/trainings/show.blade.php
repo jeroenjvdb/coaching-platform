@@ -6,8 +6,14 @@
         'group' => $group->slug,
         'training_id' => $training->id,
     ]) }}"><i class="fa fa-download"></i></a></h2>
+    <div class="row">
 
-    <a href="#" data-toggle="add-exercise"><i class="fa fa-plus"></i><span class="sr-only">Add new exercise</span></a>
+        <div class="col-xs-2 col-xs-offset-10 text-center">
+            <a href="#" data-toggle="add-exercise"><i class="fa fa-plus"></i><span
+                        class="sr-only">Add new exercise</span></a>
+        </div>
+
+    </div>
 
     <div class="training">
         <div id="exercises" class="sortable" data-url="{{ route('exercises.update.cat.position', [
@@ -29,14 +35,15 @@
                             {{ $category->total }}m
                         </div>
                         <div class="col-xs-1 no-gutter  ">
-                            <a href="#" data-toggle="add-exercise-{{ $category->id }}"><i class="fa fa-plus"></i><span class="sr-only">Add new exercise</span></a>
+                            <a href="#" data-toggle="add-exercise-{{ $category->id }}"><i class="fa fa-plus"></i><span
+                                        class="sr-only">Add new exercise</span></a>
                         </div>
                     </div>
                     <div class="sortable">
                         @foreach($category->exercises as $exercise)
                             @include('trainings.show.exercise')
                         @endforeach
-                            @include('trainings.show.create')
+                        @include('trainings.show.create')
                     </div>
                 </div>
 

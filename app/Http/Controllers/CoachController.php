@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Coach;
+use App\Group;
+use App\User;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -14,10 +16,15 @@ class CoachController extends Controller
      * @var Coach
      */
     private $coach;
+    /**
+     * @var User
+     */
+    private $user;
 
-    public function __construct(Coach $coach)
+    public function __construct(Coach $coach, User $user)
     {
         $this->coach = $coach;
+        $this->user = $user;
     }
 
     /**
@@ -34,12 +41,16 @@ class CoachController extends Controller
     /**
      * Create new coach.
      *
+     * @param Group $group
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function create()
+    public function create(Group $group)
     {
+        $data = [
+            'group' => $group,
+        ];
 
-        return view('coach.create');
+        return view('coach.create', $data);
     }
 
     /**
@@ -48,13 +59,38 @@ class CoachController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(Request $request, Group $group)
     {
-        $coach = $this->coach->create([
+        echo 'store';
 
+        $user = $this->user->where('email', $request->email)->first();
+        if($user) {
+            if($user->clearance_level < 1) {
+                $user->clearance_level = 1;
+                $user->save();
+            }
+
+
+
+        } else {
+            $user = $this->user->create([
+                'email' => $request->email,
+                'clearance_level' => 1,
+                'name' => $request->first_name,
+                'password' => bcrypt('root'),
+            ]);
+        }
+
+        $coach = $user->coach()->create([
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
         ]);
 
-        return redirect()->route('coach.index');
+        $group->coaches()->attach($coach);
+
+        return redirect()->route('{group}.coach.index', [
+            'group' => $group->slug
+        ]);
     }
 
     /**

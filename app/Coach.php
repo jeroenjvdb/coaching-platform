@@ -21,8 +21,10 @@ class Coach extends Model
     protected $fillable = [
         'first_name',
         'last_name',
-        'user_id',
+//        'user_id',
     ];
+
+    public $timestamps = false;
 
     /**
      * get the user associated with the coach

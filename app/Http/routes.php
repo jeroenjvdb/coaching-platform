@@ -72,9 +72,12 @@ Route::group(['middleware' => 'web'], function () {
         Route::group(['middleware' => 'coach'], function () {
 
 
+            Route::group(['prefix' => '{group}'], function() {
+                Route::resource('coach', 'CoachController', ['parameters' => [
+//                'group' => 'group',
+                ]]);
+            });
 
-
-            Route::resource('coach', 'CoachController');
 
             Route::get('/create', ['as' => 'groups.create', 'uses' => 'GroupController@create']);
             Route::post('/', ['as' => 'groups.store', 'uses' => 'GroupController@store']);
@@ -85,6 +88,7 @@ Route::group(['middleware' => 'web'], function () {
                 Route::get('/edit', ['as' => 'groups.edit', 'uses' => 'GroupController@edit']);
                 Route::post('/', ['as' => 'groups.update', 'uses' => 'GroupController@update']);
                 Route::get('/destroy', ['as' => 'groups.destroy', 'uses' => 'GroupController@destroy']);
+
 
                 Route::group(['prefix' => 'chat'], function () {
                     Route::get('/', ['as' => 'chat.index', 'uses' => 'ChatController@index']);
