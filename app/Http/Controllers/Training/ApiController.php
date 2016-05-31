@@ -39,6 +39,7 @@ class ApiController extends Controller
         return json_encode([
             'type' => 'success',
             'datatype' => 'distance',
+            'training' => $training,
             'categories' => $categories,
         ]);
     }
