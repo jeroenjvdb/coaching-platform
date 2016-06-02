@@ -1,7 +1,7 @@
 @extends('layouts.landing')
 
 @section('content')
-    <div class="login-box ">
+    <div class="login-box box box-danger">
         <div class="in clearfix">
             {!! Form::open(['url' => '/login']) !!}
             <div class="visual">

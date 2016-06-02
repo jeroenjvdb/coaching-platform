@@ -14,7 +14,7 @@
                 'group' => $swimmer->group->slug,
             ]) }}"
         @else
-            data-url="{{ route('swimmers.heartRate', [
+            data-url="{{ route('{group}.swimmer.heartRate', [
                 'group' => $group->slug,
                 'swimmer' => $swimmer->slug,
             ]) }}"

@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -33,6 +34,12 @@ class TrainingController extends Controller
         Group $group
     )
     {
+        $this->middleware('coach', ['except' => [
+            'index',
+            'show',
+            'get',
+        ]]);
+
         $this->training = $training;
         $this->group = $group;
         setLocale(LC_TIME, 'nl_NL.utf8');
@@ -90,7 +97,7 @@ class TrainingController extends Controller
         ]);
         $training = $group->trainings()->save($training);
 
-        return redirect()->route('trainings.show', [
+        return redirect()->route('{group}.training.show', [
             'group' => $group->slug,
             'training' => $training->id,
         ]);
@@ -110,6 +117,12 @@ class TrainingController extends Controller
 //            ->with(['exercises' => function ($query) {
 //                $query->positioned();
 //            }])
+        if(!Auth::user()->clearance_level > 0 && !$training->is_shared) {
+
+            return redirect()->back()->withErrors([
+                'you aren\'t permitted to view this training',
+            ]);
+        }
         setLocale(LC_TIME, 'nl_NL.utf8');
         $starttime = new Carbon($training->starttime);
 //        dd($starttime);
@@ -123,6 +136,10 @@ class TrainingController extends Controller
 
 
         $swimmers = $group->swimmers()->presences($training->id)->get();
+        $editable = false;
+        if(Auth::user()->clearance_level > 0) {
+            $editable = true;
+        }
 
 
         $data = [
@@ -130,6 +147,7 @@ class TrainingController extends Controller
             'categories' => $categories,
             'group' => $group,
             'swimmers' => $swimmers,
+            'editable' => $editable,
         ];
 
         return view('trainings.show', $data);
@@ -200,35 +218,5 @@ class TrainingController extends Controller
         //TODO make choice between pdf/xls
     }
 
-    function get(Request $request, Group $group)
-    {
-        $trainings = $group->trainings()
-            ->where('starttime', '>', $request->start)
-            ->where('starttime', '<', $request->end)
-            ->get();
-        $trainingsArr = [];
 
-        foreach($trainings as $training) {
-            $starttime = Carbon::parse($training->starttime);
-            $start = $starttime->toDateTimeString();
-            $endtime = $starttime->addHours(2)->toDateTimeString();
-            $url = route('trainings.show', [
-                'group' => $group->slug,
-                'training_id' => $training->id,
-            ]);
-
-            $data = [
-                'start' => $start,
-                'end' => $endtime,
-                'url' => $url,
-            ];
-
-            array_push($trainingsArr, $data);
-        }
-//        Log::info('request: ', [$request->all()]);
-
-        Log::info($trainingsArr);
-
-        return json_encode($trainingsArr);
-    }
 }

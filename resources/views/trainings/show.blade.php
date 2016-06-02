@@ -1,44 +1,37 @@
 @extends('layouts.master')
 
 @section('content')
-    {!! Breadcrumbs::render('trainings.show', $group, $training) !!}
-    <h2>training {{ $training->starttime->formatLocalized('%A %d %B %P') }} <a rel="external" href="{{ route('training.download', [
+    {!! Breadcrumbs::render('{group}.training.show', $group, $training) !!}
+    <h2>training {{ $training->starttime->formatLocalized('%A %d %B %P') }} <a rel="external" href="{{ route('{group}.training.download', [
         'group' => $group->slug,
         'training_id' => $training->id,
     ]) }}"><i class="fa fa-download"></i></a></h2>
-    <div class="row">
-
+    @if($editable)
+        <div class="row">
         <div class="col-xs-2 col-xs-offset-10 text-center">
             <a href="#" data-toggle="add-exercise"><i class="fa fa-plus"></i><span
                         class="sr-only">Add new exercise</span></a>
         </div>
-
     </div>
-
+        @endif
+    @if($editable)
+        <a href="{{ route('{group}.training.shared', [
+            'group' => $group->slug,
+            $training->id,
+        ]) }}">is_shared</a>
+    @endif
     <div class="training">
-        <div id="exercises" class="sortable" data-url="{{ route('exercises.update.cat.position', [
+        <div id="exercises" class="sortable" data-url="{{ route('{group}.training.exercise.update.cat.position', [
             'group' => $group->slug,
             'training_id' => $training->id,
         ]) }}">
             @foreach($categories as $category)
                 <div id="category-{{ $category->id }}" class="test" data-id="{{ $category->id }}"
-                     data-table="exercises" data-class="test" data-url="{{ route('exercises.update.position', [
+                     data-table="exercises" data-class="test" data-url="{{ route('{group}.training.exercise.update.position', [
             'group' => $group->slug,
             'training_id' => $training->id,
         ]) }}">
-                    <div class="category exercise-ui row">
-                        <div class="sort-bars col-xs-1"><i class="fa fa-bars"></i></div>
-                        <div class="col-xs-4">
-                            <div class="">{{ $category->category->name }}</div>
-                        </div>
-                        <div class="col-xs-6">
-                            {{ $category->total }}m
-                        </div>
-                        <div class="col-xs-1 no-gutter  ">
-                            <a href="#" data-toggle="add-exercise-{{ $category->id }}"><i class="fa fa-plus"></i><span
-                                        class="sr-only">Add new exercise</span></a>
-                        </div>
-                    </div>
+                    @include('trainings.show.category')
                     <div class="sortable">
                         @foreach($category->exercises as $exercise)
                             @include('trainings.show.exercise')
@@ -54,10 +47,11 @@
 
                 </div>
             </div>
+                @if($editable)
             <div class="add-exercise " hidden data-is_form="true">
                 <h2>add category</h2>
                 {!! Form::open(['route' => [
-                                    'category.exercise.store',
+                                    '{group}.training.category.exercise.store',
                                     'group' => $group->slug,
                                     'id' => $training->id
                                 ],
@@ -73,6 +67,7 @@
                 </fieldset>
                 {!! Form::close() !!}
             </div>
+                @endif
         </div>
     </div>
     <div class="row">

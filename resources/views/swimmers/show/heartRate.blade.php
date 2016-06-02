@@ -4,7 +4,7 @@ heartRate
 
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    {!! Form::open(['route' => ['swimmers.heartRate',
+    {!! Form::open(['route' => ['{group}.swimmer.heartRate',
         'group' => $group->slug,
         'swimmer' => $swimmer->slug,
     ], 'data-ajax' => 'false']) !!}

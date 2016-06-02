@@ -73,7 +73,7 @@ class StopwatchController extends Controller
 
         $stopwatch = Auth::user()->stopwatches()->save( $stopwatchData );
 
-        return redirect()->route('stopwatches.show', [
+        return redirect()->route('{group}.stopwatch.show', [
             'group' => $group->slug,
             'id' => $stopwatch->id,
         ]);
@@ -112,14 +112,16 @@ class StopwatchController extends Controller
             $lastTime = $lastTime->created;
         }
 
+        $storeUrl = route('{group}.stopwatch.storeTime', [
+            'group' => $group->slug,
+            'id' => $id,
+        ]);
+
        // dd($stopwatch->times->last()->time);
         JavaScript::put([
             'user_id' => $user->id,
             'stopwatch_id' => $id,
-            'stopwatch_store' => route('stopwatches.storeTime', [
-                                    'group' => $group->slug,
-                                    'id' => $id,
-                                    ]),
+            'stopwatch_store' =>$storeUrl,
             'clock' =>  $clock,
             'is_paused' => $is_paused,
             'lastTime' => $lastTime,
@@ -128,10 +130,7 @@ class StopwatchController extends Controller
         $data = [
             'group' => $group,
             'stopwatch' => $stopwatch,
-            'url' => route('stopwatches.storeTime', [
-                'group' => $group->slug,
-                'id' => $id,
-            ]),
+            'url' => $storeUrl,
             'is_paused' => $is_paused,
             'clock' => $clock,
             'lastTime' => $lastTime,

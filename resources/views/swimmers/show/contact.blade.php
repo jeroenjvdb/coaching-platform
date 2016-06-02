@@ -10,7 +10,7 @@
         @endif
             alt=""></a>
         {!! Form::open([
-            'route' => ['swimmers.contact.update',
+            'route' => ['{group}.swimmer.contact.update',
             'group' => $group->slug,
             'swimmer' => $swimmer->slug,
             ],
@@ -45,7 +45,7 @@
                             </div>
                         </div>
                         <div class="row phone contact-form" data-is_form="true" data-form="phone" hidden>
-                            {!! Form::open(['route' => ['swimmers.contact.update',
+                            {!! Form::open(['route' => ['{group}.swimmer.contact.update',
             'group' => $group->slug,
             'swimmer' => $swimmer->slug,
             ],
@@ -83,7 +83,7 @@
                             </div>
                         </div>
                         <div class="row address contact-form" hidden data-is_form="true" data-form="address">
-                            {!! Form::open(['route' => ['swimmers.contact.update',
+                            {!! Form::open(['route' => ['{group}.swimmer.contact.update',
                                         'group' => $group->slug,
                                         'swimmer' => $swimmer->slug,
                                         ],
@@ -118,7 +118,7 @@
                             </div>
                         </div>
                         <div class="row swimmer-email contact-form" data-is_form="true" hidden>
-                            {!! Form::open(['route' => ['swimmers.contact.update',
+                            {!! Form::open(['route' => ['{group}.swimmer.contact.update',
                                         'group' => $group->slug,
                                         'swimmer' => $swimmer->slug,
                                         ],
@@ -156,7 +156,7 @@
         </div>
     </div>
     <div class="col-md-10 col-xs-12 contact-form" data-is_form="true" data-form="contact" hidden>
-        {!! Form::open(['route' => ['swimmers.contact.update',
+        {!! Form::open(['route' => ['{group}.swimmer.contact.update',
             'group' => $group->slug,
             'swimmer' => $swimmer->slug,
             ],

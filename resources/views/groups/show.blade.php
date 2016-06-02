@@ -5,7 +5,7 @@
 @section('content')
     {!! Breadcrumbs::render('group', $group) !!}
     <h1>{{ $group->name }}</h1>
-    <a href="{{ route('swimmers.download.pr', ['group' => $group->slug]) }}">download</a>
+    <a href="{{ route('{group}.swimmer.download.pr', ['group' => $group->slug]) }}">download</a>
     <a href="{{ route('groups.edit', [$group->slug]) }}">edit</a>
     <h2>vandaag</h2>
 
@@ -19,7 +19,7 @@
             <div class="col-xs-12 col-md-6 col-lg-4">
                 <div class="row">
                     <div class="col-xs-12 text-center">
-                        <a href="{{ route('trainings.show', [
+                        <a href="{{ route('{group}.training.show', [
                     'group' => $group->slug,
                     'training_id' => $training->id,
                 ]) }}">
@@ -32,7 +32,7 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-12">
-                        <canvas class="chart" data-url="{{ route('trainings.show.distances', [
+                        <canvas class="chart" data-url="{{ route('{group}.training.show.distances', [
                     'group' => $group->slug,
                     'training_id' => $training->id,
                 ]) }}"></canvas>
@@ -42,7 +42,7 @@
         @endforeach
     </div>
 
-    <h2>zwemmers <a href="{{ route('swimmers.create', [
+    <h2>zwemmers <a href="{{ route('{group}.swimmer.create', [
         'group' => $group->slug,
     ]) }}" class="small"><i class="fa fa-plus"></i></a></h2>
     <div class="row swimmers">
@@ -60,7 +60,10 @@
                 <div class="clearfix visible-lg"></div>
             @endif
             <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6 center">
-                <a rel="external" href="{{ route('swimmers.show', ['group' => $group->slug, $swimmer->slug]) }}">
+                <a rel="external" href="{{ route('{group}.swimmer.show', [
+                    'group' => $group->slug,
+                    $swimmer->slug
+                ]) }}">
                     <span class="col-xs-12 col-sm-10 col-sm-offset-1">
                         <span class="thumbnail center swimmer-thumb" style="; ">
                         @if($swimmer->getMeta('picture'))

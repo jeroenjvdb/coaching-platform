@@ -1,5 +1,6 @@
+@if($editable)
 <h2>presences</h2>
-{{ Form::open(['route' => ['presences.store',
+{{ Form::open(['route' => ['{group}.training.presences.store',
                                 'group' => $group->slug,
                                 'training_id' => $training->id,
                             ],
@@ -29,3 +30,4 @@
 </div>
 {{ Form::submit() }}
 {{ Form::close() }}
+    @endif

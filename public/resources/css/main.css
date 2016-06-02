@@ -8007,6 +8007,13 @@ h3 {
     transition: background-color, 125ms; }
   .variation .groups {
     color: white; }
+    .variation .groups .btn {
+      width: 100%;
+      margin: 5px auto;
+      height: 5.2rem; }
+      .variation .groups .btn .fa {
+        position: relative;
+        top: -5px; }
   .variation .btn-lg, .variation .btn-group-lg > .btn {
     font-size: 2em;
     padding: 20px 30px; }
@@ -8024,8 +8031,12 @@ h3 {
 
 .btn {
   border-radius: 0; }
-  .btn .btn-secondary {
+  .btn.btn-secondary {
     color: #444; }
+  .btn.btn-no-border {
+    border: none;
+    background-color: transparent;
+    padding: 0; }
 
 .stopwatch span {
   font-family: digital-7;

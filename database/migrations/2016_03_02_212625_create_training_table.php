@@ -18,6 +18,7 @@ class CreateTrainingTable extends Migration
 
             $table->integer('group_id')->unsigned();
             $table->dateTime('starttime');
+            $table->boolean('is_shared')->default(0);
 
             $table->timestamps();
         });

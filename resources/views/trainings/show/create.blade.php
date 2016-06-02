@@ -1,13 +1,14 @@
+@if($editable)
 {!! Form::open(['route' => [
-                                        'exercises.store',
-                                        'group' => $group->slug,
-                                        'id' => $training->id
-                                    ],
-                                    'data-ajax' => "false",
-                                    'class' => 'exercise-ui row add-exercise-' . $category->id ,
-                                    'data-is_form' => 'true',
-                                    'hidden'
-                                    ]) !!}
+        '{group}.training.exercise.store',
+        'group' => $group->slug,
+        'id' => $training->id
+    ],
+    'data-ajax' => "false",
+    'class' => 'exercise-ui row add-exercise-' . $category->id ,
+    'data-is_form' => 'true',
+    'hidden'
+]) !!}
 <fieldset class="form-group col-xs-7">
     <div class="col-xs-5">
         {!! Form::label('sets', 'sets', [
@@ -50,3 +51,4 @@
 ]) !!}
 </fieldset>
 {!! Form::close() !!}
+    @endif

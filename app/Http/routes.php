@@ -32,23 +32,6 @@ Route::bind('swimmer', function ($slug) {
 |
 */
 
-Route::group(['middleware' => ['web']], function () {
-    Route::get('/test', function () {
-        return view('test');
-    });
-    // Route::get('/test', function () {
-    //     $redis = app()->make('redis');
-    //     $redis->set('key1', 'test');
-    //     return $redis->get('key1');
-    // });
-});
-
-
-Route::group(['middleware' => 'auth'], function () {
-
-});
-
-
 Route::group(['middleware' => 'web'], function () {
     Route::get('test', 'HomeController@test');
     Route::auth();
@@ -64,12 +47,12 @@ Route::group(['middleware' => 'web'], function () {
         Route::get('/password', [
             'as' => 'auth.password.edit',
             'uses' => 'UserController@getUpdatePassword',
-            ]);
+        ]);
         Route::post('/password', [
             'as' => 'auth.password.update',
             'uses' => 'UserController@postUpdatePassword',
         ]);
-        Route::group(['prefix' => '{group}'], function() {
+        Route::group(['prefix' => '{group}'], function () {
             Route::get('/me', ['as' => 'me.profile', 'uses' => 'MyController@me']);
             Route::post('/me', ['as' => 'me.reaction.store', 'uses' => 'MyController@store']);
             Route::post('/me/heartRate', ['as' => 'me.heartRate', 'uses' => 'MyController@heartRate']);
@@ -77,13 +60,122 @@ Route::group(['middleware' => 'web'], function () {
         });
 
 
-        Route::group(['middleware' => 'coach'], function () {
+        Route::group([/*'middleware' => 'coach'*/], function () {
 
 
-            Route::group(['prefix' => '{group}'], function() {
+            Route::group(['prefix' => '{group}'], function () {
                 Route::resource('coach', 'CoachController', ['parameters' => [
 //                'group' => 'group',
                 ]]);
+                Route::group(['namespace' => 'Training'], function () {
+                    Route::get('/get', ['as' => '{group}.training.get', 'uses' => 'ApiController@get']);
+//                    Route::get('/{id}', ['as' => 'trainings.show', 'uses' => 'TrainingController@show']);
+
+                    Route::get('training/{training_id}/download', [
+                        'as' => '{group}.training.download',
+                        'uses' => 'TrainingController@download',
+                    ]);
+
+
+                    Route::group(['prefix' => 'training/{training_id}'], function () {
+                        Route::post('presences', [
+                            'as' => '{group}.training.presences.store',
+                            'uses' => 'PresenceController@store',
+                        ]);
+
+                        Route::post('exercise/position', [
+                            'as' => '{group}.training.exercise.update.position',
+                            'uses' => 'ExerciseController@updatePosition',
+                        ]);
+
+                        Route::post('exercise/position/category', [
+                            'as' => '{group}.training.exercise.update.cat.position',
+                            'uses' => 'CategoryController@updateCatPosition',
+                        ]);
+
+                        Route::post('category', [
+                            'as' => '{group}.training.category.exercise.store',
+                            'uses' => 'CategoryController@store',
+                        ]);
+
+                        Route::get('distances', [
+                            'as' => '{group}.training.show.distances',
+                            'uses' => 'ApiController@individualDistance',
+                        ]);
+                        Route::get('shared', [
+                            'as' => '{group}.training.shared',
+                            'uses' => 'ApiController@shared',
+                        ]);
+
+                    });
+                    Route::resource('training', 'TrainingController');
+                    Route::resource('training.exercise', 'ExerciseController', [
+                        'except' => [
+                            'index',
+                            'show',
+                            'edit',
+                        ]
+                    ]);
+
+                });
+
+                Route::group([ 'namespace' => 'Swimmer'], function () {
+                    Route::group(['prefix' => 'zwemmer'], function() {
+                        Route::get('download', ['as' => '{group}.swimmer.download.pr', 'uses' => 'SwimmerController@download']);
+
+                        Route::group(['prefix' => '{swimmer}'], function () {
+                            Route::post('meta', [
+                                'as' => '{group}.swimmer.meta.store',
+                                'uses' => 'MetaController@store',
+                            ]);
+                            Route::post('contact', [
+                                'as' => '{group}.swimmer.contact.update',
+                                'uses' => 'ContactController@update'
+                            ]);
+
+                            Route::post('heartRate', [
+                                'as' => '{group}.swimmer.heartRate',
+                                'uses' => 'ApiController@heartRate'
+                            ]);
+                            Route::get('heartRate', [
+                                'as' => '{group}.swimmer.heartRate',
+                                'uses' => 'ApiController@getHeartRate'
+                            ]);
+
+                        });
+                    });
+
+                    Route::resource('zwemmer', 'SwimmerController', [
+                        'names' => [
+                            'index' => '{group}.swimmer.index',
+                            'store' => '{group}.swimmer.store',
+                            'create' => '{group}.swimmer.create',
+                            'show' => '{group}.swimmer.show',
+                            'update' => '{group}.swimmer.update',
+                            'edit' => '{group}.swimmer.edit',
+                        ],
+                        'parameters' => [
+                            'zwemmer' => 'swimmer',
+                        ],
+                        'except' => [
+                            'destroy',
+                        ]
+                    ]);
+
+                });
+                Route::post('stopwatch/{id}/time', [
+                    'as' => '{group}.stopwatch.storeTime',
+                    'uses' => 'StopwatchTimeController@store'
+                ]);
+
+                Route::resource('stopwatch', 'StopwatchController', [
+                    'except' => [
+                        'destroy',
+                        'edit',
+                        'update',
+                    ],
+                ]);
+
             });
 
 
@@ -106,123 +198,47 @@ Route::group(['middleware' => 'web'], function () {
                 });
 
 
-                Route::group(['prefix' => 'zwemmer', 'namespace' => 'Swimmer'], function () {
-                    Route::get('/', ['as' => 'swimmers.index', 'uses' => 'SwimmerController@index']);
-                    Route::get('/create', ['as' => 'swimmers.create', 'uses' => 'SwimmerController@create']);
-                    Route::post('/', ['as' => 'swimmers.store', 'uses' => 'SwimmerController@store']);
-                    Route::get('/download', ['as' => 'swimmers.download.pr', 'uses' => 'SwimmerController@download']);
-                    Route::group(['prefix' => '{swimmer}'], function () {
-                        Route::get('/', ['as' => 'swimmers.show', 'uses' => 'SwimmerController@show']);
-                        Route::get('edit', ['as' => 'swimmers.edit', 'uses' => 'SwimmerController@edit']);
-                        Route::post('/', ['as' => 'swimmers.update', 'uses' => 'SwimmerController@update']);
-                        Route::post('meta', ['as' => 'swimmers.meta.store', 'uses' => 'MetaController@store']);
-                        Route::post('contact', ['as' => 'swimmers.contact.update', 'uses' => 'ContactController@update']);
-
-                        Route::post('heartRate', ['as' => 'swimmers.heartRate', 'uses' => 'ApiController@heartRate']);
-                        Route::get('heartRate', ['as' => 'swimmers.heartRate', 'uses' => 'ApiController@getHeartRate']);
-
-                    });
-                });
-
                 Route::group(['prefix' => 'training', 'namespace' => 'Training'], function () {
-                    Route::get('/', ['as' => 'trainings.index', 'uses' => 'TrainingController@index']);
-                    Route::get('/create', ['as' => 'trainings.create', 'uses' => 'TrainingController@create']);
-                    Route::post('/', ['as' => 'trainings.store', 'uses' => 'TrainingController@store']);
-                    Route::get('/get', ['as' => 'trainings.get', 'uses' => 'TrainingController@get']);
-                    Route::get('/{id}', ['as' => 'trainings.show', 'uses' => 'TrainingController@show']);
-
-                    Route::get('/{training_id}/download', [
-                        'as' => 'training.download',
-                        'uses' => 'TrainingController@download',
-                    ]);
-
-
-                    Route::group(['prefix' => '{training_id}'], function () {
-                        Route::post('presences', [
-                            'as' => 'presences.store',
-                            'uses' => 'PresenceController@store',
-                        ]);
-
-                        Route::post('exercise/', [
-                            'as' => 'exercises.store',
-                            'uses' => 'ExerciseController@store',
-                        ]);
-
-                        Route::post('exercise/position', [
-                            'as' => 'exercises.update.position',
-                            'uses' => 'ExerciseController@updatePosition',
-                        ]);
-
-                        Route::post('exercise/position/category', [
-                            'as' => 'exercises.update.cat.position',
-                            'uses' => 'CategoryController@updateCatPosition',
-                        ]);
-
-                        Route::get('exercise/{id}', [
-                            'as' => 'exercises.edit',
-                            'uses' => 'ExerciseController@edit',
-                        ]);
-
-                        Route::post('exercise/{id}', [
-                            'as' => 'exercises.update',
-                            'uses' => 'ExerciseController@update',
-                        ]);
-
-                        Route::get('exercise/{id}/delete', [
-                            'as' => 'exercises.delete',
-                            'uses' => 'ExerciseController@destroy',
-                        ]);
-
-                        Route::post('category', [
-                            'as' => 'category.exercise.store',
-                            'uses' => 'CategoryController@store',
-                        ]);
-
-                        Route::get('distances', [
-                            'as' => 'trainings.show.distances',
-                            'uses' => 'ApiController@individualDistance',
-                        ]);
-                    });
+//                    Route::get('/', ['as' => 'trainings.index', 'uses' => 'TrainingController@index']);
+//                    Route::get('/create', ['as' => 'trainings.create', 'uses' => 'TrainingController@create']);
+//                    Route::post('/', ['as' => 'trainings.store', 'uses' => 'TrainingController@store']);
 
                 });
-
-                Route::group(['prefix' => 'stopwatch'], function () {
-                    Route::get('/', ['as' => 'stopwatches.index', 'uses' => 'StopwatchController@index']);
-                    Route::get('/create', ['as' => 'stopwatches.create', 'uses' => 'StopwatchController@create']);
-                    Route::post('/', ['as' => 'stopwatches.store', 'uses' => 'StopwatchController@store']);
-                    Route::get('/{id}', ['as' => 'stopwatches.show', 'uses' => 'StopwatchController@show']);
-                    Route::post('/{id}/time', ['as' => 'stopwatches.storeTime', 'uses' => 'StopwatchTimeController@store']);
-                });
-
-                Route::group(['prefix' => 'gym', 'namespace' => 'Gym'], function () {
-                    Route::group(['prefix' => 'exercise'], function () {
-                        Route::get('/', ['as' => 'gym.exercises.index', 'uses' => 'ExerciseController@index']);
-                        Route::get('/create', ['as' => 'gym.exercises.create', 'uses' => 'ExerciseController@create']);
-                        Route::post('/', ['as' => 'gym.exercises.store', 'uses' => 'ExerciseController@store']);
-                        Route::get('/{id}', ['as' => 'gym.exercises.show', 'uses' => 'ExerciseController@show']);
-                        Route::post('/{id}/category', ['as' => 'gym.exercises.category', 'uses' => 'CategoryController@add']);
-                    });
-
-                    Route::post('/category', ['as' => 'gym.categories.store', 'uses' => 'CategoryController@store']);
-
-
-                    Route::get('/', ['as' => 'gyms.index', 'uses' => 'GymController@index']);
-                    Route::get('/create', ['as' => 'gyms.create', 'uses' => 'GymController@create']);
-                    Route::post('/', ['as' => 'gyms.store', 'uses' => 'GymController@store']);
-                    Route::group(['prefix' => '{id}'], function () {
-                        Route::get('/', ['as' => 'gyms.show', 'uses' => 'GymController@show']);
-                        Route::post('/', ['as' => 'gym.training.store', 'uses' => 'TrainingController@store']);
-                    });
-                });
-
 
             });
 
+
+            /*Route::group(['prefix' => 'stopwatch'], function () {
+                Route::get('/', ['as' => 'stopwatches.index', 'uses' => 'StopwatchController@index']);
+                Route::get('/create', ['as' => 'stopwatches.create', 'uses' => 'StopwatchController@create']);
+                Route::post('/', ['as' => 'stopwatches.store', 'uses' => 'StopwatchController@store']);
+                Route::get('/{id}', ['as' => 'stopwatches.show', 'uses' => 'StopwatchController@show']);
+                Route::post('/{id}/time', ['as' => 'stopwatches.storeTime', 'uses' => 'StopwatchTimeController@store']);
+            });*/
+
+            Route::group(['prefix' => 'gym', 'namespace' => 'Gym'], function () {
+                Route::group(['prefix' => 'exercise'], function () {
+                    Route::get('/', ['as' => 'gym.exercises.index', 'uses' => 'ExerciseController@index']);
+                    Route::get('/create', ['as' => 'gym.exercises.create', 'uses' => 'ExerciseController@create']);
+                    Route::post('/', ['as' => 'gym.exercises.store', 'uses' => 'ExerciseController@store']);
+                    Route::get('/{id}', ['as' => 'gym.exercises.show', 'uses' => 'ExerciseController@show']);
+                    Route::post('/{id}/category', ['as' => 'gym.exercises.category', 'uses' => 'CategoryController@add']);
+                });
+
+                Route::post('/category', ['as' => 'gym.categories.store', 'uses' => 'CategoryController@store']);
+
+
+                Route::get('/', ['as' => 'gyms.index', 'uses' => 'GymController@index']);
+                Route::get('/create', ['as' => 'gyms.create', 'uses' => 'GymController@create']);
+                Route::post('/', ['as' => 'gyms.store', 'uses' => 'GymController@store']);
+                Route::group(['prefix' => '{id}'], function () {
+                    Route::get('/', ['as' => 'gyms.show', 'uses' => 'GymController@show']);
+                    Route::post('/', ['as' => 'gym.training.store', 'uses' => 'TrainingController@store']);
+                });
+            });
+
+
         });
 
-
-        Route::get('/home', 'HomeController@index');
-        Route::get('/jeroen', ['as' => 'swimmer.jeroen', 'uses' => 'SwimmerController@jeroen']);
-        Route::get('/philippe', ['as' => 'swimmer.philippe', 'uses' => 'SwimmerController@philippe']);
     });
 });

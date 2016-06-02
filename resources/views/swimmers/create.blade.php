@@ -7,7 +7,7 @@
     {!! Form::open([
         'method' => 'POST',
         'route' => [
-            'swimmers.store',
+            '{group}.swimmer.store',
             'group' => $group->slug
         ],
         'data-ajax' => 'false',

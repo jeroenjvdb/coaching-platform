@@ -1,3 +1,4 @@
+@if($editable)
 <div data-id="{{ $exercise->id }}" class="exercise exercise-row-{{ $exercise->id }} row"
      data-class="exercise" data-table="category-{{ $category->id }}">
     <div class="sort-bars col-xs-1"><i class="fa fa-bars"></i></div>
@@ -21,19 +22,27 @@
                 </a>
             </div>
             <div class="col-xs-6 no-gutter">
-                <a rel="external" href="{{ route('exercises.delete', [
-                                                    'group' => $group->slug,
-                                                    'training_id' => $training->id,
-                                                    'id' => $exercise->id
-                                                ]) }}"><i class="fa fa-times"></i><span
+                {{--<a rel="external" ">--}}
+                {!! Form::open(['route' => [
+                        '{group}.training.exercise.destroy',
+                        'group' => $group->slug,
+                        'training_id' => $training->id,
+                        'id' => $exercise->id
+                    ], 'method' => 'delete',
+                    'data-ajax' => 'false',
+                ]) !!}
+                <button type="submit" class="btn btn-default btn-no-border btn-lg">
+                <i class="fa fa-times"></i><span
                             class="sr-only">delete</span></a>
+                </button>
+                {!! Form::close() !!}
             </div>
         </div>
     </div>
 </div>
 <div class="exercise-ui exercise-row-{{ $exercise->id }} row" data-is_form="true" hidden>
     {!! Form::open(['route' => [
-        'exercises.update',
+        '{group}.training.exercise.update',
         'group' => $group->slug,
         'training_id' => $training->id,
         'id' => $exercise->id,
@@ -72,3 +81,19 @@
     {{--<td>{!! Form::submit() !!}</td>--}}
     {!! Form::close() !!}
 </div>
+@else
+    <div data-id="{{ $exercise->id }}" class="exercise exercise-row-{{ $exercise->id }} row"
+         data-class="exercise" data-table="category-{{ $category->id }}">
+        {{--<td class="sort-bars"><i class="fa fa-bars"></i></td>--}}
+        <div class="col-xs-offset-1 col-xs-4">
+            <div class="row">
+                <div class="col-xs-3">{{ $exercise->sets }}</div>
+                <div class="col-xs-1"><i class="fa fa-times"></i></div>
+                <div class="col-xs-6">{{ $exercise->meters }}</div>
+            </div>
+        </div>
+        <div class="col-xs-6">
+            {!! $exercise->description !!}
+        </div>
+    </div>
+@endif

@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
-    {!! Breadcrumbs::render('trainings.index', $group) !!}
+{{--    {!! Breadcrumbs::render('trainings.index', $group) !!}--}}
     <h1>trainingen</h1>
     {{--<a rel="external" href="{{ route('trainings.create', [--}}
         {{--'group' => $group->slug,--}}
@@ -22,7 +22,7 @@
             <div class="box box-danger">
                 <div class="box-body">
                     <h3>training toevoegen</h3>
-                    {!! Form::open(['route' => ['trainings.store', 'group' => $group->slug],
+                    {!! Form::open(['route' => ['{group}.training.store', 'group' => $group->slug],
         'data-ajax' => 'false',
         'data-is_form' => 'true',
         'data-form' => ''
@@ -47,7 +47,7 @@
         <div class="col-md-8">
             <div class="box box-danger">
                 <div class="box-body box-no-padding">
-                    <div class="calendar" data-url="{{ route('trainings.get', [
+                    <div class="calendar" data-url="{{ route('{group}.training.get', [
         'group' => $group->slug
     ]) }}"></div>
                 </div>

@@ -5,7 +5,7 @@
         <div class="row groups">
             <h1>mijn groepen</h1>
             @foreach($groups as $group)
-                <div class="col-xs-4">
+                <div class="col-lg-3 col-md-4 col-sm-6 field">
                     <a rel="external" href="{{ route('groups.show', ['group' => $group->slug]) }}"
                        class="btn btn-lg btn-primary" role="button">
                         {{ $group->name }}
@@ -13,7 +13,7 @@
                 </div>
             @endforeach
             @if(Auth::user() && Auth::user()->clearance_level > 0)
-            <div class="col-xs-4">
+            <div class="col-lg-3 col-md-4 col-sm-6 field">
                 <a href="{{ route('groups.create') }}"
                     class="btn btn-lg btn-primary" role="button" rel="external">
                     <i class="fa fa-plus"></i>
@@ -21,7 +21,7 @@
             </div>
             @endif
             @if($is_swimmer)
-                  <div class="col-cs-4">
+                  <div class="col-lg-3 col-md-4 col-sm-6 field">
                       <a href="{{ route('me.profile', [
                         'group' => $swimmer->group->slug
                       ]) }}" class="btn btn-lg btn-primary"

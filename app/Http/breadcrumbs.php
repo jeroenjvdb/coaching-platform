@@ -10,42 +10,42 @@ Breadcrumbs::register('group', function($breadcrumbs, $group)
 Breadcrumbs::register('swimmer', function($breadcrumbs, $group, $swimmer)
 {
     $breadcrumbs->parent('group', $group);
-    $breadcrumbs->push($swimmer->first_name . ' ' . $swimmer->last_name, route('swimmers.show', [
+    $breadcrumbs->push($swimmer->first_name . ' ' . $swimmer->last_name, route('{group}.swimmer.show', [
         'group' => $group->slug,
         'swimmer' => $swimmer->slug,
     ]));
 });
 
-Breadcrumbs::register('trainings.index', function($breadcrumbs, $group)
+Breadcrumbs::register('{group}.training.index', function($breadcrumbs, $group)
 {
     $breadcrumbs->parent('group', $group);
-    $breadcrumbs->push('training' , route('trainings.index', [
+    $breadcrumbs->push('training' , route('{group}.training.index', [
         'group' => $group->slug,
     ]));
 });
 
-Breadcrumbs::register('trainings.show', function($breadcrumbs, $group, $training)
+Breadcrumbs::register('{group}.training.show', function($breadcrumbs, $group, $training)
 {
-    $breadcrumbs->parent('trainings.index', $group);
-    $breadcrumbs->push($training->starttime, route('trainings.show', [
+    $breadcrumbs->parent('{group}.training.index', $group);
+    $breadcrumbs->push($training->starttime, route('{group}.training.show', [
         'group' => $group->slug,
         'swimmer' => $training->id,
     ]));
 });
 
-Breadcrumbs::register('stopwatch.index', function($breadcrumbs, $group)
+Breadcrumbs::register('{group}.stopwatch.index', function($breadcrumbs, $group)
 {
     $breadcrumbs->parent('group', $group);
-    $breadcrumbs->push('stopwatch', route('stopwatches.index', [
+    $breadcrumbs->push('stopwatch', route('{group}.stopwatch.index', [
         'group' => $group->slug,
     ]));
 });
 
 Breadcrumbs::register('stopwatch.show', function($breadcrumbs, $group, $stopwatch)
 {
-    $breadcrumbs->parent('stopwatch.index', $group);
+    $breadcrumbs->parent('{group}.stopwatch.index', $group);
     $breadcrumbs->push($stopwatch->distance->distance . ' ' . $stopwatch->distance->stroke->name,
-            route('stopwatches.show', [
+            route('{group}.stopwatch.show', [
                 'group' => $group->slug,
                 'id' => $stopwatch->id,
             ])

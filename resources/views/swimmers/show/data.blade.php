@@ -1,5 +1,5 @@
 @if(!$myProfile)
-    {!! Form::open(['route' => ['swimmers.meta.store',
+    {!! Form::open(['route' => ['{group}.swimmer.meta.store',
         'group' => $group->slug,
         'swimmer' => $swimmer->slug
     ],'files' => true,
@@ -40,7 +40,7 @@
                     @endif
                 @endif
             @elseif($data->type == 'chrono')
-                <a href="{{ route('stopwatches.show', [
+                <a href="{{ route('{group}.stopwatch.show', [
                         'group' => $group->slug,
                         'id' => $data->message->id,
                         ]) }}">
