@@ -55,7 +55,7 @@ class ExerciseController extends Controller
 
     public function store(Group $group, GExerciseRequest $request)
     {
-        try {
+//        try {
             $gExercise = $this->gExercise->create([
                 'name' => $request->name,
                 'description' => $request->description,
@@ -65,7 +65,7 @@ class ExerciseController extends Controller
             $gExercise->url_picture_end = $this->storeImage($request->end, $gExercise->id, false);
 
             $gExercise->save();
-        } catch(\Exception $e) {
+        /*} catch(\Exception $e) {
             Log::warning('couldn\'t store gym exercise', [ $e ]);
             if(isset($gExercise)) {
                 return redirect()->route('{group}.gym.exercise.show', [
@@ -73,7 +73,7 @@ class ExerciseController extends Controller
                     'id' => $gExercise->id,
                 ])->withErrors('problem with saving the exercise');
             }
-        }
+        }*/
 
         return redirect()->route('{group}.gym.exercise.show', [
             'group' => $group->slug,
@@ -96,6 +96,10 @@ class ExerciseController extends Controller
 
     protected function storeImage($img, $id , $isStart)
     {
+//        dd(exif_read_data($img)['Orientation']);
+
+        $img = orientate($img, exif_read_data($img)['Orientation']);
+
         $destinationPath   = "uploads/gym/";
         $extension         = $img->getClientOriginalExtension();
         $filename = $id . "-";

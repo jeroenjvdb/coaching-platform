@@ -60,3 +60,76 @@ function random_string($length) {
 
     return $key;
 }
+
+/**
+ * Orientate an image, based on its exif rotation state
+ *
+ * @param  Intervention\Image\Image $image
+ * @param  integer $orientation Image exif orientation
+ * @return Intervention\Image\Image
+ */
+function orientate($image, $orientation)
+{
+    switch ($orientation) {
+
+        // 888888
+        // 88
+        // 8888
+        // 88
+        // 88
+        case 1:
+            return $image;
+
+        // 888888
+        //     88
+        //   8888
+        //     88
+        //     88
+        case 2:
+            return $image->flip('h');
+
+
+        //     88
+        //     88
+        //   8888
+        //     88
+        // 888888
+        case 3:
+            return $image->rotate(180);
+
+        // 88
+        // 88
+        // 8888
+        // 88
+        // 888888
+        case 4:
+            return $image->rotate(180)->flip('h');
+
+        // 8888888888
+        // 88  88
+        // 88
+        case 5:
+            return $image->rotate(-90)->flip('h');
+
+        // 88
+        // 88  88
+        // 8888888888
+        case 6:
+            return $image->rotate(-90);
+
+        //         88
+        //     88  88
+        // 8888888888
+        case 7:
+            return $image->rotate(-90)->flip('v');
+
+        // 8888888888
+        //     88  88
+        //         88
+        case 8:
+            return $image->rotate(90);
+
+        default:
+            return $image;
+    }
+}
