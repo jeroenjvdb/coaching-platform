@@ -13,7 +13,7 @@
     </div>
     <h2>categories</h2>
     {!! Form::open(['route' => [
-        'gym.categories.store',
+        '{group}.gym.categories.store',
         'group' => $group->slug,
     ], 'data-ajax' => true]) !!}
     {!! Form::label('name') !!}
@@ -25,7 +25,7 @@
             <li>{{ $category->name }}</li>
         @endforeach
     </ul>
-    {!! Form::open(['route' => ['gym.exercises.category',
+    {!! Form::open(['route' => ['{group}.gym.exercises.category',
                             'group' => $group->slug,
                             'id' => $gExercise->id,
     ], 'data-ajax' => true]) !!}

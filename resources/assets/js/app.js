@@ -6,9 +6,8 @@ $(function () {
 
     function init() {
         $.ajaxSetup({
-            headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') }
+            headers: {'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')}
         });
-
 
 
         $('.pages>div').hide().first().show();
@@ -18,39 +17,109 @@ $(function () {
         var sortable = $('.sortable');
         sortable.sortable();
         sortable.sortable('disable');
+        addEventListeners();
         calendar();
         charts();
-        addEventListeners();
+        forms();
+        daterangepicker();
+
         $(window).trigger('resize');
         createTimers();
-        checkboxes();
     }
 
-    function charts()
-    {
+    function cb(start, end) {
+        $('#daterangepicker span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+        updateCharts(start, end);
+    }
+
+    function daterangepicker() {
+        cb(moment().subtract(29, 'days'), moment());
+
+        console.log($('#daterangepicker'));
+        $('#daterangepicker').first().daterangepicker({
+            ranges: {
+                //'Today': [moment(), moment()],
+                //'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                'Last 90 Days': [moment().subtract(89, 'days'), moment()],
+                'This Month': [moment().startOf('month'), moment().endOf('month')],
+                'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+            }
+        }, cb);
+    }
+
+    function forms() {
+        checkboxes();
+        var forms = $('form');
+        forms.each(function () {
+            var form = $(this);
+            formHtml = this;
+
+            var checkedChange = form.is(function () {
+                var thisForm = $(this);
+
+                return thisForm.data('checked-submit');
+            });
+            if (checkedChange) {
+                var checkbox = form.find('input[type=checkbox]');
+                console.log(form);
+                console.log(document.getElementById('test-form'));
+                checkbox.on('click', function () {
+                    console.log(form);
+                    console.log(form.find('input[type=submit]'));
+                    form.find('input[type=submit]').trigger('click');
+                    console.log(form);
+                });
+                //console.log();
+
+            }
+        });
+
+    }
+
+    function charts() {
         var charts = $('.chart');
 
-        charts.each(function(index, chart) {
+        charts.each(function (index, chart) {
             var url = $(chart).data('url');
 
-            $.getJSON(url, function(data) {
+            $.getJSON(url, function (data) {
                 console.log(data);
                 console.log(chart);
-                new ChartConfig(chart , data)
+                new ChartConfig(chart, data)
             });
-        })
+        });
         //$('.chart').each(function(elem)
         //{
         //    console.log($(elem));
         //});
     }
 
-
-
-
-    function calendar()
+    function updateCharts(start, end)
     {
-        $('.calendar').each(function(){
+        console.log('update charts');
+        console.log(start.toISOString());
+        console.log(end);
+        var charts = $('.chart');
+
+       charts.each(function (index, chart) {
+            var url = $(chart).data('url');
+
+            $.getJSON(url, {
+                start: start.toISOString(),
+                end: end.toISOString(),
+            }, function (data) {
+                console.log(data);
+                console.log(chart);
+                new ChartConfig(chart, data)
+            });
+        });
+    }
+
+
+    function calendar() {
+        $('.calendar').each(function () {
             var url = $(this).data('url');
             console.log(url);
             $(this).fullCalendar({
@@ -61,7 +130,7 @@ $(function () {
                 },
                 events: {
                     url: url,
-                    error: function() {
+                    error: function () {
                         alert('error')
                     }
                 },
@@ -70,72 +139,72 @@ $(function () {
 
     }
 
-    function checkboxes()
-    {
-        $('.input_change_checkbox').each(function(){
-            console.log($(this));
+    function checkboxes() {
+        $('.input_change_checkbox').each(function () {
             var checked = "";
             if ($(this).is(':checked')) {
                 checked = "checked";
             }
-            $(this).hide().after('<div class="change_checkbox '+ checked
-                +'"><img src="' + $(this).data('image') +
+            $(this).hide().after('<div class="change_checkbox ' + checked
+                + '"><img src="' + $(this).data('image') +
                 '" alt=""></div>');
 
         });
 
-        $('.change_checkbox').on('click',function(){
-            $(this).toggleClass('checked').prev().prop('checked',$(this).is('.checked'))
+        $('.change_checkbox').on('click', function () {
+            $(this).toggleClass('checked').prev().prop('checked', $(this).is('.checked'))
         });
     }
 
-    function addEventListeners()
-    {
+    function addEventListeners() {
         $(window).on('resize', resize);
         $('.upload-image').on('change', renderImage);
         $('form').on('submit', formRequest);
         $('a').on('click', links);
         //$('.sort-bars').on('mousedown', function(e) { $('.sortable').sortable('enable'); console.log(e); })
-        $('.sort-bars').on('touchstart mousedown', function(e) { $('.sortable').sortable('enable'); console.log(e); })
-        $('.sort-bars').on('touchend mouseup', function(e) { $('.sortable').sortable('disable'); console.log(e); })
+        $('.sort-bars').on('touchstart mousedown', function (e) {
+            $('.sortable').sortable('enable');
+            console.log(e);
+        })
+        $('.sort-bars').on('touchend mouseup', function (e) {
+            $('.sortable').sortable('disable');
+            console.log(e);
+        })
         $('.sortable').on('sortupdate', sort);
         //$('.sortable').on('sortstop', sortStop);
         $('.btn-page').on('click', showPage);
         var page = $('.page');
         page.on('swipeleft', swipePageLeft);
         page.on('swiperight', swipePageRight);
-        $('.sidebar-toggle').on('click', function(){
-            setTimeout(function(){
+        $('.sidebar-toggle').on('click', function () {
+            setTimeout(function () {
                 $(window).trigger('resize');
             }, 250);
         })
     }
 
-    function resize(e)
-    {
+    function resize(e) {
         //delay(1000);
         console.log('resize');
         var cw = $('.swimmer-thumb').width();
-        $('.swimmer-thumb').css({'height':cw+'px'});
+        $('.swimmer-thumb').css({'height': cw + 'px'});
     }
 
-    function swipePageLeft(e)
-    {
+    function swipePageLeft(e) {
         //console.log(e);
         var nextPage = $(e.currentTarget).data('next');
         //console.log(nextPage);
         $('#' + nextPage).trigger('click');
     }
 
-    function swipePageRight(e)
-    {
+    function swipePageRight(e) {
         //console.log(e);
         var nextPage = $(e.currentTarget).data('prev');
         console.log('right');
-        $('#' + nextPage).trigger('click');    }
+        $('#' + nextPage).trigger('click');
+    }
 
-    function sort(event, ui)
-    {
+    function sort(event, ui) {
         var id = ui.item.data('id');
         var tableClass = ui.item.data('class');
         var position = $('.' + tableClass).index(ui.item);
@@ -150,28 +219,27 @@ $(function () {
         updatePosition(id, position, url);
     }
 
-    function sortStop(event, ui)
-    {
+    function sortStop(event, ui) {
         //console.log(sortStop);
         $('.sortable').sortable('disable');
     }
 
-    function updatePosition(id, position, url)
-    {
+    function updatePosition(id, position, url) {
         console.log('update position');
         console.log(url);
 
         $.post(url, {
             position: position,
             exercise_id: id,
-        }, function(data) {
+        }, function (data) {
             console.log(data);
         }, "json");
     }
 
-    function formRequest(e)
-    {
-        if($(e.target).data('ajax')) {
+    function formRequest(e) {
+        console.log('form request');
+        console.log(e);
+        if ($(e.target).data('ajax')) {
             e.preventDefault();
             var form = $(e.target);
             console.log(form);
@@ -184,13 +252,14 @@ $(function () {
         }
     }
 
-    function formResponse(data)
-    {
+    function formResponse(data) {
         console.log(data);
-        switch(data.form){
+        switch (data.form) {
             case "contact":
                 updateContact(data);
                 break;
+            case "timer":
+                createNewTimer(data);
         }
     }
 
@@ -199,11 +268,11 @@ $(function () {
         //console.log($('.contact-data'));
         var elems = $('.contact-data');
 
-        $.each(elems, function(index, value) {
+        $.each(elems, function (index, value) {
             var elem = $(value);
             //console.log();
             //console.log(index);
-            switch(elem.data('contact')) {
+            switch (elem.data('contact')) {
                 case 'swimmer.email':
                     elem.text(data.data.swimmer.email);
                     break;
@@ -220,10 +289,10 @@ $(function () {
 
         var forms = $('.contact-form');
         console.log(forms)
-        $.each(forms, function(index, value) {
+        $.each(forms, function (index, value) {
             var elem = $(value);
             console.log(elem);
-            if(elem.data('is_form')) {
+            if (elem.data('is_form')) {
                 elem.hide();
             } else {
                 elem.show();
@@ -231,21 +300,40 @@ $(function () {
         })
     }
 
-    function renderImage()
-    {
+    function renderImage() {
         console.log(this);
+        var fileReader = new FileReader();
+
+        fileReader.onloadend = function() {
+            var exif = EXIF.readFromBinaryFile(new BinaryFile(this.result));
+
+            switch(exif.Orientation){
+
+                case 8:
+                    ctx.rotate(90*Math.PI/180);
+                    break;
+                case 3:
+                    ctx.rotate(180*Math.PI/180);
+                    break;
+                case 6:
+                    ctx.rotate(-90*Math.PI/180);
+                    break;
+
+
+            }
+        };
+
         readURL(this);
     }
 
-    function readURL(input)
-    {
+    function readURL(input) {
         console.log('readURL')
         if (input.files && input.files[0]) {
             var reader = new FileReader();
             console.log('input.files');
             reader.onload = function (e) {
                 console.log($(input).data('img'));
-                if($(input).data('img') == 'start') {
+                if ($(input).data('img') == 'start') {
                     $('#image-start').attr('src', e.target.result);
                 } else {
                     $('#image-end').attr('src', e.target.result);
@@ -256,8 +344,7 @@ $(function () {
         }
     }
 
-    function showPage(page)
-    {
+    function showPage(page) {
         $('.btn-page').removeClass('active');
         pageName = $(page.target).data('page');
         //page.addClass('active');
@@ -273,32 +360,51 @@ $(function () {
         var stopwatches = [];
         var sWatch;
 
-        for (var i=0, len=elems.length; i<len; i++) {
+        for (var i = 0, len = elems.length; i < len; i++) {
             var elem = $(elems[i]);
             var swOptions = {
-                stopwatch_id:   elem.data('stopwatch_id'),// ? stopwatch_id : 0,
-                user_id:        elem.data('user_id') , //||0,
-                url:            elem.data('url'),//stopwatch_store, // ||0,
-                startClock:     elem.data('clock'), // || 0, clock
-                lastTime:       elem.data('last'), // || 0, lastTime
-                is_paused:      elem.data('paused'), // ||false, is_paused
-                is_base3:       elem.data('base3'),
+                stopwatch_id: elem.data('stopwatch_id'),// ? stopwatch_id : 0,
+                user_id: elem.data('user_id'), //||0,
+                swimmer_id: elem.data('swimmer_id'),
+                url: elem.data('url'),//stopwatch_store, // ||0,
+                startClock: elem.data('clock'), // || 0, clock
+                lastTime: elem.data('last'), // || 0, lastTime
+                is_paused: elem.data('paused'), // ||false, is_paused
+                is_base3: elem.data('base3'),
             };
 
             stopwatches[i] = new Stopwatch(elems[i], swOptions);
         }
     }
 
-    function links(e)
+    function createNewTimer(data)
     {
+        console.log(data);
+        elem = $('#newStopwatch').prepend('<div class="stopwatch"></div>');
+        console.log(elem.find('.stopwatch')[0]);
+        var swOptions = {
+            //stopwatch_id: elem.data('stopwatch_id'),// ? stopwatch_id : 0,
+            //user_id: elem.data('user_id'), //||0,
+            //swimmer_id: elem.data('swimmer_id'),
+            url: data.route,//stopwatch_store, // ||0,
+            startClock: 0, // || 0, clock
+            lastTime: 0, // || 0, lastTime
+            is_paused: true, // ||false, is_paused
+            is_base3: false,
+        };
+
+        new Stopwatch(elem.find('.stopwatch')[0], swOptions);
+    }
+
+    function links(e) {
         console.log($(e.currentTarget).data('toggle'));
         var toggle = $(e.currentTarget).data('toggle');
         if (toggle && toggle != 'dropdown') {
             //console.log($('.' + toggle));
             var elems = $('.' + toggle);
-            $.each(elems, function(index, value) {
+            $.each(elems, function (index, value) {
                 console.log($(value));
-                if($(value).data('is_form')) {
+                if ($(value).data('is_form')) {
                     //console.log('show');
                     $(value).show();
                     console.log($(value).find('input')[0]);
@@ -315,7 +421,7 @@ $(function () {
     function isHTML(str) {
         var a = document.createElement('div');
         a.innerHTML = str;
-        for (var c = a.childNodes, i = c.length; i--; ) {
+        for (var c = a.childNodes, i = c.length; i--;) {
             if (c[i].nodeType == 1) return true;
         }
         return false;

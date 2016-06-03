@@ -102,7 +102,7 @@ Route::group(['middleware' => 'web'], function () {
                             'as' => '{group}.training.show.distances',
                             'uses' => 'ApiController@individualDistance',
                         ]);
-                        Route::get('shared', [
+                        Route::post('shared', [
                             'as' => '{group}.training.shared',
                             'uses' => 'ApiController@shared',
                         ]);
@@ -167,6 +167,10 @@ Route::group(['middleware' => 'web'], function () {
                     'as' => '{group}.stopwatch.storeTime',
                     'uses' => 'StopwatchTimeController@store'
                 ]);
+                Route::post('stopwatch/create/api', [
+                    'as' => '{group}.stopwatch.store.api',
+                    'uses' => 'StopwatchController@storeApi',
+                ]);
 
                 Route::resource('stopwatch', 'StopwatchController', [
                     'except' => [
@@ -205,6 +209,51 @@ Route::group(['middleware' => 'web'], function () {
 
                 });
 
+                Route::group(['namespace' => 'Gym'], function () {
+
+                    Route::group(['prefix' => 'gym'], function() {
+                        Route::get('/get', [
+                            'as' => '{group}.gym.get',
+                            'uses' => 'ApiController@get',
+                        ]);
+
+                        Route::post('exercise/store/api', [
+                            'as' => '{group}.gym.{gym}.add.api',
+                            'uses' => 'ApiController@store',
+                        ]);
+
+                        Route::post('{gym}/add/', [
+                            'as' => '{group}.gym.{gym}.add',
+                            'uses' => 'TrainingController@store',
+                        ]);
+
+                        Route::post('exercise/{id}/category', [
+                            'as' => '{group}.gym.exercises.category',
+                            'uses' => 'CategoryController@add'
+                        ]);
+                        Route::post('/category', [
+                            'as' => '{group}.gym.categories.store',
+                            'uses' => 'CategoryController@store'
+                        ]);
+
+                        Route::resource('exercise', 'ExerciseController', [
+                            'only' => [
+                                'index',
+                                'create',
+                                'store',
+                                'show',
+                            ]
+                        ]);
+                    });
+
+                    Route::resource('gym', 'GymController', [
+                        'except' => [
+                            'update',
+                            'edit',
+                            'destroy',
+                        ]
+                    ]);
+                });
             });
 
 
@@ -216,26 +265,7 @@ Route::group(['middleware' => 'web'], function () {
                 Route::post('/{id}/time', ['as' => 'stopwatches.storeTime', 'uses' => 'StopwatchTimeController@store']);
             });*/
 
-            Route::group(['prefix' => 'gym', 'namespace' => 'Gym'], function () {
-                Route::group(['prefix' => 'exercise'], function () {
-                    Route::get('/', ['as' => 'gym.exercises.index', 'uses' => 'ExerciseController@index']);
-                    Route::get('/create', ['as' => 'gym.exercises.create', 'uses' => 'ExerciseController@create']);
-                    Route::post('/', ['as' => 'gym.exercises.store', 'uses' => 'ExerciseController@store']);
-                    Route::get('/{id}', ['as' => 'gym.exercises.show', 'uses' => 'ExerciseController@show']);
-                    Route::post('/{id}/category', ['as' => 'gym.exercises.category', 'uses' => 'CategoryController@add']);
-                });
 
-                Route::post('/category', ['as' => 'gym.categories.store', 'uses' => 'CategoryController@store']);
-
-
-                Route::get('/', ['as' => 'gyms.index', 'uses' => 'GymController@index']);
-                Route::get('/create', ['as' => 'gyms.create', 'uses' => 'GymController@create']);
-                Route::post('/', ['as' => 'gyms.store', 'uses' => 'GymController@store']);
-                Route::group(['prefix' => '{id}'], function () {
-                    Route::get('/', ['as' => 'gyms.show', 'uses' => 'GymController@show']);
-                    Route::post('/', ['as' => 'gym.training.store', 'uses' => 'TrainingController@store']);
-                });
-            });
 
 
         });

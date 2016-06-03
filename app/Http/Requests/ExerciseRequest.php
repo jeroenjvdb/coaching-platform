@@ -24,7 +24,7 @@ class ExerciseRequest extends Request
     public function rules()
     {
         return [
-            'sets' => 'required|int',
+            'sets' => 'optional|int',
             'meters' => 'required|int',
             'description' => 'required',
         ];

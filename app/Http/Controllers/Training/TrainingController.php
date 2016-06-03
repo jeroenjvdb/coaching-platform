@@ -59,9 +59,15 @@ class TrainingController extends Controller
             $training->starttime = $startTime;
         }
 
+        $editable = false;
+        if(Auth::user()->clearance_level > 0) {
+            $editable = true;
+        }
+
         $data = [
             'trainings' => $trainings,
-            'group' => $group
+            'group' => $group,
+            'editable' => $editable,
         ];
 
         return view('trainings.index', $data);

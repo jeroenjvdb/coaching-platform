@@ -8,6 +8,14 @@
     </div>
 </div>
 <h3>ochtendpolsen</h3>
+<div class="row">
+    <div class="col-md-4 col-md-offset-8">
+        <div id="daterangepicker" class="pull-right " style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
+            <i class="fa fa-calendar"></i>&nbsp;
+            <span></span> <b class="caret"></b>
+        </div>
+    </div>
+</div>
 <canvas id="canvas" class="chart"
         @if($myProfile)
             data-url="{{ route('me.heartRate', [
@@ -20,6 +28,4 @@
             ]) }}"
         @endif
 ></canvas>
-<script>
-
-</script>
+@include('swimmers.show.data')

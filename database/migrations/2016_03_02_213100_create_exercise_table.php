@@ -20,7 +20,7 @@ class CreateExerciseTable extends Migration
             $table->integer('training_id')->unsigned();
             $table->integer('category_exercise_id')->unsigned();
 
-            $table->integer('sets');
+            $table->integer('sets')->default(1);
             $table->integer('meters');
             $table->string('description');
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Swimmer;
 
 use App\Classes\SwimmerProfile;
 use App\Group;
+use App\Stroke;
 use App\Swimmer;
 use App\User;
 use Illuminate\Http\Request;
@@ -27,16 +28,24 @@ class SwimmerController extends Controller
      * @var User
      */
     private $user;
+    /**
+     * @var Stroke
+     */
+    private $stroke;
 
     /**
      * SwimmerController constructor.
      * @param Swimmer $swimmer
+     * @param Group $group
+     * @param User $user
+     * @param Stroke $stroke
      */
-    public function __construct(Swimmer $swimmer, Group $group, User $user)
+    public function __construct(Swimmer $swimmer, Group $group, User $user, Stroke $stroke)
     {
         $this->swimmer = $swimmer;
         $this->group = $group;
         $this->user = $user;
+        $this->stroke = $stroke;
     }
 
     /**
@@ -115,6 +124,7 @@ class SwimmerController extends Controller
 
         $data['group'] = $group;
         $data['myProfile'] = false;
+        $data['strokes'] = $this->stroke->with('distances')->get();
 
         return view('swimmers.show', $data);
 

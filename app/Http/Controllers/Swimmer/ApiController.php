@@ -8,13 +8,13 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Log;
 
 class ApiController extends Controller
 {
-    public function getHeartRate(Group $group, Swimmer $swimmer)
+    public function getHeartRate(Request $request, Group $group, Swimmer $swimmer)
     {
-        $data = $swimmer->get();
-        $hr = $data['meta']['heartRate'];
+        $hr = $swimmer->getHeartRates($request->start, $request->end);
 
         return json_encode([
             'type' => 'success',

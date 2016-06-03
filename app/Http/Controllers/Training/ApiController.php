@@ -37,8 +37,8 @@ class ApiController extends Controller
     function get(Request $request, Group $group)
     {
         $trainings = $group->trainings()
-            ->where('starttime', '>', $request->start)
-            ->where('starttime', '<', $request->end);
+            ->where('start_time', '>', $request->start)
+            ->where('start_time', '<', $request->end);
         if(! Auth::user()->clearance_level > 0) {
             $trainings = $trainings->where('is_shared', 1);
         }
@@ -79,12 +79,14 @@ class ApiController extends Controller
         ]);
     }
 
-    public function shared(Group $group, $training_id)
+    public function shared(Request $request, Group $group, $training_id)
     {
         $training = $group->trainings()->find($training_id);
 
         $training-> is_shared = abs($training->is_shared - 1);
         $training->save();
+
+//        dd($training);
 
         return redirect()->back();
     }

@@ -17,7 +17,7 @@
             <a rel="external" href="{{ route('{group}.stopwatch.index',[
                         'group' => $group->slug,
                     ]) }}">stopwatch</a></li>
-        <li {{ Request::is($group->slug . '/gym*') ? ' class=active' : null }}><a rel="external" href="{{ route('gyms.index', [
+        <li {{ Request::is($group->slug . '/gym*') ? ' class=active' : null }}><a rel="external" href="{{ route('{group}.gym.index', [
                         'group' => $group->slug,
                     ]) }}">gym</a></li>
     </ul>

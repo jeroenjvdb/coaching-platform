@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Jenssegers\Date\Date;
 
 trait SwimmerProfile
 {
@@ -127,58 +128,44 @@ trait SwimmerProfile
      */
     public function checkHeartRate()
     {
-        $meta = $this->getAllMeta();
-        $hasHeartRate = false;
-        foreach($meta as $data) {
-            if(isset($data->type) && $data->type == 'heartRate' && $data->date > Carbon::today()) {
-                $hasHeartRate = true;
-            }
-        }
-
-        return $hasHeartRate;
+        return $this->heartRates()->where('created_at', '>', Carbon::today())->exists();;
     }
 
     /**
      * store new heartRate
      *
      * @param $rate
-     * @param $forgot
+     * @return bool
      */
-    public function storeHeartRate($rate, $forgot)
+    public function storeHeartRate($rate)
     {
-        $collecting = [
-            'type' => 'heartRate',
-            'message' => $rate,
-            'media' => null,
-            'date' => date('Y-m-d H:i:s'),
-            'response' => true,
-        ];
+        $this->heartRates()->create([
+            'heart_rate' => $rate,
+        ]);
 
-        $collection = collect($collecting);
-
-        $this->addMeta(date("Y-m-d H:i:s"), $collection);
+        return true;
 
     }
 
     /**
-     * Get all heartRates
+     * get the heartRates
      *
-     * @param $meta
-     * @return static
+     * @param null $start
+     * @param null $end
+     * @return mixed
      */
-    public function getHeartRates($meta) {
-        $heartRate = collect([]);
+    public function getHeartRates($start = null, $end = null)
+    {
+        $hr = $this->heartRates();
 
-        $meta->each(function($item, $key) use ($heartRate){
-            if(isset($item->type) && $item->type == 'heartRate') {
-                $item->date = Carbon::createFromFormat('Y-m-d H:i:s',$item->date);
-                $heartRate->push($item);
-            }
-        });
+        if($start) {
+            $hr = $hr->where('created_at', '>', $start);
+        }
+        if( $end ){
+            $hr = $hr->where('created_at', '<', $end);
+        }
 
-        dd($heartRate);
-
-        return $heartRate->sortBy('date');
+        return $hr->orderBy('created_at', 'asc')->get();
     }
 
     /**
@@ -276,8 +263,6 @@ trait SwimmerProfile
         }
     }
 
-
-
     /**
      * remove width of table
      *
@@ -331,7 +316,7 @@ trait SwimmerProfile
 
         $allMeta->each(function($item, $key) use ($meta, $dateArr, $rateArr){
             if(isset($item->type) && $item->type == 'data') {
-                $item->date = Carbon::createFromFormat('Y-m-d H:i:s',$item->date);
+                $item->date = Date::createFromFormat('Y-m-d H:i:s',$item->date);
                 $meta->push($item);
             } else if(isset($item->type) && $item->type == 'heartRate') {
                 $item->date = Carbon::createFromFormat('Y-m-d H:i:s',$item->date);
@@ -339,16 +324,29 @@ trait SwimmerProfile
             }
         });
 
-        foreach($allMeta as $key => $item) {
-            if(isset($item->type) && $item->type == 'heartRate') {
-                array_push($dateArr, $item->date);
-                array_push($rateArr, $item->message);
-                $hr = collect([
-                    'x' => $item->date,
-                    'y' => $item->message,
-                ]);
-                array_push($heartRate, $hr);
-            }
+//        foreach($allMeta as $key => $item) {
+//            if(isset($item->type) && $item->type == 'heartRate') {
+//                array_push($dateArr, $item->date);
+//                array_push($rateArr, $item->message);
+//                $hr = collect([
+//                    'x' => $item->date,
+//                    'y' => $item->message,
+//                ]);
+//                array_push($heartRate, $hr);
+//            }
+//        }
+
+        foreach($this->heartRates as $heartRate) {
+            $newMeta = [
+                'type' => 'heartRate',
+                'message' => $heartRate->heart_rate,
+                'media' => null,
+                'date' => Date::parse($heartRate->created_at),
+                'response' => true,
+            ];
+
+            $item = (object)$newMeta;
+            $meta->push($item);
         }
 
         foreach($stopwatches as $stopwatch) {
@@ -356,7 +354,7 @@ trait SwimmerProfile
                 'type' => 'chrono',
                 'message' => $stopwatch,
                 'media' => null,
-                'date' => $stopwatch->created_at,
+                'date' => Date::parse($stopwatch->created_at),
                 'response' => false,
             ];
 

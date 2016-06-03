@@ -161,13 +161,14 @@ var ChartConfig = function (elem, data) {
 //    }
 
         function heartRate(data) {
+            console.log(data);
             var heartRates = [];
             for (var i = 0; i < data.hr.length; i++) {
                 console.log(data.hr[i]);
                 for (var i = 0; i < data.hr.length; i++) {
                     var heartRate = {
-                        x: newDateString(data.hr[i].x.date),
-                        y: data.hr[i].y,
+                        x: newDateString(data.hr[i].created_at),
+                        y: data.hr[i].heart_rate,
                     };
                     heartRates.push(heartRate);
 

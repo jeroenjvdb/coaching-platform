@@ -71,6 +71,11 @@ class Swimmer extends Model
         return $this->hasMany('App\Stopwatch');
     }
 
+    public function heartRates()
+    {
+        return $this->hasMany('App\HeartRate');
+    }
+
     /**
      * Get presences on training
      *

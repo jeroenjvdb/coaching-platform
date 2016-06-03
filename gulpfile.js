@@ -25,9 +25,11 @@ elixir(function(mix) {
             'touch-punch.js',
             paths.bootstrap + "javascripts/bootstrap.js",
             'moment.min.js',
+            'moment-nl.js',
             'chartjs.min.js',
             'charts.js',
             'adminLTE.js',
+            'daterangepicker.js',
             'fullcalendar.min.js',
             'Stopwatch.js',
             'app.js'

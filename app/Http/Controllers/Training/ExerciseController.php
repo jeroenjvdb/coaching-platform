@@ -75,6 +75,10 @@ class ExerciseController extends Controller
             $position = $lastExercise->position + 1;
         }
 
+        if($request->sets == "") {
+            $request->sets = 1;
+        }
+
         $exercise = $this->exercise->fill([
             'sets' => $request->sets,
             'meters' => $request->meters,

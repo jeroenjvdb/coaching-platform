@@ -1,3 +1,4 @@
+<h2>data</h2>
 @if(!$myProfile)
     {!! Form::open(['route' => ['{group}.swimmer.meta.store',
         'group' => $group->slug,
@@ -26,38 +27,41 @@
 
 {!! Form::close() !!}
 
-@if(isset($meta['meta']))
-    @foreach($meta['meta'] as $data)
-        <div class="data {{ $data->type }} {{ ($data->response) ? 'response' : '' }}">
-            @if($data->type == 'data' )
-                {{ $data->message }}
-                @if($data->media && isset($data->media->type))
-                    <hr>
-                    @if( $data->media->type == 'img')
-                        <img src="{{ $data->media->url }}" alt="">
-                    @elseif( $data->media->type == 'vid' )
-                        <video src="{{ $data->media->url }}" controls></video>
-                    @endif
-                @endif
-            @elseif($data->type == 'chrono')
-                <a href="{{ route('{group}.stopwatch.show', [
+        @if(isset($meta['meta']))
+            @foreach($meta['meta'] as $data)
+                <div class="data {{ $data->type }} {{ ($data->response) ? 'response' : '' }}">
+                    <div class="pull-right">
+                        {{ $data->date->format('2 F, g:ia') }}
+                    </div>
+                    @if($data->type == 'data' )
+                        {{ $data->message }}
+                        @if($data->media && isset($data->media->type))
+                            <hr>
+                            @if( $data->media->type == 'img')
+                                <img src="{{ $data->media->url }}" alt="">
+                            @elseif( $data->media->type == 'vid' )
+                                <video src="{{ $data->media->url }}" controls></video>
+                            @endif
+                        @endif
+                    @elseif($data->type == 'chrono')
+                        <a href="{{ route('{group}.stopwatch.show', [
                         'group' => $group->slug,
                         'id' => $data->message->id,
                         ]) }}">
-                    {{ $data->message->distance->distance }}
-                    {{ $data->message->distance->stroke->name }}
-                </a>
-                <div class="row stopwatch-ui">
-                    @foreach($data->message->times as $time)
-                        <div class="col-md-3 col-xs-6">
-                            @foreach($time->full_time->arr as $char)
-                                <div class="cell">{{ $char }}</div>@endforeach
+                            {{ $data->message->distance->distance }}
+                            {{ $data->message->distance->stroke->name }}
+                        </a>
+                        <div class="row stopwatch-ui">
+                            @foreach($data->message->times as $time)
+                                <div class="col-md-3 col-xs-6">
+                                    @foreach($time->full_time->arr as $char)
+                                        <div class="cell">{{ $char }}</div>@endforeach
+                                </div>
+                            @endforeach
                         </div>
-                    @endforeach
+                    @elseif($data->type == 'heartRate')
+                        {{ $data->message }}
+                    @endif
                 </div>
-            @elseif($data->type == 'heartRate')
-                {{ $data->message }}
-            @endif
-        </div>
-    @endforeach
-@endif
+            @endforeach
+        @endif

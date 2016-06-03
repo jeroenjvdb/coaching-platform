@@ -18,6 +18,7 @@
         {{--@endforeach--}}
     {{--</ul>--}}
     <div class="row">
+        @if($editable)
         <div class="col-md-4">
             <div class="box box-danger">
                 <div class="box-body">
@@ -44,7 +45,8 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-8">
+        @endif
+        <div class="col-md-8 {{(!$editable) ? 'col-md-offset-2' :''}}">
             <div class="box box-danger">
                 <div class="box-body box-no-padding">
                     <div class="calendar" data-url="{{ route('{group}.training.get', [

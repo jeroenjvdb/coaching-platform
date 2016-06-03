@@ -7,18 +7,32 @@
         'training_id' => $training->id,
     ]) }}"><i class="fa fa-download"></i></a></h2>
     @if($editable)
+        {!! Form::open([
+            'route' => [
+                '{group}.training.shared',
+                'group' => $group->slug,
+                $training->id,
+            ],
+            'data-checked-submit' => 'true',
+            'data-ajax' => 'true',
+        ]) !!}
+        <label class="switch">
+            {!! Form::checkbox('is_shared','shared', $training->is_shared, ['id' => 'is_shared']) !!}
+            {{--<input type="checkbox" id="is_shared" name="is_shared" value="shared">--}}
+            <div class="slider"></div>
+        </label>
+        <label for="is_shared">share with swimmers</label>
+
+        {!! Form::submit('verzenden', [
+            'hidden',
+        ]) !!}
+        {!! Form::close() !!}
         <div class="row">
-        <div class="col-xs-2 col-xs-offset-10 text-center">
-            <a href="#" data-toggle="add-exercise"><i class="fa fa-plus"></i><span
-                        class="sr-only">Add new exercise</span></a>
+            <div class="col-xs-2 col-xs-offset-10 text-center">
+                <a href="#" data-toggle="add-exercise"><i class="fa fa-plus"></i><span
+                            class="sr-only">Add new exercise</span></a>
+            </div>
         </div>
-    </div>
-        @endif
-    @if($editable)
-        <a href="{{ route('{group}.training.shared', [
-            'group' => $group->slug,
-            $training->id,
-        ]) }}">is_shared</a>
     @endif
     <div class="training">
         <div id="exercises" class="sortable" data-url="{{ route('{group}.training.exercise.update.cat.position', [

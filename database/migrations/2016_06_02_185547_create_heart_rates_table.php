@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateGymsTable extends Migration
+class CreateHeartRatesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,12 +12,12 @@ class CreateGymsTable extends Migration
      */
     public function up()
     {
-        Schema::create('gyms', function (Blueprint $table) {
+        Schema::create('heart_rates', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->integer('group_id')->unsigned();
+            $table->integer('swimmer_id')->unsigned();
 
-            $table->dateTime('start_time');
+            $table->integer('heart_rate');
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ class CreateGymsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('gyms');
+        Schema::drop('heart_rates');
     }
 }

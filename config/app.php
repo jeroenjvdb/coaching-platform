@@ -65,7 +65,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'nl',
 
     /*
     |--------------------------------------------------------------------------
@@ -165,7 +165,8 @@ return [
         'Laracasts\Utilities\JavaScript\JavaScriptServiceProvider',
         'Phoenix\EloquentMeta\ServiceProvider',
         DaveJamesMiller\Breadcrumbs\ServiceProvider::class,
-        'GrahamCampbell\Flysystem\FlysystemServiceProvider'
+        'GrahamCampbell\Flysystem\FlysystemServiceProvider',
+        'Jenssegers\Date\DateServiceProvider',
 
 
     ],
@@ -223,6 +224,7 @@ return [
         'Excel' => 'Maatwebsite\Excel\Facades\Excel',
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Breadcrumbs' => DaveJamesMiller\Breadcrumbs\Facade::class,
+        'Date' => Jenssegers\Date\Date::class,
 
     ],
 

@@ -58,7 +58,7 @@ class GymController extends Controller
             'group' => $group,
         ];
 
-        return redirect()->route('gyms.show', [
+        return redirect()->route('{group}.gym.show', [
             'group' => $group->slug,
             'id' => $gym->id
         ]);

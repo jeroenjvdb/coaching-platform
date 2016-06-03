@@ -57,6 +57,11 @@ class Group extends Model
         return $this->hasMany('App\Training');
     }
 
+    public function gyms()
+    {
+        return $this->hasMany('App\Gym');
+    }
+
     /**
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough

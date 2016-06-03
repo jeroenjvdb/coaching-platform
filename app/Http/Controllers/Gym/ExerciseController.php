@@ -68,14 +68,14 @@ class ExerciseController extends Controller
         } catch(\Exception $e) {
             Log::warning('couldn\'t store gym exercise', [ $e ]);
             if(isset($gExercise)) {
-                return redirect()->route('gym.exercises.show', [
+                return redirect()->route('{group}.gym.exercise.show', [
                     'group' => $group->slug,
                     'id' => $gExercise->id,
                 ])->withErrors('problem with saving the exercise');
             }
         }
 
-        return redirect()->route('gym.exercises.show', [
+        return redirect()->route('{group}.gym.exercise.show', [
             'group' => $group->slug,
             'id' => $gExercise->id,
         ]);

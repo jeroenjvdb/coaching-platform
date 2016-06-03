@@ -1,34 +1,51 @@
 var Stopwatch = function(elem, options ) {
-
-    var timer       = createTimer(),
-        startButton = createButton("start", start),
-        stopButton  = createButton("stop", stop),
-        resetButton = createButton("reset", reset),
-        splitButton = createButton("split", split),
+    var timer,//       = createTimer(),
+        startButton,// = createButton("start", startStop),
+        //stopButton  = createButton("stop", stop),
+        resetButton, // = createButton("reset", splitReset),
+        splitSpan,
+        //splitButton = createButton("split", split),
         offset,
         clock,
         interval,
-        url = options.url || '/s3/stopwatch/1/time';//,
+        url,
+        time; // = options.url;
 
-    var time;
-    this.clock   = 0;
+    init();
 
+    function init()
+    {
+        timer       = createTimer();
+        startButton = createButton("start", startStop);
+        //stopButton  = createButton("stop", stop),
+        resetButton = createButton("reset", splitReset);
+        //splitButton = createButton("split", split),
+        splitSpan = createSplitSpan();
+        url = options.url;
 
+        this.clock   = 0;
 
-    // default options
-    options = options || {};
-    options.delay = options.delay || 1;
+        // default options
+        options = options || {};
+        options.delay = options.delay || 1;
 
-    // append elements
-    elem.appendChild(timer);
-    elem.appendChild(document.createElement("br"));
-    elem.appendChild(startButton);
-    elem.appendChild(stopButton);
-    elem.appendChild(resetButton);
-    elem.appendChild(splitButton);
+        // append elements
+        elem.appendChild(timer);
+        elem.appendChild(document.createElement("br"));
+        elem.appendChild(startButton);
+        //elem.appendChild(stopButton);
+        if(! options.is_base3) {
+            elem.appendChild(resetButton);
+        }
+        elem.appendChild(document.createElement("br"));
+        elem.appendChild(splitSpan);
 
-    // initialize
-    reset();
+        //elem.appendChild(splitButton);
+
+        // initialize
+
+        reset();
+    }
 
     /**
      * create timer element
@@ -47,11 +64,11 @@ var Stopwatch = function(elem, options ) {
      * @returns {Element}
      */
     function createButton(action, handler) {
-        var a = document.createElement("a");
+        var a = document.createElement("button");
         a.href = "#" + action;
         a.setAttribute('class',  action);
         a.innerHTML = action;
-        a.className = "btn btn-primary"
+        a.className = "btn btn-primary btn-lg"
         a.addEventListener("click", function(event) {
             handler();
             event.preventDefault();
@@ -59,11 +76,41 @@ var Stopwatch = function(elem, options ) {
         return a;
     }
 
+    function createSplitSpan()
+    {
+        var a = document.createElement("span");
+        a.setAttribute('class',  'splits');
+        a.className = "";
+
+        return a;
+    }
+
+    function startStop()
+    {
+        if(! interval) {
+            start();
+        } else {
+            stop();
+        }
+    }
+
+    function splitReset()
+    {
+        if(interval) {
+            split();
+        } else {
+            reset();
+        }
+    }
+
     /**
      * start the timer
      */
     function start() {
         if (!interval) {
+            console.log(startButton);
+            startButton.innerHTML = 'stop';
+            resetButton.innerHTML = 'split';
             offset = Date.now();
             interval = setInterval(update, options.delay);
             if( options.is_paused ) {
@@ -78,6 +125,8 @@ var Stopwatch = function(elem, options ) {
      */
     function stop() {
         if (interval) {
+            startButton.innerHTML = 'start';
+            resetButton.innerHTML = 'reset';
             time = clock;
             clearInterval(interval);
             interval = null;
@@ -222,10 +271,9 @@ var Stopwatch = function(elem, options ) {
      * @param time
      */
     function appendSplit(time) {
-        var splits = $('ul#splits');
-        var firstSplit = $('ul#splits li');
-        if(firstSplit.first().data('time') != time) {
-            splits.prepend('<li data-time="' + time + '">' + timeToString(time) + '</li>');
+        console.log(splitSpan);
+        if($(splitSpan).first().data('time') != time) {
+            $(splitSpan).prepend('<li data-time="' + time + '">' + timeToString(time) + '</li>');
         }
     }
 

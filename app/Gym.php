@@ -16,4 +16,9 @@ class Gym extends Model
     {
         return $this->hasMany('App\GymExercise', 'gym_id', 'id');
     }
+
+    public function group()
+    {
+        return $this->belongsTo('App\Group');
+    }
 }

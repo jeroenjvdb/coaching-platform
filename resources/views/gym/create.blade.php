@@ -2,7 +2,7 @@
 
 @section('content')
     {!! Form::open(['route' => [
-        'gyms.store',
+        '{group}.gym.store',
         'group' => $group->slug,
     ]]) !!}
 

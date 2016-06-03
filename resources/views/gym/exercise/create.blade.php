@@ -4,7 +4,7 @@
     <h1>create exercises
         <small>for in the gym</small>
     </h1>
-    {!! Form::open(['route' => ['gym.exercises.store', 'group' => $group->slug], 'files' => true]) !!}
+    {!! Form::open(['route' => ['{group}.gym.exercise.store', 'group' => $group->slug], 'files' => true]) !!}
     {!! Form::label('name') !!}<br>
     {!! Form::text('name') !!}<br>
 

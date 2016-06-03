@@ -79,6 +79,32 @@ class StopwatchController extends Controller
         ]);
     }
 
+    public function storeApi(Request $request, Group $group)
+    {
+        $swimmer = $group->swimmers()->findOrFail($request->swimmer);
+        $distance = $this->distance->find($request->distance);
+
+        $stopwatchData = $this->stopwatch->fill([
+            'swimmer_id' => $swimmer->id,
+            'distance_id' => $distance->id,
+            'is_running' => false,
+        ]);
+
+        $stopwatch = Auth::user()->stopwatches()->save( $stopwatchData );
+        $storeTimeRoute = route('{group}.stopwatch.storeTime', [
+            'group' => $group->slug,
+            'id' => $stopwatch->id,
+        ]);
+
+        $data = [
+            'form' => 'timer',
+            'route' => $storeTimeRoute,
+
+        ];
+
+        return json_encode($data);
+    }
+
 
 
     public function show(Group $group, $id) {
