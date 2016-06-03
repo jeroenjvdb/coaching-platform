@@ -103,7 +103,7 @@ $(function () {
         console.log(end);
         var charts = $('.chart');
 
-       charts.each(function (index, chart) {
+        charts.each(function (index, chart) {
             var url = $(chart).data('url');
 
             $.getJSON(url, {
@@ -345,7 +345,27 @@ $(function () {
                 }
             };
 
-           
+            /*reader.onloadend = function(e) {
+             console.log(e);
+             var exif = EXIF.readFromBinaryFile(new BinaryFile(this.result));
+
+             console.log(exif);
+
+             switch(exif.Orientation){
+
+             case 8:
+             ctx.rotate(90*Math.PI/180);
+             break;
+             case 3:
+             ctx.rotate(180*Math.PI/180);
+             break;
+             case 6:
+             ctx.rotate(-90*Math.PI/180);
+             break;
+
+
+             }
+             };*/
 
             reader.readAsDataURL(input.files[0]);
         }
