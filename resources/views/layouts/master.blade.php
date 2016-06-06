@@ -8,10 +8,16 @@
 
     <title>@yield('title') | {{ config('app.name') }}</title>
 
-    <link rel="manifest" href="/manifest.json">
     <meta name="viewport" content="width=device-width">
+    <meta name="application-name" content="topswim">
     <meta name="mobile-web-app-capable" content="yes">
-    <link rel="icon" sizes="32x32" href="/resources/img/launcher-icon-0-75x.png">
+    <link rel="icon" sizes="36x36" href="/resources/img/launcher-icon-0-75x.png">
+    <link rel="icon" sizes="48x48" href="/resources/img/launcher-icon-1x.png">
+    <link rel="icon" sizes="72x72" href="/resources/img/launcher-icon-1-5x.png">
+    <link rel="icon" sizes="96x96" href="/resources/img/launcher-icon-2x.png">
+    <link rel="icon" sizes="144x144" href="/resources/img/launcher-icon-3x.png">
+    <link rel="icon" sizes="192x192" href="/resources/img/launcher-icon-4x.png">
+    <link rel="manifest" href="manifest.webmanifest">
 
 
     <!-- Fonts -->
