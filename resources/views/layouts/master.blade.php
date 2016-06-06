@@ -7,6 +7,8 @@
     <meta name="_token" content="{{ csrf_token() }}">
 
     <title>@yield('title') | {{ config('app.name') }}</title>
+    
+    <!-- manifest -->
 
     <meta name="viewport" content="width=device-width">
     <meta name="application-name" content="topswim">
