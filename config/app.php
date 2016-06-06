@@ -108,7 +108,19 @@ return [
     |
     */
 
-    'log' => env('APP_LOG', 'single'),
+    'log' => env('APP_LOG', 'daily'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Name of the application
+    |--------------------------------------------------------------------------
+    |
+    | Here you can set the name of the application. This name will
+    | be used as title for the application in the views.
+    |
+    */
+
+    'name' => env('APP_NAME', 'topCoach'),
 
     /*
     |--------------------------------------------------------------------------

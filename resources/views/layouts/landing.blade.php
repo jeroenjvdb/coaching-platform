@@ -6,11 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="_token" content="{{ csrf_token() }}">
 
-    <title>@yield('title') | coaching platform | KAZSC</title>
+    <title>@yield('title') | {{ config('app.name') }}</title>
 
     <meta name="viewport" content="width=device-width">
     <meta name="mobile-web-app-capable" content="yes">
-    <link rel="icon" sizes="400x400" href="/icon.png">
+    <link rel="icon" sizes="32x32" href="/resources/img/launcher-icon-0-75x.png">
+
     <!--<link rel="manifest" href="/manifest.json">-->
 
     <!-- Styles -->

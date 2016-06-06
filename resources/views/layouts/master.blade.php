@@ -6,12 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="_token" content="{{ csrf_token() }}">
 
-    <title>@yield('title') | iCoach</title>
+    <title>@yield('title') | {{ config('app.name') }}</title>
 
     <link rel="manifest" href="/manifest.json">
     <meta name="viewport" content="width=device-width">
     <meta name="mobile-web-app-capable" content="yes">
-    <link rel="icon" sizes="400x400" href="/icon.png">
+    <link rel="icon" sizes="32x32" href="/resources/img/launcher-icon-0-75x.png">
 
 
     <!-- Fonts -->
@@ -40,7 +40,8 @@
     <header class="main-header">
         {{--<div class="header-content">--}}
         <a class="logo" href="{{ url('/') }}">
-            iCoach
+            <img src="/resources/img/icon-2-400x400.png" alt="">
+            {{ config('app.name') }}
         </a>
         <nav class="navbar navbar-static-top" role="navigation">
             <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">

@@ -1,7 +1,8 @@
 var elixir = require('laravel-elixir');
 
 var paths = {
-    'bootstrap': './node_modules/bootstrap-sass/assets/'
+    'bootstrap': './node_modules/bootstrap-sass/assets/',
+    'select2' : './node_modules/select2/dist/'
 };
 
 /*
@@ -15,7 +16,7 @@ var paths = {
  |
  */
 
-elixir(function(mix) {
+elixir(function (mix) {
     mix.sass('style.scss', 'public/resources/css/main.css')
         .less('adminLTE/adminLTE.less', 'public/resources/css/adminLTE.css')
         .scripts([
@@ -32,6 +33,7 @@ elixir(function(mix) {
             'adminLTE.js',
             'daterangepicker.js',
             'fullcalendar.min.js',
+            paths.select2 + 'js/select2.full.min.js',
             'Stopwatch.js',
             'app.js'
         ], 'public/resources/js/app.js')

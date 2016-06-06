@@ -33,6 +33,10 @@ Route::bind('swimmer', function ($slug) {
 */
 
 Route::group(['middleware' => 'web'], function () {
+    Route::get('/index', function() {
+        return redirect('/');
+    });
+    
     Route::get('test', 'HomeController@test');
     Route::auth();
 
