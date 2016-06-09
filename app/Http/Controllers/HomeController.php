@@ -1,15 +1,13 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use App\Classes\SwimmerProfile;
 use App\Group;
 use App\Http\Requests;
+use App\Stroke;
 use App\Swimmer;
 use App\Training;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
 class HomeController extends Controller
 {
     /**
@@ -20,19 +18,25 @@ class HomeController extends Controller
      * @var Swimmer
      */
     private $swimmer;
+    /**
+     * @var Stroke
+     */
+    private $stroke;
 
     /**
      * Create a new controller instance.
+     *
      * @param Group $group
      * @param Swimmer $swimmer
+     * @param Stroke $stroke
      */
-    public function __construct(Group $group, Swimmer $swimmer)
+    public function __construct(Group $group, Swimmer $swimmer, Stroke $stroke)
     {
 //        $this->middleware('auth');
         $this->group = $group;
         $this->swimmer = $swimmer;
+        $this->stroke = $stroke;
     }
-
     /**
      * Show the application dashboard.
      *
@@ -40,7 +44,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-//        dd(Auth::user()->group);
         $user = Auth::user();
         $is_swimmer = false;
         $swimmer = null;
@@ -48,28 +51,30 @@ class HomeController extends Controller
             $is_swimmer = true;
             $swimmer = $this->swimmer->find($user->getMeta('swimmer_id'));
         }
-//        $coach_id = $user->getMeta('coach_id');
-//        $groups = null;
-//        if($coach_id) {
         $coach = $user->coaches->first();
-        $groups = $coach->groups;
-//        }
-
-//        dd($swimmer);
+        $groups = [];
+        if($coach) {
+            $groups = $coach->groups;
+        }
 
         $data = [
             'groups' => $groups,
             'is_swimmer' => $is_swimmer,
             'swimmer' => $swimmer,
+
         ];
 
         return view('welcome', $data);
     }
 
+    /**
+     * get testpage
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function test()
     {
         $training = Training::find(1);
-
         $categories = $training->categoryExercises;
         $data = [
             'categories' => $categories,

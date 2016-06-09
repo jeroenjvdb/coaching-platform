@@ -1,7 +1,6 @@
 @extends('layouts.master')
 
-@section('title')
-@stop
+@section('title', 'alle stopwatches')
 
 @section('content')
     {!! Breadcrumbs::render('{group}.stopwatch.index', $group) !!}

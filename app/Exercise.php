@@ -100,7 +100,6 @@ class Exercise extends Model
      *
      * @param Training $training
      * @param $newPos
-     * @param $oldPos
      * @return bool
      */
     public function changePositions( Training $training, $newPos)

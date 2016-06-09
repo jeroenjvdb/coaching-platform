@@ -34,6 +34,12 @@ class ExerciseController extends Controller
         $this->category = $category;
     }
 
+    /**
+     * show exercises
+     *
+     * @param Group $group
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index(Group $group)
     {
         $data = [
@@ -44,6 +50,12 @@ class ExerciseController extends Controller
         return view('gym.exercise.index', $data);
     }
 
+    /**
+     * create new exercise
+     *
+     * @param Group $group
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function create(Group $group)
     {
         $data = [
@@ -53,9 +65,15 @@ class ExerciseController extends Controller
         return view('gym.exercise.create', $data);
     }
 
+    /**
+     * store exercise
+     *
+     * @param Group $group
+     * @param GExerciseRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(Group $group, GExerciseRequest $request)
     {
-//        try {
             $gExercise = $this->gExercise->create([
                 'name' => $request->name,
                 'description' => $request->description,
@@ -65,15 +83,6 @@ class ExerciseController extends Controller
             $gExercise->url_picture_end = $this->storeImage($request->end, $gExercise->id, false);
 
             $gExercise->save();
-        /*} catch(\Exception $e) {
-            Log::warning('couldn\'t store gym exercise', [ $e ]);
-            if(isset($gExercise)) {
-                return redirect()->route('{group}.gym.exercise.show', [
-                    'group' => $group->slug,
-                    'id' => $gExercise->id,
-                ])->withErrors('problem with saving the exercise');
-            }
-        }*/
 
         return redirect()->route('{group}.gym.exercise.show', [
             'group' => $group->slug,
@@ -81,6 +90,13 @@ class ExerciseController extends Controller
         ]);
     }
 
+    /**
+     * show exercise
+     *
+     * @param Group $group
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function show(Group $group, $id)
     {
         $gExercise = $this->gExercise->where('id', $id)->with('categories')->first();
@@ -94,11 +110,20 @@ class ExerciseController extends Controller
         return view('gym.exercise.show', $data);
     }
 
+    /**
+     * upload exercise to gym
+     *
+     * @param $img
+     * @param $id
+     * @param $isStart
+     * @return string
+     */
     protected function storeImage($img, $id , $isStart)
     {
 //        dd(exif_read_data($img)['Orientation']);
-
-        $img = orientate($img, exif_read_data($img)['Orientation']);
+        if($img->getMimeType() == 'image/jpeg' && isset(exif_read_data($img)['Orientation'])) {
+            $img = orientate($img, exif_read_data($img)['Orientation']);
+        }
 
         $destinationPath   = "uploads/gym/";
         $extension         = $img->getClientOriginalExtension();

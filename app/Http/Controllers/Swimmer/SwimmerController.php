@@ -11,6 +11,9 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use ZipArchive;
 
@@ -35,6 +38,7 @@ class SwimmerController extends Controller
 
     /**
      * SwimmerController constructor.
+     *
      * @param Swimmer $swimmer
      * @param Group $group
      * @param User $user
@@ -57,7 +61,7 @@ class SwimmerController extends Controller
     public function index(Group $group)
     {
         $data = [
-            'group' => $group,
+            'group'    => $group,
             'swimmers' => $group->swimmers,
         ];
 
@@ -73,7 +77,7 @@ class SwimmerController extends Controller
     public function create(Group $group)
     {
         $data = [
-            'group' => $group
+            'group' => $group,
         ];
 
         return view('swimmers.create', $data);
@@ -88,22 +92,27 @@ class SwimmerController extends Controller
      */
     public function store(Request $request, Group $group)
     {
-        $swimmer = $this->swimmer->fill([
-            'first_name'    => $request->first_name ,
-            'last_name'     => $request->input('last_name'),
-            'swimrankings_id'    => $request->input('swimrankings'),
-            'email'         => $request->email,
-        ]);
+        $swimmer = $this->swimmer->fill(
+            [
+                'first_name'      => $request->first_name,
+                'last_name'       => $request->input('last_name'),
+                'swimrankings_id' => $request->input('swimrankings'),
+//                'email'           => $request->email,
+            ]
+        );
 
         $swimmer = $group->swimmers()->save($swimmer);
 
-        $this->createLogin($swimmer);
+        $this->createLogin($swimmer, $request->email);
         $swimmer->getPersonalBest();
         $swimmer->seedPDF();
 
-        return redirect()->route('groups.show', [
-            'group' => $group->slug
-        ]);
+        return redirect()->route(
+            'groups.show',
+            [
+                'group' => $group->slug,
+            ]
+        );
     }
 
     /**
@@ -115,7 +124,7 @@ class SwimmerController extends Controller
      */
     public function show(Group $group, Swimmer $swimmer)
     {
-        if( $group->id != $swimmer->group_id ) {
+        if ($group->id != $swimmer->group_id) {
             abort(404, 'page not found');
         }
 
@@ -139,12 +148,12 @@ class SwimmerController extends Controller
      */
     public function edit(Group $group, Swimmer $swimmer)
     {
-        if( $group->id != $swimmer->group_id ) {
+        if ($group->id != $swimmer->group_id) {
             abort(404, 'page not found');
         }
 
         $data = [
-            'group' => $group,
+            'group'   => $group,
             'swimmer' => $group->swimmers()->findOrFail($swimmer->id),
         ];
 
@@ -165,69 +174,102 @@ class SwimmerController extends Controller
      * create login for new swimmer.
      *
      * @param $swimmer
+     * @param $email
+     * @return bool
      */
-    private function createLogin($swimmer)
+    private function createLogin($swimmer, $email)
     {
-        $user = $this->user->create([
-            'clearance_level' => config('clearance.swimmer'),
-            'email' => $swimmer->email,
-            'name' => $swimmer->first_name . ' ' . $swimmer->last_name,
-            'password' => bcrypt(random_string(10)),
-        ]);
+        if ( ! $this->user->where('email', $email)->exists()) {
+            $user = $this->user->create(
+                [
+                    'clearance_level' => config('clearance.swimmer'),
+                    'email'           => $email,
+                    'name'            => $swimmer->first_name . ' ' . $swimmer->last_name,
+                    'password'        => bcrypt(random_string(10)),
+                ]
+            );
 
-        $user->addMeta('swimmer_id', $swimmer->id);
+            $user->addMeta('swimmer_id', $swimmer->id);
+            $token = strtolower(str_random(64));
 
-        //TODO: fix this shit
-//        $client = new Client(['base_uri' => config('app.url')]);
-//        $request = $client->post('/password/reset', [
-//            'form_params' => [
-//                'email' => $user->email,
-//                '_token' =>
-//            ]
-//        ]);
+            DB::table('password_resets')->insert(
+                [
+                    'email' => $email,
+                    'token' => $token,
+                ]
+            );
+            $this->sendLogin($token, $swimmer, $email);
+        }
 
-        /*return redirect()->action('Auth\PasswordController@postReset', [
-            'email' => $user->email,
-        ]);*/
+        return true;
     }
 
+    /**
+     * send login link over mail
+     *
+     * @param $token
+     * @param $swimmer
+     * @param $email
+     * @return bool
+     */
+    private function sendLogin($token, $swimmer, $email)
+    {
+        $route = route(
+            'password.reset.{token}',
+            [
+                'token' => $token,
+            ]
+        );
+
+        Mail::send(
+            'emails.reset',
+            ['route' => $route, 'swimmer' => $swimmer],
+            function ($m) use ($email) {
+                $m->from('jeroen.vandenbroeck@student.kdg.be', Auth::user()->name . ' - topswim');
+                $m->to($email, 'topswim')->subject('account geregistreerd');
+            }
+        );
+
+        return true;
+    }
+
+    /**
+     * download pr's
+     *
+     * @param Group $group
+     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
+     */
     public function download(Group $group)
     {
         $groupPath = $group->slug;
-        $path = '../storage/app/' . $groupPath ;
-        if (!file_exists($path)) {
+        $path = '../storage/app/' . $groupPath;
+        if ( ! file_exists($path)) {
             mkdir($path, 0777, true);
             mkdir($path . '/bestTimes', 0777, true);
         }
         $path = $path . '/';
         $zipname = $path . 'bestTimes.zip';
-        if(file_exists($zipname)) {
+        if (file_exists($zipname)) {
             unlink($zipname);
         }
 
         $zip = new ZipArchive();
         $zip->open($zipname, ZipArchive::CREATE);
-//        $zip->addFile('resources/js/app.js');
-        //var_dump(Storage::allFiles('designs'));
 
-        foreach (Storage::allFiles($groupPath . '/bestTimes') as $file) { /* Add appropriate path to read content of zip */
+        foreach (Storage::allFiles(
+            $groupPath . '/bestTimes'
+        ) as $file) { /* Add appropriate path to read content of zip */
             $toZip = '../storage/app/' . $file;
             $zip->addFile($toZip, $file);
         }
 
-//        Storage::put('bestTimes.zip', $zip);
         $zip->close();
-//        dd(Storage::get('bestTimes.zip'));
 
-//        var_dump();
-//        dd();
         $headers = [
             'Content-Disposition: attachment',
             'filename: ' . $zipname,
-//            'content-Length: ' . filesize($zipname),
         ];
 
-
-        return response()->download( $zipname, 'BestTimes.zip', $headers );
+        return response()->download($zipname, 'BestTimes.zip', $headers);
     }
 }

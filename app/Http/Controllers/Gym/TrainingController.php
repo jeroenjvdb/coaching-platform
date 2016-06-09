@@ -21,13 +21,17 @@ class TrainingController extends Controller
         $this->gym = $gym;
     }
 
+    /**
+     * store exercise to training
+     *
+     * @param Request $request
+     * @param Group $group
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(Request $request, Group $group, $id)
     {
-        echo $id;
         $gym = $this->gym->find($id);
-        var_dump($gym);
-        var_dump($request->all());
-        echo '<br><br>';
         $exercise = $gym->exercises()->create([
             'sets' => $request->sets,
             'reps' => $request->reps,

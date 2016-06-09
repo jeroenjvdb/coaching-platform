@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', $swimmer->name . ' profile')
+@section('title', $swimmer->name . ' profiel')
 
 @section('content')
     <div class="nav-tabs-custom">
@@ -20,10 +20,21 @@
 
     <div class="row">
         <div class="col-sm-10 col-sm-offset-1">
-            <h1>{{ $swimmer->first_name }} {{ $swimmer->last_name }}</h1>
+            <div class="row">
+
             @if(! $hasHeartRate)
-                @include('swimmers.show.heartRate') <br>
+                <div class="col-xs-6">
+                @include('swimmers.show.heartRate')
+                </div>
             @endif
+            @if(! $swimmer->checkWeights())
+                <div class="col-xs-6">
+                @include('swimmers.show.weight')
+                </div>
+            @endif
+            </div>
+            <h1>{{ $swimmer->first_name }} {{ $swimmer->last_name }}</h1>
+
 
 
             <div class="pages">

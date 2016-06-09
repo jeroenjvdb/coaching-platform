@@ -141,6 +141,7 @@ trait SwimmerProfile
     {
         $this->heartRates()->create([
             'heart_rate' => $rate,
+            'date' => Carbon::today(),
         ]);
 
         return true;
@@ -436,4 +437,36 @@ trait SwimmerProfile
 
         ];
     }
+
+    /**
+     * @return bool
+     */
+    public function checkWeights()
+    {
+        return $this->weights()->where('date', '>=', Carbon::today())->exists();
+    }
+
+    /**
+     * Get weights between dates
+     *
+     * @param null $start
+     * @param null $end
+     * @return mixed
+     */
+    public function getWeights($start = null, $end = null)
+    {
+        $weights = $this->weights();
+        if($start) {
+            $weights = $weights->where('date', '>=', $start);
+        }
+        if($end) {
+            $weights = $weights->where('date', '<=', $end);
+        }
+        $weights = $weights->ordered()->get();
+
+
+        return $weights;
+    }
+
+
 }

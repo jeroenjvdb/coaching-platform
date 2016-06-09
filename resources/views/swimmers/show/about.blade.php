@@ -28,4 +28,16 @@
             ]) }}"
         @endif
 ></canvas>
+<canvas id="canvas2" class="chart"
+        @if($myProfile)
+        data-url="{{ route('me.heartRate', [
+                'group' => $swimmer->group->slug,
+            ]) }}"
+        @else
+        data-url="{{ route('{group}.swimmer.weights', [
+                'group' => $group->slug,
+                'swimmer' => $swimmer->slug,
+            ]) }}"
+        @endif
+></canvas>
 @include('swimmers.show.data')

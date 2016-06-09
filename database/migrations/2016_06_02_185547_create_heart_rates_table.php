@@ -18,6 +18,8 @@ class CreateHeartRatesTable extends Migration
             $table->integer('swimmer_id')->unsigned();
 
             $table->integer('heart_rate');
+
+            $table->dateTime('date');
             $table->timestamps();
         });
     }

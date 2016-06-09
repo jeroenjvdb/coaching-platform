@@ -1,5 +1,7 @@
 @extends('layouts.master')
 
+@section('title', 'gym training toevoegen')
+
 @section('content')
     {!! Form::open(['route' => [
         '{group}.gym.store',

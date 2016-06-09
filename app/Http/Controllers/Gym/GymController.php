@@ -27,6 +27,12 @@ class GymController extends Controller
         $this->gExercise = $gExercise;
     }
 
+    /**
+     * get trainings
+     *
+     * @param Group $group
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index(Group $group)
     {
         $gyms = $this->gym->all();
@@ -39,6 +45,12 @@ class GymController extends Controller
         return view('gym.index', $data);
     }
 
+    /**
+     * create new training
+     *
+     * @param Group $group
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function create(Group $group)
     {
         $data = [
@@ -48,6 +60,13 @@ class GymController extends Controller
         return view('gym.create', $data);
     }
 
+    /**
+     * store new training
+     *
+     * @param Group $group
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(Group $group, Request $request)
     {
         $gym = $this->gym->create([
@@ -64,6 +83,13 @@ class GymController extends Controller
         ]);
     }
 
+    /**
+     * show individual training
+     *
+     * @param Group $group
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function show(Group $group, $id)
     {
         $gym = $this->gym->find($id);

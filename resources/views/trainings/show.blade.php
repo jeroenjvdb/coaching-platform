@@ -1,11 +1,14 @@
 @extends('layouts.master')
 
+@section('title', 'training ' . $training->starttime->formatLocalized('%A %d %B %P') )
+
 @section('content')
     {!! Breadcrumbs::render('{group}.training.show', $group, $training) !!}
     <h2>training {{ $training->starttime->formatLocalized('%A %d %B %P') }} <a rel="external" href="{{ route('{group}.training.download', [
         'group' => $group->slug,
         'training_id' => $training->id,
     ]) }}"><i class="fa fa-download"></i></a></h2>
+    <div class="stopwatch" data-base3="true"></div>
     @if($editable)
         {!! Form::open([
             'route' => [

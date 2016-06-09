@@ -2,13 +2,13 @@
 <div class="row swimmer">
     <div class="col-md-2 col-xs-4">
         <a href="#" data-toggle="picture">
-    <img id="image-start"
-        @if($contact['picture'])
-            src="{{ $contact['picture'] }}"
-        @else
-            src="http://library.unn.edu.ng/wp-content/uploads/sites/42/2016/03/prifile-pic.png"
-        @endif
-            alt=""></a>
+            <img id="image-start"
+                 @if($contact['picture'])
+                 src="{{ $contact['picture'] }}"
+                 @else
+                 src="http://library.unn.edu.ng/wp-content/uploads/sites/42/2016/03/prifile-pic.png"
+                 @endif
+                 alt=""></a>
         {!! Form::open([
             'route' => ['{group}.swimmer.contact.update',
             'group' => $group->slug,
@@ -21,11 +21,17 @@
             'files' => 'true',
             'hidden'
         ]) !!}
-        {!! Form::file('picture', [
+        <div class="form-group">
+        <span class="btn btn-primary btn-full btn-file">
+        <i class="fa fa-upload"></i> foto toevoegen {!! Form::file('picture', [
             'class' => 'upload-image',
             'data-img' => 'start',
         ]) !!}
-        {!! Form::submit() !!}
+    </span>
+        </div>
+        {!! Form::submit('opslaan', [
+            'class' => 'btn btn-primary btn-full',
+        ]) !!}
         {!! Form::close() !!}
     </div>
     <div class="col-md-10 col-xs-12" data-is_form="false">
@@ -56,7 +62,8 @@
                                 {!! Form::text('phone', $contact['phone']) !!}
                             </div>
                             <div class="col-xs-2">
-                                <button type="submit"><i class="fa fa-angle-right"></i></button>
+                                <button type="submit" class="btn btn-primary btn-full"><i class="fa fa-angle-right"></i>
+                                </button>
                             </div>
                             {!! Form::close() !!}
                         </div>
@@ -66,7 +73,7 @@
                 <div class="row contact">
                     <div class="col-xs-2">
                         <strong>
-                            <i class="fa fa-compass"></i>
+                            <i class="fa fa-home"></i>
                             <span class="sr-only">adres:</span>
                         </strong>
                     </div>
@@ -97,7 +104,8 @@
                                 {!! Form::text('city', $contact['address']->city) !!}
                             </div>
                             <div class="col-xs-2">
-                                <button type="submit"><i class="fa fa-angle-right"></i></button>
+                                <button type="submit" class="btn btn-primary btn-full"><i class="fa fa-angle-right"></i>
+                                </button>
                             </div>
                             {!! Form::close() !!}
                         </div>
@@ -129,7 +137,8 @@
                                 {!! Form::email('email', $swimmer->email) !!}
                             </div>
                             <div class="col-xs-2">
-                                <button type="submit"><i class="fa fa-angle-right"></i></button>
+                                <button type="submit" class="btn btn-primary btn-full"><i class="fa fa-angle-right"></i>
+                                </button>
                             </div>
                             {!! Form::close() !!}
                         </div>
@@ -139,18 +148,46 @@
 
             </div>
             <div class="col-md-6 col-xs-12">
-                <div class="row">
-                    <div class="col-xs-2 contact-data" data-contact="email">
+                <div class="row contact-data parents-email" data-is_form="false">
+                    <div class="col-xs-2">
                         <strong>
                             <i class="fa fa-envelope"></i> <i class="fa fa-plus"></i>
                             <span class="sr-only">extra email adressen</span>
                         </strong>
                     </div>
-                    <div class="col-xs-8">
-                        {{--@foreach($contact['email'] as $email)--}}
-                        {{--{{ $email }} <br>--}}
-                        {{--@endforeach--}}
+                    <div class="col-xs-8 contact-data" data-contact="email">
+                        @foreach($contact['email'] as $email)
+                            {{ $email }} <br>
+                        @endforeach
                     </div>
+                    <div class="col-xs-2">
+                        <a href="#" data-toggle="parents-email"><i class="fa fa-pencil"></i></a>
+                    </div>
+                </div>
+                <div class="row parents-email contact-form" data-is_form="true" hidden>
+                    {!! Form::open([
+                        'route' => [
+                            '{group}.swimmer.contact.update',
+                            'group' => $group->slug,
+                            'swimmer' => $swimmer->slug,
+                        ],
+                        'data-ajax' => 'true',
+                    ]) !!}
+                    <div class="col-xs-2">
+                        <strong>
+                            <i class="fa fa-envelope"></i> <i class="fa fa-plus"></i>
+                            <span class="sr-only">extra email adressen</span>
+                        </strong>
+                    </div>
+                    <div class="col-xs-8 contact-data" data-contact="email">
+                        {!! Form::email('emailMother', null) !!}
+                        {!! Form::email('emailFather', null) !!}
+                    </div>
+                    <div class="col-xs-2">
+                        <button type="submit" class="btn btn-primary btn-full"><i class="fa fa-angle-right"></i>
+                        </button>
+                    </div>
+                    {!! Form::close() !!}
                 </div>
             </div>
         </div>
@@ -160,7 +197,7 @@
             'group' => $group->slug,
             'swimmer' => $swimmer->slug,
             ],
-            'data-ajax' => 'true',
+            'data-ajax' => 'false',
 
         ]) !!}
         <div class="row">
@@ -184,10 +221,10 @@
                 <div class="row">
                     <div class="col-xs-4"><strong>adres:</strong></div>
                     <div class="col-xs-8">
-{{--                        {!! Form::text('street', $contact['address']->street) !!}--}}
-{{--                        {!! Form::text('number', $contact['address']->number) !!} <br>--}}
-{{--                        {!! Form::text('zipcode', $contact['address']->zipcode) !!}--}}
-{{--                        {!! Form::text('city', $contact['address']->city) !!}--}}
+                        {{--                        {!! Form::text('street', $contact['address']->street) !!}--}}
+                        {{--                        {!! Form::text('number', $contact['address']->number) !!} <br>--}}
+                        {{--                        {!! Form::text('zipcode', $contact['address']->zipcode) !!}--}}
+                        {{--                        {!! Form::text('city', $contact['address']->city) !!}--}}
                         {{--{{ $contact['address']->street }} {{ $contact['address']->number }}, <br>--}}
                         {{--{{ $contact['address']->zipcode }} {{ $contact['address']->city }}--}}
                     </div>

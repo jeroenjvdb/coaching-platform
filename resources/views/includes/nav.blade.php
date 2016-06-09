@@ -10,9 +10,9 @@
         {{--<li><a rel="external" href="{{ route('swimmers.index', [--}}
         {{--'group' => $group->slug,--}}
         {{--]) }}"></a></li>--}}
-        <li {{ Request::is($group->slug . '/chat*') ? ' class=active' : null }}><a rel="external" href="{{ route('chat.index',[
+        <li {{ Request::is($group->slug . '/mail*') ? ' class=active' : null }}><a rel="external" href="{{ route('{group}.mail',[
                         'group' => $group->slug,
-                    ]) }}">chat</a></li>
+                    ]) }}">mail</a></li>
         <li {{ Request::is($group->slug . '/stopwatch*') ? ' class=active' : null }}>
             <a rel="external" href="{{ route('{group}.stopwatch.index',[
                         'group' => $group->slug,

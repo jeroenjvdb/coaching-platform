@@ -34,7 +34,7 @@ var Stopwatch = function(elem, options ) {
         elem.appendChild(document.createElement("br"));
         elem.appendChild(startButton);
         //elem.appendChild(stopButton);
-        if(! options.is_base3) {
+        if( options.is_base3) {
             elem.appendChild(resetButton);
         }
         elem.appendChild(document.createElement("br"));

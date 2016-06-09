@@ -43,7 +43,10 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('password/email', 'Auth\PasswordController@getEmail');
     Route::post('password/email', 'Auth\PasswordController@postEmail');
 
-    Route::get('password/reset/{token}', 'Auth\PasswordController@getReset');
+    Route::get('password/reset/{token}', [
+        'as' => 'password.reset.{token}',
+        'uses' =>'Auth\PasswordController@getReset',
+    ]);
     Route::post('password/reset', 'Auth\PasswordController@postReset');
 
     Route::group(['middleware' => 'auth'], function () {
@@ -64,10 +67,22 @@ Route::group(['middleware' => 'web'], function () {
         });
 
 
+
+
         Route::group([/*'middleware' => 'coach'*/], function () {
 
 
             Route::group(['prefix' => '{group}'], function () {
+                Route::group(['middleware' => 'coach'], function() {
+                    Route::get('mail', [
+                        'as' => '{group}.mail',
+                        'uses' => 'MailController@show',
+                    ]);
+                    Route::post('mail', [
+                        'as' => '{group}.mail.send',
+                        'uses' => 'MailController@send',
+                    ]);
+                });
                 Route::resource('coach', 'CoachController', ['parameters' => [
 //                'group' => 'group',
                 ]]);
@@ -110,6 +125,10 @@ Route::group(['middleware' => 'web'], function () {
                             'as' => '{group}.training.shared',
                             'uses' => 'ApiController@shared',
                         ]);
+                        Route::delete('category/destroy', [
+                            'as' => '{group}.training.category.destroy',
+                            'uses' => 'CategoryController@destroy'
+                        ]);
 
                     });
                     Route::resource('training', 'TrainingController');
@@ -140,6 +159,14 @@ Route::group(['middleware' => 'web'], function () {
                             Route::post('heartRate', [
                                 'as' => '{group}.swimmer.heartRate',
                                 'uses' => 'ApiController@heartRate'
+                            ]);
+                            Route::get('weight', [
+                                'as' => '{group}.swimmer.weights',
+                                'uses' => 'ApiController@weights'
+                            ]);
+                            Route::post('weight', [
+                                'as' => '{group}.swimmer.weight',
+                                'uses' => 'ApiController@postWeight'
                             ]);
                             Route::get('heartRate', [
                                 'as' => '{group}.swimmer.heartRate',

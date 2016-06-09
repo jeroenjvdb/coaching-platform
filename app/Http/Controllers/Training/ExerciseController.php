@@ -147,7 +147,7 @@ class ExerciseController extends Controller
 
         $exercise->save();
 
-        return redirect()->route('trainings.show', [
+        return redirect()->route('{group}.training.show', [
             'group' => $group->slug,
             'id' => $training_id
         ]);
@@ -181,21 +181,17 @@ class ExerciseController extends Controller
      * @param Request $request
      * @param Group $group
      * @param $training_id
+     * @return string
      */
     public function updateCatPosition(Request $request, Group $group, $training_id)
     {
-        Log::info('request: ', [$request->all()]);
-
-//        return json_encode([
-//            'type' => 'success',
-//        ]);
-
         $training = $group->trainings()->find($training_id);
-
         $category = $training->categoryExercises()->find($request->exercise_id);
-        Log::info('category: ', [$category]);
         $category->changePosition($training, $request->position);
-        $newPos = $request->position;
+
+        return json_encode([
+            'type' => 'success',
+        ]);
     }
 
     /**

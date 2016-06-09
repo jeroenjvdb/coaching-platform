@@ -27,6 +27,12 @@ class CategoryController extends Controller
         $this->gExercise = $gExercise;
     }
 
+    /**
+     * store category
+     *
+     * @param Request $request
+     * @return string
+     */
     public function store(Request $request)
     {
         $this->category->create([
@@ -39,15 +45,21 @@ class CategoryController extends Controller
         ]);
     }
 
+    /**
+     * synchronize categories
+     *
+     * @param Request $request
+     * @param Group $group
+     * @param $id
+     * @return string
+     */
     public function add(Request $request, Group $group, $id)
     {
         $exercise = $this->gExercise->find($id);
         if(! isset($request->options)) {
             $request->options = [];
         }
-
         $exercise->categories()->sync($request->options);
-
 
         return json_encode([
             'categories' => $exercise->categories,

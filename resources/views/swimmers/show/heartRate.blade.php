@@ -1,9 +1,9 @@
-<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-heartRate
+<button type="button" class="btn btn-primary btn-lg btn-full" data-toggle="modal" data-target="#heartRate">
+ochtendpols
 </button>
 
 <!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="heartRate" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     {!! Form::open(['route' => ['{group}.swimmer.heartRate',
         'group' => $group->slug,
         'swimmer' => $swimmer->slug,
@@ -17,16 +17,22 @@ heartRate
                 <h4 class="modal-title" id="myModalLabel">ochtendpols</h4>
             </div>
             <div class="modal-body">
-                {!! Form::label('heartRate') !!}
-                {!! Form::text('heartRate') !!} <br>
+                <div class="form-group">
+                    {!! Form::label('heartRate', 'ochtendpols') !!}
+                    {!! Form::number('heartRate', null, [
+                        'class' => 'form-control',
+                        'autocomplete' => 'off',
+                    ]) !!} <br>
+                </div>
                 {{--<input type="checkbox" name></input>--}}
-                {!! Form::checkbox('forgot', 'true',false, ['id' => 'forgot']) !!}
-                {!! Form::label('forgot') !!}
+{{--                {!! Form::checkbox('forgot', 'true',false, ['id' => 'forgot']) !!}--}}
+{{--                {!! Form::label('forgot') !!}--}}
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                {!! Form::submit() !!}
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">sluiten</button>
+                {!! Form::submit('verzenden', [
+                    'class' => 'btn btn-primary',
+                ]) !!}
             </div>
         </div>
     </div>
