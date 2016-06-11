@@ -17,7 +17,9 @@ $(function () {
         var sortable = $('.sortable');
         sortable.sortable();
         sortable.sortable('disable');
-        $('.select2').select2();
+        $('.select2').select2({
+            width: '100%'
+        });
         addEventListeners();
         calendar();
         charts();

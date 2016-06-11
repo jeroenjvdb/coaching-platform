@@ -8494,10 +8494,8 @@ h3 {
     .variation .groups .btn {
       width: 100%;
       margin: 5px auto;
-      height: 5.2rem; }
-      .variation .groups .btn .fa {
-        position: relative;
-        top: -5px; }
+      height: 5.2rem;
+      padding-bottom: 50px; }
   .variation .btn-lg, .variation .btn-group-lg > .btn {
     font-size: 2em;
     padding: 20px 30px; }

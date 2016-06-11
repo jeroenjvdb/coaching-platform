@@ -39,6 +39,18 @@
                     </div>
                 </div>
             </div>-->
+                <div class="col-lg-3 col-md-4 col-sm-6 field">
+                    <a href="/logout" class="btn btn-lg btn-primary"
+                       role="button" rel="external">
+                        <i class="fa fa-sign-out"></i> uitloggen
+                    </a>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6 field">
+                    <a href="/password" class="btn btn-lg btn-primary"
+                       role="button" rel="external">
+                        <i class="fa fa-key"></i> wachtwoord
+                    </a>
+                </div>
         </div>
     </div>
 @endsection

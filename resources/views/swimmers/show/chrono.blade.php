@@ -15,15 +15,21 @@
     ]) !!}
 
                 {!! Form::hidden('swimmer', $swimmer->id) !!}
-                {!! Form::label('distance') !!}
-                <select name="distance" id="">
-                    @foreach($strokes as $stroke)
-                        @foreach($stroke->distances as $distance)
-                            <option value="{{ $distance->id }}">{{ $stroke->name }} - {{ $distance->distance }}</option>
+                <div class="form-group">
+                    {!! Form::label('distance') !!}<br>
+                    <select name="distance" class="select2 form-control" id="">
+                        @foreach($strokes as $stroke)
+                            @foreach($stroke->distances as $distance)
+                                <option value="{{ $distance->id }}">{{ $stroke->name }} - {{ $distance->distance }}</option>
+                            @endforeach
                         @endforeach
-                    @endforeach
-                </select>
-                {!! Form::submit() !!}
+                    </select>
+                </div>
+                <div class="form-group">
+                {!! Form::submit('stopwatch aanmaken', [
+                    'class' => 'btn btn-primary btn-full',
+                ]) !!}
+                </div>
 
                 {!! Form::close() !!}
             </div>
