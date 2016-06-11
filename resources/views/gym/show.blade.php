@@ -1,5 +1,7 @@
 @extends('layouts.master')
 
+@section('title', 'toon training')
+
 @section('content')
     <h1>fitness training</h1>
     <div class="row">

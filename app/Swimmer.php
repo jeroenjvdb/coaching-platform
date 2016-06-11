@@ -29,6 +29,7 @@ class Swimmer extends Model
         'last_name',
         'swimrankings_id',
         'email',
+        'birthday',
     ];
 
     /**
@@ -61,9 +62,19 @@ class Swimmer extends Model
         return $this->belongsTo('App\Group');
     }
 
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
+
     public function trainings()
     {
         return $this->belongsToMany('App\Training', 'presences');
+    }
+
+    public function data()
+    {
+        return $this->hasMany('App\Data');
     }
 
     public function stopwatches()
@@ -74,6 +85,11 @@ class Swimmer extends Model
     public function heartRates()
     {
         return $this->hasMany('App\HeartRate');
+    }
+
+    public function weights()
+    {
+        return $this->hasMany('App\Weight');
     }
 
     /**
@@ -122,4 +138,10 @@ class Swimmer extends Model
     {
         return $this->first_name . ' ' . $this->last_name;
     }
+
+    public function getEmailAttribute()
+    {
+        return $this->user->email;
+    }
+
 }

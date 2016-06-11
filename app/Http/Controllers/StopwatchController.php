@@ -34,6 +34,12 @@ class StopwatchController extends Controller
         $this->stopwatch = $stopwatch;
     }
 
+    /**
+     * get all stopwatches
+     *
+     * @param Group $group
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index(Group $group)
     {
         $data = [
@@ -46,6 +52,12 @@ class StopwatchController extends Controller
         return view('stopwatches.index', $data);
     }
 
+    /**
+     * create new stopwatch
+     *
+     * @param Group $group
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function create(Group $group)
     {
         $swimmers = $group->swimmers()->lists('first_name', 'id');
@@ -60,6 +72,13 @@ class StopwatchController extends Controller
         return view('stopwatches.create', $data);
     }
 
+    /**
+     * store stopwatch
+     *
+     * @param Request $request
+     * @param Group $group
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(Request $request, Group $group)
     {
         $swimmer = $group->swimmers()->findOrFail($request->swimmer);
@@ -79,6 +98,13 @@ class StopwatchController extends Controller
         ]);
     }
 
+    /**
+     * store stopwatch for api
+     *
+     * @param Request $request
+     * @param Group $group
+     * @return string
+     */
     public function storeApi(Request $request, Group $group)
     {
         $swimmer = $group->swimmers()->findOrFail($request->swimmer);
@@ -106,7 +132,13 @@ class StopwatchController extends Controller
     }
 
 
-
+    /**
+     * show stopwatch
+     *
+     * @param Group $group
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function show(Group $group, $id) {
         $user = Auth::user();
         $stopwatch = $user->stopwatches()
@@ -126,7 +158,6 @@ class StopwatchController extends Controller
             }
         }
 
-
         $clock = 0;
         $is_paused = true;
         $lastTime = null;
@@ -143,7 +174,6 @@ class StopwatchController extends Controller
             'id' => $id,
         ]);
 
-       // dd($stopwatch->times->last()->time);
         JavaScript::put([
             'user_id' => $user->id,
             'stopwatch_id' => $id,

@@ -34,11 +34,18 @@ class ApiController extends Controller
         $this->training = $training;
     }
 
+    /**
+     * get all trainings
+     *
+     * @param Request $request
+     * @param Group $group
+     * @return string
+     */
     function get(Request $request, Group $group)
     {
         $trainings = $group->trainings()
-            ->where('start_time', '>', $request->start)
-            ->where('start_time', '<', $request->end);
+            ->where('starttime', '>', $request->start)
+            ->where('starttime', '<', $request->end);
         if(! Auth::user()->clearance_level > 0) {
             $trainings = $trainings->where('is_shared', 1);
         }
@@ -66,6 +73,13 @@ class ApiController extends Controller
         return json_encode($trainingsArr);
     }
 
+    /**
+     * get distance for training
+     *
+     * @param Group $group
+     * @param $training_id
+     * @return string
+     */
     public function individualDistance(Group $group, $training_id)
     {
         $training = $this->training->find($training_id);
@@ -79,6 +93,14 @@ class ApiController extends Controller
         ]);
     }
 
+    /**
+     * share+unshare training with swimmers
+     *
+     * @param Request $request
+     * @param Group $group
+     * @param $training_id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function shared(Request $request, Group $group, $training_id)
     {
         $training = $group->trainings()->find($training_id);

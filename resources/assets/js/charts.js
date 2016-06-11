@@ -31,7 +31,7 @@ var ChartConfig = function (elem, data) {
 
         function config(data) {
             var configData;
-            if (data.datatype == 'heartRate') {
+            if (data.datatype == 'heartRate' || data.datatype == 'weight') {
                 configData = heartRate(data);
             } else if (data.datatype == 'distance') {
                 configData = distance(data);
@@ -162,26 +162,26 @@ var ChartConfig = function (elem, data) {
 
         function heartRate(data) {
             console.log(data);
-            var heartRates = [];
-            for (var i = 0; i < data.hr.length; i++) {
-                console.log(data.hr[i]);
-                for (var i = 0; i < data.hr.length; i++) {
+            var dataSet = [];
+                //console.log(data.data[i]);
+                for (var i = 0; i < data.data.length; i++) {
                     var heartRate = {
-                        x: newDateString(data.hr[i].created_at),
-                        y: data.hr[i].heart_rate,
+                        x: newDateString(data.data[i].date),
+                        y: data.data[i].value,
                     };
-                    heartRates.push(heartRate);
+                    dataSet.push(heartRate);
 
                 }
 
-            }
+            console.log('dataSet');
+            console.log(dataSet);
             return {
                 type: 'line',
                 data: {
-                    labels: [newDate(0), newDate(1), newDate(2), newDate(3), newDate(4), newDate(5), newDate(6)], // Date Objects
+                    labels: [/*newDate(0), newDate(1), newDate(2), newDate(3), newDate(4), newDate(5), newDate(6)*/], // Date Objects
                     datasets: [{
-                        label: "pols ",
-                        data: heartRates,
+                        label: data.label,
+                        data: dataSet,
                         fill: false,
                     }]
                 },
@@ -198,7 +198,7 @@ var ChartConfig = function (elem, data) {
                         yAxes: [{
                             scaleLabel: {
                                 display: true,
-                                labelString: 'pols'
+                                labelString: data.label
                             },
                             ticks: {
 //                            beginAtZero: true,7

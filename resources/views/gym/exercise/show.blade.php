@@ -1,5 +1,7 @@
 @extends('layouts.master')
 
+@section('title', $gExercise->name)
+
 @section('content')
     <div class="row">
         <div class="col-sm-10 col-sm-offset-1 gym">

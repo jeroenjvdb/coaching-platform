@@ -26,7 +26,7 @@ class ContactController extends Controller
     /**
      * update contact.
      *
-     * @param Request $request
+     * @param ContactRequest $request
      * @param Group $group
      * @param Swimmer $swimmer
      * @return string

@@ -18,6 +18,7 @@ trait SwimmerProfile
 
     /**
      * SwimmerProfile constructor.
+     *
      * @param Swimmer $swimmer
      */
 //    public function __construct(Swimmer $swimmer)
@@ -51,23 +52,23 @@ trait SwimmerProfile
      * @param null $data
      * @return bool
      */
-    public function addData($message,  $data = null)
+    public function addData($message, $data = null)
     {
         $media = null;
-        if($data['media']) {
+        if ($data['media']) {
             $mediaCollect = [
-                'url' => $this->storeImage($data['media']),
-                'type' => 'image'
+                'url'  => $this->storeImage($data['media']),
+                'type' => 'image',
             ];
             $media = collect($mediaCollect);
         }
 
         $collecting = [
-            'type'      => 'data',
-            'message'   => $message,
-            'media'     => $media,
-            'date'      => date('Y-m-d H:i:s'),
-            'response'  => false,
+            'type'     => 'data',
+            'message'  => $message,
+            'media'    => $media,
+            'date'     => date('Y-m-d H:i:s'),
+            'response' => false,
         ];
 
         $collection = collect($collecting);
@@ -85,10 +86,10 @@ trait SwimmerProfile
     public function reaction($message)
     {
         $collecting = [
-            'type' => 'data',
-            'message' => $message,
-            'media' => null,
-            'date' => date('Y-m-d H:i:s'),
+            'type'     => 'data',
+            'message'  => $message,
+            'media'    => null,
+            'date'     => date('Y-m-d H:i:s'),
             'response' => true,
         ];
 
@@ -108,13 +109,13 @@ trait SwimmerProfile
     public function storeContact($data)
     {
         $address = collect($data['address']);
-        if($data['address']['street']) {
+        if ($data['address']['street']) {
             $this->updateMeta('address', $address);
         }
-        if($data['phone']) {
+        if ($data['phone']) {
             $this->updateMeta('phone', $data['phone']);
         }
-        foreach($data['email'] as $email) {
+        foreach ($data['email'] as $email) {
             $this->appendMeta('email', $email);
         }
 
@@ -139,9 +140,12 @@ trait SwimmerProfile
      */
     public function storeHeartRate($rate)
     {
-        $this->heartRates()->create([
-            'heart_rate' => $rate,
-        ]);
+        $this->heartRates()->create(
+            [
+                'heart_rate' => $rate,
+                'date'       => Carbon::today(),
+            ]
+        );
 
         return true;
 
@@ -158,10 +162,10 @@ trait SwimmerProfile
     {
         $hr = $this->heartRates();
 
-        if($start) {
+        if ($start) {
             $hr = $hr->where('created_at', '>', $start);
         }
-        if( $end ){
+        if ($end) {
             $hr = $hr->where('created_at', '<', $end);
         }
 
@@ -177,26 +181,58 @@ trait SwimmerProfile
     {
         $stopwatches = $this->stopwatches()
 //            ->where('stopwatches.id', $id)
-            ->with(['times' => function($query){
+            ->with(
+                ['times' => function ($query) {
                     $query->orderedRev();
                 },
-                'distance',
-                'distance.stroke',
-            ])->get();
+                    'distance',
+                    'distance.stroke',
+                ]
+            )->get();
 
         $lastRecord = null;
-        foreach($stopwatches as $stopwatch) {
+        foreach ($stopwatches as $stopwatch) {
+            $lastTime = 0;
             foreach ($stopwatch->times as $key => $time) {
-                if ($lastRecord == $time->time) {
+                if ($lastRecord == $time->time || $time->time == 0) {
                     $stopwatch->times->pull($key);
                 } else {
+                    $split = $time->time - $lastTime;
+                    $time->split = $this->makeFullTime($split);
+                    $lastTime = $time->time;
                     $lastRecord = $time->time;
-
                 }
             }
         }
 
         return $stopwatches;
+    }
+
+    private function makeFullTime($input)
+    {
+        $data = collect([]);
+
+        $data->milliseconds = $input % 1000;
+        $data->hundredth = $input % 100;
+        $input = floor($input / 1000);
+
+        $data->seconds = $input % 60;
+        $input = floor($input / 60);
+
+        $data->minutes = $input % 60;
+        $input = floor($input / 60);
+
+        $data->hours = $input % 24;
+        $input = floor($input / 24);
+
+        $data->toText = //sprintf('%02d', $data->hours) . ':' .
+            sprintf('%02d', $data->minutes) . ':' .
+            sprintf('%02d', $data->seconds) . '.' .
+            sprintf('%02d', $data->milliseconds / 10);
+
+        $data->arr = str_split($data->toText);
+
+        return $data;
     }
 
     /**
@@ -206,7 +242,6 @@ trait SwimmerProfile
      */
     public function getPersonalBest()
     {
-        Log::warning('cache');
         $athleteId = $this->swimrankings_id;
 
         $url = config('swimrankings.url') . config('swimrankings.swimmersPage') . $athleteId;
@@ -214,29 +249,39 @@ trait SwimmerProfile
         try {
             $res = getCall($url, $parameters);
 
-            $pattern = '/<table class="athleteBest"[\s\S]*<\/table>/';
-            preg_match($pattern, $res->getBody(), $table);
-
-            $pattern = '/<script[\s\S]*?<\/script>/';
-            $body = "not found";
-            if(isset($table[0])) {
-                $body = preg_replace($pattern, '', $table[0]);
-            }
-
+            $body = $this->extractTable($res);
             $body = removeLinks($body);
             $body = $this->mobileHidden($body);
             $body = $this->removeWidth($body);
 
-            $expiresAt = Carbon::now()->addDays(31);
-
-            Cache::forever('PB.' . $this->id, $body, $expiresAt);
+            Cache::forever('PB.' . $this->id, $body);
 
             return $body;
         } catch (\Exception $e) {
-            Log::info('couldn\'t connect to url', [ $e ] );
+            Log::info('couldn\'t connect to url', [$e]);
 
             return "not found";
         }
+    }
+
+    /**
+     * extract table from string
+     *
+     * @param $res
+     * @return mixed|string
+     */
+    private function extractTable($res)
+    {
+        $pattern = '/<table class="athleteBest"[\s\S]*<\/table>/';
+        preg_match($pattern, $res->getBody(), $table);
+
+        $pattern = '/<script[\s\S]*?<\/script>/';
+        $body = "not found";
+        if(isset($table[0])) {
+            $body = preg_replace($pattern, '', $table[0]);
+        }
+
+        return $body;
     }
 
     public function seedPDF()
@@ -257,7 +302,7 @@ trait SwimmerProfile
             return true;
 //            return $body;
         } catch (\Exception $e) {
-            Log::info('couldn\'t connect to url', [ $e ] );
+            Log::info('couldn\'t connect to url', [$e]);
 
             return "not found";
         }
@@ -289,8 +334,7 @@ trait SwimmerProfile
             'name',
         ];
 
-        foreach($hidden as $column)
-        {
+        foreach ($hidden as $column) {
             $records = preg_replace('/class="' . $column . '"/', 'class="' . $column . ' hidden-xs"', $records);
         }
 
@@ -305,24 +349,25 @@ trait SwimmerProfile
      */
     private function getSwimmerMeta($stopwatches)
     {
-        $allMeta = $this->getAllMeta();
+//        $allMeta = $this->getAllMeta();
         $meta = collect([]);
 
         $heartRate = [];
         $dateArr = [];
         $rateArr = [];
 
-        $allMeta = $allMeta->sortByDesc('date');
+//        $allMeta = $allMeta->sortByDesc('date');
 
-        $allMeta->each(function($item, $key) use ($meta, $dateArr, $rateArr){
-            if(isset($item->type) && $item->type == 'data') {
-                $item->date = Date::createFromFormat('Y-m-d H:i:s',$item->date);
-                $meta->push($item);
-            } else if(isset($item->type) && $item->type == 'heartRate') {
-                $item->date = Carbon::createFromFormat('Y-m-d H:i:s',$item->date);
-                $meta->push($item);
-            }
-        });
+
+        /* $allMeta->each(function($item, $key) use ($meta, $dateArr, $rateArr){
+             if(isset($item->type) && $item->type == 'data') {
+                 $item->date = Date::createFromFormat('Y-m-d H:i:s',$item->date);
+                 $meta->push($item);
+             } else if(isset($item->type) && $item->type == 'heartRate') {
+                 $item->date = Carbon::createFromFormat('Y-m-d H:i:s',$item->date);
+                 $meta->push($item);
+             }
+         });*/
 
 //        foreach($allMeta as $key => $item) {
 //            if(isset($item->type) && $item->type == 'heartRate') {
@@ -335,13 +380,33 @@ trait SwimmerProfile
 //                array_push($heartRate, $hr);
 //            }
 //        }
-
-        foreach($this->heartRates as $heartRate) {
+        foreach ($this->data as $data) {
+            $media = null;
+            if ($data->media_url && $data->media_type) {
+                $collecting = [
+                    'type' => $data->media_type,
+                    'url'  => $data->media_url,
+                ];
+                $media = collect($collecting);
+            }
             $newMeta = [
-                'type' => 'heartRate',
-                'message' => $heartRate->heart_rate,
-                'media' => null,
-                'date' => Date::parse($heartRate->created_at),
+                'type'     => 'data',
+                'message'  => $data->text,
+                'media'    => $media,
+                'date'     => Date::parse($data->created_at),
+                'response' => $data->is_reaction,
+            ];
+
+            $item = (object)$newMeta;
+            $meta->push($item);
+        }
+
+        foreach ($this->heartRates as $heartRate) {
+            $newMeta = [
+                'type'     => 'heartRate',
+                'message'  => $heartRate->heart_rate,
+                'media'    => null,
+                'date'     => Date::parse($heartRate->created_at),
                 'response' => true,
             ];
 
@@ -349,12 +414,12 @@ trait SwimmerProfile
             $meta->push($item);
         }
 
-        foreach($stopwatches as $stopwatch) {
+        foreach ($stopwatches as $stopwatch) {
             $newMeta = [
-                'type' => 'chrono',
-                'message' => $stopwatch,
-                'media' => null,
-                'date' => Date::parse($stopwatch->created_at),
+                'type'     => 'chrono',
+                'message'  => $stopwatch,
+                'media'    => null,
+                'date'     => Date::parse($stopwatch->created_at),
                 'response' => false,
             ];
 
@@ -363,8 +428,8 @@ trait SwimmerProfile
         }
 
         return [
-            'meta' =>$meta->sortByDesc('date'),
-            'heartRate' => $heartRate
+            'meta'      => $meta->sortByDesc('date'),
+            'heartRate' => $heartRate,
         ];
     }
 
@@ -376,13 +441,13 @@ trait SwimmerProfile
      */
     private function storeImage($img)
     {
-        $destinationPath    = "uploads/data/";
-        $extension          = $img->getClientOriginalExtension();
-        $filename           = random_string(50);
-        $filename          .= "." . $extension;
+        $destinationPath = "uploads/data/";
+        $extension = $img->getClientOriginalExtension();
+        $filename = random_string(50);
+        $filename .= "." . $extension;
         //fullpath = path to picture + filename + extension
-        $fullPath           = $destinationPath . $filename;
-        $img->move($destinationPath , $filename);
+        $fullPath = $destinationPath . $filename;
+        $img->move($destinationPath, $filename);
 
         return '/' . $fullPath;
     }
@@ -399,7 +464,7 @@ trait SwimmerProfile
         $address = $swimmer->getMeta('address');
         $addressText = null;
 
-        if($address) {
+        if ($address) {
             $address->street = htmlentities($address->street);
             $address->number = htmlentities($address->number);
             $address->city = htmlentities($address->city);
@@ -428,12 +493,44 @@ trait SwimmerProfile
         }
 
         return [
-            'phone'     => $swimmer->getMeta('phone'),
-            'email'     => $swimmer->getMeta('email', []),
-            'birthday'  => $swimmer->getMeta('birthday'),
-            'picture'   => $swimmer->getMeta('picture'),
-            'address'   => $address,
+            'phone'    => $swimmer->getMeta('phone'),
+            'email'    => $swimmer->getMeta('email', []),
+            'birthday' => $swimmer->getMeta('birthday'),
+            'picture'  => $swimmer->getMeta('picture'),
+            'address'  => $address,
 
         ];
     }
+
+    /**
+     * @return bool
+     */
+    public function checkWeights()
+    {
+        return $this->weights()->where('date', '>=', Carbon::today())->exists();
+    }
+
+    /**
+     * Get weights between dates
+     *
+     * @param null $start
+     * @param null $end
+     * @return mixed
+     */
+    public function getWeights($start = null, $end = null)
+    {
+        $weights = $this->weights();
+        if ($start) {
+            $weights = $weights->where('date', '>=', $start);
+        }
+        if ($end) {
+            $weights = $weights->where('date', '<=', $end);
+        }
+        $weights = $weights->ordered()->get();
+
+
+        return $weights;
+    }
+
+
 }

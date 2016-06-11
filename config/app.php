@@ -180,7 +180,10 @@ return [
         'GrahamCampbell\Flysystem\FlysystemServiceProvider',
         'Jenssegers\Date\DateServiceProvider',
 
-
+        /*
+        * Acacha AdminLTE template provider
+         */
+//        Acacha\AdminLTETemplateLaravel\Providers\AdminLTETemplateServiceProvider::class,
     ],
 
     /*
@@ -237,6 +240,10 @@ return [
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Breadcrumbs' => DaveJamesMiller\Breadcrumbs\Facade::class,
         'Date' => Jenssegers\Date\Date::class,
+        /*
+* Acacha AdminLTE template alias
+*/
+//        'AdminLTE' => Acacha\AdminLTETemplateLaravel\Facades\AdminLTE::class,
 
     ],
 

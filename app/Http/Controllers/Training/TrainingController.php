@@ -38,6 +38,7 @@ class TrainingController extends Controller
             'index',
             'show',
             'get',
+            'download',
         ]]);
 
         $this->training = $training;

@@ -11,6 +11,12 @@ function getCall($url, $parameters)
     }
 }
 
+/**
+ * remove links from string
+ *
+ * @param $body
+ * @return mixed
+ */
 function removeLinks($body)
 {
     $pattern = '/(<a\s*?href[\s\S]*?>)|(<a[\s]*?class="[\s\S]*?">)/';

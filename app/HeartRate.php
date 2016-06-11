@@ -12,10 +12,20 @@ class HeartRate extends Model
 
     protected $fillable = [
         'heart_rate',
+        'date',
+    ];
+
+    protected $appends = [
+        'value',
     ];
 
     public function swimmer()
     {
         return $this->belongsTo('App\Swimmer');
+    }
+
+    public function getValueAttribute()
+    {
+        return $this->heart_rate;
     }
 }

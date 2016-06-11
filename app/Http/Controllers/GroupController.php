@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Group;
+use App\Swimmer;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -16,10 +17,15 @@ class GroupController extends Controller
      * @var Group
      */
     private $group;
+    /**
+     * @var Swimmer
+     */
+    private $swimmer;
 
-    public function __construct(Group $group)
+    public function __construct(Group $group, Swimmer $swimmer)
     {
         $this->group = $group;
+        $this->swimmer = $swimmer;
     }
 
     /**
@@ -91,10 +97,19 @@ class GroupController extends Controller
             ->where('starttime', '<', $tomorrow)
             ->get();
 
+        $user = Auth::user();
+        $mySwimmer = null;
+        if ($user->getMeta('swimmer_id')) {
+            $is_swimmer = true;
+            $mySwimmer = $this->swimmer->find($user->getMeta('swimmer_id'));
+        }
+
         $data = [
             'group' => $group,
             'trainings' => $trainings,
             'swimmers' => $swimmers,
+            'coaches' => $group->coaches,
+            'mySwimmer' => $mySwimmer,
         ];
 
         return view('groups.show', $data);

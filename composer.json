@@ -19,7 +19,8 @@
         "graham-campbell/flysystem": "^3.4",
         "league/flysystem-ziparchive": "^1.0",
         "dompdf/dompdf": "~0.6.1",
-        "jenssegers/date": "^3.2"
+        "jenssegers/date": "^3.2",
+        "acacha/admin-lte-template-laravel": "2.*"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

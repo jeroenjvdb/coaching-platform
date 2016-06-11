@@ -29,4 +29,12 @@
   .cell {
     width: 6px;
   }
+  line-height: 30px;
+  .split {
+    font-size: $fs-4;
+
+    .cell {
+      width: 4px;
+    }
+  }
 }

@@ -81,7 +81,6 @@ class ChatController extends Controller
             'user_id' => Auth::user()->id,
             'chat_id' => $chat->id,
         ]);
-        //dd($request->input('msg'));
         // this fires the event
         event(new chatEvent($message->message, $this->authUser->name));
 

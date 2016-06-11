@@ -20,21 +20,17 @@ class CreateSwimmersTable extends Migration
             /**
              * foreign keys
              */
-            $table->integer('swimrankings_id')->unsigned();
             $table->integer('group_id')->unsigned();
-            $table->integer('profile_id')->unsigned();
+            $table->integer('user_id')->unsigned();
 
+            $table->integer('swimrankings_id')->unsigned();
             /**
              * data
              */
             $table->string('first_name');
             $table->string('last_name');
             $table->boolean('is_man');
-            $table->datetime('date_of_birth');
-            $table->string('email');
-            $table->string('phone');
-            $table->string('parent1')->nullable();
-            $table->string('parent2')->nullable();
+            $table->datetime('birthday');
 
             /**
              * timestamps

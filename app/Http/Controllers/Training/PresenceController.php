@@ -10,6 +10,14 @@ use App\Http\Controllers\Controller;
 
 class PresenceController extends Controller
 {
+    /**
+     * store presences from a training
+     *
+     * @param Request $request
+     * @param Group $group
+     * @param $training_id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(Request $request, Group $group, $training_id)
     {
         $swimmerIds = $request->swimmers;

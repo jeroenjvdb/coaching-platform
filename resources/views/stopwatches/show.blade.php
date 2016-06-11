@@ -1,5 +1,7 @@
 @extends('layouts.master')
 
+@section('title', 'stopwatch')
+
 @section('content')
     {!! Breadcrumbs::render('stopwatch.show', $group, $stopwatch) !!}
     <h1>stopwatch</h1>

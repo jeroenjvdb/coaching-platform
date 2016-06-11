@@ -94,4 +94,37 @@ class CategoryController extends Controller
             'type' => 'success',
         ]);
     }
+
+    /**
+     * delete category from training
+     *
+     * @param Request $request
+     * @param Group $group
+     * @param $training_id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroy(Request $request, Group $group, $training_id)
+    {
+        $training = $group
+            ->trainings()
+            ->find($training_id);
+        $category = $training
+            ->categoryExercises()
+            ->find($request->category_id);
+
+        $category->delete();
+
+        $counter = 0;
+        $categories = $training
+            ->categoryExercises()
+            ->orderBy('position', 'asc');
+
+        foreach($categories as $cat) {
+            $cat->position = $counter;
+            $cat->save();
+            $counter++;
+        }
+
+        return redirect()->back();
+    }
 }

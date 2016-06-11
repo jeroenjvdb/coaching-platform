@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Classes\SwimmerProfile;
+use App\Stroke;
 use App\Swimmer;
 use Illuminate\Http\Request;
 
@@ -16,10 +17,21 @@ class MyController extends Controller
      * @var Swimmer
      */
     private $swimmer;
+    /**
+     * @var Stroke
+     */
+    private $stroke;
 
-    public function __construct(Swimmer $swimmer)
+    /**
+     * MyController constructor.
+     *
+     * @param Swimmer $swimmer
+     * @param Stroke $stroke
+     */
+    public function __construct(Swimmer $swimmer, Stroke $stroke)
     {
         $this->swimmer = $swimmer;
+        $this->stroke = $stroke;
     }
 
     /**
@@ -33,7 +45,17 @@ class MyController extends Controller
         $user = Auth::user();
         $swimmer = $this->swimmer->find($user->getMeta('swimmer_id'));
 
-        $swimmer->reaction($request->message);
+//        $swimmer->reaction($request->message);
+
+        $swimmer->data()->create(
+            [
+                'text' => $request->message,
+                'media_type' => null,
+                'media_url' => null,
+                'user_id' => Auth::user()->id,
+                'is_reaction' => true,
+            ]
+        );
 
         return redirect()->back();
 
@@ -56,6 +78,7 @@ class MyController extends Controller
 //        $data['hasHeartRate'] = $swimmer->checkHeartRate();
         $data['group'] = $swimmer->group;
         $data['myProfile'] = true;
+        $data['strokes'] = $this->stroke->with('distances')->get();
 
 
         /*JavaScript::put([
@@ -65,6 +88,12 @@ class MyController extends Controller
         return view('swimmers.show', $data);
     }
 
+    /**
+     * store heart rates
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function heartRate(Request $request)
     {
         $id = Auth::user()->getMeta('swimmer_id');
@@ -79,6 +108,11 @@ class MyController extends Controller
         return redirect()->back();
     }
 
+    /**
+     * get heart rates
+     *
+     * @return string
+     */
     public function getHeartRate()
     {
         $swimmer = Swimmer::find(Auth::user()->getMeta('swimmer_id'));

@@ -52,6 +52,7 @@ $(function () {
 
     function forms() {
         checkboxes();
+        $("#compose-textarea").wysihtml5();
         var forms = $('form');
         forms.each(function () {
             var form = $(this);
@@ -141,6 +142,19 @@ $(function () {
     }
 
     function checkboxes() {
+        $('input[type=checkbox].line').each(function(){
+            var self = $(this),
+                label = self.next(),
+                label_text = label.text();
+
+            label.remove();
+            self.iCheck({
+                checkboxClass: 'icheckbox_line-red',
+                radioClass: 'iradio_line-red',
+                insert: '<div class="icheck_line-icon"></div>' + label_text
+            });
+        });
+
         $('.input_change_checkbox').each(function () {
             var checked = "";
             if ($(this).is(':checked')) {
@@ -152,6 +166,24 @@ $(function () {
 
         });
 
+        $('input[type=checkbox]').each(function() {
+            if($(this).data('all')) {
+                $(this).on('ifClicked', function(e)
+                {
+                    var source = this;
+                    console.log($(source).is(':checked'));
+                    var name = $(this).data('checkbox');
+                    console.log($('input[type=checkbox][name=' + name + ']'));
+                    $('input[type=checkbox][data-name=' + name + ']').each(function() {
+                        this.checked = !source.checked;
+                        console.log(this.checked);
+                        $(this).iCheck('update');
+                    })
+
+                })
+            }
+        })
+
         $('.change_checkbox').on('click', function () {
             $(this).toggleClass('checked').prev().prop('checked', $(this).is('.checked'))
         });
@@ -162,15 +194,14 @@ $(function () {
         $('.upload-image').on('change', renderImage);
         $('form').on('submit', formRequest);
         $('a').on('click', links);
-        //$('.sort-bars').on('mousedown', function(e) { $('.sortable').sortable('enable'); console.log(e); })
         $('.sort-bars').on('touchstart mousedown', function (e) {
             $('.sortable').sortable('enable');
             console.log(e);
-        })
+        });
         $('.sort-bars').on('touchend mouseup', function (e) {
             $('.sortable').sortable('disable');
             console.log(e);
-        })
+        });
         $('.sortable').on('sortupdate', sort);
         //$('.sortable').on('sortstop', sortStop);
         $('.btn-page').on('click', showPage);
@@ -271,7 +302,8 @@ $(function () {
 
         $.each(elems, function (index, value) {
             var elem = $(value);
-            //console.log();
+            console.log(elem);
+
             //console.log(index);
             switch (elem.data('contact')) {
                 case 'swimmer.email':
@@ -285,6 +317,7 @@ $(function () {
                     elem.html(data.data.contact.address.toString);
                     break;
                 case 'email':
+                    elem.html(data.data.email);
             }
         });
 

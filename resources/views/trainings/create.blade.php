@@ -1,5 +1,7 @@
 @extends('layouts.master')
 
+@section('title', 'training toevoegen')
+
 @section('content')
 
     {!! Form::open(['route' => ['trainings.store', 'group' => $group->slug], 'data-ajax' => 'false']) !!}

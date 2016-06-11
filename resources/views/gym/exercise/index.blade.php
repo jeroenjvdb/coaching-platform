@@ -1,7 +1,9 @@
 @extends('layouts.master')
 
+@section('title', 'gym oefeningen')
+
 @section('content')
-    <h1>all gym exercises</h1>
+    <h1>gym oefeningen</h1>
     <a href="{{ route('{group}.gym.exercise.create', [
         'group' => $group->slug,
     ]) }}">create</a>

@@ -1,5 +1,7 @@
 @extends('layouts.master')
 
+@section('title', 'oefening wijzigen')
+
 @section('content')
 
     <h1>update exercise</h1>

@@ -1,5 +1,7 @@
 @extends('layouts.master')
 
+@section('title', 'stopwatch aanmaken')
+
 @section('content')
 
     {!! Form::open(['route' => [

@@ -13,6 +13,13 @@ use Jenssegers\Date\Date;
 
 class ApiController extends Controller
 {
+    /**
+     * get fitness trainings
+     *
+     * @param Request $request
+     * @param Group $group
+     * @return string
+     */
     public function get(Request $request, Group $group)
     {
         $trainings = $group->gyms()

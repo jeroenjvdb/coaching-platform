@@ -1,5 +1,7 @@
 @extends('layouts.master')
 
+@section('title', 'training ' . $training->starttime->formatLocalized('%A %d %B %P') )
+
 @section('content')
     {!! Breadcrumbs::render('{group}.training.show', $group, $training) !!}
     <h2>training {{ $training->starttime->formatLocalized('%A %d %B %P') }} <a rel="external" href="{{ route('{group}.training.download', [
@@ -72,7 +74,9 @@
                                 'data-ajax' => "false",
                                 ]) !!}
                 <fieldset class="form-group col-md-12">
-                    {!! Form::text('category') !!}
+                    {!! Form::text('category', null, [
+                        'placeholder' => 'naam',
+                    ]) !!}
                 </fieldset>
                 <fieldset class="form-group col-md-12">
                     {!! Form::submit('verzenden', [
@@ -82,6 +86,11 @@
                 {!! Form::close() !!}
             </div>
                 @endif
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="stopwatch" data-base3="true"></div>
         </div>
     </div>
     <div class="row">

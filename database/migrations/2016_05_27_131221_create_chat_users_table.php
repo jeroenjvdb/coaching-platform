@@ -12,11 +12,11 @@ class CreateChatUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('chat_users', function (Blueprint $table) {
+        /*Schema::create('chat_users', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->integer('chat_id')->unsigned();
-        });
+        });*/
     }
 
     /**
@@ -26,6 +26,6 @@ class CreateChatUsersTable extends Migration
      */
     public function down()
     {
-        Schema::drop('chat_users');
+//        Schema::drop('chat_users');
     }
 }
