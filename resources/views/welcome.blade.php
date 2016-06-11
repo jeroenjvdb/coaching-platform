@@ -5,7 +5,7 @@
 @section('content')
     <div class="container">
         <div class="row groups">
-            <h1>mijn groepen</h1>
+            <h1 class="text-center">mijn groepen</h1>
             @foreach($groups as $group)
                 <div class="col-lg-3 col-md-4 col-sm-6 field">
                     <a rel="external" href="{{ route('groups.show', ['group' => $group->slug]) }}"
