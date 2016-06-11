@@ -3,19 +3,20 @@
 @section('title', 'groep toevoegen')
 
 @section('content')
-    <div class="row">
-        <div class="col-md-10 col-md-offset-1">
+    <div class="box box-danger login-box">
+        <div class="in clearfix">
             <h1>Groep toevoegen</h1>
             {!! Form::open(['method' => 'POST', 'route' => 'groups.store']) !!}
             <fieldset class="form-group">
                 {!! Form::label('name', 'naam') !!}
                 {!! Form::text('name', null, [
                     'class' => 'form-control',
+                    'autofocus' => 'autofocus',
                 ]) !!}
             </fieldset>
             <fieldset class="form-group">
                 {!! Form::submit('toevoegen', [
-                    'class' => 'btn btn-lg btn-primary',
+                    'class' => 'btn btn-primary btn-full',
                 ]) !!}
             </fieldset>
             {!! Form::close() !!}

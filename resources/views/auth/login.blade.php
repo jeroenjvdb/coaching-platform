@@ -5,16 +5,14 @@
         <div class="in clearfix">
             {!! Form::open(['url' => '/login']) !!}
             <div class="visual">
-                <!--<div class="face front"><img src="https://musketonmazda.com/resources/admin/images/login-user.gif">
+                <div class="face front"><img src="/resources/img/launcher-icon-4x.png">
                 </div>
-                <div class="face back">
+                <!--<div class="face back">
                     <a href="#"><i class="fa fa-times"></i></a>
                     <img src="http://placehold.it/200x200">
                 </div>-->
             </div>
-            <div class="field fixed-user">
-                Firstname Lastname
-            </div>
+
             <div class="field user">
                 {!! Form::text('email', null, ['placeholder' => 'email', 'autofocus', 'required']) !!}
             </div>
