@@ -57,6 +57,10 @@
                                     @foreach($time->full_time->arr as $char)
                                         <div class="cell">{{ $char }}</div>@endforeach
                                 </div>
+                                <div class="col-md-3 col-xs-6 split">
+                                   @foreach($time->split->arr as $char)
+                                        <div class="cell">{{ $char }}</div>@endforeach
+                                </div>
                             @endforeach
                         </div>
                     @elseif($data->type == 'heartRate')

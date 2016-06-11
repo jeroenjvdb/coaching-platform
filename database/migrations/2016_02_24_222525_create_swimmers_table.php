@@ -20,10 +20,10 @@ class CreateSwimmersTable extends Migration
             /**
              * foreign keys
              */
-            $table->integer('swimrankings_id')->unsigned();
             $table->integer('group_id')->unsigned();
             $table->integer('user_id')->unsigned();
 
+            $table->integer('swimrankings_id')->unsigned();
             /**
              * data
              */

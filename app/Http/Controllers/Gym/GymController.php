@@ -69,7 +69,7 @@ class GymController extends Controller
      */
     public function store(Group $group, Request $request)
     {
-        $gym = $this->gym->create([
+        $gym = $group->gyms()->create([
             'start_time' => $request->start_time,
         ]);
 

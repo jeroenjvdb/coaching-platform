@@ -30,7 +30,7 @@ class UsersTableSeeder extends Seeder
         $this->user->create([
             'name' => 'Jeroen Van den Broeck',
             'email' => 'jeroen_vdb1@hotmail.com',
-            'password' => Hash::make('root'),
+            'password' => 'root',
             'clearance_level' => 1,
         ]);
     }

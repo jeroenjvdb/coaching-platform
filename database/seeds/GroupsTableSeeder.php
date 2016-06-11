@@ -1,6 +1,7 @@
 <?php
 
 use App\Group;
+use App\User;
 use Illuminate\Database\Seeder;
 
 class GroupsTableSeeder extends Seeder
@@ -9,14 +10,21 @@ class GroupsTableSeeder extends Seeder
      * @var Group
      */
     private $group;
+    /**
+     * @var User
+     */
+    private $user;
 
     /**
      * GroupsTableSeeder constructor.
+     *
      * @param Group $group
+     * @param User $user
      */
-    public function __construct(Group $group)
+    public function __construct(Group $group, User $user)
     {
         $this->group = $group;
+        $this->user = $user;
     }
 
     /**
@@ -26,9 +34,16 @@ class GroupsTableSeeder extends Seeder
      */
     public function run()
     {
-        $this->group->create([
+        $group = $this->group->create([
             'name' => 's3',
             'slug' => 's3',
         ]);
+
+        $coach = $this->user->first()->coach()->create([
+            'first_name' => 'jeroen',
+            'last_name' => 'van den broeck'
+        ]);
+
+        $group->coaches()->attach($coach->id);
     }
 }

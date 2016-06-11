@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'show all groups')
+@section('title', 'alle groepen')
 
 @section('content')
     @foreach($groups as $group)

@@ -8,7 +8,6 @@
         'group' => $group->slug,
         'training_id' => $training->id,
     ]) }}"><i class="fa fa-download"></i></a></h2>
-    <div class="stopwatch" data-base3="true"></div>
     @if($editable)
         {!! Form::open([
             'route' => [
@@ -75,7 +74,9 @@
                                 'data-ajax' => "false",
                                 ]) !!}
                 <fieldset class="form-group col-md-12">
-                    {!! Form::text('category') !!}
+                    {!! Form::text('category', null, [
+                        'placeholder' => 'naam',
+                    ]) !!}
                 </fieldset>
                 <fieldset class="form-group col-md-12">
                     {!! Form::submit('verzenden', [
@@ -85,6 +86,11 @@
                 {!! Form::close() !!}
             </div>
                 @endif
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="stopwatch" data-base3="true"></div>
         </div>
     </div>
     <div class="row">

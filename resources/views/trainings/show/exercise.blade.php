@@ -55,7 +55,9 @@
             <div class="row form-group">
                 <div class="col-xs-5">
                     {!! Form::number('sets', $exercise->sets, [
-                        'class' => 'form-control number'
+                        'class' => 'form-control number',
+                        'placeholder' => 'sets',
+
                     ]) !!}
                 </div><!--
                             -->
@@ -65,6 +67,8 @@
                 <div class="col-xs-6">
                     {!! Form::number('meters', $exercise->meters, [
                         'class' => 'form-control number',
+                        'placeholder' => 'meters',
+                        'required',
                     ] ) !!}
                 </div>
             </div>
@@ -72,7 +76,9 @@
         <div class="col-xs-6 form-group">
             {!! Form::textarea('description', $exercise->textarea, [
                 'class' => 'form-control',
-                'rows' => 1
+                'rows' => 1,
+                'placeholder' => 'beschrijving',
+                'required'
             ]) !!}
         </div>
 

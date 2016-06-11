@@ -15,7 +15,7 @@ class CreateStopwatchTimesTable extends Migration
         Schema::create('stopwatch_times', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->integer('stopwatch_id');
+            $table->integer('stopwatch_id')->unsigned();
 
             $table->integer('time');
             $table->bigInteger('created')->nullable();

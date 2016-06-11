@@ -107,6 +107,7 @@
             </div>
         </div>
     </div>
+    <div class="clearfix"></div>
     {{--<h2>komende trainingen</h2>--}}
 
     {{--<ul>--}}

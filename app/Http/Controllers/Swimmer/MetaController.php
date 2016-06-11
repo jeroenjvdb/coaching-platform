@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class MetaController extends Controller
 {
@@ -46,35 +47,49 @@ class MetaController extends Controller
      */
     public function store(Request $request, Group $group, Swimmer $swimmer)
     {
-        $media = null;
-        if(isset($request->media)) {
-            $type = 'img';
-            if($request->media->getMimeType() == 'video/mp4') {
-                $type = 'vid';
+        $media_type = null;
+        $media_url = null;
+        if (isset($request->media)) {
+            if ($request->media->getMimeType() == 'image/jpeg') {
+                $media_type = 'img';
+
+            } else {
+                if ($request->media->getMimeType() == 'video/mp4') {
+                    $media_type = 'vid';
+                }
             }
-            $media = $this->storeImage($request->media);
-            $mediaCollect = [
-                'url' => $media,
-                'type' => $type,
-            ];
-            $media = collect($mediaCollect);
+            $media_url = $this->storeImage($request->media);
         }
 
-        $collecting = [
-            'type' => 'data',
-            'message' => $request->message,
-            'media' => $media,
-            'date' => date('Y-m-d H:i:s'),
-            'response' => false,
-        ];
+//        $collecting = [
+//            'type'     => 'data',
+//            'message'  => $request->message,
+//            'media'    => $media,
+//            'date'     => date('Y-m-d H:i:s'),
+//            'response' => false,
+//        ];
 
-        $collection = collect($collecting);
-        $swimmer->addMeta(date("Y-m-d H:i:s"), $collection);
+//        $collection = collect($collecting);
 
-        return redirect()->route('swimmers.show', [
-            'group' => $group->slug,
-            'swimmer' => $swimmer->slug,
-        ]);
+        $swimmer->data()->create(
+            [
+                'text' => $request->message,
+                'media_type' => $media_type,
+                'media_url' => $media_url,
+                'user_id' => Auth::user()->id,
+                'is_reaction' => false,
+            ]
+        );
+
+//        $swimmer->addMeta(date("Y-m-d H:i:s"), $collection);
+
+        return redirect()->route(
+            '{group}.swimmer.show',
+            [
+                'group'   => $group->slug,
+                'swimmer' => $swimmer->slug,
+            ]
+        );
     }
 
     public function show()
@@ -105,13 +120,13 @@ class MetaController extends Controller
      */
     protected function storeImage($img)
     {
-        $destinationPath   = "uploads/data/";
-        $extension         = $img->getClientOriginalExtension();
+        $destinationPath = "uploads/data/";
+        $extension = $img->getClientOriginalExtension();
         $filename = random_string(50);
         $filename .= "." . $extension;
         //fullpath = path to picture + filename + extension
-        $fullPath          = $destinationPath . $filename;
-        $img->move($destinationPath , $filename);
+        $fullPath = $destinationPath . $filename;
+        $img->move($destinationPath, $filename);
 
         return '/' . $fullPath;
     }

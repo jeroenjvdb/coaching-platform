@@ -72,6 +72,11 @@ class Swimmer extends Model
         return $this->belongsToMany('App\Training', 'presences');
     }
 
+    public function data()
+    {
+        return $this->hasMany('App\Data');
+    }
+
     public function stopwatches()
     {
         return $this->hasMany('App\Stopwatch');

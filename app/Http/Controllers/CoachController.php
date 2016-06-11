@@ -9,6 +9,9 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class CoachController extends Controller
 {
@@ -79,6 +82,17 @@ class CoachController extends Controller
                 'name' => $request->first_name,
                 'password' => bcrypt('root'),
             ]);
+
+            $token = strtolower(str_random(64));
+
+            DB::table('password_resets')->insert(
+                [
+                    'email' => $request->email,
+                    'token' => $token,
+                ]
+            );
+//            Log::info($email);
+            $this->sendLogin($token, $request->email);
         }
 
         $coach = $user->coach()->create([
@@ -88,7 +102,7 @@ class CoachController extends Controller
 
         $group->coaches()->attach($coach);
 
-        return redirect()->route('{group}.coach.index', [
+        return redirect()->route('groups.show', [
             'group' => $group->slug
         ]);
     }
@@ -149,5 +163,26 @@ class CoachController extends Controller
         $coach->delete();
 
         return redirect()->route('coach.index');
+    }
+
+    private function sendLogin($token, $email)
+    {
+        $route = route(
+            'password.reset.{token}',
+            [
+                'token' => $token,
+            ]
+        );
+
+        Mail::send(
+            'emails.reset2',
+            ['route' => $route],
+            function ($m) use ($email) {
+                $m->from('jeroen.vandenbroeck@student.kdg.be', Auth::user()->name . ' - topswim');
+                $m->to($email, 'topswim')->subject('account geregistreerd');
+            }
+        );
+
+        return true;
     }
 }

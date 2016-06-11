@@ -45,7 +45,17 @@ class MyController extends Controller
         $user = Auth::user();
         $swimmer = $this->swimmer->find($user->getMeta('swimmer_id'));
 
-        $swimmer->reaction($request->message);
+//        $swimmer->reaction($request->message);
+
+        $swimmer->data()->create(
+            [
+                'text' => $request->message,
+                'media_type' => null,
+                'media_url' => null,
+                'user_id' => Auth::user()->id,
+                'is_reaction' => true,
+            ]
+        );
 
         return redirect()->back();
 

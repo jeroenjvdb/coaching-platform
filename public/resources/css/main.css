@@ -5027,27 +5027,27 @@ fieldset[disabled] a.btn {
 
 .btn-primary {
   color: #fff;
-  background-color: #222d32;
-  border-color: #181f23; }
+  background-color: #0E7287;
+  border-color: #0c5e70; }
   .btn-primary:focus, .btn-primary.focus {
     color: #fff;
-    background-color: #0d1214;
+    background-color: #094b59;
     border-color: black; }
   .btn-primary:hover {
     color: #fff;
-    background-color: #0d1214;
-    border-color: black; }
+    background-color: #094b59;
+    border-color: #063038; }
   .btn-primary:active, .btn-primary.active,
   .open > .btn-primary.dropdown-toggle {
     color: #fff;
-    background-color: #0d1214;
-    border-color: black; }
+    background-color: #094b59;
+    border-color: #063038; }
     .btn-primary:active:hover, .btn-primary:active:focus, .btn-primary:active.focus, .btn-primary.active:hover, .btn-primary.active:focus, .btn-primary.active.focus,
     .open > .btn-primary.dropdown-toggle:hover,
     .open > .btn-primary.dropdown-toggle:focus,
     .open > .btn-primary.dropdown-toggle.focus {
       color: #fff;
-      background-color: black;
+      background-color: #063038;
       border-color: black; }
   .btn-primary:active, .btn-primary.active,
   .open > .btn-primary.dropdown-toggle {
@@ -5056,10 +5056,10 @@ fieldset[disabled] a.btn {
   fieldset[disabled] .btn-primary:hover,
   fieldset[disabled] .btn-primary:focus,
   fieldset[disabled] .btn-primary.focus {
-    background-color: #222d32;
-    border-color: #181f23; }
+    background-color: #0E7287;
+    border-color: #0c5e70; }
   .btn-primary .badge {
-    color: #222d32;
+    color: #0E7287;
     background-color: #fff; }
 
 .btn-success {
@@ -9008,8 +9008,14 @@ ul.wysihtml5-toolbar div[data-wysihtml5-command-value="orange"] {
     width: 12px;
     margin: 0; }
 
-.data .stopwatch-ui .cell {
-  width: 6px; }
+.data .stopwatch-ui {
+  line-height: 30px; }
+  .data .stopwatch-ui .cell {
+    width: 6px; }
+  .data .stopwatch-ui .split {
+    font-size: 1.8rem; }
+    .data .stopwatch-ui .split .cell {
+      width: 4px; }
 
 table {
   width: 100%; }
@@ -9041,6 +9047,9 @@ table {
   margin-right: 0; }
   .nav-tabs-custom > .nav-tabs > li.active {
     border-top-color: #dd4b39; }
+
+.page {
+  min-height: 500px; }
 
 .data {
   width: 80%;

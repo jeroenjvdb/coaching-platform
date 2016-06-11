@@ -13,7 +13,9 @@
     <div class="row form-group">
         <div class="col-xs-5">
             {!! Form::number('sets', null, [
-                'class' => 'form-control number'
+                'class' => 'form-control number',
+                'placeholder' => 'sets',
+
             ]) !!}
         </div><!--
                             -->
@@ -23,6 +25,8 @@
         <div class="col-xs-6">
             {!! Form::number('meters', null, [
                 'class' => 'form-control number',
+                'placeholder' => 'meters',
+                'required',
             ] ) !!}
         </div>
     </div>
@@ -30,7 +34,9 @@
 <div class="col-xs-6">
     {!! Form::textarea('description', null, [
         'class' => 'form-control',
-        'rows' => 1
+        'rows' => 1,
+        'placeholder' => 'beschrijving',
+        'required',
     ]) !!}
 </div>
 

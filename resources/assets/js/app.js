@@ -149,8 +149,8 @@ $(function () {
 
             label.remove();
             self.iCheck({
-                checkboxClass: 'icheckbox_line',
-                radioClass: 'iradio_line',
+                checkboxClass: 'icheckbox_line-red',
+                radioClass: 'iradio_line-red',
                 insert: '<div class="icheck_line-icon"></div>' + label_text
             });
         });

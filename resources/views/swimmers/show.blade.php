@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', $swimmer->name . ' profiel')
+@section('title', $swimmer->full_name )
 
 @section('content')
     <div class="nav-tabs-custom">

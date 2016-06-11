@@ -44,13 +44,14 @@ class MailController extends Controller
             'subject'    => $request->subject,
             'attachment' => $request->attachment,
         ];
-
+        if (! $request->to) {
+            return redirect()->back()->withErrors(['gelieve recipiënten mee te geven'])->withInput();
+        }
         $email = $this->getMails($request->to, $group);
-
-        $data['to'] = $email;//'jeroen_vdb1@hotmail.com' ;// ;
+        $data['to'] = ['jeroen_vdb1@hotmail.com', 'm.vdbroeck92@gmail.com'] ;// $email;//
 
         Mail::send(
-            'mail.mail',
+            'emails.mail',
             $data,
             function ($m) use ($data) {
                 $m->from('jeroen.vandenbroeck@student.kdg.be', Auth::user()->name . ' - topswim');

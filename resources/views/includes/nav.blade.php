@@ -10,6 +10,7 @@
         {{--<li><a rel="external" href="{{ route('swimmers.index', [--}}
         {{--'group' => $group->slug,--}}
         {{--]) }}"></a></li>--}}
+        @if(Auth::user()->clearance_level > 0)
         <li {{ Request::is($group->slug . '/mail*') ? ' class=active' : null }}><a rel="external" href="{{ route('{group}.mail',[
                         'group' => $group->slug,
                     ]) }}">mail</a></li>
@@ -17,6 +18,7 @@
             <a rel="external" href="{{ route('{group}.stopwatch.index',[
                         'group' => $group->slug,
                     ]) }}">stopwatch</a></li>
+        @endif
         <li {{ Request::is($group->slug . '/gym*') ? ' class=active' : null }}><a rel="external" href="{{ route('{group}.gym.index', [
                         'group' => $group->slug,
                     ]) }}">gym</a></li>

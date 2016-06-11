@@ -31,18 +31,15 @@
         {{ $training->starttime->format('A') }}
     </td>
 </tr>
-<tr>
-    <td class="colored" colspan="10">new line</td>
-    <td class="colored" colspan="1"></td>
-</tr>
 @foreach($categories as $category)
         <tr>
             <td colspan="10"></td>
             <td colspan="1"></td>
         </tr>
     <tr>
-        <td colspan="10">{{ $category->category->name }}</td>
         <td colspan="1"></td>
+        <td colspan="8">{{ $category->category->name }}</td>
+        <td colspan="2">{{ $category->total }}m</td>
     </tr>
         <tr>
             <td colspan="10"></td>
@@ -53,7 +50,7 @@
             <td colspan="1">{{ $exercise->sets }}</td>
             <td colspan="1">X</td>
             <td colspan="1">{{ $exercise->meters }}</td>
-            <td colspan="7">{{ $exercise->description }}</td>
+            <td colspan="7">{{ $exercise->textarea }}</td>
             <td colspan="1">{{ $exercise->total }}</td>
         </tr>
     @endforeach

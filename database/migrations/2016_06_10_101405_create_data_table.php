@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMessagesTable extends Migration
+class CreateDataTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,16 +12,20 @@ class CreateMessagesTable extends Migration
      */
     public function up()
     {
-    /*    Schema::create('messages', function(Blueprint $table){
+        Schema::create('data', function (Blueprint $table) {
             $table->increments('id');
 
+            $table->integer('swimmer_id')->unsigned();
             $table->integer('user_id')->unsigned();
-            $table->integer('chat_id')->unsigned();
 
-            $table->string('message');
+            $table->string('text');
+            $table->string('media_type')->nullable();
+            $table->string('media_url')->nullable();
+
+            $table->boolean('is_reaction');
 
             $table->timestamps();
-        });*/
+        });
     }
 
     /**
@@ -31,6 +35,6 @@ class CreateMessagesTable extends Migration
      */
     public function down()
     {
-//        Schema::drop('messages');
+        Schema::drop('data');
     }
 }

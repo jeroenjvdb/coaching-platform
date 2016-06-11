@@ -6,7 +6,7 @@
     <header class="main-header">
         {{--<div class="header-content">--}}
         <a class="logo" href="{{ url('/') }}">
-            <img src="/resources/img/icon-2-400x400.png" alt="">
+            <img src="/resources/img/launcher-icon-4x.png" alt="">
             {{ config('app.name') }}
         </a>
         <nav class="navbar navbar-static-top" role="navigation">

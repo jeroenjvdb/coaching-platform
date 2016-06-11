@@ -59432,9 +59432,9 @@ var Stopwatch = function(elem, options ) {
         elem.appendChild(document.createElement("br"));
         elem.appendChild(startButton);
         //elem.appendChild(stopButton);
-        if( options.is_base3) {
+        //if( options.is_base3) {
             elem.appendChild(resetButton);
-        }
+        //}
         elem.appendChild(document.createElement("br"));
         elem.appendChild(splitSpan);
 
@@ -59833,8 +59833,8 @@ $(function () {
 
             label.remove();
             self.iCheck({
-                checkboxClass: 'icheckbox_line',
-                radioClass: 'iradio_line',
+                checkboxClass: 'icheckbox_line-red',
+                radioClass: 'iradio_line-red',
                 insert: '<div class="icheck_line-icon"></div>' + label_text
             });
         });

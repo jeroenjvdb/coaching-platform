@@ -13,6 +13,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use ZipArchive;
@@ -84,7 +85,7 @@ class SwimmerController extends Controller
     }
 
     /**
-     * store the swimmers in the database
+     * store a swimmer
      *
      * @param Request $request
      * @param Group $group
@@ -92,14 +93,11 @@ class SwimmerController extends Controller
      */
     public function store(Request $request, Group $group)
     {
-        $swimmer = $this->swimmer->fill(
-            [
+        $swimmer = $this->swimmer->fill([
                 'first_name'      => $request->first_name,
                 'last_name'       => $request->input('last_name'),
                 'swimrankings_id' => $request->input('swimrankings'),
-//                'email'           => $request->email,
-            ]
-        );
+            ]);
 
         $swimmer = $group->swimmers()->save($swimmer);
 
@@ -107,12 +105,9 @@ class SwimmerController extends Controller
         $swimmer->getPersonalBest();
         $swimmer->seedPDF();
 
-        return redirect()->route(
-            'groups.show',
-            [
+        return redirect()->route('groups.show', [
                 'group' => $group->slug,
-            ]
-        );
+            ]);
     }
 
     /**
@@ -189,6 +184,9 @@ class SwimmerController extends Controller
                 ]
             );
 
+            $swimmer->user_id = $user->id;
+            $swimmer->save();
+
             $user->addMeta('swimmer_id', $swimmer->id);
             $token = strtolower(str_random(64));
 
@@ -214,6 +212,7 @@ class SwimmerController extends Controller
      */
     private function sendLogin($token, $swimmer, $email)
     {
+        Log::info($email);
         $route = route(
             'password.reset.{token}',
             [
