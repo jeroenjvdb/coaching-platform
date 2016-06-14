@@ -43,13 +43,13 @@
                 {{--@include('swimmers.show.data')--}}
                 {{--</div>--}}
                 {{--</div>--}}
-                <div id="about" data-role="page" class="page" data-next="PR" data-prev="data">
+                <div id="" data-role="page" class="page about" data-next="PR" data-prev="data">
                     @include('swimmers.show.about')
                 </div>
-                <div id="PR" data-role="page" class="page" data-next="chrono" data-prev="about">
+                <div id="" data-role="page" class="page PR" data-next="chrono" data-prev="about">
                     @include('swimmers.show.PR')
                 </div>
-                <div id="chrono" data-role="page" class="page" data-next="contact" data-previous="PR" hidden>
+                <div id="" data-role="page" class="page chrono" data-next="contact" data-prev="PR" hidden>
                     @include('swimmers.show.chrono')
                 </div>
                 <div id="contact" data-role="page" class="page" data-prev="chrono" hidden>

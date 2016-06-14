@@ -59687,6 +59687,7 @@ var Stopwatch = function(elem, options ) {
  */
 $(function () {
     init();
+    var nextPage, prevPage;
 
     function init() {
         $.ajaxSetup({
@@ -59891,14 +59892,23 @@ $(function () {
         $('.sortable').on('sortupdate', sort);
         //$('.sortable').on('sortstop', sortStop);
         $('.btn-page').on('click', showPage);
-        var page = $('.page');
-        page.on('swipeleft', swipePageLeft);
-        page.on('swiperight', swipePageRight);
+        swipeEvents();
         $('.sidebar-toggle').on('click', function () {
             setTimeout(function () {
                 $(window).trigger('resize');
             }, 250);
         })
+    }
+
+    function swipeEvents()
+    {
+        console.log('swipeEvents');
+        var body = $('body');
+        var page = $('.page').first();
+        var nextPage = page.data('next');
+        var prevPage = page.data('prev');
+        body.on('swipeleft', swipePageLeft);
+        body.on('swiperight', swipePageRight);
     }
 
     function resize(e) {
@@ -59909,17 +59919,24 @@ $(function () {
     }
 
     function swipePageLeft(e) {
+        console.log('left');
         //console.log(e);
-        var nextPage = $(e.currentTarget).data('next');
+        //var nextPage = $(e.currentTarget).data('next');
         //console.log(nextPage);
-        $('#' + nextPage).trigger('click');
+        var page =  $('#' + nextPage);
+        page.trigger('click');
+        //nextPage = page.data('next');
+        //prevPage = page.data('prev');
     }
 
     function swipePageRight(e) {
         //console.log(e);
-        var nextPage = $(e.currentTarget).data('prev');
+        //var nextPage = $(e.currentTarget).data('prev');
         console.log('right');
-        $('#' + nextPage).trigger('click');
+        var page =  $('#' + prevPage);
+        page.trigger('click');
+        //nextPage = page.data('next');
+        //prevPage = page.data('prev');
     }
 
     function sort(event, ui) {
@@ -60180,7 +60197,10 @@ $(function () {
         $(page.target).addClass('active');
         console.log(page.target);
         $('.pages>div').hide();
-        $('.pages>div#' + pageName).show();
+        showPage = $('.pages>div#' + pageName);
+        showPage.show();
+        nextPage = showPage.data('next');
+        prevPage = showPage.data('prev');
     }
 
     function createTimers() {
