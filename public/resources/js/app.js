@@ -60197,7 +60197,7 @@ $(function () {
         $(page.target).addClass('active');
         console.log(page.target);
         $('.pages>div').hide();
-        showPage = $('.pages>div#' + pageName);
+        showPage = $('.pages>div.' + pageName);
         showPage.show();
         nextPage = showPage.data('next');
         prevPage = showPage.data('prev');
