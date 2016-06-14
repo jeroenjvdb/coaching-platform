@@ -83,14 +83,9 @@ class CoachController extends Controller
                 'password' => bcrypt('root'),
             ]);
 
-            $token = strtolower(str_random(64));
+            $token = hash_hmac('sha256', Str::random(40), env('APP_KEY'));
+            DB::table('password_resets')->insert(['email' => $new_user->email, 'token' => $token, 'created_at' => new Carbon]);
 
-            DB::table('password_resets')->insert(
-                [
-                    'email' => $request->email,
-                    'token' => $token,
-                ]
-            );
 //            Log::info($email);
             $this->sendLogin($token, $request->email);
         }
