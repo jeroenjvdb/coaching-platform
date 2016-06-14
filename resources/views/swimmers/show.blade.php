@@ -52,7 +52,7 @@
                 <div id="" data-role="page" class="page chrono" data-next="contact" data-prev="PR" hidden>
                     @include('swimmers.show.chrono')
                 </div>
-                <div id="contact" data-role="page" class="page" data-prev="chrono" hidden>
+                <div id="contact" data-role="page" class="page contact" data-prev="chrono" hidden>
                     @include('swimmers.show.contact')
                 </div>
             </div>
