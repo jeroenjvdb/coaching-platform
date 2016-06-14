@@ -1,4 +1,4 @@
-<h2>data</h2>
+<h2>aandachtspunten</h2>
 @if(!$myProfile)
     {!! Form::open(['route' => ['{group}.swimmer.meta.store',
         'group' => $group->slug,
@@ -9,7 +9,7 @@
     {!! Form::open(['route' => ['me.reaction.store', 'group' => $swimmer->group->slug], 'files' => true]) !!}
 @endif
 <fieldset class="form-group">
-    {!! Form::label('message') !!}
+    {!! Form::label('message', 'bericht') !!}
     {!! Form::textarea('message', null, [
         'class' => 'form-control'
     ]) !!}
