@@ -163,13 +163,13 @@ trait SwimmerProfile
         $hr = $this->heartRates();
 
         if ($start) {
-            $hr = $hr->where('created_at', '>', $start);
+            $hr = $hr->where('date', '>', $start);
         }
         if ($end) {
-            $hr = $hr->where('created_at', '<', $end);
+            $hr = $hr->where('date', '<', $end);
         }
 
-        return $hr->orderBy('created_at', 'asc')->get();
+        return $hr->orderBy('date', 'asc')->get();
     }
 
     /**

@@ -59904,9 +59904,9 @@ $(function () {
     {
         console.log('swipeEvents');
         var body = $('body');
-        var page = $('.page').first();
-        var nextPage = page.data('next');
-        var prevPage = page.data('prev');
+        var page = $('.pages .page').first();
+        nextPage = page.data('next');
+        prevPage = page.data('prev');
         body.on('swipeleft', swipePageLeft);
         body.on('swiperight', swipePageRight);
     }

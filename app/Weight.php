@@ -26,7 +26,7 @@ class Weight extends Model
 
     public function scopeOrdered($query)
     {
-        return $query->orderBy('created_at', 'asc');
+        return $query->orderBy('date', 'asc');
     }
 
     public function getWeightAttribute($value)

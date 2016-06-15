@@ -16,5 +16,7 @@ class DatabaseSeeder extends Seeder
         $this->call(DistancesTableSeeder::class);
         $this->call(GroupsTableSeeder::class);
         $this->call(SwimmersTableSeeder::class);
+        $this->call(WeightTableSeeder::class);
+        $this->call(HeartRateSeeder::class);
     }
 }
