@@ -92,10 +92,15 @@ class CoachController extends Controller
             $this->sendLogin($token, $request->email);
         }
 
-        $coach = $user->coach()->create([
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-        ]);
+        $coach = $user->coach;
+        if(! $coach) {
+            $coach = $user->coach()->create(
+                [
+                    'first_name' => $request->first_name,
+                    'last_name'  => $request->last_name,
+                ]
+            );
+        }
 
         $group->coaches()->attach($coach);
 

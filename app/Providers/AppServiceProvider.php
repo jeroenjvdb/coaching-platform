@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Group;
 use App\Swimmer;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Str;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -21,7 +22,7 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Group::creating(function ($group) {
-            $group->slug = createSlug($group->name);
+            $group->slug = createSlug($group->name  . '-' . str_random(5));
         });
     }
 

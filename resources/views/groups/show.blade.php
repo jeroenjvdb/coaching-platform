@@ -124,7 +124,7 @@
             </h2>
             @foreach($coaches as $coach)
                 <div class="col-xs-12">
-                    {{ $coach->first_name . ' ' . $coach->last_name }}
+                    {{ $coach->first_name }} {{-- }}{{ $coach->last_name }}--}}
                 </div>
             @endforeach
         </div>
