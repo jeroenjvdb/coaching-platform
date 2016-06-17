@@ -7,6 +7,9 @@ use App\Swimmer;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
+use App\Http\Requests\HeartrateRequest;
+use App\Http\Requests\WeightRequest;
+
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Log;
@@ -41,7 +44,7 @@ class ApiController extends Controller
      * @param Swimmer $swimmer
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function heartRate(Request $request, Group $group, Swimmer $swimmer)
+    public function heartRate(HeartrateRequest $request, Group $group, Swimmer $swimmer)
     {
         $swimmer->storeHeartRate($request->heartRate, $request->forgot);
 
@@ -76,7 +79,7 @@ class ApiController extends Controller
      * @param Swimmer $swimmer
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function postWeight(Request $request, Group $group, Swimmer $swimmer)
+    public function postWeight(WeightRequest $request, Group $group, Swimmer $swimmer)
     {
         $swimmer->weights()->create([
             'weight' => $request->weight,

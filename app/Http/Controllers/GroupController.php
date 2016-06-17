@@ -6,6 +6,7 @@ use App\Group;
 use App\Swimmer;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Http\Requests\GroupRequest;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -60,7 +61,7 @@ class GroupController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(GroupRequest $request)
     {
         $group = $this->group->create([
             'name' => $request->input('name'),

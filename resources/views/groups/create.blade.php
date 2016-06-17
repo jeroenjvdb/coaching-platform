@@ -15,6 +15,15 @@
             </a>
         </div>
         <div class="in clearfix">
+            @if (count($errors) > 0)
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
             {!! Form::open(['method' => 'POST', 'route' => 'groups.store']) !!}
             <fieldset class="form-group">

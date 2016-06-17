@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
 
-class HeartrateRequest extends Request
+class WeightRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,9 +23,9 @@ class HeartrateRequest extends Request
      */
     public function rules()
     {
+
         return [
-            'heartRate' => 'required|numeric|between:30,120',
-            
+            'weight' => 'required|numeric|between:20,140',
         ];
     }
 }
