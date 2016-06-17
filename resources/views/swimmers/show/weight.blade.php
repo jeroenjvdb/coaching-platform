@@ -1,5 +1,5 @@
 <button type="button" class="btn btn-primary btn-lg btn-full" data-toggle="modal" data-target="#weight">
-    gewicht
+    Gewicht
 </button>
 
 <!-- Modal -->
@@ -14,7 +14,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <h4 class="modal-heartrate" id="myModalLabel">gewicht</h4>
+                <h4 class="modal-heartrate" id="myModalLabel">Gewicht</h4>
             </div>
             <div class="modal-body">
                 <div class="form-group">
@@ -30,7 +30,7 @@
                 {{--                {!! Form::label('forgot') !!}--}}
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">sluiten</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
                 {!! Form::submit('verzenden', [
                     'class' => 'btn btn-primary',
                 ]) !!}

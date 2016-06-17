@@ -28,9 +28,9 @@
 
                         <ul class="dropdown-menu">
                             <li><a rel="external" href="{{ url('/logout') }}"><i
-                                            class="fa fa-btn fa-sign-out"></i>uitloggen</a></li>
+                                            class="fa fa-btn fa-sign-out"></i> Uitloggen</a></li>
                             <li><a href="{{ route('auth.password.update') }}">
-                                    <i class="fa fa-key"></i> wachtwoord wijzigen
+                                    <i class="fa fa-key"></i> Wachtwoord wijzigen
                                 </a></li>
                         </ul>
                     </li>

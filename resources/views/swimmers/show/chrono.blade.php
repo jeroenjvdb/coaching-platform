@@ -1,9 +1,9 @@
-<h2>stopwatch</h2>
+<h2>Stopwatch</h2>
 <div class="row">
     <div class="col-md-4">
         <div class="box box-danger">
             <div class="box-header">
-                <h3>nieuwe stopwatch aanmaken</h3>
+                <h3>Nieuwe stopwatch aanmaken</h3>
             </div>
             <div class="box-body">
                 {!! Form::open(['route' => ['{group}.stopwatch.store.api',

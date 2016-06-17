@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'coach toevoegen')
+@section('title', 'Coach toevoegen')
 
 @section('content')
     <div class="row">
@@ -16,25 +16,25 @@
                         'data-ajax' => 'false',
                     ]) !!}
                     <div class="form-group">
-                        {!! Form::label('email') !!}
+                        {!! Form::label('email', 'E-mail address') !!}
                         {!! Form::email('email', null, [
                             'class' => 'form-control',
                         ]) !!}
                     </div>
                     <div class="form-group">
-                        {!! Form::label('first_name') !!}
+                        {!! Form::label('first_name', 'Voornaam') !!}
                         {!! Form::text('first_name', null, [
                             'class' => 'form-control',
                         ]) !!}
                     </div>
                     <div class="form-group">
-                        {!! Form::label('last_name') !!}
+                        {!! Form::label('last_name', 'Achternaam') !!}
                         {!! Form::text('last_name', null, [
                             'class' => 'form-control'
                         ]) !!}
                     </div>
                     <div class="form-group">
-                        {!! Form::submit('toevoegen', [
+                        {!! Form::submit('Toevoegen', [
                             'class' => 'btn btn-primary btn-full'
                         ]) !!}
                     </div>

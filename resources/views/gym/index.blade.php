@@ -1,9 +1,9 @@
 @extends('layouts.master')
 
-@section('title', 'gym')
+@section('title', 'Gym')
 
 @section('content')
-    <h1>gym</h1>
+    <h1>Gym</h1>
     <!--<a href="{{ route('{group}.gym.exercise.index', ['group' => $group->slug]) }}">exercises</a><br>
     <a href="{{ route('{group}.gym.create', [
         'group' => $group->slug,
@@ -14,7 +14,7 @@
 
                 <div class="box box-danger">
                     <div class="box-header">
-                        <h2>gym training toevoegen</h2>
+                        <h2>Gym training toevoegen</h2>
                     </div>
                     <div class="box-body">
                         {!! Form::open(['route' => [
@@ -22,12 +22,12 @@
                 'group' => $group->slug,
             ]]) !!}
                         <div class="form-group">
-                            {!! Form::label('start_time', 'begintijdstip') !!}
+                            {!! Form::label('start_time', 'Begintijdstip') !!}
                             {!! Form::text('start_time', null, [
                                 'class' => 'form-control',
                             ]) !!}
                         </div>
-                        {!! Form::submit('aanmaken', [
+                        {!! Form::submit('Aanmaken', [
                             'class' => 'btn btn-primary btn-full',
                         ]) !!}
 
@@ -38,32 +38,31 @@
             <div class="col-xs-12">
                 <div class="box box-danger">
                     <div class="box-header">
-                        <h1>oefening toevoegen
-                            <small>for in the gym</small>
+                        <h1>Oefening toevoegen
                         </h1>
                     </div>
                     <div class="box-body">
                         {!! Form::open(['route' => ['{group}.gym.exercise.store', 'group' => $group->slug], 'files' => true]) !!}
                         <div class="form-group">
-                            {!! Form::label('name', 'naam') !!}
+                            {!! Form::label('name', 'Naam') !!}
                             {!! Form::text('name', null, [
                                 'class' => 'form-control',
                             ]) !!}
                         </div>
                         <div class="form-group">
-                            {!! Form::label('description', 'beschrijving') !!}
+                            {!! Form::label('description', 'Beschrijving') !!}
                             {!! Form::textarea('description', null, [
                                 'class' => 'form-control',
                             ]) !!}
                         </div>
                         <div class="row">
                             <div class="col-md-6">
-                                {!! Form::label('start', 'beginpositie') !!}
+                                {!! Form::label('start', 'Beginpositie') !!}
 
 
                                 <div class="form-group">
                                 <span class="btn btn-primary btn-full btn-file">
-                                    <i class="fa fa-upload"></i> foto toevoegen {!! Form::file('start', [
+                                    <i class="fa fa-upload"></i> Foto toevoegen {!! Form::file('start', [
                                                                 'class' => 'upload-image',
                                                                 'data-img' => 'start',
                                                             ]) !!}
@@ -72,12 +71,12 @@
                                 <img id="image-start" src="#" alt="your image"/>
                             </div>
                             <div class="col-md-6">
-                                {!! Form::label('end', 'eindpositie') !!}
+                                {!! Form::label('end', 'Eindpositie') !!}
 
 
                                 <div class="form-group">
                                 <span class="btn btn-primary btn-full btn-file">
-                                    <i class="fa fa-upload"></i> foto toevoegen {!! Form::file('picture', [
+                                    <i class="fa fa-upload"></i> Foto toevoegen {!! Form::file('picture', [
                                         'class' => 'upload-image',
                                         'data-img' => 'end',
                                     ]) !!}

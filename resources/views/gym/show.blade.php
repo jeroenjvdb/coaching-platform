@@ -3,12 +3,12 @@
 @section('title', 'toon training')
 
 @section('content')
-    <h1>fitness training</h1>
+    <h1>Fitness training</h1>
     <div class="row">
         <div class="col-md-4">
             <div class="box box-danger">
                 <div class="box-header">
-                    <h2>oefening toevoegen</h2>
+                    <h2>Oefening toevoegen</h2>
                 </div>
                 <div class="box-body">
                     {!! Form::open([
@@ -20,20 +20,20 @@
            ]) !!}
                     <div class="row">
                         <div class="col-md-6 form-group">
-                            {!! Form::label('sets') !!}
+                            {!! Form::label('sets', 'Sets') !!}
                             {!! Form::text('sets', null, [
                                 'class' => 'form-control',
                             ]) !!}
                         </div>
                         <div class="col-md-6 form-group">
-                            {!! Form::label('reps') !!}
+                            {!! Form::label('reps', 'Reps') !!}
                             {!! Form::text('reps', null, [
                                 'class' => 'form-control'
                             ]) !!}
                         </div>
                     </div>
                     <div class="form-group">
-                        {!! Form::label('exercise') !!}
+                        {!! Form::label('exercise', 'Oefening') !!}
                         <select name="exercise" class="form-control" id="">
                             @foreach($allExercises as $exercise)
                                 <option value="{{ $exercise->id }}">{{ $exercise->name }}</option>
@@ -41,7 +41,7 @@
                         </select>
                     </div>
 
-                    {!! Form::submit('oefening toevoegen', [
+                    {!! Form::submit('Oefening toevoegen', [
                         'class' => 'btn btn-primary btn-full'
                     ]) !!}
 
@@ -54,20 +54,20 @@
         <div class="col-md-8">
             <div class="box box-danger">
                 <div class="box-header">
-                    <h2>oefening aanmaken</h2>
+                    <h2>Oefening aanmaken</h2>
                 </div>
                 <div class="box-body">
                     {!! Form::open(['route' => ['{group}.gym.exercise.store', 'group' => $group->slug], 'files' => true]) !!}
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                {!! Form::label('name') !!}
+                                {!! Form::label('name', 'Naam') !!}
                                 {!! Form::text('name', null, [
                                     'class' => 'form-control',
                                 ]) !!}
                             </div>
                             <div class="form-group">
-                                {!! Form::label('description') !!}
+                                {!! Form::label('description', 'Beschrijving') !!}
                                 {!! Form::textarea('description', null, [
                                     'rows' => '1',
                                     'class' => 'form-control',
@@ -81,7 +81,7 @@
                                         'class' => 'sr-only',
                                     ]) !!}
                                     <span class="btn btn-primary btn-file btn-full">
-        <i class="fa fa-image"></i> <i class="fa fa-upload"></i> beginpositie {!! Form::file('start', [
+        <i class="fa fa-image"></i> <i class="fa fa-upload"></i> Beginpositie {!! Form::file('start', [
                                         'class' => 'upload-image',
                                         'data-img' => 'start',
                                     ]) !!}
@@ -89,11 +89,11 @@
                                     <img id="image-start" src="#" alt="your image"/>
                                 </div>
                                 <div class="form-group col-md-6">
-                                    {!! Form::label('end', 'eindpositie', [
+                                    {!! Form::label('end', 'Eindpositie', [
                                         'class' => 'sr-only',
                                     ]) !!}
                                     <span class="btn btn-primary btn-file btn-full">
-        <i class="fa fa-image"></i> <i class="fa fa-upload"></i> eindpositie
+        <i class="fa fa-image"></i> <i class="fa fa-upload"></i> Eindpositie
                                     {!! Form::file('end', [
                                         'class' => 'upload-image',
                                         'data-img' => 'end',
@@ -124,7 +124,7 @@
                     {{--</div>--}}
                     {{--</div>--}}
 
-                    {!! Form::submit('oefening aanmaken', [
+                    {!! Form::submit('Oefening aanmaken', [
                         'class' => 'btn btn-primary btn-full',
                     ]) !!}
 

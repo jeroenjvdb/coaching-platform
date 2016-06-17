@@ -19,7 +19,7 @@
                 <div class="col-xs-12 col-md-6">
                     <div class="box box-danger">
                         <div class="box-header">
-                            <h2>categories</h2>
+                            <h2>Categorieën</h2>
                         </div>
                         <div class="box-body">
                             {!! Form::open(['route' => [
@@ -27,7 +27,7 @@
                         'group' => $group->slug,
                     ], 'data-ajax' => true]) !!}
                             <div class="form-group">
-                                {!! Form::label('name') !!}
+                                {!! Form::label('name', 'Naam') !!}
                                 {!! Form::text('name', null, [
                                     'class' => 'form-control',
                                 ]) !!}<br>
@@ -56,7 +56,7 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                {!! Form::submit('opslaan', [
+                                {!! Form::submit('Opslaan', [
                                     'class' => 'btn btn-primary btn-full',
                                 ]) !!}
                             </div>

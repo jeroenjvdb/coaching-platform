@@ -20,7 +20,7 @@
                             <!-- /.col -->
                         <div class="box box-danger">
                             <div class="box-header with-border">
-                                <h2 class="">Compose New Message</h2>
+                                <h2 class="">Nieuw Bericht Schrijven</h2>
                             </div>
                             <!-- /.box-header -->
                             {!! Form::open(['route' => [
@@ -42,7 +42,7 @@
                                             'class' => 'line',
                                         ]) !!}
                                         <label>
-                                            iedereen
+                                            Iedereen
                                         </label>
                                     </div>
                                     <div class="form-group">
@@ -51,7 +51,7 @@
                                             'class' => 'line',
                                         ]) !!}
                                         <label>
-                                            zwemmers
+                                            Zwemmers
                                         </label>
                                     </div>
                                     <div class="form-group">
@@ -60,7 +60,7 @@
                                             'class' => 'line',
                                         ]) !!}
                                         <label>
-                                            coaches
+                                            Coaches
                                         </label>
                                     </div>
                                     <div class="form-group">
@@ -69,7 +69,7 @@
                                             'class' => 'line',
                                         ] ) !!}
                                         <label>
-                                            ouders
+                                            Ouders
 
                                         </label>
                                     </div>
@@ -77,7 +77,7 @@
                                 </div>
                                 <div class="form-group">
                                     {!! Form::text('subject', null, [
-                                        'placeholder' => 'Subject:',
+                                        'placeholder' => 'Onderwerp:',
                                         'class' => 'form-control',
                                     ]) !!}
                                     {{--<input class="form-control" name="subject" placeholder="Subject:">--}}
@@ -85,7 +85,7 @@
                                 <div class="form-group">
                                     {!! Form::textarea('message', null, [
                                         'id' => 'compose-textarea',
-                                        'placeholder' => 'bericht',
+                                        'placeholder' => 'Bericht',
                                         'class' => 'form-control',
                                         'rows' => '10',
                                     ]) !!}
@@ -107,7 +107,7 @@
                                 <div class="pull-right">
                                     {{--<button type="button" class="btn btn-default"><i class="fa fa-pencil"></i> Draft--}}
                                     {{--</button>--}}
-                                    <button type="submit" class="btn btn-primary"><i class="fa fa-envelope-o"></i> Send
+                                    <button type="submit" class="btn btn-primary"><i class="fa fa-envelope-o"></i> Verzenden
                                     </button>
                                 </div>
                                 {{--<button type="reset" class="btn btn-default"><i class="fa fa-times"></i> Discard--}}

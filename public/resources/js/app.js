@@ -59478,7 +59478,7 @@ var Stopwatch = function(elem, options ) {
     {
         var a = document.createElement("span");
         a.setAttribute('class',  'splits');
-        a.className = "";
+        a.className = "list-unstyled";
 
         return a;
     }
@@ -59490,6 +59490,7 @@ var Stopwatch = function(elem, options ) {
         } else {
             stop();
         }
+
     }
 
     function splitReset()
@@ -59592,6 +59593,7 @@ var Stopwatch = function(elem, options ) {
         } else {
             timer.innerHTML = timeToString(s);
         }
+
     }
 
     /**
@@ -59670,9 +59672,10 @@ var Stopwatch = function(elem, options ) {
      */
     function appendSplit(time) {
         console.log(splitSpan);
-        if($(splitSpan).first().data('time') != time) {
-            $(splitSpan).prepend('<li data-time="' + time + '">' + timeToString(time) + '</li>');
+        if($(splitSpan).first().data('time') != time && clock != options.lastTime & clock != 0) {
+            $(splitSpan).prepend('<li data-time="' + time + '">' + timeToString(time)  + '<div class="small">' + timeToString(time - options.lastTime) + '</div>' + '</li>');
         }
+        options.lastTime = clock;
     }
 
 

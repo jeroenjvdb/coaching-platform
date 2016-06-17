@@ -6,11 +6,11 @@
 
 {!! Form::model($group, ['method' => 'POST', 'route' => ['groups.update', $group->slug]]) !!}
     <div class="form-group">
-        {!! Form::label('name', 'naam') !!} {!! Form::text('name', null, [
+        {!! Form::label('name', 'Naam') !!} {!! Form::text('name', null, [
             'class' => 'form-control'
         ]) !!}
     </div>
-    {!! Form::submit('updaten', [
+    {!! Form::submit('Updaten', [
         'class' => 'btn btn-primary'
     ]) !!}
 {!! Form::close() !!}

@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'stopwatch aanmaken')
+@section('title', 'Stopwatch aanmaken')
 
 @section('content')
 

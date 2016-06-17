@@ -1,4 +1,4 @@
-<h2>besttijden <a href="{{ config('swimrankings.url') . config('swimrankings.pdf') . $swimmer->swimrankings_id }}"
+<h2>Persoonlijke records <a href="{{ config('swimrankings.url') . config('swimrankings.pdf') . $swimmer->swimrankings_id }}"
                       target="_blank">
         <i class="fa fa-download"></i><span class="sr-only">download to pdf</span></a></h2>
 

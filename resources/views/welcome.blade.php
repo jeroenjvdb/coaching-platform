@@ -5,7 +5,7 @@
 @section('content')
     <div class="container">
         <div class="row groups">
-            <h1 class="text-center">mijn groepen</h1>
+            <h1 class="text-center">Mijn groepen</h1>
             @foreach($groups as $group)
                 <div class="col-lg-3 col-md-4 col-sm-6 field">
                     <a rel="external" href="{{ route('groups.show', ['group' => $group->slug]) }}"
@@ -42,13 +42,13 @@
                 <div class="col-lg-3 col-md-4 col-sm-6 field">
                     <a href="/logout" class="btn btn-lg btn-primary"
                        role="button" rel="external">
-                        <i class="fa fa-sign-out"></i> uitloggen
+                        <i class="fa fa-sign-out"></i> Uitloggen
                     </a>
                 </div>
                 <div class="col-lg-3 col-md-4 col-sm-6 field">
                     <a href="/password" class="btn btn-lg btn-primary"
                        role="button" rel="external">
-                        <i class="fa fa-key"></i> wachtwoord
+                        <i class="fa fa-key"></i> Wachtwoord
                     </a>
                 </div>
         </div>

@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'gym training toevoegen')
+@section('title', 'Gym training toevoegen')
 
 @section('content')
     {!! Form::open(['route' => [

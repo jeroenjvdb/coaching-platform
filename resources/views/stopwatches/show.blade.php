@@ -4,8 +4,8 @@
 
 @section('content')
     {!! Breadcrumbs::render('stopwatch.show', $group, $stopwatch) !!}
-    <h1>stopwatch</h1>
-    <h2>base 3</h2>
+    <h1>Stopwatch</h1>
+    <h2>slagenteller</h2>
     <div class="stopwatch" data-base3="true"></div>
     <h2>normal</h2>
     <div class="stopwatch" data-base3="false" data-user-id="{{ Auth::user()->user_id }}"

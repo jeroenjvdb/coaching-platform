@@ -1,4 +1,4 @@
-<h2>aandachtspunten</h2>
+<h2>Aandachtspunten</h2>
 @if(!$myProfile)
     {!! Form::open(['route' => ['{group}.swimmer.meta.store',
         'group' => $group->slug,
@@ -9,14 +9,14 @@
     {!! Form::open(['route' => ['me.reaction.store', 'group' => $swimmer->group->slug], 'files' => true]) !!}
 @endif
 <fieldset class="form-group">
-    {!! Form::label('message', 'bericht') !!}
+    {!! Form::label('message') !!}
     {!! Form::textarea('message', null, [
         'class' => 'form-control'
     ]) !!}
 </fieldset>
 <fieldset class="form-group">
     <span class="btn btn-default btn-file">
-        <i class="fa fa-upload"></i> upload media {!! Form::file('media') !!}
+        <i class="fa fa-upload"></i> Upload media {!! Form::file('media') !!}
     </span>
 
 </fieldset>
@@ -35,12 +35,13 @@
                     </div>
                     @if($data->type == 'data' )
                         {{ $data->message }}
-                        @if($data->media && isset($data->media->type))
+                        @if($data->media && isset($data->media['type']))
+                            test
                             <hr>
-                            @if( $data->media->type == 'img')
-                                <img src="{{ $data->media->url }}" alt="">
-                            @elseif( $data->media->type == 'vid' )
-                                <video src="{{ $data->media->url }}" controls></video>
+                            @if( $data->media['type'] == 'img')
+                                <img src="{{ $data->media['url'] }}" alt="">
+                            @elseif( $data->media['type'] == 'vid' )
+                                <video src="{{ $data->media['url'] }}" controls></video>
                             @endif
                         @endif
                     @elseif($data->type == 'chrono')

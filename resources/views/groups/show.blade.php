@@ -9,9 +9,9 @@
 
             <h1>{{ $group->name }}</h1>
             <a href="{{ route('{group}.swimmer.download.pr', ['group' => $group->slug]) }}" class="btn btn-primary"><i
-                        class="fa fa-download"></i> besttijden</a>
+                        class="fa fa-download"></i> Persoonlijke Records</a>
             {{--    <a href="{{ route('groups.edit', [$group->slug]) }}">edit</a>--}}
-            <h2>vandaag</h2>
+            <h2>Vandaag</h2>
 
             <div class="row">
                 @foreach($trainings as $key => $training)
@@ -43,7 +43,7 @@
                 @endforeach
             </div>
             @if($mySwimmer)
-                <h2>mijn profiel</h2>
+                <h2>Mijn profiel</h2>
 
                 <div class="row swimmers">
                     <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
@@ -68,7 +68,7 @@
                     </div>
                 </div>
             @endif
-            <h2>zwemmers
+            <h2>Zwemmers
                 @if(Auth::user()->clearance_level > 0)
                     <a href="{{ route('{group}.swimmer.create', [
         'group' => $group->slug,
@@ -115,7 +115,7 @@
                 @endforeach
             </div>
 
-            <h2>coaches
+            <h2>Coaches
                 @if(Auth::user()->clearance_level > 0)
                     <a href="{{ route('{group}.coach.create', [
         'group' => $group->slug,

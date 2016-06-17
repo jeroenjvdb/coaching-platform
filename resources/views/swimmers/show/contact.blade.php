@@ -1,4 +1,4 @@
-<h2>contact</h2>
+<h2>Contact</h2>
 <div class="row swimmer">
     <div class="col-md-2 col-xs-4">
         <a href="#" data-toggle="picture">
@@ -39,7 +39,7 @@
             <div class="col-md-6 col-xs-12">
                 <div class="row contact">
                     <div class="col-xs-2">
-                        <strong><i class="fa fa-phone"></i><span class="sr-only">phone</span></strong>
+                        <strong><i class="fa fa-phone"></i><span class="sr-only">GSM</span></strong>
                     </div>
                     <div class="col-xs-10">
                         <div class="row phone contact-form" data-is_form="false">
@@ -74,7 +74,7 @@
                     <div class="col-xs-2">
                         <strong>
                             <i class="fa fa-home"></i>
-                            <span class="sr-only">adres:</span>
+                            <span class="sr-only">Adres:</span>
                         </strong>
                     </div>
                     <div class="col-xs-10">
@@ -114,7 +114,7 @@
                 </div>
                 <div class="row contact">
                     <div class="col-xs-2">
-                        <strong><i class="fa fa-envelope"></i><span class="sr-only">email:</span></strong>
+                        <strong><i class="fa fa-envelope"></i><span class="sr-only">Email:</span></strong>
                     </div>
                     <div class="col-xs-10">
                         <div class="row swimmer-email contact-form" data-is_form="false">
@@ -152,7 +152,7 @@
                     <div class="col-xs-2">
                         <strong>
                             <i class="fa fa-envelope"></i> <i class="fa fa-plus"></i>
-                            <span class="sr-only">extra email adressen</span>
+                            <span class="sr-only">Extra email adressen</span>
                         </strong>
                     </div>
                     <div class="col-xs-8 contact-data" data-contact="email">
@@ -176,7 +176,7 @@
                     <div class="col-xs-2">
                         <strong>
                             <i class="fa fa-envelope"></i> <i class="fa fa-plus"></i>
-                            <span class="sr-only">extra email adressen</span>
+                            <span class="sr-only">Extra Email adressen</span>
                         </strong>
                     </div>
                     <div class="col-xs-8 contact-data" data-contact="email">
@@ -204,7 +204,7 @@
             <div class="col-md-6 col-xs-12">
                 <div class="row">
                     <div class="col-xs-4">
-                        <strong>phone:</strong>
+                        <strong>GSM:</strong>
                     </div>
                     <div class="col-xs-8">
                         {!! Form::text('phone', $contact['phone']) !!}
@@ -212,14 +212,14 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-4">
-                        <strong>email:</strong>
+                        <strong>Email:</strong>
                     </div>
                     <div class="col-xs-8">
                         {!! Form::email('email', $swimmer->email) !!}
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-4"><strong>adres:</strong></div>
+                    <div class="col-xs-4"><strong>Adres:</strong></div>
                     <div class="col-xs-8">
                         {{--                        {!! Form::text('street', $contact['address']->street) !!}--}}
                         {{--                        {!! Form::text('number', $contact['address']->number) !!} <br>--}}
@@ -233,7 +233,7 @@
             <div class="col-md-6 col-xs-12">
                 <div class="row">
                     <div class="col-xs-4">
-                        <strong>email ouders:</strong>
+                        <strong>Email ouders:</strong>
                     </div>
                     <div class="col-xs-8">
                         {!! Form::email('emailMother') !!}
@@ -250,7 +250,7 @@
                 </div>
             </div>
         </div>
-        --}}
+
         {!! Form::close() !!}
     </div>
 </div>

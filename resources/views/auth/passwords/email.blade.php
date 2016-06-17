@@ -1,10 +1,16 @@
 @extends('layouts.landing')
 
+@section('title', 'Reset Wachtwoord')
         <!-- Main Content -->
 @section('content')
     <div class="box box-danger login-box">
         <div class="box-header">
-            <h1>Reset Password</h1>
+            <h1>Reset Wachtwoord</h1>
+            <a href="/">
+                <div class="return">
+                    <h3>&lt</h3>
+                </div>
+            </a>
         </div>
         <div class="box-body">
             @if (session('status'))

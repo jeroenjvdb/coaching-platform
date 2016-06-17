@@ -1,12 +1,14 @@
 @extends('layouts.landing')
 
+@section('title', 'Wachtwoord wijzigen')
+
 @section('content')
     <div class="col-md-4 col-md-offset-4">
 
         <div class="box box-danger login-box">
             <div class="box-header">
                 <h3 class="text-center title-center">
-                    wachtwoord wijzigen
+                    Wachtwoord wijzigen
                 </h3>
                 <a href="/">
                     <div class="return">
@@ -26,19 +28,19 @@
                 @endif
                 {!! Form::open([route('auth.password.update')]) !!}
                 <fieldset class="field form_group">
-                    {!! Form::label('old_password') !!}
+                    {!! Form::label('old_password', 'Oud wachtwoord') !!}
                     {!! Form::password('old_password') !!}
                 </fieldset>
                 <fieldset class="field form_group">
-                    {!! Form::label('new_password') !!}
+                    {!! Form::label('new_password', 'Nieuw wachtwoord') !!}
                     {!! Form::password('new_password') !!}
                 </fieldset>
                 <fieldset class="field form_group">
-                    {!! Form::label('new_password_confirmation') !!}
+                    {!! Form::label('new_password_confirmation', 'Bevestig wachtwoord') !!}
                     {!! Form::password('new_password_confirmation') !!}
                 </fieldset>
                 <fieldset class="field form_group">
-                    {!! Form::submit('wachtwoord wijzigen', [
+                    {!! Form::submit('Wachtwoord wijzigen', [
                         'class' => 'btn btn-primary',
                     ]) !!}
                 </fieldset>

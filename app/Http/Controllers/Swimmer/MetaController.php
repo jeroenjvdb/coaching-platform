@@ -50,13 +50,10 @@ class MetaController extends Controller
         $media_type = null;
         $media_url = null;
         if (isset($request->media)) {
-            if ($request->media->getMimeType() == 'image/jpeg') {
-                $media_type = 'img';
+            $media_type = 'img';
 
-            } else {
-                if ($request->media->getMimeType() == 'video/mp4') {
-                    $media_type = 'vid';
-                }
+            if ($request->media->getMimeType() == 'video/mp4') {
+                $media_type = 'vid';
             }
             $media_url = $this->storeImage($request->media);
         }
@@ -73,10 +70,10 @@ class MetaController extends Controller
 
         $swimmer->data()->create(
             [
-                'text' => $request->message,
-                'media_type' => $media_type,
-                'media_url' => $media_url,
-                'user_id' => Auth::user()->id,
+                'text'        => $request->message,
+                'media_type'  => $media_type,
+                'media_url'   => $media_url,
+                'user_id'     => Auth::user()->id,
                 'is_reaction' => false,
             ]
         );
@@ -92,23 +89,29 @@ class MetaController extends Controller
         );
     }
 
-    public function show()
+    public
+    function show()
     {
 
     }
 
-    public function edit()
+    public
+    function edit()
     {
 
     }
 
-    public function update(Request $request)
-    {
+    public
+    function update(
+        Request $request
+    ) {
 
     }
 
-    public function destroy(Request $request)
-    {
+    public
+    function destroy(
+        Request $request
+    ) {
 
     }
 
@@ -118,8 +121,10 @@ class MetaController extends Controller
      * @param $img
      * @return string
      */
-    protected function storeImage($img)
-    {
+    protected
+    function storeImage(
+        $img
+    ) {
         $destinationPath = "uploads/data/";
         $extension = $img->getClientOriginalExtension();
         $filename = random_string(50);

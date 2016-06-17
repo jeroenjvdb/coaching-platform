@@ -124,7 +124,7 @@ class SwimmerController extends Controller
         }
 
         $data = $swimmer->get();
-//        dd($data);
+        //dd($data['meta']['meta'][1]->media['type']);
 
         $data['group'] = $group;
         $data['myProfile'] = false;
