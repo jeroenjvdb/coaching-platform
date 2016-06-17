@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="nl">
 @include('includes.head')
 <body class="variation">
 

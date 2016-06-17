@@ -45,6 +45,11 @@ class HomeController extends Controller
     public function index()
     {
         $user = Auth::user();
+
+        if(!$user) {
+            return view('welcome');
+        }
+
         $is_swimmer = false;
         $swimmer = null;
         if ($user->getMeta('swimmer_id')) {

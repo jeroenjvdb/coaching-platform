@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
 @include('includes.head')
 <body id="app-layout" class="skin-red">
 <div class="wrapper">

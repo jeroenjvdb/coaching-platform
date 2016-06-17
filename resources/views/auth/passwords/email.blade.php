@@ -4,8 +4,8 @@
         <!-- Main Content -->
 @section('content')
     <div class="box box-danger login-box">
-        <div class="box-header">
-            <h1>Reset Wachtwoord</h1>
+        <div class="panel-heading">
+            <h3>Reset Wachtwoord</h3>
             <a href="/">
                 <div class="return">
                     <h3>&lt</h3>
