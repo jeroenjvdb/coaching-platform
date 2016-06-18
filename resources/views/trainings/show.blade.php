@@ -17,13 +17,14 @@
             ],
             'data-checked-submit' => 'true',
             'data-ajax' => 'true',
+            'class' => 'training',
         ]) !!}
         <label class="switch">
             {!! Form::checkbox('is_shared','shared', $training->is_shared, ['id' => 'is_shared']) !!}
             {{--<input type="checkbox" id="is_shared" name="is_shared" value="shared">--}}
             <div class="slider"></div>
         </label>
-        <label for="is_shared">share with swimmers</label>
+        <label for="is_shared" class="shared"><i class="fa fa-share-alt"></i><span class="sr-only">Share with swimmer </span></label>
 
         {!! Form::submit('verzenden', [
             'hidden',
@@ -94,7 +95,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-xs-12">
+        <div class="col-xs-12" class="training">
             @include('trainings.show.presences')
         </div>
     </div>

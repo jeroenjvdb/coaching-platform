@@ -9087,10 +9087,18 @@ table {
   cursor: inherit;
   display: block; }
 
+.training .shared {
+  position: relative;
+  top: -8px;
+  font-size: 2.5em; }
+
 .training .exercise, .training .exercise-ui {
   font-size: 1.2em;
   background-color: #AAAAAA;
   padding: 10px 0; }
+  .training .exercise form, .training .exercise-ui form {
+    position: relative;
+    top: -3px; }
 
 .training .category {
   background-color: #999; }

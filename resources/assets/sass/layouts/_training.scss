@@ -1,4 +1,10 @@
 .training {
+  .shared {
+    position: relative;
+    top: -8px;
+    font-size: 2.5em;
+  }
+
   .exercise, .exercise-ui {
     font-size: 1.2em;
 
@@ -10,6 +16,10 @@
     //td {
     //  padding: 5px;
     //}
+    form {
+      position:relative;
+      top: -3px;
+    }
   }
 
   .category {

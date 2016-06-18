@@ -92,7 +92,7 @@
             </div>
 
             <div class="field user">
-                <a class="btn btn-danger" href="{{ url('/password/reset') }}" role="button">Wachtwoord vergeven?</a>
+                <a class="btn btn-danger" href="{{ url('/password/reset') }}" role="button">Wachtwoord vergeten?</a>
             </div>
 
 

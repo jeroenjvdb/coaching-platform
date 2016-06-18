@@ -28,6 +28,8 @@
 
     @endforeach
 </div>
-{{ Form::submit() }}
+{{ Form::submit('verzenden', [
+    'class' => 'btn btn-primary',
+]) }}
 {{ Form::close() }}
     @endif
