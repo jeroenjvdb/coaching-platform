@@ -8,7 +8,7 @@
         <div class="col-md-10 col-md-offset-1">
 
             <h1>{{ $group->name }}</h1>
-            <a href="{{ route('{group}.swimmer.download.pr', ['group' => $group->slug]) }}" class="btn btn-primary"><i
+            {{--<a href="{{ route('{group}.swimmer.download.pr', ['group' => $group->slug]) }}" class="btn btn-primary"><i
                         class="fa fa-download"></i> Persoonlijke Records</a>
             {{--    <a href="{{ route('groups.edit', [$group->slug]) }}">edit</a>--}}
             <h2>Vandaag</h2>
