@@ -50,7 +50,8 @@ class ContactController extends Controller
         ];
 
         if($request->picture && $request->picture->isValid()) {
-            $swimmer->addMeta('picture', $this->storeImage($request->picture, $group, $swimmer));
+            $swimmer->updateMeta('picture', $this->storeImage($request->picture, $group, $swimmer));
+            return redirect()->back();
         }
 
         $swimmer->storeContact($store);

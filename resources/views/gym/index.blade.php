@@ -68,7 +68,7 @@
                                                             ]) !!}
                                 </span>
                                 </div>
-                                <img id="image-start" src="#" alt="your image"/>
+                                <img id="image-start" src="/resources/img/gym/start.png" alt="your image"/>
                             </div>
                             <div class="col-md-6">
                                 {!! Form::label('end', 'Eindpositie') !!}
@@ -83,7 +83,7 @@
                                 </span>
                                 </div>
 
-                                <img id="image-end" src="#" alt="your image"/>
+                                <img id="image-end" src="/resources/img/gym/stop.png" alt="your image"/>
                             </div>
                         </div>
 

@@ -4,5 +4,5 @@
 {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
 {{--<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">--}}
 
-<script src="/resources/js/app.js"></script>
+<script src="/resources/js/app.min.js"></script>
 @yield('scripts')

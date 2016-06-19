@@ -24,7 +24,7 @@ class ContactRequest extends Request
     public function rules()
     {
         return [
-            'picture' => 'mimes:jpeg',
+            'picture' => 'mimes:jpeg,png',
             'email' => 'email',
         ];
     }

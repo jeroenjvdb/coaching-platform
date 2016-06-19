@@ -76,7 +76,8 @@
                         </div>
                         <div class="col-md-6">
                             <div class="row">
-                                <div class="form-group col-md-6">
+                                <div class="col-md-6">
+                                <div class="form-group">
                                     {!! Form::label('start', 'beginpositie', [
                                         'class' => 'sr-only',
                                     ]) !!}
@@ -86,20 +87,23 @@
                                         'data-img' => 'start',
                                     ]) !!}
     </span>
-                                    <img id="image-start" src="#" alt="your image"/>
                                 </div>
-                                <div class="form-group col-md-6">
+                                <img id="image-start" src="/resources/img/gym/start.png" alt="your image"/>
+                                </div>
+                                <div class="col-md-6">
+                                <div class="form-group">
                                     {!! Form::label('end', 'Eindpositie', [
                                         'class' => 'sr-only',
                                     ]) !!}
                                     <span class="btn btn-primary btn-file btn-full">
         <i class="fa fa-image"></i> <i class="fa fa-upload"></i> Eindpositie
-                                    {!! Form::file('end', [
-                                        'class' => 'upload-image',
-                                        'data-img' => 'end',
-                                    ]) !!}
+                                        {!! Form::file('end', [
+                                            'class' => 'upload-image',
+                                            'data-img' => 'end',
+                                        ]) !!}
                                         </span>
-                                    <img id="image-end" src="#" alt="your image"/>
+                                </div>
+                                <img id="image-end" src="/resources/img/gym/stop.png" alt="your image"/>
                                 </div>
                             </div>
                         </div>

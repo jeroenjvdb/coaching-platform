@@ -59554,6 +59554,7 @@ var Stopwatch = function(elem, options ) {
             if (!options.is_paused) {
                 start();
             }
+            options.lastTime = options.startClock;
         }
 
         render();
@@ -59624,9 +59625,9 @@ var Stopwatch = function(elem, options ) {
         var mins = s % 60;
         var hrs = (s - mins) / 60;
 
-        return '<div class="cell">' + Math.floor(hrs/10) + '</div><div class="cell">' + hrs % 10  + '</div>' +
-            '<div class="cell">:</div>' +
-            '<div class="cell">' + Math.floor(mins/10) + '</div><div class="cell">' + mins%10 + '</div>' +
+        //return /*'<div class="cell">' + Math.floor(hrs/10) + '</div>'<div class="cell">' + hrs % 10  + '</div>' +
+            //'<div class="cell">:</div>' +*/
+        return    '<div class="cell">' + Math.floor(s/10) + '</div><div class="cell">' + s%10 + '</div>' +
             '<div class="cell">:</div>' +
             '<div class="cell">' + Math.floor(secs/10) + '</div><div class="cell">' + secs%10 + '</div>' +
             '<div class="cell">.</div>' +
@@ -59662,6 +59663,7 @@ var Stopwatch = function(elem, options ) {
             }, 'json');
 
             appendSplit(options.clock);
+            console.log(whut);
         }
     }
 
@@ -59671,9 +59673,10 @@ var Stopwatch = function(elem, options ) {
      * @param time
      */
     function appendSplit(time) {
-        console.log(splitSpan);
+        console.log(time);
+        console.log(options.lastTime);
         if($(splitSpan).first().data('time') != time && clock != options.lastTime & clock != 0) {
-            $(splitSpan).prepend('<li data-time="' + time + '">' + timeToString(time)  + '<div class="small">' + timeToString(time - options.lastTime) + '</div>' + '</li>');
+            $(splitSpan).prepend('<li data-time="' + time + '">' + timeToString(time)  + ' <span class="small">' + timeToString(time - options.lastTime) + '</span>' + '</li>');
         }
         options.lastTime = clock;
     }

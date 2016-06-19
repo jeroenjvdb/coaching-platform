@@ -197,7 +197,7 @@
             'group' => $group->slug,
             'swimmer' => $swimmer->slug,
             ],
-            'data-ajax' => 'false',
+            'data-ajax' => 'true',
 
         ]) !!}
         <div class="row">

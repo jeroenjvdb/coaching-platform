@@ -12,14 +12,17 @@
          data-stopwatch-id="{{ $stopwatch->id }}"
          data-url="{{ $url }}" data-clock="{{ $clock }}" data-last="{{ $lastTime }}" data-paused="{{ $is_paused }}"
     ></div>
-    <ul id="splits">
+    <span id="splits" class="list-unstyled">
         @foreach($stopwatch->times as $time)
             <li data-time="{{ $time->time }}">
                 {{--{{ $time->full_time->toText }}--}}
                 @foreach($time->full_time->arr as $char)<div class="cell">{{ $char }}</div>@endforeach
+                <span class="small">
+                @foreach($time->split->arr as $char)<div class="cell">{{ $char }}</div>@endforeach
+                </span>
             </li>
         @endforeach
-    </ul>
+    </span>
 
 
 

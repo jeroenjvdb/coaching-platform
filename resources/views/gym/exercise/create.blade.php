@@ -18,7 +18,7 @@
                 'class' => 'upload-image',
                 'data-img' => 'start',
             ]) !!}
-            <img id="image-start" src="#" alt="your image" />
+            <img id="image-start" src="/resources/img/gym/start.png" alt="your image" />
         </div>
         <div class="col-md-6">
             {!! Form::label('end', 'Einde') !!}
@@ -26,7 +26,7 @@
                 'class' => 'upload-image',
                 'data-img' => 'end',
             ]) !!}
-            <img id="image-end" src="#" alt="your image" />
+            <img id="image-end" src="/resources/img/gym/start.png" alt="your image" />
         </div>
     </div>
 

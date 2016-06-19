@@ -3,6 +3,10 @@
     font-family: digital-7;
     font-size: $font-large;
 
+    &.small {
+      font-size: 80%;
+    }
+
     .cell {
       display: inline-block;
       width: 13px;
@@ -15,11 +19,11 @@
 
 #splits, .stopwatch-ui {
   font-family: digital-7;
-  font-size: $fs-3;
+  font-size: $font-large;
 
   .cell {
     display: inline-block;
-    width: 12px;
+    width: 13px;
     margin: 0;
   }
 }

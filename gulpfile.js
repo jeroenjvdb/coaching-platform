@@ -19,7 +19,7 @@ var paths = {
  */
 
 elixir(function (mix) {
-    mix.sass('style.scss', 'public/resources/css/main.css')
+    mix.sass('style.scss', 'public/resources/css/main.min.css')
         //.less('adminLTE/adminLTE.less', 'public/resources/css/adminLTE.css')
         .scripts([
             'exif.js',
@@ -42,7 +42,7 @@ elixir(function (mix) {
             paths.select2 + 'js/select2.full.min.js',
             'Stopwatch.js',
             'app.js'
-        ], 'public/resources/js/app.js')
+        ], 'public/resources/js/app.min.js')
         .copy([
             'resources/assets/fonts',
             paths.bootstrap + "fonts",

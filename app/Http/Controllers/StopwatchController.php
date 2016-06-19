@@ -43,9 +43,9 @@ class StopwatchController extends Controller
     public function index(Group $group)
     {
         $data = [
-            'group' => $group,
-            'swimmers' => $group->swimmers,
-            'strokes' => $this->stroke->all(),
+            'group'        => $group,
+            'swimmers'     => $group->swimmers,
+            'strokes'      => $this->stroke->all(),
             'chronometers' => $group->stopwatches,
         ];
 
@@ -64,9 +64,9 @@ class StopwatchController extends Controller
         $strokes = $this->stroke->with('distances')->get();
 
         $data = [
-            'group' => $group,
+            'group'    => $group,
             'swimmers' => $swimmers,
-            'strokes' => $strokes,
+            'strokes'  => $strokes,
         ];
 
         return view('stopwatches.create', $data);
@@ -84,18 +84,23 @@ class StopwatchController extends Controller
         $swimmer = $group->swimmers()->findOrFail($request->swimmer);
         $distance = $this->distance->find($request->distance);
 
-        $stopwatchData = $this->stopwatch->fill([
-            'swimmer_id' => $swimmer->id,
-            'distance_id' => $distance->id,
-            'is_running' => false,
-        ]);
+        $stopwatchData = $this->stopwatch->fill(
+            [
+                'swimmer_id'  => $swimmer->id,
+                'distance_id' => $distance->id,
+                'is_running'  => false,
+            ]
+        );
 
-        $stopwatch = Auth::user()->stopwatches()->save( $stopwatchData );
+        $stopwatch = Auth::user()->stopwatches()->save($stopwatchData);
 
-        return redirect()->route('{group}.stopwatch.show', [
-            'group' => $group->slug,
-            'id' => $stopwatch->id,
-        ]);
+        return redirect()->route(
+            '{group}.stopwatch.show',
+            [
+                'group' => $group->slug,
+                'id'    => $stopwatch->id,
+            ]
+        );
     }
 
     /**
@@ -110,20 +115,25 @@ class StopwatchController extends Controller
         $swimmer = $group->swimmers()->findOrFail($request->swimmer);
         $distance = $this->distance->find($request->distance);
 
-        $stopwatchData = $this->stopwatch->fill([
-            'swimmer_id' => $swimmer->id,
-            'distance_id' => $distance->id,
-            'is_running' => false,
-        ]);
+        $stopwatchData = $this->stopwatch->fill(
+            [
+                'swimmer_id'  => $swimmer->id,
+                'distance_id' => $distance->id,
+                'is_running'  => false,
+            ]
+        );
 
-        $stopwatch = Auth::user()->stopwatches()->save( $stopwatchData );
-        $storeTimeRoute = route('{group}.stopwatch.storeTime', [
-            'group' => $group->slug,
-            'id' => $stopwatch->id,
-        ]);
+        $stopwatch = Auth::user()->stopwatches()->save($stopwatchData);
+        $storeTimeRoute = route(
+            '{group}.stopwatch.storeTime',
+            [
+                'group' => $group->slug,
+                'id'    => $stopwatch->id,
+            ]
+        );
 
         $data = [
-            'form' => 'timer',
+            'form'  => 'timer',
             'route' => $storeTimeRoute,
 
         ];
@@ -139,29 +149,35 @@ class StopwatchController extends Controller
      * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function show(Group $group, $id) {
+    public function show(Group $group, $id)
+    {
         $user = Auth::user();
         $stopwatch = $user->stopwatches()
-                            ->where('stopwatches.id', $id)
-                            ->with(['times' => function($query){
-                                $query->ordered();
-                            }])->first();
+            ->where('stopwatches.id', $id)
+            ->with(
+                ['times' => function ($query) {
+                    $query->orderedRev();
+                }]
+            )->first();
 
         $lastRecord = null;
-        foreach($stopwatch->times as $key => $time)
-        {
-            if ($lastRecord == $time->time) {
+        $lastTime = 0;
+        foreach ($stopwatch->times as $key => $time) {
+            if ($lastRecord == $time->time || $time->time == 0) {
                 $stopwatch->times->pull($key);
             } else {
+                $split = $time->time - $lastTime;
+                $time->split = $this->makeFullTime($split);
+                $lastTime = $time->time;
                 $lastRecord = $time->time;
-
             }
         }
+
 
         $clock = 0;
         $is_paused = true;
         $lastTime = null;
-        if ( $stopwatch->times->count() ) {
+        if ($stopwatch->times->count()) {
             $lastTime = $stopwatch->times->first();
             $clock = $lastTime->time;
             $is_paused = $lastTime->is_paused;
@@ -169,29 +185,64 @@ class StopwatchController extends Controller
             $lastTime = $lastTime->created;
         }
 
-        $storeUrl = route('{group}.stopwatch.storeTime', [
-            'group' => $group->slug,
-            'id' => $id,
-        ]);
 
-        JavaScript::put([
-            'user_id' => $user->id,
-            'stopwatch_id' => $id,
-            'stopwatch_store' =>$storeUrl,
-            'clock' =>  $clock,
-            'is_paused' => $is_paused,
-            'lastTime' => $lastTime,
-        ]);
+        $storeUrl = route(
+            '{group}.stopwatch.storeTime',
+            [
+                'group' => $group->slug,
+                'id'    => $id,
+            ]
+        );
+
+        JavaScript::put(
+            [
+                'user_id'         => $user->id,
+                'stopwatch_id'    => $id,
+                'stopwatch_store' => $storeUrl,
+                'clock'           => $clock,
+                'is_paused'       => $is_paused,
+                'lastTime'        => $lastTime,
+            ]
+        );
+
+        $stopwatch->times = $stopwatch->times->sortByDesc('created_at');
 
         $data = [
-            'group' => $group,
+            'group'     => $group,
             'stopwatch' => $stopwatch,
-            'url' => $storeUrl,
+            'url'       => $storeUrl,
             'is_paused' => $is_paused,
-            'clock' => $clock,
-            'lastTime' => $lastTime,
+            'clock'     => $clock,
+            'lastTime'  => $lastTime,
         ];
 
         return view('stopwatches.show', $data);
+    }
+
+    private function makeFullTime($input)
+    {
+        $data = collect([]);
+
+        $data->milliseconds = $input % 1000;
+        $data->hundredth = $input % 100;
+        $input = floor($input / 1000);
+
+        $data->seconds = $input % 60;
+        $input = floor($input / 60);
+
+        $data->minutes = $input % 60;
+        $input = floor($input / 60);
+
+        $data->hours = $input % 24;
+        $input = floor($input / 24);
+
+        $data->toText = //sprintf('%02d', $data->hours) . ':' .
+            sprintf('%02d', $data->minutes) . ':' .
+            sprintf('%02d', $data->seconds) . '.' .
+            sprintf('%02d', $data->milliseconds / 10);
+
+        $data->arr = str_split($data->toText);
+
+        return $data;
     }
 }

@@ -8991,6 +8991,8 @@ ul.wysihtml5-toolbar div[data-wysihtml5-command-value="orange"] {
 .stopwatch span {
   font-family: digital-7;
   font-size: 30px; }
+  .stopwatch span.small {
+    font-size: 80%; }
   .stopwatch span .cell {
     display: inline-block;
     width: 13px;
@@ -8999,10 +9001,10 @@ ul.wysihtml5-toolbar div[data-wysihtml5-command-value="orange"] {
 
 #splits, .stopwatch-ui {
   font-family: digital-7;
-  font-size: 2.4rem; }
+  font-size: 30px; }
   #splits .cell, .stopwatch-ui .cell {
     display: inline-block;
-    width: 12px;
+    width: 13px;
     margin: 0; }
 
 .data .stopwatch-ui {
