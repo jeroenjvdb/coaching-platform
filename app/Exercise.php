@@ -142,6 +142,19 @@ class Exercise extends Model
                 $allExercise->position = $counter;
                 $allExercise->save();
             }
+
+            $allEx2 = $allExercises = $training->categoryExercises()->find($category_id)->exercises()
+                ->orderBy('position', 'asc')
+                ->get();
+
+            $i = 0;
+            foreach($allEx2 as $exercise) {
+                $exercise->position = $i;
+                $exercise->save();
+                $i++;
+            }
+
+
         }
 
         return true;

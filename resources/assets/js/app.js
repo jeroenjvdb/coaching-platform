@@ -256,6 +256,7 @@ $(function () {
     }
 
     function sort(event, ui) {
+        console.log(sort);
         var id = ui.item.data('id');
         var tableClass = ui.item.data('class');
         var position = $('.' + tableClass).index(ui.item);
