@@ -186,12 +186,12 @@ Route::group(['middleware' => 'web'], function () {
                             'show' => '{group}.swimmer.show',
                             'update' => '{group}.swimmer.update',
                             'edit' => '{group}.swimmer.edit',
+                            'destroy' => '{group}.swimmer.destroy',
                         ],
                         'parameters' => [
                             'zwemmer' => 'swimmer',
                         ],
                         'except' => [
-                            'destroy',
                         ]
                     ]);
 
@@ -224,7 +224,7 @@ Route::group(['middleware' => 'web'], function () {
                 Route::get('/', ['as' => 'groups.show', 'uses' => 'GroupController@show']);
                 Route::get('/edit', ['as' => 'groups.edit', 'uses' => 'GroupController@edit']);
                 Route::post('/', ['as' => 'groups.update', 'uses' => 'GroupController@update']);
-                Route::get('/destroy', ['as' => 'groups.destroy', 'uses' => 'GroupController@destroy']);
+                Route::delete('/destroy', ['as' => 'groups.destroy', 'uses' => 'GroupController@destroy']);
 
 
                 Route::group(['prefix' => 'chat'], function () {

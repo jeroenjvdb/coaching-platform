@@ -47,7 +47,7 @@
 
                 <div class="row swimmers">
                     <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
-                    <a rel="external" href="{{ route('me.profile', [
+                        <a rel="external" href="{{ route('me.profile', [
                     'group' => $group->slug,
                 ]) }}">
                         <span class="col-xs-12 col-sm-10 col-sm-offset-1">
@@ -64,7 +64,7 @@
                     </span>
                         </span>
 
-                    </a>
+                        </a>
                     </div>
                 </div>
             @endif
@@ -127,6 +127,46 @@
                     {{ $coach->first_name }} {{-- }}{{ $coach->last_name }}--}}
                 </div>
             @endforeach
+            @if(Auth::user()->clearance_level > 0)
+
+                <h2>groep verwijderen</h2>
+                <div class="row">
+                    <div class="col-md-4 col-md-offset-4 col-sm-8 col-sm-offset-2 col-xs-12">
+                        <button type="button" class="btn btn-danger btn-lg btn-full" data-toggle="modal"
+                                data-target="#delete">
+                            verwijderen
+                        </button>
+                    </div>
+                </div>
+                <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <h4 class="modal-title" id="myModalLabel">groep verwijderen</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>Bent u zeker dat u {{ $group->name }} wil verwijderen?</p>
+                            </div>
+                            {!! Form::open(['route' => [
+                                'groups.destroy',
+                                'group' => $group->slug,
+                            ], 'method' => 'delete']) !!}
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
+                                {!! Form::submit('verwijderen', [
+                                    'class' => 'btn btn-danger',
+                                ]) !!}
+                            </div>
+                            {!! Form::close() !!}
+                        </div>
+                    </div>
+                </div>
+            @endif
+
         </div>
     </div>
 

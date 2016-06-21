@@ -160,9 +160,18 @@ class SwimmerController extends Controller
 
     }
 
-    public function delete()
+    public function destroy(Group $group, Swimmer $swimmer)
     {
+        if(! $group->swimmers()->find($swimmer->id)) {
+            return redirect()->back()->withErrors('De zwemmer is niet gevonden.');
+        }
 
+        $swimmer->delete();
+
+
+        return redirect()->route('groups.show', [
+            'group' => $group->slug,
+        ]);
     }
 
     /**

@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Group extends Model
 {
+    use softDeletes;
+
     /**
      * the table of the model
      *

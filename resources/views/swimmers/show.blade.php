@@ -20,9 +20,11 @@
 
     <div class="row">
         <div class="col-sm-10 col-sm-offset-1">
+            @if(Auth::user()->clearance_level > 0 || $myProfile)
             <div class="row">
 
-            @if(! $hasHeartRate)
+
+                @if(! $hasHeartRate)
                 <div class="col-xs-6">
                 @include('swimmers.show.heartRate')
                 </div>
@@ -33,6 +35,7 @@
                 </div>
             @endif
             </div>
+            @endif
             <h1>{{ $swimmer->first_name }} {{ $swimmer->last_name }}</h1>
 
 

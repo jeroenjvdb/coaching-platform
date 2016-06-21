@@ -160,6 +160,6 @@ class GroupController extends Controller
 
         $group->delete();
 
-        return redirect()->route('groups.index');
+        return redirect('/');
     }
 }

@@ -16,28 +16,16 @@
     </div>
 </div>
 <canvas id="canvas" class="chart"
-        @if($myProfile)
-            data-url="{{ route('me.heartRate', [
-                'group' => $swimmer->group->slug,
-            ]) }}"
-        @else
             data-url="{{ route('{group}.swimmer.heartRate', [
                 'group' => $group->slug,
                 'swimmer' => $swimmer->slug,
             ]) }}"
-        @endif
 ></canvas>
-<h2>Gewicht</h2>
+<h3>Gewicht</h3>
 <canvas id="canvas2" class="chart"
-        @if($myProfile)
-        data-url="{{ route('me.heartRate', [
-                'group' => $swimmer->group->slug,
-            ]) }}"
-        @else
         data-url="{{ route('{group}.swimmer.weights', [
                 'group' => $group->slug,
                 'swimmer' => $swimmer->slug,
             ]) }}"
-        @endif
 ></canvas>
 @include('swimmers.show.data')

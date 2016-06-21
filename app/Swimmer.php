@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 use Phoenix\EloquentMeta\MetaTrait;
 use App\Traits\SwimmerProfile;
@@ -11,6 +12,7 @@ class Swimmer extends Model
 {
     use MetaTrait;
     use SwimmerProfile;
+    use SoftDeletes;
 
     /**
      * the table associated with the model

@@ -1,4 +1,6 @@
 <h2>Aandachtspunten</h2>
+@if($myProfile || Auth::user()->clearance_level > 0)
+
 @if(!$myProfile)
     {!! Form::open(['route' => ['{group}.swimmer.meta.store',
         'group' => $group->slug,
@@ -26,6 +28,7 @@
 ]) !!}
 
 {!! Form::close() !!}
+@endif
 
         @if(isset($meta['meta']))
             @foreach($meta['meta'] as $data)
