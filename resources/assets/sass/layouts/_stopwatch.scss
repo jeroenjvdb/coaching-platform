@@ -1,5 +1,6 @@
 .stopwatch {
   span {
+    display: block;
     font-family: digital-7;
     font-size: $font-large;
 
@@ -14,6 +15,11 @@
       margin: 0;
     }
 
+  }
+
+  .btn-sw {
+    margin: 10px 0;
+    line-height: 50px;
   }
 }
 

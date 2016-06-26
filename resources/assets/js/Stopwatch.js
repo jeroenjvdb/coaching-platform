@@ -4,6 +4,8 @@ var Stopwatch = function(elem, options ) {
         //stopButton  = createButton("stop", stop),
         resetButton, // = createButton("reset", splitReset),
         splitSpan,
+        lastSplitSpan,
+        fullSplitSpan,
         //splitButton = createButton("split", split),
         offset,
         clock,
@@ -16,6 +18,8 @@ var Stopwatch = function(elem, options ) {
     function init()
     {
         timer       = createTimer();
+        lastSplitSpan = createTimer();
+        fullSplitSpan = createTimer();
         startButton = createButton("start", startStop);
         //stopButton  = createButton("stop", stop),
         resetButton = createButton("reset", splitReset);
@@ -30,13 +34,17 @@ var Stopwatch = function(elem, options ) {
         options.delay = options.delay || 1;
 
         // append elements
+        if(!options.is_base3) {
+            elem.appendChild(lastSplitSpan);
+            elem.appendChild(fullSplitSpan);
+        }
         elem.appendChild(timer);
         elem.appendChild(document.createElement("br"));
         elem.appendChild(startButton);
         //elem.appendChild(stopButton);
-        //if( options.is_base3) {
+        if(! options.is_base3) {
             elem.appendChild(resetButton);
-        //}
+        }
         elem.appendChild(document.createElement("br"));
         elem.appendChild(splitSpan);
 
@@ -68,7 +76,7 @@ var Stopwatch = function(elem, options ) {
         a.href = "#" + action;
         a.setAttribute('class',  action);
         a.innerHTML = action;
-        a.className = "btn btn-primary btn-lg"
+        a.className = "btn btn-primary btn-lg btn-full btn-sw";
         a.addEventListener("click", function(event) {
             handler();
             event.preventDefault();
@@ -114,6 +122,9 @@ var Stopwatch = function(elem, options ) {
             resetButton.innerHTML = 'split';
             offset = Date.now();
             interval = setInterval(update, options.delay);
+            if(options.is_base3) {
+                reset();
+            }
             if( options.is_paused ) {
                 options.is_paused = false;
                 send();
@@ -157,6 +168,8 @@ var Stopwatch = function(elem, options ) {
                 start();
             }
             options.lastTime = options.startClock;
+            lastSplitSpan.innerHTML = timeToString(0);
+            fullSplitSpan.innerHTML = timeToString(0);
         }
 
         render();
@@ -279,6 +292,8 @@ var Stopwatch = function(elem, options ) {
         console.log(options.lastTime);
         if($(splitSpan).first().data('time') != time && clock != options.lastTime & clock != 0) {
             $(splitSpan).prepend('<li data-time="' + time + '">' + timeToString(time)  + ' <span class="small">' + timeToString(time - options.lastTime) + '</span>' + '</li>');
+            lastSplitSpan.innerHTML = timeToString(time);
+            fullSplitSpan.innerHTML = timeToString(time - options.lastTime);
         }
         options.lastTime = clock;
     }

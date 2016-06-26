@@ -55,9 +55,10 @@ class HomeController extends Controller
         if ($user->getMeta('swimmer_id')) {
             $is_swimmer = true;
             $swimmer = $this->swimmer->find($user->getMeta('swimmer_id'));
+            $groups = $this->group->where('id', $user->getMeta('swimmer_id'))->get();
+
         }
         $coach = $user->coaches->first();
-        $groups = [];
         if($coach) {
             $groups = $coach->groups;
         }

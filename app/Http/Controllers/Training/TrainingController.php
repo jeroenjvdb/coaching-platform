@@ -11,6 +11,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Jenssegers\Date\Date;
 use Maatwebsite\Excel\Facades\Excel;
 
 class TrainingController extends Controller
@@ -130,8 +131,7 @@ class TrainingController extends Controller
                 'you aren\'t permitted to view this training',
             ]);
         }
-        setLocale(LC_TIME, 'nl_NL.utf8');
-        $starttime = new Carbon($training->starttime);
+        $starttime = Date::parse($training->starttime);
 //        dd($starttime);
 
         $training->starttime = $starttime;

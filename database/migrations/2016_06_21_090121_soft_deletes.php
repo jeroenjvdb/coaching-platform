@@ -29,9 +29,9 @@ class SoftDeletes extends Migration
     {
 
 
-        Schema::tale('groups', function($table)
+        Schema::table('groups', function($table)
         {
-            $table->dropColumnd('deleted_at');
+            $table->dropColumn('deleted_at');
         });
     }
 }
