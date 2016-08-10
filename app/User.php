@@ -76,7 +76,7 @@ class User extends Authenticatable
 
         if ($this->coach) {
             $groups = $this->coach->groups;
-            //$group = $groups->first();
+            $group = $groups->first();
             if($this->getMeta('group')) {
                 $id = intval($this->getMeta('group'));
                 $group = $groups->where('id', $id)->first();
