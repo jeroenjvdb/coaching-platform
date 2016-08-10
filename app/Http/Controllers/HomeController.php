@@ -51,7 +51,7 @@ class HomeController extends Controller
         $user = Auth::user();
 
         if ( ! $user) {
-            return view('home');
+            return view('auth.login');
         }
 
         $group = null;
