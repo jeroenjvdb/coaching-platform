@@ -6,13 +6,10 @@
     <div class="nav-tabs-custom">
         <ul class="btn-pages nav-tabs nav">
             {{--<li id="data" class="btn btn-page active" data-page="data">data</li><!----}}
-            <li id="about" class="btn btn-page active" data-page="about">About</li><!--
-            -->
-            <li id="PR" class="btn btn-page" data-page="PR">PR</li><!--
-            -->
-            <li id="chrono" class="btn btn-page" data-page="chrono">Stopwatch</li><!--
-            -->
-            <li id="contact" class="btn btn-page last" data-page="contact">Contact</li>
+            <li id="about" class="btn btn-page active col-xs-3 no-gutter" data-page="about">About</li><!--
+            --><li id="PR" class="btn btn-page col-xs-3 no-gutter" data-page="PR">PR</li><!--
+            --> <li id="chrono" class="btn btn-page col-xs-3 no-gutter" data-page="chrono">SW</li><!--
+            --><li id="contact" class="btn btn-page col-xs-3 no-gutter last" data-page="contact">Contact</li>
         </ul>
     </div>
 
@@ -56,7 +53,7 @@
                     @include('swimmers.show.chrono')
                 </div>
                 <div id="contact" data-role="page" class="page contact" data-prev="chrono" hidden>
-                    @include('swimmers.show.contact')
+                    @include('swimmers.show.data')
                 </div>
             </div>
 

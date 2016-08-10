@@ -1,8 +1,11 @@
 .swimmers {
+  margin-bottom: 10px;
+
   .swimmer-thumb {
-    border-radius: 100%;
+    //border-radius: 100%;
     overflow: hidden;
     padding: 0;
+    margin-bottom: 5px;
     //display: inline-block;
     //width: 70%;
     img {
@@ -15,4 +18,85 @@
   .center {
     text-align: center;
   }
+
+  .cube {
+    margin-bottom: -5px;
+    padding-bottom: -3px;
+    border-radius:0;
+
+  }
+
+  .swimmer {
+    margin-bottom: 0px;
+    margin-left: 0;
+    margin-right: 0;
+
+
+    .thumbnail {
+      border-radius: 0;
+
+    }
+    label {
+      min-height: 100%;
+      //overflow: hidden;
+    }
+    img {
+      //min-width: 100%;
+      //min-height: 100%;
+      //height: auto;
+      //width: auto;
+      max-width: initial;
+      max-height: initial;
+    }
+
+    .name {
+      text-transform: uppercase;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      background-color: #CCC;
+      //line-height: 40px;
+      padding-top: 4px;
+      height: 50px;
+      opacity: .8;
+      width: 100%;
+    }
+  }
+  .swimmer:hover {
+    .name {
+      opacity: 1;
+    }
+  }
+}
+
+input[type=checkbox] {
+  display:none;
+}
+input[type=checkbox] + label
+{
+  background: #999;
+  //height: 16px;
+  //width: 16px;
+  //display:inline-block;
+  padding: 0 0 0 0px;
+  margin-bottom: 0;
+}
+
+input[type=checkbox]:checked + label img
+{
+  background: #0080FF;
+  //height: 16px;
+  //width: 16px;
+  //display:inline-block;
+  padding: 0 0 0 0px;
+  opacity: 0.5;
+}
+
+input[type=checkbox]:checked + label
+{
+  background-color: #FFFFFF;
+}
+
+input[type=checkbox] + label {
+  background-color: white;
 }

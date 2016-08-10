@@ -4,10 +4,14 @@
 
 @section('content')
     {!! Breadcrumbs::render('{group}.training.show', $group, $training) !!}
-    <h2>training {{ $training->starttime->formatLocalized('%A %d %B %P') }} <a rel="external" href="{{ route('{group}.training.download', [
-        'group' => $group->slug,
-        'training_id' => $training->id,
-    ]) }}"><i class="fa fa-download"></i></a></h2>
+        <h2>Training {{ $training->starttime->formatLocalized('%A %d %B %P') }} <a href="#" data-toggle="modal" data-target="#edit">
+                <i class="fa fa-pencil"></i></a></h2>
+        @include('trainings.edit')
+
+        {{--<a rel="external" href="{{ route('{group}.training.download', [
+       'group' => $group->slug,
+       'training_id' => $training->id,
+   ]) }}"><i class="fa fa-download"></i></a>--}}</h2>
     @if($editable)
         {!! Form::open([
             'route' => [
@@ -24,18 +28,14 @@
             {{--<input type="checkbox" id="is_shared" name="is_shared" value="shared">--}}
             <div class="slider"></div>
         </label>
-        <label for="is_shared" class="shared"><i class="fa fa-share-alt"></i><span class="sr-only">Share with swimmer </span></label>
+        <label for="is_shared" class="shared"><i class="fa fa-share-alt"></i><span
+                    class="sr-only">Share with swimmer </span></label>
 
         {!! Form::submit('verzenden', [
             'hidden',
         ]) !!}
         {!! Form::close() !!}
-        <div class="row">
-            <div class="col-xs-2 col-xs-offset-10 text-center">
-                <a href="#" data-toggle="add-exercise"><i class="fa fa-plus"></i><span
-                            class="sr-only">Add new exercise</span></a>
-            </div>
-        </div>
+
     @endif
     <div class="training">
         <div id="exercises" class="sortable" data-url="{{ route('{group}.training.exercise.update.cat.position', [
@@ -58,36 +58,70 @@
                 </div>
 
             @endforeach
-            <div class="exercise-ui total row">
-                <div class="col-xs-8 col-xs-offset-1">
-                    totaal: {{ $training->total }}m
+            @if($editable)
+                <div class="test">
+                    <div class="category exercise-ui row">
+                        <div class=" col-xs-offset-1 col-xs-9">Categorie toevoegen</div>
+                        <div class="col-xs-2  no-gutter">
+                            <a href="#" data-toggle="add-exercise"><i class="fa fa-plus"></i><span
+                                        class="sr-only">Nieuwe categorie toevoegen</span></a>
+                        </div>
+                    </div>
+                    <div class="sortable">
 
-                </div>
-            </div>
-                @if($editable)
-            <div class="add-exercise " hidden data-is_form="true">
-                <h2>add category</h2>
-                {!! Form::open(['route' => [
-                                    '{group}.training.category.exercise.store',
-                                    'group' => $group->slug,
-                                    'id' => $training->id
-                                ],
-                                'data-ajax' => "false",
+                    <div class="exercise-ui row add-exercise " hidden data-is_form="true">
+                            {!! Form::open(['route' => [
+                                                                        '{group}.training.category.exercise.store',
+                                                                        'id' => $training->id
+                                                                    ],
+                                                                    'data-ajax' => "false",
+                                                                    ]) !!}
+                            <fieldset class="form-group col-xs-offset col-xs-12 col-md-10">
+                                {!! Form::text('category', null, [
+                                    'placeholder' => 'naam',
+                                    'class' => 'form-control'
                                 ]) !!}
-                <fieldset class="form-group col-md-12">
-                    {!! Form::text('category', null, [
-                        'placeholder' => 'naam',
-                    ]) !!}
-                </fieldset>
-                <fieldset class="form-group col-md-12">
-                    {!! Form::submit('verzenden', [
-                    'class' => 'btn btn-primary'
-                ]) !!}
-                </fieldset>
-                {!! Form::close() !!}
-            </div>
-                @endif
+                            </fieldset>
+                            <fieldset class=" col-xs-12 col-md-2">
+                                {!! Form::submit('verzenden', [
+                                'class' => 'btn btn-primary btn-full'
+                            ]) !!}
+                            </fieldset>
+                            {!! Form::close() !!}
+                        </div>
+
+                    </div>
+                </div>
+            @endif
         </div>
+        <div class="exercise-ui total row">
+            <div class="col-xs-8 col-xs-offset-1">
+                totaal: {{ $training->total }}m
+
+            </div>
+        </div>
+        @if($editable)
+            {{-- <div class="add-exercise " hidden data-is_form="true">
+                 <h2>add category</h2>
+                 {!! Form::open(['route' => [
+                                     '{group}.training.category.exercise.store',
+                                     'id' => $training->id
+                                 ],
+                                 'data-ajax' => "false",
+                                 ]) !!}
+                 <fieldset class="form-group col-md-12">
+                     {!! Form::text('category', null, [
+                         'placeholder' => 'naam',
+                     ]) !!}
+                 </fieldset>
+                 <fieldset class="form-group col-md-12">
+                     {!! Form::submit('verzenden', [
+                     'class' => 'btn btn-primary'
+                 ]) !!}
+                 </fieldset>
+                 {!! Form::close() !!}
+             </div> --}}
+        @endif
     </div>
     <div class="row">
         <div class="col-xs-12">

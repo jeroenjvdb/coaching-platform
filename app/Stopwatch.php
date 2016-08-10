@@ -38,4 +38,28 @@ class Stopwatch extends Model
     {
         return $this->hasMany('App\StopwatchTime');
     }
+
+    public function getBestTime()
+    {
+        $stroke = $this->distance->stroke->name;
+        $distance = $this->distance->distance;
+
+        $swimmer = $this->swimmer->first();
+
+        $pb = $swimmer->getPersonalBest();
+//        dd($pb);
+
+        preg_match_all("/<tr.*?<\/tr>/", $pb, $pbArr);
+        $times = [];
+
+        $courses = preg_grep("/" . config('swimrankings.courses')[$stroke][$distance] . "<\/td>/", $pbArr[0]);
+//        dd(config('swimrankings.courses')[$stroke][$distance]);
+        foreach ($courses as $course) {
+            preg_match('/<td class="course">.*?<\/td><td class="time">.*?<\/td>/', $course, $time);
+//            dd($course);
+            array_push($times, $time[0]);
+        }
+
+        return $times;
+    }
 }

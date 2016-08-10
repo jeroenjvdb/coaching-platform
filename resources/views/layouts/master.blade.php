@@ -23,7 +23,7 @@
                     <li class="dropdown">
                         <a rel="external" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                            aria-haspopup="true" aria-expanded="">
-                            {{ Auth::user()->name }} <span class="caret"></span>
+                            {{ Auth::user()->name }} - {{ $group->name }} <span class="caret"></span>
                         </a>
 
                         <ul class="dropdown-menu">
@@ -32,6 +32,14 @@
                             <li><a href="{{ route('auth.password.update') }}">
                                     <i class="fa fa-key"></i> Wachtwoord wijzigen
                                 </a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="{{ route('groups.create') }}"><i class="fa fa-plus"></i> Groep toevoegen</a></li>
+                            <li role="separator" class="divider"></li>
+                            @foreach($groups as $groupItem)
+                            <li><a href="{{ route('group.select', [
+                                'group_id' => $groupItem->id,
+                            ]) }}"><i class="fa fa-user"></i> {{$groupItem->name}}</a></li>
+                            @endforeach
                         </ul>
                     </li>
                 @endif

@@ -1,7 +1,6 @@
 @if($editable)
 {!! Form::open(['route' => [
-        '{group}.training.exercise.store',
-        'group' => $group->slug,
+        'training.exercise.store',
         'id' => $training->id
     ],
     'data-ajax' => "false",

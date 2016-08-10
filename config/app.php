@@ -179,6 +179,7 @@ return [
         DaveJamesMiller\Breadcrumbs\ServiceProvider::class,
         'GrahamCampbell\Flysystem\FlysystemServiceProvider',
         'Jenssegers\Date\DateServiceProvider',
+        App\Providers\ComposerServiceProvider::class,
 
         /*
         * Acacha AdminLTE template provider

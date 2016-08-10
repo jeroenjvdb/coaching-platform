@@ -40,11 +40,13 @@ class StopwatchController extends Controller
      * @param Group $group
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index(Group $group)
+    public function index()
     {
+        $group = Auth::user()->getGroup();
+
         $data = [
             'group'        => $group,
-            'swimmers'     => $group->swimmers,
+            'swimmers'     => $swimmers = $group->swimmers()->orderBy('first_name')->lists('first_name', 'id'),
             'strokes'      => $this->stroke->all(),
             'chronometers' => $group->stopwatches,
         ];
@@ -58,8 +60,10 @@ class StopwatchController extends Controller
      * @param Group $group
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function create(Group $group)
+    public function create()
     {
+        $group = Auth::user()->getGroup();
+
         $swimmers = $group->swimmers()->lists('first_name', 'id');
         $strokes = $this->stroke->with('distances')->get();
 
@@ -79,10 +83,13 @@ class StopwatchController extends Controller
      * @param Group $group
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request, Group $group)
+    public function store(Request $request)
     {
+        $group = Auth::user()->getGroup();
+
         $swimmer = $group->swimmers()->findOrFail($request->swimmer);
         $distance = $this->distance->find($request->distance);
+
 
         $stopwatchData = $this->stopwatch->fill(
             [
@@ -110,8 +117,10 @@ class StopwatchController extends Controller
      * @param Group $group
      * @return string
      */
-    public function storeApi(Request $request, Group $group)
+    public function storeApi(Request $request)
     {
+        $group = Auth::user()->getGroup();
+
         $swimmer = $group->swimmers()->findOrFail($request->swimmer);
         $distance = $this->distance->find($request->distance);
 
@@ -135,7 +144,10 @@ class StopwatchController extends Controller
         $data = [
             'form'  => 'timer',
             'route' => $storeTimeRoute,
-
+            'records' => $stopwatch->getBestTime(),
+            'swimmer'   => $stopwatch->swimmer,
+            'distance'  => $stopwatch->distance,
+            'stroke'    => $stopwatch->distance->stroke,
         ];
 
         return json_encode($data);
@@ -149,9 +161,11 @@ class StopwatchController extends Controller
      * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function show(Group $group, $id)
+    public function show($id)
     {
         $user = Auth::user();
+        $group = $user->getGroup();
+
         $stopwatch = $user->stopwatches()
             ->where('stopwatches.id', $id)
             ->with(
@@ -159,6 +173,7 @@ class StopwatchController extends Controller
                     $query->orderedRev();
                 }]
             )->first();
+
 
         $lastRecord = null;
         $lastTime = 0;
@@ -178,7 +193,7 @@ class StopwatchController extends Controller
         $is_paused = true;
         $lastTime = null;
         if ($stopwatch->times->count()) {
-            $lastTime = $stopwatch->times->first();
+            $lastTime = $stopwatch->times->last();
             $clock = $lastTime->time;
             $is_paused = $lastTime->is_paused;
 
@@ -214,7 +229,14 @@ class StopwatchController extends Controller
             'is_paused' => $is_paused,
             'clock'     => $clock,
             'lastTime'  => $lastTime,
+            'records'   => $stopwatch->getBestTime(),
+            'swimmer'   => $stopwatch->swimmer,
+            'distance'  => $stopwatch->distance,
+            'stroke'    => $stopwatch->stroke,
+
         ];
+
+//        dd($data);
 
         return view('stopwatches.show', $data);
     }

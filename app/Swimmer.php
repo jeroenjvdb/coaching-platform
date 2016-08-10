@@ -71,7 +71,7 @@ class Swimmer extends Model
 
     public function trainings()
     {
-        return $this->belongsToMany('App\Training', 'presences');
+        return $this->belongsToMany('App\Training', 'presences')->withPivot('is_present');
     }
 
     public function data()
@@ -125,10 +125,16 @@ class Swimmer extends Model
      */
     public function getPresenceAttribute()
     {
-        $trainingCount = $this->group->trainings()->count();
-        $trainingPresences = $this->trainings()->count();
-        if( $trainingCount != 0 ) {
-            $presence = $trainingPresences/$trainingCount;
+        $trainingCount = $this->trainings()->count();
+        $trainings = $this->trainings;
+        $count = 0;
+        foreach($trainings as $training) {
+            if($training->pivot->is_present) {
+                $count++;
+            }
+        }
+        if( $count != 0 ) {
+            $presence = $count/$trainingCount;
 
             return round($presence, 2);
         }

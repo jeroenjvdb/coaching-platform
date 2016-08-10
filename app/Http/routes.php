@@ -49,7 +49,9 @@ Route::group(['middleware' => 'web'], function () {
     ]);
     Route::post('password/reset', 'Auth\PasswordController@postReset');
 
-    Route::get('/', 'HomeController@index');
+    Route::get('/', ['uses' => 'HomeController@index', 'as' => 'home']);
+
+    Route::get('/groep/{group_id}', ['as' => 'group.select', 'uses' => 'GroupController@select']);
     
 
     Route::group(['middleware' => 'auth'], function () {
@@ -74,7 +76,7 @@ Route::group(['middleware' => 'web'], function () {
         Route::group([/*'middleware' => 'coach'*/], function () {
 
 
-            Route::group(['prefix' => '{group}'], function () {
+//            Route::group(['prefix' => '{group}'], function () {
                 Route::group(['middleware' => 'coach'], function() {
                     Route::get('mail', [
                         'as' => '{group}.mail',
@@ -89,7 +91,8 @@ Route::group(['middleware' => 'web'], function () {
 //                'group' => 'group',
                 ]]);
                 Route::group(['namespace' => 'Training'], function () {
-                    Route::get('/get', ['as' => '{group}.training.get', 'uses' => 'ApiController@get']);
+                    Route::get('training/get', ['as' => '{group}.training.get', 'uses' => 'ApiController@get']);
+
 //                    Route::get('/{id}', ['as' => 'trainings.show', 'uses' => 'TrainingController@show']);
 
                     Route::get('training/{training_id}/download', [
@@ -99,6 +102,8 @@ Route::group(['middleware' => 'web'], function () {
 
 
                     Route::group(['prefix' => 'training/{training_id}'], function () {
+                    Route::post('/swimmers', ['as' => '{group}.training.swimmer', 'uses' => 'PresenceController@swimmers']);
+                        
                         Route::post('presences', [
                             'as' => '{group}.training.presences.store',
                             'uses' => 'PresenceController@store',
@@ -201,7 +206,7 @@ Route::group(['middleware' => 'web'], function () {
                     'uses' => 'StopwatchTimeController@store'
                 ]);
                 Route::post('stopwatch/create/api', [
-                    'as' => '{group}.stopwatch.store.api',
+                    'as' => 'stopwatch.store.api',
                     'uses' => 'StopwatchController@storeApi',
                 ]);
 
@@ -303,5 +308,5 @@ Route::group(['middleware' => 'web'], function () {
 
         });
 
-    });
+//    });
 });

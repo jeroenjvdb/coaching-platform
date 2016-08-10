@@ -117,8 +117,9 @@ class SwimmerController extends Controller
      * @param Swimmer $swimmer
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function show(Group $group, Swimmer $swimmer)
+    public function show(Swimmer $swimmer)
     {
+        $group = Auth::user()->getGroup();
         if ($group->id != $swimmer->group_id) {
             abort(404, 'page not found');
         }

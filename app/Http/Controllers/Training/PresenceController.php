@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class PresenceController extends Controller
 {
@@ -20,6 +21,23 @@ class PresenceController extends Controller
      */
     public function store(Request $request, Group $group, $training_id)
     {
+        $group = Auth::user()->getGroup();
+        $training = $group->trainings()->find($training_id);
+        $swimmers = $training->swimmers;
+        foreach($swimmers as $swimmer) {
+            $swimmer->pivot->is_present = false;
+            if(in_array($swimmer->id, $request->swimmers)) {
+                $swimmer->pivot->is_present = true;
+            }
+            $swimmer->pivot->save();
+        }
+
+        return redirect()->back();
+    }
+
+    public function swimmers(Request $request, Group $group, $training_id)
+    {
+        $group = Auth::user()->getGroup();
         $swimmerIds = $request->swimmers;
         $swimmers = $group->swimmers()->whereIn('id', $swimmerIds)->get();
 

@@ -7,27 +7,38 @@
 
   .exercise, .exercise-ui {
     font-size: 1.2em;
+    color: $color-secondary;
+    background-color: #ecf0f5;
 
-    //width: 100%;
-    background-color: #AAAAAA;
-    //background-color: #000;
-    //border-bottom: 1px solid #000;
     padding: 10px 0;
-    //td {
-    //  padding: 5px;
-    //}
+
+    border-radius: 1px;
+    box-shadow: 0px 0px 0px 1px rgba(0,0,0,0.2);
+
     form {
       position:relative;
       top: -3px;
+
     }
+
+    .fa {
+      color: $color-secondary;
+    } 
+
+    a {
+      color: $color-secondary;
+    }
+
+
   }
 
   .category {
-    background-color: #999;
+    background-color: $color-primary;
+    color: white;
   }
 
   .total {
-    background-color: #555;
+    background-color: $color-primary;
     color: white;
   }
 
@@ -50,14 +61,26 @@
 .presences {
   label {
     line-height: 15px;
+    //display: inline;
   }
 
   img {
     //max-width: 50px;
-    height: 100px;
+    //height: 100px;
   }
 
   .checked {
-    opacity: 0.5;
+    //opacity: 0.5;
+    line-height: 100px;
+  }
+
+  .checked::before {
+    content: "\f00c";
+    font-family: fontAwesome;
+    display: block;
+    //top: 50%;
+    position: absolute;
+    vertical-align: -50%;
+    left: 45%;
   }
 }

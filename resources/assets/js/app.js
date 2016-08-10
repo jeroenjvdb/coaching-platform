@@ -55,6 +55,7 @@ $(function () {
 
     function forms() {
         checkboxes();
+        datetimes();
         $("#compose-textarea").wysihtml5();
         var forms = $('form');
         forms.each(function () {
@@ -81,6 +82,13 @@ $(function () {
             }
         });
 
+    }
+
+    function datetimes() {
+        $('#dtbox').DateTimePicker({
+            'dateTimeFormat': 'yyyy-mm-dd hh:mm',
+            'minuteInterval': 15,
+        });
     }
 
     function charts() {
@@ -158,7 +166,7 @@ $(function () {
             });
         });
 
-        $('.input_change_checkbox').each(function () {
+        /*$('.input_change_checkbox').each(function () {
             var checked = "";
             if ($(this).is(':checked')) {
                 checked = "checked";
@@ -167,7 +175,7 @@ $(function () {
                 + '"><img src="' + $(this).data('image') +
                 '" alt=""></div>');
 
-        });
+        });*/
 
         $('input[type=checkbox]').each(function() {
             if($(this).data('all')) {
@@ -213,6 +221,11 @@ $(function () {
             setTimeout(function () {
                 $(window).trigger('resize');
             }, 250);
+        });
+        $('.modal').on('show.bs.modal', function() {
+            setTimeout(function() {
+                $(window).trigger('resize');
+            }, 250);
         })
     }
 
@@ -230,8 +243,13 @@ $(function () {
     function resize(e) {
         //delay(1000);
         console.log('resize');
-        var cw = $('.swimmer-thumb').width();
-        $('.swimmer-thumb').css({'height': cw + 'px'});
+        $.each($('.swimmer-thumb'), function() {
+            var cw = $(this).width();
+            $(this).css('height', cw + 'px');
+        });
+        //var cw = $('.swimmer-thumb').width();
+
+        //$('.swimmer-thumb').css({'height': cw + 'px'});
     }
 
     function swipePageLeft(e) {
@@ -537,6 +555,10 @@ $(function () {
                 lastTime: elem.data('last'), // || 0, lastTime
                 is_paused: elem.data('paused'), // ||false, is_paused
                 is_base3: elem.data('base3'),
+                records: false,
+                swimmer: false,
+                distance: false,
+                stroke: false,
             };
 
             stopwatches[i] = new Stopwatch(elems[i], swOptions);
@@ -546,7 +568,7 @@ $(function () {
     function createNewTimer(data)
     {
         console.log(data);
-        elem = $('#newStopwatch').prepend('<div class="stopwatch"></div>');
+        elem = $('#newStopwatch').prepend('<div class="stopwatch row"></div>');
         console.log(elem.find('.stopwatch')[0]);
         var swOptions = {
             //stopwatch_id: elem.data('stopwatch_id'),// ? stopwatch_id : 0,
@@ -557,6 +579,10 @@ $(function () {
             lastTime: 0, // || 0, lastTime
             is_paused: true, // ||false, is_paused
             is_base3: false,
+            records: data.records,
+            swimmer: data.swimmer,
+            distance: data.distance,
+            stroke: data.stroke,
         };
 
         new Stopwatch(elem.find('.stopwatch')[0], swOptions);

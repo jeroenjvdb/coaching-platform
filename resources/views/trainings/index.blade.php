@@ -12,17 +12,23 @@
                     <div class="col-md-4">
                         <div class="box box-danger">
                             <div class="box-body">
-                                <h3>training toevoegen</h3>
-                                {!! Form::open(['route' => ['{group}.training.store', 'group' => $group->slug],
+                                <h3>Training toevoegen</h3>
+                                {!! Form::open(['route' => ['training.store', 'group' => $group->slug],
                     'data-ajax' => 'false',
                     'data-is_form' => 'true',
                     'data-form' => ''
                 ]) !!}
                                 <fieldset class="form-group">
-                                    {!! Form::label('starttime') !!}
-                                    {!! Form::input('datetime-local', 'starttime', date('Y-m-d\Th:i'), [
-                                        'class' => 'form-control datetimepicker',
+                                    {!! Form::label('starttime', 'Begin tijdstip') !!}
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                                    {!! Form::input('text', 'starttime',null, [
+                                        'class' => 'form-control datetimepicker datetime-box',
+                                        'data-field' => "datetime",
+                                        'read-only',
                                     ]) !!}
+                                    </div>
+
 
                                 </fieldset>
                                 <fieldset class="form-group">
@@ -35,6 +41,7 @@
                             </div>
                         </div>
                     </div>
+                    <div id="dtbox"></div>
                 @endif
                 <div class="col-md-8 {{(!$editable) ? 'col-md-offset-2' :''}}">
                     <div class="box box-danger">

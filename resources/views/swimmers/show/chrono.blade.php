@@ -6,7 +6,7 @@
                 <h3>Nieuwe stopwatch aanmaken</h3>
             </div>
             <div class="box-body">
-                {!! Form::open(['route' => ['{group}.stopwatch.store.api',
+                {!! Form::open(['route' => ['stopwatch.store.api',
             'group' => $group->slug,
         ],
         'data-ajax' => 'true',

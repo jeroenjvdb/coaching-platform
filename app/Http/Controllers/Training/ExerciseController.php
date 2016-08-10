@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class ExerciseController extends Controller
@@ -50,8 +51,10 @@ class ExerciseController extends Controller
      * @param $training_id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(ExerciseRequest $request, Group $group, $training_id)
+    public function store(ExerciseRequest $request, $training_id)
     {
+        $group = Auth::user()->getGroup();
+
         $description = htmlentities($request->description);
 
         $order   = array("\r\n", "\n", "\r");
@@ -130,6 +133,8 @@ class ExerciseController extends Controller
      */
     public function update(ExerciseRequest $request, Group $group, $training_id, $exercise_id)
     {
+        $group = Auth::user()->getGroup();
+
         $training = $group->trainings()->find($training_id);
         $exercise = $training->exercises()->find($exercise_id);
 
@@ -147,8 +152,7 @@ class ExerciseController extends Controller
 
         $exercise->save();
 
-        return redirect()->route('{group}.training.show', [
-            'group' => $group->slug,
+        return redirect()->route('training.show', [
             'id' => $training_id
         ]);
     }
@@ -163,6 +167,7 @@ class ExerciseController extends Controller
      */
     public function updatePosition(Request $request, Group $group, $training_id)
     {
+        $group = Auth::user()->getGroup();
         $training = $group->trainings()->find($training_id);
 
         $exercise = $training->exercises()->find($request->exercise_id);
@@ -185,6 +190,7 @@ class ExerciseController extends Controller
      */
     public function updateCatPosition(Request $request, Group $group, $training_id)
     {
+        $group = Auth::user()->getGroup();
         $training = $group->trainings()->find($training_id);
         $category = $training->categoryExercises()->find($request->exercise_id);
         $category->changePosition($training, $request->position);

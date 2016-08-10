@@ -1,5 +1,6 @@
 <?php
 namespace App\Http\Controllers;
+
 use App\Classes\SwimmerProfile;
 use App\Group;
 use App\Http\Requests;
@@ -8,6 +9,8 @@ use App\Swimmer;
 use App\Training;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
+
 class HomeController extends Controller
 {
     /**
@@ -37,6 +40,7 @@ class HomeController extends Controller
         $this->swimmer = $swimmer;
         $this->stroke = $stroke;
     }
+
     /**
      * Show the application dashboard.
      *
@@ -46,31 +50,67 @@ class HomeController extends Controller
     {
         $user = Auth::user();
 
-        if(!$user) {
-            return view('welcome');
+        if ( ! $user) {
+            return view('home');
+        }
+
+        $group = null;
+
+        if ($user->getMeta('swimmer_id')) {
+            $is_swimmer = true;
+            $mySwimmer = $this->swimmer->find($user->getMeta('swimmer_id'));
+            $groups = $this->group->where('id', $user->getMeta('swimmer_id'))->get();
+            $group = $groups->first();
+        }
+
+        if ($user->coach) {
+            $groups = $user->coach->groups;
+            $group = $user->getGroup();
         }
 
         $is_swimmer = false;
         $swimmer = null;
-        if ($user->getMeta('swimmer_id')) {
-            $is_swimmer = true;
-            $swimmer = $this->swimmer->find($user->getMeta('swimmer_id'));
-            $groups = $this->group->where('id', $user->getMeta('swimmer_id'))->get();
 
-        }
-        $coach = $user->coaches->first();
-        if($coach) {
-            $groups = $coach->groups;
-        }
+//        $groups = $this->group->where('id', $user->getMeta('swimmer_id'))->get();
+
+        $swimmers = $group
+            ->swimmers()
+            ->ordered()
+            ->get();
+        $today = Carbon::today();
+        $tomorrow = Carbon::today()
+            ->addDay();
+
+        $trainings = $group->trainings()
+            ->where('starttime', '>', $today)
+            ->where('starttime', '<', $tomorrow)
+            ->get();
+
+        $user = Auth::user();
+        $mySwimmer = null;
+
 
         $data = [
-            'groups' => $groups,
-            'is_swimmer' => $is_swimmer,
-            'swimmer' => $swimmer,
-
+            'group'     => $group,
+            'trainings' => $trainings,
+            'swimmers'  => $swimmers,
+            'coaches'   => $group->coaches,
+            'mySwimmer' => $mySwimmer,
         ];
 
-        return view('welcome', $data);
+
+        return view('groups.show', $data);
+
+//        $coach = $user->coaches->first();
+//
+//        $data = [
+//            'groups'     => $groups,
+//            'is_swimmer' => $is_swimmer,
+//            'swimmer'    => $swimmer,
+//
+//        ];
+//
+//        return view('welcome', $data);
     }
 
     /**
@@ -80,12 +120,23 @@ class HomeController extends Controller
      */
     public function test()
     {
-        $training = Training::find(1);
-        $categories = $training->categoryExercises;
-        $data = [
-            'categories' => $categories,
-        ];
+        $stroke = 'freestyle';
+        $distance = '100';
 
-        return view('test', $data);
+        $swimmer = $this->swimmer->first();
+
+        $pb = $swimmer->getPersonalBest();
+
+        preg_match_all("/<tr.*?<\/tr>/", $pb, $pbArr);
+        $times = [];
+
+        $courses = preg_grep("/" . config('swimrankings.courses')[$stroke][$distance] . "<\/td>/", $pbArr[0]);
+        foreach ($courses as $course) {
+            preg_match('/<td class="time">.*?<\/td>/', $course, $time);
+            array_push($times, $time[0]);
+        }
+        dd($times);
+
+        dd($pbArr);
     }
 }

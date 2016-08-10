@@ -19,33 +19,31 @@ Breadcrumbs::register('swimmer', function($breadcrumbs, $group, $swimmer)
 Breadcrumbs::register('{group}.training.index', function($breadcrumbs, $group)
 {
     $breadcrumbs->parent('group', $group);
-    $breadcrumbs->push('training' , route('{group}.training.index', [
-        'group' => $group->slug,
+    $breadcrumbs->push('training' , route('training.index', [
     ]));
 });
 
 Breadcrumbs::register('{group}.training.show', function($breadcrumbs, $group, $training)
 {
     $breadcrumbs->parent('{group}.training.index', $group);
-    $breadcrumbs->push($training->starttime, route('{group}.training.show', [
-        'group' => $group->slug,
+    $breadcrumbs->push($training->starttime, route('training.show', [
         'swimmer' => $training->id,
     ]));
 });
 
-Breadcrumbs::register('{group}.stopwatch.index', function($breadcrumbs, $group)
+Breadcrumbs::register('stopwatch.index', function($breadcrumbs, $group)
 {
     $breadcrumbs->parent('group', $group);
-    $breadcrumbs->push('stopwatch', route('{group}.stopwatch.index', [
+    $breadcrumbs->push('stopwatch', route('stopwatch.index', [
         'group' => $group->slug,
     ]));
 });
 
 Breadcrumbs::register('stopwatch.show', function($breadcrumbs, $group, $stopwatch)
 {
-    $breadcrumbs->parent('{group}.stopwatch.index', $group);
+    $breadcrumbs->parent('stopwatch.index', $group);
     $breadcrumbs->push($stopwatch->distance->distance . ' ' . $stopwatch->distance->stroke->name,
-            route('{group}.stopwatch.show', [
+            route('stopwatch.show', [
                 'group' => $group->slug,
                 'id' => $stopwatch->id,
             ])

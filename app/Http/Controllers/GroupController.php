@@ -37,9 +37,11 @@ class GroupController extends Controller
     public function index()
     {
         $data = [
-            'groups' => $this->group->with(['swimmers' => function($query) {
-                $query->ordered()->get();
-            }]),
+            'groups' => $this->group->with(
+                ['swimmers' => function ($query) {
+                    $query->ordered()->get();
+                }]
+            ),
         ];
 
         return view('groups.index', $data);
@@ -63,18 +65,22 @@ class GroupController extends Controller
      */
     public function store(GroupRequest $request)
     {
-        $group = $this->group->create([
-            'name' => $request->input('name'),
-        ]);
+        $group = $this->group->create(
+            [
+                'name' => $request->input('name'),
+            ]
+        );
 
         $user = Auth::user();
         $coach = $user->coach;
         $group->coaches()->attach($coach->id);
 
-        return redirect()->route('groups.show',
-        [
-            'group' => $group->slug,
-        ]);
+        return redirect()->route(
+            'groups.show',
+            [
+                'group' => $group->slug,
+            ]
+        );
     }
 
     /**
@@ -106,10 +112,10 @@ class GroupController extends Controller
         }
 
         $data = [
-            'group' => $group,
+            'group'     => $group,
             'trainings' => $trainings,
-            'swimmers' => $swimmers,
-            'coaches' => $group->coaches,
+            'swimmers'  => $swimmers,
+            'coaches'   => $group->coaches,
             'mySwimmer' => $mySwimmer,
         ];
 
@@ -161,5 +167,21 @@ class GroupController extends Controller
         $group->delete();
 
         return redirect('/');
+    }
+
+    /**
+     * Select other group.
+     *
+     * @param $group_id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function select($group_id)
+    {
+        $group = $this->group->where('id', $group_id)->first();
+        if($group) {
+            Auth::user()->updateMeta('group', $group->id);
+        }
+
+        return redirect()->back();
     }
 }

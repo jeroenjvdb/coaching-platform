@@ -18,14 +18,18 @@
   }
 
   .btn-sw {
-    margin: 10px 0;
+    margin: 20px 0;
     line-height: 50px;
   }
+
+  text-align: center;
 }
 
 #splits, .stopwatch-ui {
   font-family: digital-7;
   font-size: $font-large;
+  text-align: center;
+  display: block;
 
   .cell {
     display: inline-block;
@@ -46,5 +50,29 @@
     .cell {
       width: 4px;
     }
+  }
+}
+
+.stopwatch-title {
+  font-size: 20px;
+  text-transform: uppercase;
+  font-weight: 800;
+  text-align: center;
+}
+
+.stopwatch-table {
+  width: 70%;
+  @media screen and (max-width: 444px) {
+    width: 90%;
+}
+  margin-left: auto;
+  margin-right: auto;
+  table-layout: fixed;
+  td, th {
+    //white-space: nowrap;
+    overflow:hidden;
+    width: 50px;
+    text-align: left;
+
   }
 }

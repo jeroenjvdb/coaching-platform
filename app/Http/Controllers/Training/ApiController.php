@@ -41,8 +41,10 @@ class ApiController extends Controller
      * @param Group $group
      * @return string
      */
-    function get(Request $request, Group $group)
+    function get(Request $request)
     {
+        $group = Auth::user()->getGroup();
+
         $trainings = $group->trainings()
             ->where('starttime', '>', $request->start)
             ->where('starttime', '<', $request->end);
@@ -56,8 +58,7 @@ class ApiController extends Controller
             $starttime = Carbon::parse($training->starttime);
             $start = $starttime->toDateTimeString();
             $endtime = $starttime->addHours(2)->toDateTimeString();
-            $url = route('{group}.training.show', [
-                'group' => $group->slug,
+            $url = route('training.show', [
                 'training_id' => $training->id,
             ]);
 

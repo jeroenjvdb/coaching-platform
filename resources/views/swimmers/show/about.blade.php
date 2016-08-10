@@ -28,4 +28,6 @@
                 'swimmer' => $swimmer->slug,
             ]) }}"
 ></canvas>
-@include('swimmers.show.data')
+
+@include('swimmers.show.contact')
+

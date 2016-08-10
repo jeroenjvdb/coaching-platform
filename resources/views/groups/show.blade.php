@@ -19,8 +19,7 @@
                         <div class="col-xs-12 col-md-6 col-lg-4">
                             <div class="row">
                                 <div class="col-xs-12 text-center">
-                                    <a href="{{ route('{group}.training.show', [
-                    'group' => $group->slug,
+                                    <a href="{{ route('training.show', [
                     'training_id' => $training->id,
                 ]) }}">
                                         <button class="btn btn-primary">
@@ -46,7 +45,7 @@
                 <h2>Mijn profiel</h2>
 
                 <div class="row swimmers">
-                    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
+                    <div class="swimmer col-xs-6 col-sm-4 col-md-3 col-lg-2">
                         <a rel="external" href="{{ route('me.profile', [
                     'group' => $group->slug,
                 ]) }}">
@@ -89,12 +88,11 @@
                     @if($key > 0 && $key % 6 == 0)
                         <div class="clearfix visible-lg"></div>
                     @endif
-                    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6 center">
+                    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6 center no-gutter cube">
                         <a rel="external" href="{{ route('{group}.swimmer.show', [
-                    'group' => $group->slug,
                     $swimmer->slug
                 ]) }}">
-                    <span class="col-xs-12 col-sm-10 col-sm-offset-1">
+                    <span class=" swimmer">
                         <span class="thumbnail center swimmer-thumb" style="; ">
                         @if($swimmer->getMeta('picture'))
                                 <img src="{{ $swimmer->getMeta('picture') }}" alt="">
@@ -103,7 +101,7 @@
                                      alt="">
                             @endif
                     </span>
-                    <span class="col-xs-12 center">
+                    <span class="col-xs-12 center name">
                      {{ $swimmer->first_name }} {{ $swimmer->last_name }}
                     </span>
                     </span>
@@ -117,7 +115,7 @@
 
             <h2>Coaches
                 @if(Auth::user()->clearance_level > 0)
-                    <a href="{{ route('{group}.coach.create', [
+                    <a href="{{ route('coach.create', [
         'group' => $group->slug,
     ]) }}" class="small"><i class="fa fa-plus"></i></a>
                 @endif

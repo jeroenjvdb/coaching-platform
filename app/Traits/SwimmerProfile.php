@@ -392,8 +392,9 @@ trait SwimmerProfile
             $newMeta = [
                 'type'     => 'data',
                 'message'  => $data->text,
+                'user'     => $data->user,
                 'media'    => $media,
-                'date'     => Date::parse($data->created_at),
+                'date'     => $data->created_at,
                 'response' => $data->is_reaction,
             ];
 
@@ -406,7 +407,7 @@ trait SwimmerProfile
                 'type'     => 'heartRate',
                 'message'  => $heartRate->heart_rate,
                 'media'    => null,
-                'date'     => Date::parse($heartRate->created_at),
+                'date'     => Carbon::parse($heartRate->date),
                 'response' => true,
             ];
 
@@ -419,7 +420,7 @@ trait SwimmerProfile
                 'type'     => 'chrono',
                 'message'  => $stopwatch,
                 'media'    => null,
-                'date'     => Date::parse($stopwatch->created_at),
+                'date'     => Carbon::parse($stopwatch->created_at),
                 'response' => false,
             ];
 
@@ -427,8 +428,30 @@ trait SwimmerProfile
             $meta->push($item);
         }
 
+        $meta = $meta->sortByDesc('date');
+        $metaGrouped = [];
+        $item = null;
+        $allItems = null;
+
+        $date = null;
+        foreach ($meta as $data) {
+            $day = Date::parse($data->date)->startOfDay();
+            if($day != $date) {
+                $date = $day;
+                if($item) {
+                    $item->put('item', $allItems);
+                    array_push($metaGrouped, $item);
+                }
+                $item = collect([]);
+                $item->put('date', $date);
+                $allItems = [];
+            }
+            array_push($allItems, $data);
+        }
+
+
         return [
-            'meta'      => $meta->sortByDesc('date'),
+            'meta' => $metaGrouped,
             'heartRate' => $heartRate,
         ];
     }

@@ -1,0 +1,15 @@
+.bg-red {
+  background-color: $color-primary !important;
+}
+
+.bg-blue {
+  background-color: $color-secondary !important;
+}
+
+a {
+	color: $color-secondary;
+}
+
+a:hover {
+	color: $color-primary;
+}

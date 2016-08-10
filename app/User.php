@@ -62,4 +62,27 @@ class User extends Authenticatable
     public function setPasswordAttribute($password){
         $this->attributes['password'] = bcrypt($password);
     }
+
+    public function getGroup()
+    {
+        $group = null;
+
+        /*if ($this->getMeta('swimmer_id')) {
+            $is_swimmer = true;
+            $mySwimmer = $this->swimmer->find($user->getMeta('swimmer_id'));
+            $groups = $this->group->where('id', $user->getMeta('swimmer_id'))->get();
+            $group = $groups->first();
+        }*/
+
+        if ($this->coach) {
+            $groups = $this->coach->groups;
+            //$group = $groups->first();
+            if($this->getMeta('group')) {
+                $id = intval($this->getMeta('group'));
+                $group = $groups->where('id', $id)->first();
+            }
+        }
+
+        return $group;
+    }
 }

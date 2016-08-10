@@ -55,6 +55,8 @@ class TrainingController extends Controller
      */
     public function index(Group $group)
     {
+        $group = Auth::user()->getGroup();
+
         $trainings = $group->trainings()->with('group', 'exercises')->get();
         foreach($trainings as $training) {
             $startTime = new Carbon($training->starttime);
@@ -97,15 +99,17 @@ class TrainingController extends Controller
      * @param Group $group
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request, Group $group)
+    public function store(Request $request)
     {
+        $group = Auth::user()->getGroup();
+
         $training = $this->training->fill([
             'starttime' => $request->starttime,
 
         ]);
         $training = $group->trainings()->save($training);
 
-        return redirect()->route('{group}.training.show', [
+        return redirect()->route('training.show', [
             'group' => $group->slug,
             'training' => $training->id,
         ]);
@@ -119,8 +123,54 @@ class TrainingController extends Controller
      * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function show(Group $group, $id)
+    public function show($id)
     {
+        $group = Auth::user()->getGroup();
+        $training = $group->trainings()->find($id);
+//            ->with(['exercises' => function ($query) {
+//                $query->positioned();
+//            }])
+        if((!Auth::user()->clearance_level > 0 && !$training->is_shared) || !$training) {
+
+            return redirect()->route('training.index')->withErrors([
+                trans('trainings.permission')
+            ]);
+        }
+        $starttime = Date::parse($training->starttime);
+//        dd($starttime);
+
+        $training->starttime = $starttime;
+
+        $categories = $training->categoryExercises()->positioned()
+            ->with(['exercises' => function($query) {
+                $query->positioned();
+            }])->get();
+
+
+        $swimmers = $training->swimmers;
+//        dd($swimmers);
+        $editable = false;
+        if(Auth::user()->clearance_level > 0) {
+            $editable = true;
+        }
+
+        $data = [
+            'training' => $training,
+            'categories' => $categories,
+            'group' => $group,
+            'swimmers' => $swimmers,
+            'editable' => $editable,
+        ];
+
+        return view('trainings.show', $data);
+    }
+
+    /**
+     * @param $id
+     */
+    public function edit($id)
+    {
+        $group = Auth::user()->getGroup();
         $training = $group->trainings()->find($id);
 //            ->with(['exercises' => function ($query) {
 //                $query->positioned();
@@ -151,29 +201,28 @@ class TrainingController extends Controller
 
         $data = [
             'training' => $training,
-            'categories' => $categories,
             'group' => $group,
             'swimmers' => $swimmers,
-            'editable' => $editable,
         ];
 
-        return view('trainings.show', $data);
-    }
-
-    /**
-     * @param $id
-     */
-    public function edit($id)
-    {
+        return view('trainings.edit', $data);
 
     }
 
     /**
      * @param $id
      */
-    public function update($id)
+    public function update(Request $request, Group $group, $id)
     {
+        $group = Auth::user()->getGroup();
 
+        $training = $group->trainings()->find($id);
+        $training->starttime = $request->starttime;
+        $training->save();
+
+        return redirect()->route('training.show',[
+            'id' => $training->id,
+        ]);
     }
 
     /**

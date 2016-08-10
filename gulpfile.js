@@ -5,6 +5,7 @@ var paths = {
     'select2' : './node_modules/select2/dist/',
     'ckeditor': './node_modules/ckeditor/',
     'icheck': './node_modules/icheck/',
+    'datetimepicker': './node_modules/datetimepicker/'
 };
 
 /*
@@ -19,7 +20,7 @@ var paths = {
  */
 
 elixir(function (mix) {
-    mix.sass('style.scss', 'public/resources/css/main.min.css')
+    mix.sass('style.scss', 'public/resources/css/main.css')
         //.less('adminLTE/adminLTE.less', 'public/resources/css/adminLTE.css')
         .scripts([
             'exif.js',
@@ -29,6 +30,7 @@ elixir(function (mix) {
             'touch-punch.js',
             paths.bootstrap + "javascripts/bootstrap.js",
             paths.icheck + 'icheck.min.js',
+            paths.datetimepicker + 'src/DateTimePicker.js',
             'moment.min.js',
             'moment-nl.js',
             'chartjs.min.js',

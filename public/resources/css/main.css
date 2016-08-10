@@ -8410,12 +8410,195 @@ button.close {
 .select2-container--classic.select2-container--open .select2-dropdown {
   border-color: #5897fb; }
 
+/* ----------------------------------------------------------------------------- 
+
+  jQuery DateTimePicker - Responsive flat design jQuery DateTime Picker plugin for Web & Mobile
+  Version 0.1.31
+  Copyright (c)2016 Curious Solutions LLP and Neha Kadam
+  http://curioussolutions.github.io/DateTimePicker
+  https://github.com/CuriousSolutions/DateTimePicker
+
+ ----------------------------------------------------------------------------- */
+.dtpicker-overlay {
+  z-index: 2000;
+  display: none;
+  min-width: 300px;
+  background: rgba(0, 0, 0, 0.2);
+  font-size: 12px;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none; }
+
+.dtpicker-mobile {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%; }
+
+.dtpicker-overlay * {
+  box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent; }
+
+.dtpicker-bg {
+  width: 100%;
+  height: 100%;
+  font-family: Arial; }
+
+.dtpicker-cont {
+  border: 1px solid #ECF0F1; }
+
+.dtpicker-mobile .dtpicker-cont {
+  position: relative;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+  border: none; }
+
+.dtpicker-content {
+  margin: 0 auto;
+  padding: 1em 0;
+  max-width: 500px;
+  background: #fff; }
+
+.dtpicker-mobile .dtpicker-content {
+  width: 97%; }
+
+.dtpicker-subcontent {
+  position: relative; }
+
+.dtpicker-header {
+  margin: 0.2em 1em; }
+
+.dtpicker-header .dtpicker-title {
+  color: #2980B9;
+  text-align: center;
+  font-size: 1.1em; }
+
+.dtpicker-header .dtpicker-close {
+  position: absolute;
+  top: -0.7em;
+  right: 0.3em;
+  padding: 0.5em 0.5em 1em 1em;
+  color: #FF3B30;
+  font-size: 1.5em;
+  cursor: pointer; }
+
+.dtpicker-header .dtpicker-close:hover {
+  color: #FF3B30; }
+
+.dtpicker-header .dtpicker-value {
+  padding: 0.8em 0.2em 0.2em 0.2em;
+  color: #FF3B30;
+  text-align: center;
+  font-size: 1.4em; }
+
+.dtpicker-components {
+  overflow: hidden;
+  margin: 1em 1em;
+  font-size: 1.3em; }
+
+.dtpicker-components * {
+  margin: 0;
+  padding: 0; }
+
+.dtpicker-components .dtpicker-compOutline {
+  display: inline-block;
+  float: left; }
+
+.dtpicker-comp2 {
+  width: 50%; }
+
+.dtpicker-comp3 {
+  width: 33.3%; }
+
+.dtpicker-comp4 {
+  width: 25%; }
+
+.dtpicker-comp5 {
+  width: 20%; }
+
+.dtpicker-comp6 {
+  width: 16.66%; }
+
+.dtpicker-comp7 {
+  width: 14.285%; }
+
+.dtpicker-components .dtpicker-comp {
+  margin: 2%;
+  text-align: center; }
+
+.dtpicker-components .dtpicker-comp > * {
+  display: block;
+  height: 30px;
+  color: #2980B9;
+  text-align: center;
+  line-height: 30px; }
+
+.dtpicker-components .dtpicker-comp > *:hover {
+  color: #2980B9; }
+
+.dtpicker-components .dtpicker-compButtonEnable {
+  opacity: 1; }
+
+.dtpicker-components .dtpicker-compButtonDisable {
+  opacity: 0.5; }
+
+.dtpicker-components .dtpicker-compButton {
+  background: #FFFFFF;
+  font-size: 140%;
+  cursor: pointer; }
+
+.dtpicker-components .dtpicker-compValue {
+  margin: 0.4em 0;
+  width: 100%;
+  border: none;
+  background: #FFFFFF;
+  font-size: 100%;
+  -webkit-appearance: none;
+  -moz-appearance: none; }
+
+.dtpicker-overlay .dtpicker-compValue:focus {
+  outline: none;
+  background: #F2FCFF; }
+
+.dtpicker-buttonCont {
+  overflow: hidden;
+  margin: 0.2em 1em; }
+
+.dtpicker-buttonCont .dtpicker-button {
+  display: block;
+  padding: 0.6em 0;
+  width: 47%;
+  background: #FF3B30;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 1.3em;
+  cursor: pointer; }
+
+.dtpicker-buttonCont .dtpicker-button:hover {
+  color: #FFFFFF; }
+
+.dtpicker-singleButton .dtpicker-button {
+  margin: 0.2em auto; }
+
+.dtpicker-twoButtons .dtpicker-buttonSet {
+  float: left; }
+
+.dtpicker-twoButtons .dtpicker-buttonClear {
+  float: right; }
+
 img, video {
   max-width: 100%;
   max-height: 100%; }
 
 .content-wrapper {
-  padding: 5px; }
+  padding-left: 15px;
+  padding-right: 15px; }
 
 .main-header nav {
   padding-right: 10px; }
@@ -8988,20 +9171,28 @@ ul.wysihtml5-toolbar div[data-wysihtml5-command-value="orange"] {
 .glyphicon-quote:after {
   content: "\0000a0"; }
 
-.stopwatch span {
-  font-family: digital-7;
-  font-size: 30px; }
-  .stopwatch span.small {
-    font-size: 80%; }
-  .stopwatch span .cell {
-    display: inline-block;
-    width: 13px;
-    top: 3px;
-    margin: 0; }
+.stopwatch {
+  text-align: center; }
+  .stopwatch span {
+    display: block;
+    font-family: digital-7;
+    font-size: 30px; }
+    .stopwatch span.small {
+      font-size: 80%; }
+    .stopwatch span .cell {
+      display: inline-block;
+      width: 13px;
+      top: 3px;
+      margin: 0; }
+  .stopwatch .btn-sw {
+    margin: 20px 0;
+    line-height: 50px; }
 
 #splits, .stopwatch-ui {
   font-family: digital-7;
-  font-size: 30px; }
+  font-size: 30px;
+  text-align: center;
+  display: block; }
   #splits .cell, .stopwatch-ui .cell {
     display: inline-block;
     width: 13px;
@@ -9016,12 +9207,30 @@ ul.wysihtml5-toolbar div[data-wysihtml5-command-value="orange"] {
     .data .stopwatch-ui .split .cell {
       width: 4px; }
 
+.stopwatch-title {
+  font-size: 20px;
+  text-transform: uppercase;
+  font-weight: 800;
+  text-align: center; }
+
+.stopwatch-table {
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+  table-layout: fixed; }
+  @media screen and (max-width: 444px) {
+    .stopwatch-table {
+      width: 90%; } }
+  .stopwatch-table td, .stopwatch-table th {
+    overflow: hidden;
+    width: 50px;
+    text-align: left; }
+
 table {
   width: 100%; }
 
 .btn-page {
   margin: 0;
-  width: 25%;
   padding: 10px; }
 
 .btn-pages {
@@ -9033,14 +9242,14 @@ table {
 
 .nav-tabs-custom {
   position: relative;
-  top: -5px;
-  left: -5px;
+  top: 5px;
+  left: -15px;
   border-radius: 0;
-  width: calc(100% + 10px); }
+  width: calc(100% + 30px); }
 
-@media (max-width: 768px) {
+@media (min-width: 768px) {
   .nav-tabs-custom {
-    top: 0; } }
+    top: 0px; } }
 
 .nav-tabs-custom > .nav-tabs > li {
   margin-right: 0; }
@@ -9049,6 +9258,12 @@ table {
 
 .page {
   min-height: 500px; }
+
+.timeline h3 {
+  text-align: left; }
+
+.timeline {
+  margin-top: 15px; }
 
 .data {
   width: 80%;
@@ -9096,17 +9311,25 @@ table {
 
 .training .exercise, .training .exercise-ui {
   font-size: 1.2em;
-  background-color: #AAAAAA;
-  padding: 10px 0; }
+  color: #0E7287;
+  background-color: #ecf0f5;
+  padding: 10px 0;
+  border-radius: 1px;
+  box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.2); }
   .training .exercise form, .training .exercise-ui form {
     position: relative;
     top: -3px; }
+  .training .exercise .fa, .training .exercise-ui .fa {
+    color: #0E7287; }
+  .training .exercise a, .training .exercise-ui a {
+    color: #0E7287; }
 
 .training .category {
-  background-color: #999; }
+  background-color: #d73925;
+  color: white; }
 
 .training .total {
-  background-color: #555;
+  background-color: #d73925;
   color: white; }
 
 .training table {
@@ -9120,25 +9343,77 @@ table {
 .presences label {
   line-height: 15px; }
 
-.presences img {
-  height: 100px; }
-
 .presences .checked {
-  opacity: 0.5; }
+  line-height: 100px; }
 
-.contact {
+.presences .checked::before {
+  content: "\f00c";
+  font-family: fontAwesome;
+  display: block;
+  position: absolute;
+  vertical-align: -50%;
+  left: 45%; }
+
+.page .contact {
   border-bottom: 1px solid black;
   padding: 5px 0; }
 
-.swimmers .swimmer-thumb {
-  border-radius: 100%;
-  overflow: hidden;
-  padding: 0; }
-  .swimmers .swimmer-thumb img {
-    width: 100%; }
+.swimmers {
+  margin-bottom: 10px; }
+  .swimmers .swimmer-thumb {
+    overflow: hidden;
+    padding: 0;
+    margin-bottom: 5px; }
+    .swimmers .swimmer-thumb img {
+      width: 100%; }
+  .swimmers .center {
+    text-align: center; }
+  .swimmers .cube {
+    margin-bottom: -5px;
+    padding-bottom: -3px;
+    border-radius: 0; }
+  .swimmers .swimmer {
+    margin-bottom: 0px;
+    margin-left: 0;
+    margin-right: 0; }
+    .swimmers .swimmer .thumbnail {
+      border-radius: 0; }
+    .swimmers .swimmer label {
+      min-height: 100%; }
+    .swimmers .swimmer img {
+      max-width: initial;
+      max-height: initial; }
+    .swimmers .swimmer .name {
+      text-transform: uppercase;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      background-color: #CCC;
+      padding-top: 4px;
+      height: 50px;
+      opacity: .8;
+      width: 100%; }
+  .swimmers .swimmer:hover .name {
+    opacity: 1; }
 
-.swimmers .center {
-  text-align: center; }
+input[type=checkbox] {
+  display: none; }
+
+input[type=checkbox] + label {
+  background: #999;
+  padding: 0 0 0 0px;
+  margin-bottom: 0; }
+
+input[type=checkbox]:checked + label img {
+  background: #0080FF;
+  padding: 0 0 0 0px;
+  opacity: 0.5; }
+
+input[type=checkbox]:checked + label {
+  background-color: #FFFFFF; }
+
+input[type=checkbox] + label {
+  background-color: white; }
 
 .chat form {
   background: #000;
@@ -10249,5 +10524,17 @@ be a descendant of the grid when it is being dragged.
   .gym .img img {
     max-height: 500px;
     margin: 0 auto; }
+
+.bg-red {
+  background-color: #d73925 !important; }
+
+.bg-blue {
+  background-color: #0E7287 !important; }
+
+a {
+  color: #0E7287; }
+
+a:hover {
+  color: #d73925; }
 
 /*# sourceMappingURL=main.css.map */

@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class CategoryController extends Controller
@@ -36,8 +37,10 @@ class CategoryController extends Controller
      * @param $training_id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request, Group $group, $training_id)
+    public function store(Request $request, $training_id)
     {
+        $group = Auth::user()->getGroup();
+
         $training = $group
             ->trainings()
             ->find($training_id);
@@ -79,6 +82,7 @@ class CategoryController extends Controller
      */
     public function updateCatPosition(Request $request, Group $group, $training_id)
     {
+        $group = Auth::user()->getGroup();
         Log::info('request: ', [$request->all()]);
 
         $training = $group

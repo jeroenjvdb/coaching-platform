@@ -19,7 +19,6 @@
             {!! Form::open([
                 'route' => [
                     '{group}.training.category.destroy',
-                    'group' => $group->slug,
                     'training_id' => $training->id,
                 ],
                 'method' => 'delete',

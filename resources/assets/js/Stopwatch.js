@@ -17,15 +17,37 @@ var Stopwatch = function(elem, options ) {
 
     function init()
     {
+        var divElem;
+        console.log(options);
+        if(options.records) {
+            recordElem = createDiv('col-sm-6 col-sm-push-6');
+            elem.appendChild(recordElem);
+
+            var recordTitle = document.createElement('p');
+            recordTitle.className = 'stopwatch-title';
+            recordTitle.innerHTML = options.distance.distance + ' ' + options.stroke.name +
+                ' - ' + options.swimmer.first_name + ' ' + options.swimmer.last_name;
+
+            recordElem.appendChild(recordTitle);
+
+            records = createRecords(options.records);
+            recordElem.appendChild(records);
+
+            divElem = createDiv('col-sm-6 col-sm-pull-6');
+        } else {
+            divElem = createDiv('col-sm-6');
+        }
+        elem.appendChild(divElem);
         timer       = createTimer();
         lastSplitSpan = createTimer();
         fullSplitSpan = createTimer();
-        startButton = createButton("start", startStop);
+        startButton = createButton("Start", startStop);
         //stopButton  = createButton("stop", stop),
-        resetButton = createButton("reset", splitReset);
+        resetButton = createButton("Reset", splitReset);
         //splitButton = createButton("split", split),
         splitSpan = createSplitSpan();
         url = options.url;
+        console.log(options);
 
         this.clock   = 0;
 
@@ -35,15 +57,17 @@ var Stopwatch = function(elem, options ) {
 
         // append elements
         if(!options.is_base3) {
-            elem.appendChild(lastSplitSpan);
-            elem.appendChild(fullSplitSpan);
+            divElem.appendChild(lastSplitSpan);
+            divElem.appendChild(fullSplitSpan);
         }
-        elem.appendChild(timer);
-        elem.appendChild(document.createElement("br"));
-        elem.appendChild(startButton);
+        divElem.appendChild(timer);
+        divElem.appendChild(document.createElement("br"));
+        divButton = createDiv('col-xs-12');
+        elem.appendChild(divButton);
+        divButton.appendChild(startButton);
         //elem.appendChild(stopButton);
         if(! options.is_base3) {
-            elem.appendChild(resetButton);
+            divButton.appendChild(resetButton);
         }
         elem.appendChild(document.createElement("br"));
         elem.appendChild(splitSpan);
@@ -53,6 +77,38 @@ var Stopwatch = function(elem, options ) {
         // initialize
 
         reset();
+    }
+
+    function createRecords(records)
+    {
+        console.log(records);
+
+
+
+        var recordElem = document.createElement('table');
+        thead = document.createElement('thead');
+        recordElem.appendChild(thead);
+        recordElem.className = "stopwatch-table";
+        //tr = recordElem.insertRow(-1);
+        thead.innerHTML = '<th>zwembad</th><th>tijd</th>';
+        tbody = document.createElement('tbody');
+        recordElem.appendChild(tbody);
+        for (var i = 0; i< records.length; i++) {
+            tr = tbody.insertRow(-1);
+            tr.innerHTML = records[i];
+            console.log(tr);
+        }
+
+        return recordElem;
+    }
+
+    function createDiv(divClass)
+    {
+        var divElem = document.createElement('div');
+        divElem.className = divClass;
+
+        return divElem;
+
     }
 
     /**
@@ -88,7 +144,7 @@ var Stopwatch = function(elem, options ) {
     {
         var a = document.createElement("span");
         a.setAttribute('class',  'splits');
-        a.className = "list-unstyled";
+        a.className = "list-unstyled col-xs-12 col-sm-6";
 
         return a;
     }
@@ -118,8 +174,8 @@ var Stopwatch = function(elem, options ) {
     function start() {
         if (!interval) {
             console.log(startButton);
-            startButton.innerHTML = 'stop';
-            resetButton.innerHTML = 'split';
+            startButton.innerHTML = 'Stop';
+            resetButton.innerHTML = 'Split';
             offset = Date.now();
             interval = setInterval(update, options.delay);
             if(options.is_base3) {
@@ -137,8 +193,8 @@ var Stopwatch = function(elem, options ) {
      */
     function stop() {
         if (interval) {
-            startButton.innerHTML = 'start';
-            resetButton.innerHTML = 'reset';
+            startButton.innerHTML = 'Start';
+            resetButton.innerHTML = 'Reset';
             time = clock;
             clearInterval(interval);
             interval = null;
@@ -278,7 +334,7 @@ var Stopwatch = function(elem, options ) {
             }, 'json');
 
             appendSplit(options.clock);
-            console.log(whut);
+            //console.log(whut);
         }
     }
 

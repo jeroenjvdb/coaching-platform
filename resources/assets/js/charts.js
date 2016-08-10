@@ -83,7 +83,9 @@ var ChartConfig = function (elem, data) {
                 },
                 percentageInnerCutout : 80,
                 options: {
-
+                    legend: {
+                        display: false,
+                    },
                     responsive: true,
                     title: {
                         display: false,
@@ -102,7 +104,7 @@ var ChartConfig = function (elem, data) {
                             //this constant base on canvasHeight / 2.8em
                             var constant = 150;
                             var fontsize = (canvasHeight / constant).toFixed(2);
-                            console.log(fontsize)
+                            console.log(fontsize);
                             ctx.font = fontsize + "em Verdana";
                             ctx.textBaseline = "middle";
                             var total = 0;
@@ -114,7 +116,7 @@ var ChartConfig = function (elem, data) {
                             var textWidth = ctx.measureText(tpercentage).width;
 
                             var txtPosx = Math.round((canvasWidthvar - textWidth) / 2);
-                            ctx.fillText(tpercentage, txtPosx, canvasHeight / 2 + 10);
+                            ctx.fillText(tpercentage, txtPosx, canvasHeight / 2 );
 
                         }
                     }

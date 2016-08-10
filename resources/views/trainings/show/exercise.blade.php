@@ -24,8 +24,7 @@
                 <div class="col-xs-6 no-gutter">
                     {{--<a rel="external" ">--}}
                     {!! Form::open(['route' => [
-                            '{group}.training.exercise.destroy',
-                            'group' => $group->slug,
+                            'training.exercise.destroy',
                             'training_id' => $training->id,
                             'id' => $exercise->id
                         ], 'method' => 'delete',
@@ -42,8 +41,7 @@
     </div>
     <div class="exercise-ui exercise-row-{{ $exercise->id }} row" data-is_form="true" hidden>
         {!! Form::open(['route' => [
-            '{group}.training.exercise.update',
-            'group' => $group->slug,
+            'training.exercise.update',
             'training_id' => $training->id,
             'id' => $exercise->id,
             ],

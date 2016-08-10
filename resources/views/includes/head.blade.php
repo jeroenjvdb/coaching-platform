@@ -28,7 +28,7 @@
 
     <link href="/resources/css/adminLTE.css" rel="stylesheet">
     <link href="/resources/css/skin.css" rel="stylesheet">
-    <link href="/resources/css/main.min.css" rel="stylesheet">
+    <link href="/resources/css/main.css" rel="stylesheet">
     <link rel="stylesheet" href="/resources/css/icheck/skins/all.css">
 
     @yield('style')

@@ -18,6 +18,8 @@ class CreatePresencesTable extends Migration
 
             $table->integer('swimmer_id')->unsigned();
             $table->integer('training_id')->unsigned();
+
+            $table->boolean('is_present');
         });
     }
 

@@ -78,7 +78,7 @@ class Training extends Model
      */
     public function swimmers()
     {
-        return $this->belongsToMany('App\Swimmer', 'presences');
+        return $this->belongsToMany('App\Swimmer', 'presences')->withPivot('is_present');
     }
 
     public function categoryExercises()

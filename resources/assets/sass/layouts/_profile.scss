@@ -4,7 +4,7 @@ table {
 
 .btn-page {
   margin: 0;
-  width: 25%;
+  //width: 25%;
   //border-right: 1px solid black;
   padding: 10px;
   //&.last {
@@ -31,16 +31,16 @@ table {
 //}
 .nav-tabs-custom {
   position: relative;
-  top: -5px;
-  left: -5px;
+  top: 5px;
+  left: -15px;
   border-radius: 0;
-  width: calc(100% + 10px);
+  width: calc(100% + 30px);
 
 }
 
-@media(max-width: $screen-sm-min) {
+@media(min-width: $screen-sm-min) {
   .nav-tabs-custom {
-    top:0;
+    top:0px;
   }
 }
 
@@ -54,4 +54,10 @@ table {
 
 .page {
   min-height: 500px;
+}
+
+.timeline {
+  h3 {
+    text-align: left;
+  }
 }
