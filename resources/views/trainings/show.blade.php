@@ -4,8 +4,8 @@
 
 @section('content')
     {!! Breadcrumbs::render('{group}.training.show', $group, $training) !!}
-        <h2>Training {{ $training->starttime->formatLocalized('%A %d %B %P') }} <a href="#" data-toggle="modal" data-target="#edit">
-                <i class="fa fa-pencil"></i></a></h2>
+        <h1>Training {{ $training->starttime->formatLocalized('%A %d %B %P') }} <a href="#" data-toggle="modal" data-target="#edit">
+                <i class="fa fa-pencil"></i></a></h1>
         @include('trainings.edit')
 
         {{--<a rel="external" href="{{ route('{group}.training.download', [
@@ -123,9 +123,56 @@
              </div> --}}
         @endif
     </div>
+    <h2>Stopwatch</h2>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="box box-danger">
+                <div class="box-body">
+                    {!! Form::open(['route' => [
+                            'stopwatch.store.api',
+                            'group' => $group->slug
+                        ],
+                        'data-ajax' => "true"
+                    ]) !!}
+
+                    <fieldset class="form-group">
+
+
+                        <select name="swimmer" id="swimmer" class="select2 form-control">
+                            @foreach($swimmers as $swimmer)
+                                <option value="{{$swimmer->id}}">{{ $swimmer->first_name }}</option>
+                            @endforeach
+                        </select>
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <select name="distance" class="select2 form-control" id="">
+                            @foreach($strokes as $stroke)
+                                @foreach($stroke->distances as $distance)
+                                    <option value="{{ $distance->id }}">{{ $stroke->name }}
+                                        - {{ $distance->distance }}</option>
+                                @endforeach
+                            @endforeach
+                        </select>
+                    </fieldset>
+                    {!! Form::submit('Stopwatch aanmaken', [
+                        'class' => 'btn btn-primary btn-full',
+                    ]) !!}
+
+                    {!! Form::close() !!}
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="newStopwatch" class=""></div>
+    <div class="row">
+        @foreach($stopwatches as $stopwatch)
+            @include('stopwatches.individual')
+        @endforeach
+    </div>
     <div class="row">
         <div class="col-xs-12">
-            <div class="stopwatch" data-base3="true"></div>
+            <div class="stopwatch row" data-base3="true"></div>
         </div>
     </div>
     <div class="row">

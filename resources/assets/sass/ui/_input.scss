@@ -67,3 +67,26 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
+
+.increment {
+  padding-left: 5px;
+  padding-right: 5px;
+  border-radius: 3px;
+  //border: 1px solid #777;
+  background-color: $color-primary;
+  color: white;
+}
+
+.dtpicker-cont .dtpicker-content {
+  .dtpicker-title, .dtpicker-compValue {
+    color: $color-secondary;
+  }
+
+  .dtpicker-close, .dtpicker-value {
+    color: $color-primary;
+  }
+}
+
+.calendar .fc-event {
+  background-color: $color-secondary;
+}

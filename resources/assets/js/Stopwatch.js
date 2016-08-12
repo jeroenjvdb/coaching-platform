@@ -34,10 +34,21 @@ var Stopwatch = function(elem, options ) {
             recordElem.appendChild(records);
 
             divElem = createDiv('col-sm-6 col-sm-pull-6');
+
+            elem.appendChild(divElem);
+
         } else {
-            divElem = createDiv('col-sm-6');
+            $.getJSON(options.recordsUrl, null, createRecordsUrl);
+            var divClass = 'col-sm-6 ';
+            if(! options.is_base3) {
+                divClass += 'col-sm-pull-6';
+            }
+            divElem = createDiv(divClass);
+            elem.appendChild(divElem);
         }
-        elem.appendChild(divElem);
+
+        console.log('test');
+
         timer       = createTimer();
         lastSplitSpan = createTimer();
         fullSplitSpan = createTimer();
@@ -61,10 +72,11 @@ var Stopwatch = function(elem, options ) {
             divElem.appendChild(fullSplitSpan);
         }
         divElem.appendChild(timer);
-        divElem.appendChild(document.createElement("br"));
-        divButton = createDiv('col-xs-12');
+        elem.appendChild(createDiv("clearfix"));
+        divButton = createDiv('col-xs-12 col-sm-6');
         elem.appendChild(divButton);
         divButton.appendChild(startButton);
+        elem.appendChild(createDiv("clearfix"));
         //elem.appendChild(stopButton);
         if(! options.is_base3) {
             divButton.appendChild(resetButton);
@@ -79,6 +91,30 @@ var Stopwatch = function(elem, options ) {
         reset();
     }
 
+    function createRecordsUrl(data)
+    {
+        console.log($(elem));
+
+        divElem = createDiv('col-sm-6 col-sm-pull-6');
+
+        $(elem).prepend(divElem);
+
+        recordElem = createDiv('col-sm-6 col-sm-push-6');
+        $(elem).prepend(recordElem);
+
+        var recordTitle = document.createElement('p');
+        recordTitle.className = 'stopwatch-title';
+        recordTitle.innerHTML = data.distance.distance + ' ' + data.stroke.name +
+            ' - ' + data.swimmer.first_name + ' ' + data.swimmer.last_name;
+
+        recordElem.appendChild(recordTitle);
+
+        records = createRecords(data.besttimes);
+        recordElem.appendChild(records);
+
+        return true;
+    }
+
     function createRecords(records)
     {
         console.log(records);
@@ -90,7 +126,7 @@ var Stopwatch = function(elem, options ) {
         recordElem.appendChild(thead);
         recordElem.className = "stopwatch-table";
         //tr = recordElem.insertRow(-1);
-        thead.innerHTML = '<th>zwembad</th><th>tijd</th>';
+        thead.innerHTML = '<th>Zwembad</th><th>Tijd</th>';
         tbody = document.createElement('tbody');
         recordElem.appendChild(tbody);
         for (var i = 0; i< records.length; i++) {

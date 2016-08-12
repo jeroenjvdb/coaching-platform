@@ -29,13 +29,18 @@ table {
 //.chart {
   //min-height: 400px;
 //}
-.nav-tabs-custom {
+.pagebar {
   position: relative;
-  top: 5px;
-  left: -15px;
-  border-radius: 0;
-  width: calc(100% + 30px);
+  min-height: 75px;
+}
 
+.nav-tabs-custom {
+  position: absolute;
+  //top: 5px;
+  left: -60px ;
+  border-radius: 0;
+  width: calc(100% + 120px);
+  top: 5px;
 }
 
 @media(min-width: $screen-sm-min) {
@@ -60,4 +65,8 @@ table {
   h3 {
     text-align: left;
   }
+}
+
+.progress-bar {
+  background-color: #0e7287;
 }

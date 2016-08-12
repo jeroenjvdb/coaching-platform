@@ -31,6 +31,7 @@ elixir(function (mix) {
             paths.bootstrap + "javascripts/bootstrap.js",
             paths.icheck + 'icheck.min.js',
             paths.datetimepicker + 'src/DateTimePicker.js',
+            paths.datetimepicker + 'src/i18n/DateTimePicker-i18n-nl.js',
             'moment.min.js',
             'moment-nl.js',
             'chartjs.min.js',

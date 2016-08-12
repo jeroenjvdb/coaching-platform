@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="row">
-        <div class="col-md-10 col-md-offset-1">
+
             {{--    {!! Breadcrumbs::render('trainings.index', $group) !!}--}}
             <h1>Trainingen</h1>
             <div class="row">
@@ -53,7 +53,6 @@
                     </div>
                 </div>
             </div>
-        </div>
     </div>
 
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Training;
 
 use App\Group;
+use App\Stroke;
 use App\Training;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -24,15 +25,22 @@ class TrainingController extends Controller
      * @var Group
      */
     private $group;
+    /**
+     * @var Stroke
+     */
+    private $stroke;
 
     /**
      * TrainingController constructor.
+     *
      * @param Training $training
      * @param Group $group
+     * @param Stroke $stroke
      */
     public function __construct(
         Training $training,
-        Group $group
+        Group $group,
+        Stroke $stroke
     )
     {
         $this->middleware('coach', ['except' => [
@@ -45,6 +53,7 @@ class TrainingController extends Controller
         $this->training = $training;
         $this->group = $group;
         setLocale(LC_TIME, 'nl_NL.utf8');
+        $this->stroke = $stroke;
     }
 
     /**
@@ -148,7 +157,67 @@ class TrainingController extends Controller
 
 
         $swimmers = $training->swimmers;
-//        dd($swimmers);
+        $stopwatches = [];
+        foreach($swimmers as $swimmer) {
+            if($swimmer->stopwatches()->where('created_at', '>', $training->starttime)->exists()) {
+                $swimmerSw = $swimmer->stopwatches()
+                    ->where('created_at', '>', $training->starttime)
+                    ->where('created_at', '<', $training->starttime->addHours(3))
+                    ->with(
+                    ['times' => function ($query) {
+                        $query->orderedRev();
+                    }]
+                )->get();
+                foreach($swimmerSw as $stopwatch) {
+                    $lastRecord = null;
+                    $lastTime = 0;
+                    foreach ($stopwatch->times as $key => $time) {
+                        if ($lastRecord == $time->time || $time->time == 0) {
+                            $stopwatch->times->pull($key);
+                        } else {
+                            $split = $time->time - $lastTime;
+                            $time->split = $this->makeFullTime($split);
+                            $lastTime = $time->time;
+                            $lastRecord = $time->time;
+                        }
+                    }
+
+                    $stopwatch->url = route(
+                        '{group}.stopwatch.storeTime',
+                        [
+                            'group' => $group->slug,
+                            'id'    => $stopwatch->id,
+                        ]
+                    );
+
+                    $clock = 0;
+                    $is_paused = true;
+                    $lastTime = null;
+                    if ($stopwatch->times->count()) {
+                        $lastTime = $stopwatch->times->last();
+                        $clock = $lastTime->time;
+                        $is_paused = $lastTime->is_paused;
+
+                        $lastTime = $lastTime->created;
+                    }
+
+
+                    $stopwatch->times = $stopwatch->times->sortByDesc('created_at');
+//                    dd($stopwatch->times);
+
+                    $stopwatch->clock = $clock;
+                    $stopwatch->is_paused = $is_paused;
+                    $stopwatch->lastTime = $lastTime;
+                    $stopwatch->records = $stopwatch->getBestTime();
+                    $stopwatch->recordsUrl = route('stopwatch.record.api', [
+                        'id' => $stopwatch->id,
+                    ]);
+
+                    array_push($stopwatches, $stopwatch);
+                }
+            }
+        }
+//        dd($stopwatches);
         $editable = false;
         if(Auth::user()->clearance_level > 0) {
             $editable = true;
@@ -160,6 +229,9 @@ class TrainingController extends Controller
             'group' => $group,
             'swimmers' => $swimmers,
             'editable' => $editable,
+            'stopwatches' => $stopwatches,
+            'strokes'      => $this->stroke->all(),
+
         ];
 
         return view('trainings.show', $data);
@@ -272,6 +344,33 @@ class TrainingController extends Controller
 
         });
         //TODO make choice between pdf/xls
+    }
+
+    private function makeFullTime($input)
+    {
+        $data = collect([]);
+
+        $data->milliseconds = $input % 1000;
+        $data->hundredth = $input % 100;
+        $input = floor($input / 1000);
+
+        $data->seconds = $input % 60;
+        $input = floor($input / 60);
+
+        $data->minutes = $input % 60;
+        $input = floor($input / 60);
+
+        $data->hours = $input % 24;
+        $input = floor($input / 24);
+
+        $data->toText = //sprintf('%02d', $data->hours) . ':' .
+            sprintf('%02d', $data->minutes) . ':' .
+            sprintf('%02d', $data->seconds) . '.' .
+            sprintf('%02d', $data->milliseconds / 10);
+
+        $data->arr = str_split($data->toText);
+
+        return $data;
     }
 
 

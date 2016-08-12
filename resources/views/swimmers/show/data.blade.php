@@ -84,15 +84,21 @@
                                     <div class="timeline-body">
 
                                         <div class="row stopwatch-ui">
-                                            @foreach($data->message->times as $time)
-                                                <div class="col-md-3 col-xs-6">
+                                            <?php $i = 0; ?>
+                                            @foreach($data->message->times as $key => $time)
+                                                <div class="col-lg-3 col-md-6 col-xs-12">
                                                     @foreach($time->full_time->arr as $char)
                                                         <div class="cell">{{ $char }}</div>@endforeach
                                                 </div>
-                                                <div class="col-md-3 col-xs-6 split">
+                                                <div class="col-lg-3 col-md-6 col-xs-12 small">
                                                     @foreach($time->split->arr as $char)
                                                         <div class="cell">{{ $char }}</div>@endforeach
                                                 </div>
+                                                <div class="clearfix visible-md"></div>
+                                                @if($i != 0 && $i % 2 != 0)
+                                                    <div class="clearfix visible-lg"></div>
+                                                @endif
+                                                <?php $i++; ?>
                                             @endforeach
                                         </div>
                                     </div>

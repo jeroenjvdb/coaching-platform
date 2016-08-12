@@ -209,6 +209,10 @@ Route::group(['middleware' => 'web'], function () {
                     'as' => 'stopwatch.store.api',
                     'uses' => 'StopwatchController@storeApi',
                 ]);
+                Route::get('stopwatch/{id}/records', [
+                    'as' => 'stopwatch.record.api',
+                    'uses' => 'StopwatchController@recordApi',
+                ]);
 
                 Route::resource('stopwatch', 'StopwatchController', [
                     'except' => [

@@ -8597,17 +8597,33 @@ img, video {
   max-height: 100%; }
 
 .content-wrapper {
-  padding-left: 15px;
-  padding-right: 15px; }
+  padding-left: 60px;
+  padding-right: 60px;
+  padding-bottom: 100px; }
 
 .main-header nav {
   padding-right: 10px; }
 
+.main-footer {
+  padding: 30px; }
+
 .ui-loader {
   display: none; }
 
-h3 {
-  text-align: center; }
+.row {
+  margin-bottom: 15px; }
+
+h1 {
+  font-weight: 800;
+  text-transform: uppercase;
+  border-bottom: 1px solid black;
+  margin-top: 50px;
+  padding-bottom: 20px;
+  margin-bottom: 50px; }
+
+h2, h3, h4, h5, h6 {
+  margin-top: 50px;
+  margin-bottom: 30px; }
 
 .variation {
   background-color: #d73925; }
@@ -8740,6 +8756,22 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%; }
 
+.increment {
+  padding-left: 5px;
+  padding-right: 5px;
+  border-radius: 3px;
+  background-color: #d73925;
+  color: white; }
+
+.dtpicker-cont .dtpicker-content .dtpicker-title, .dtpicker-cont .dtpicker-content .dtpicker-compValue {
+  color: #0E7287; }
+
+.dtpicker-cont .dtpicker-content .dtpicker-close, .dtpicker-cont .dtpicker-content .dtpicker-value {
+  color: #d73925; }
+
+.calendar .fc-event {
+  background-color: #0E7287; }
+
 .btn {
   border-radius: 0; }
   .btn.btn-secondary {
@@ -8755,6 +8787,9 @@ input:checked + .slider:before {
     float: left;
     margin-left: 1%;
     margin-right: 1%; }
+
+.dtpicker-button {
+  background-color: #d73925 !important; }
 
 .daterangepicker {
   position: absolute;
@@ -9171,17 +9206,20 @@ ul.wysihtml5-toolbar div[data-wysihtml5-command-value="orange"] {
 .glyphicon-quote:after {
   content: "\0000a0"; }
 
+.box {
+  margin-bottom: 50px; }
+
 .stopwatch {
   text-align: center; }
   .stopwatch span {
     display: block;
     font-family: digital-7;
-    font-size: 30px; }
+    font-size: 40px; }
     .stopwatch span.small {
       font-size: 80%; }
     .stopwatch span .cell {
       display: inline-block;
-      width: 13px;
+      width: 17px;
       top: 3px;
       margin: 0; }
   .stopwatch .btn-sw {
@@ -9190,12 +9228,12 @@ ul.wysihtml5-toolbar div[data-wysihtml5-command-value="orange"] {
 
 #splits, .stopwatch-ui {
   font-family: digital-7;
-  font-size: 30px;
+  font-size: 40px;
   text-align: center;
   display: block; }
   #splits .cell, .stopwatch-ui .cell {
     display: inline-block;
-    width: 13px;
+    width: 17px;
     margin: 0; }
 
 .data .stopwatch-ui {
@@ -9222,9 +9260,9 @@ ul.wysihtml5-toolbar div[data-wysihtml5-command-value="orange"] {
     .stopwatch-table {
       width: 90%; } }
   .stopwatch-table td, .stopwatch-table th {
+    text-align: center;
     overflow: hidden;
-    width: 50px;
-    text-align: left; }
+    width: 50px; }
 
 table {
   width: 100%; }
@@ -9240,12 +9278,16 @@ table {
   .chart {
     height: 400px; } }
 
-.nav-tabs-custom {
+.pagebar {
   position: relative;
-  top: 5px;
-  left: -15px;
+  min-height: 75px; }
+
+.nav-tabs-custom {
+  position: absolute;
+  left: -60px;
   border-radius: 0;
-  width: calc(100% + 30px); }
+  width: calc(100% + 120px);
+  top: 5px; }
 
 @media (min-width: 768px) {
   .nav-tabs-custom {
@@ -9261,6 +9303,9 @@ table {
 
 .timeline h3 {
   text-align: left; }
+
+.progress-bar {
+  background-color: #0e7287; }
 
 .timeline {
   margin-top: 15px; }
@@ -9304,41 +9349,42 @@ table {
   cursor: inherit;
   display: block; }
 
-.training .shared {
-  position: relative;
-  top: -8px;
-  font-size: 2.5em; }
-
-.training .exercise, .training .exercise-ui {
-  font-size: 1.2em;
-  color: #0E7287;
-  background-color: #ecf0f5;
-  padding: 10px 0;
-  border-radius: 1px;
-  box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.2); }
-  .training .exercise form, .training .exercise-ui form {
+.training {
+  margin-bottom: 50px; }
+  .training .shared {
     position: relative;
-    top: -3px; }
-  .training .exercise .fa, .training .exercise-ui .fa {
-    color: #0E7287; }
-  .training .exercise a, .training .exercise-ui a {
-    color: #0E7287; }
-
-.training .category {
-  background-color: #d73925;
-  color: white; }
-
-.training .total {
-  background-color: #d73925;
-  color: white; }
-
-.training table {
-  width: 100%; }
-  .training table tr {
-    border-spacing: 20px; }
-
-.training tbody div:last-child {
-  border-bottom: none; }
+    top: -8px;
+    font-size: 2.5em; }
+  .training .exercise, .training .exercise-ui {
+    width: calc(100% + 120px);
+    position: relative;
+    left: -45px;
+    font-size: 1.2em;
+    color: #0E7287;
+    background-color: #ecf0f5;
+    padding: 10px 0;
+    border-radius: 1px;
+    box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.2); }
+    .training .exercise form, .training .exercise-ui form {
+      position: relative;
+      top: -3px; }
+    .training .exercise.row, .training .exercise-ui.row {
+      margin-bottom: 0; }
+    .training .exercise .fa, .training .exercise-ui .fa {
+      color: #0E7287; }
+    .training .exercise a, .training .exercise-ui a {
+      color: #0E7287; }
+  .training .category, .training .total {
+    background-color: #d73925;
+    color: white;
+    font-weight: 800;
+    text-transform: uppercase; }
+  .training table {
+    width: 100%; }
+    .training table tr {
+      border-spacing: 20px; }
+  .training tbody div:last-child {
+    border-bottom: none; }
 
 .presences label {
   line-height: 15px; }
@@ -9371,13 +9417,20 @@ table {
   .swimmers .cube {
     margin-bottom: -5px;
     padding-bottom: -3px;
-    border-radius: 0; }
+    border-radius: 0;
+    width: 150px;
+    float: left;
+    position: relative; }
   .swimmers .swimmer {
-    margin-bottom: 0px;
-    margin-left: 0;
-    margin-right: 0; }
+    margin-bottom: 10px;
+    margin-left: 10px;
+    margin-ight: 10px; }
     .swimmers .swimmer .thumbnail {
-      border-radius: 0; }
+      margin-left: 10px;
+      margin-right: 10px;
+      margin-bottom: 30px;
+      border-radius: 0;
+      position: relative; }
     .swimmers .swimmer label {
       min-height: 100%; }
     .swimmers .swimmer img {
@@ -9386,13 +9439,18 @@ table {
     .swimmers .swimmer .name {
       text-transform: uppercase;
       position: absolute;
-      bottom: 0;
-      left: 0;
-      background-color: #CCC;
-      padding-top: 4px;
+      left: -10px;
+      bottom: 0px;
+      background-color: white;
+      color: #d73925;
+      padding-top: 5px;
+      padding-left: 5px;
+      padding-right: 5px;
       height: 50px;
-      opacity: .8;
-      width: 100%; }
+      opacity: 1;
+      width: 100%;
+      margin-left: 10px;
+      margin-right: 10px; }
   .swimmers .swimmer:hover .name {
     opacity: 1; }
 

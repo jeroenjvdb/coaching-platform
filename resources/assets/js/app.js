@@ -88,6 +88,9 @@ $(function () {
         $('#dtbox').DateTimePicker({
             'dateTimeFormat': 'yyyy-mm-dd hh:mm',
             'minuteInterval': 15,
+            'language' : 'nl',
+            'incrementButtonContent' : '<span class="increment"><i class="fa fa-angle-up"></i></span>',
+            decrementButtonContent: '<span class="increment"><i class="fa fa-angle-down"></i></span>',
         });
     }
 
@@ -546,6 +549,7 @@ $(function () {
 
         for (var i = 0, len = elems.length; i < len; i++) {
             var elem = $(elems[i]);
+
             var swOptions = {
                 stopwatch_id: elem.data('stopwatch_id'),// ? stopwatch_id : 0,
                 user_id: elem.data('user_id'), //||0,
@@ -559,10 +563,16 @@ $(function () {
                 swimmer: false,
                 distance: false,
                 stroke: false,
+                recordsUrl: elem.data('records'),
             };
 
             stopwatches[i] = new Stopwatch(elems[i], swOptions);
         }
+    }
+
+    function createWithRecord($data)
+    {
+
     }
 
     function createNewTimer(data)

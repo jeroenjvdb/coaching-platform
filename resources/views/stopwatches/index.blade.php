@@ -5,10 +5,6 @@
 @section('content')
     {!! Breadcrumbs::render('stopwatch.index', $group) !!}
     <h1>Stopwatches</h1>
-    <a rel="external" href="{{ route('stopwatch.create', [
-        'group' => $group->slug,
-    ]) }}">Aanmaken</a>
-
     <h2>Slagenteller</h2>
     <div class="row">
         <div class="col-xs-12">
@@ -17,7 +13,7 @@
     </div>
     <h2>Stopwatch</h2>
     <div class="row">
-        <div class="col-md-4 col-sm-6 col-lg-3">
+        <div class="col-sm-6">
             <div class="box box-danger">
                 <div class="box-body">
                     {!! Form::open(['route' => [

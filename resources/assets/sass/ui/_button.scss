@@ -1,25 +1,28 @@
 .btn {
-	border-radius: 0;
+  border-radius: 0;
 
-	&.btn-secondary {
-		color: $btn-color-secondary;
-	}
+  &.btn-secondary {
+    color: $btn-color-secondary;
+  }
 
-	&.btn-no-border {
-		border:none;
-		background-color: transparent;
-		padding: 0;
-	}
+  &.btn-no-border {
+    border: none;
+    background-color: transparent;
+    padding: 0;
+  }
 
-	&.btn-full {
-		width: 100%;
-	}
+  &.btn-full {
+    width: 100%;
+  }
 
-	&.btn-modal {
-		width: 48%;
-		float: left;
-		margin-left: 1%;
-		margin-right: 1%;
-	}
+  &.btn-modal {
+    width: 48%;
+    float: left;
+    margin-left: 1%;
+    margin-right: 1%;
+  }
 }
 
+.dtpicker-button {
+  background-color: $color-primary !important;
+}

@@ -2,7 +2,7 @@
   span {
     display: block;
     font-family: digital-7;
-    font-size: $font-large;
+    font-size: $font-xl;
 
     &.small {
       font-size: 80%;
@@ -10,7 +10,7 @@
 
     .cell {
       display: inline-block;
-      width: 13px;
+      width: 17px;
       top: 3px;
       margin: 0;
     }
@@ -27,16 +27,18 @@
 
 #splits, .stopwatch-ui {
   font-family: digital-7;
-  font-size: $font-large;
+  font-size: $font-xl;
   text-align: center;
   display: block;
 
   .cell {
     display: inline-block;
-    width: 13px;
+    width: 17px;
     margin: 0;
   }
 }
+
+
 
 //data
 .data .stopwatch-ui {
@@ -69,10 +71,9 @@
   margin-right: auto;
   table-layout: fixed;
   td, th {
+    text-align: center;
     //white-space: nowrap;
     overflow:hidden;
     width: 50px;
-    text-align: left;
-
   }
 }

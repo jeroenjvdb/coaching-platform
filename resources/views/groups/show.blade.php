@@ -50,17 +50,17 @@
                     'group' => $group->slug,
                 ]) }}">
                         <span class="col-xs-12 col-sm-10 col-sm-offset-1">
-                    <span class="thumbnail center swimmer-thumb" style="; ">
-                        @if($mySwimmer->getMeta('picture'))
-                            <img src="{{ $mySwimmer->getMeta('picture') }}" alt="">
-                        @else
-                            <img src="http://library.unn.edu.ng/wp-content/uploads/sites/42/2016/03/prifile-pic.png"
-                                 alt="">
-                        @endif
-                    </span>
-                    <span class="col-xs-12 center">
-                     {{ $mySwimmer->first_name }} {{ $mySwimmer->last_name }}
-                    </span>
+                        <div class="thumbnail center swimmer-thumb" style="; ">
+                            @if($mySwimmer->getMeta('picture'))
+                                <img src="{{ $mySwimmer->getMeta('picture') }}" alt="">
+                            @else
+                                <img src="http://library.unn.edu.ng/wp-content/uploads/sites/42/2016/03/prifile-pic.png"
+                                     alt="">
+                            @endif
+                            <span class="center">
+                             {{ $mySwimmer->first_name }} {{ $mySwimmer->last_name }}
+                            </span>
+                        </div>
                         </span>
 
                         </a>
@@ -77,34 +77,35 @@
             <div class="row swimmers">
                 @foreach($swimmers as $key => $swimmer)
                     @if($key > 0 && $key % 2 == 0)
-                        <div class="clearfix visible-xs"></div>
-                    @endif
-                    @if($key > 0 && $key % 3 == 0)
-                        <div class="clearfix visible-sm"></div>
+                        {{--<div class="clearfix visible-xs"></div>--}}
                     @endif
                     @if($key > 0 && $key % 4 == 0)
-                        <div class="clearfix visible-md"></div>
+                        {{--<div class="clearfix visible-sm"></div>--}}
                     @endif
                     @if($key > 0 && $key % 6 == 0)
-                        <div class="clearfix visible-lg"></div>
+                        {{--<div class="clearfix visible-md"></div>--}}
                     @endif
-                    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6 center no-gutter cube">
+                    @if($key > 0 && $key % 12 == 0)
+                        {{--<div class="clearfix visible-lg"></div>--}}
+                    @endif
+                    <div class="center no-gutter cube">
                         <a rel="external" href="{{ route('{group}.swimmer.show', [
                     $swimmer->slug
                 ]) }}">
-                    <span class=" swimmer">
-                        <span class="thumbnail center swimmer-thumb" style="; ">
-                        @if($swimmer->getMeta('picture'))
-                                <img src="{{ $swimmer->getMeta('picture') }}" alt="">
-                            @else
-                                <img src="http://library.unn.edu.ng/wp-content/uploads/sites/42/2016/03/prifile-pic.png"
-                                     alt="">
-                            @endif
-                    </span>
-                    <span class="col-xs-12 center name">
+                            <div class=" swimmer">
+                                <div class="thumbnail center swimmer-thumb" style="; ">
+                            <span class="center name">
                      {{ $swimmer->first_name }} {{ $swimmer->last_name }}
                     </span>
-                    </span>
+                                    @if($swimmer->getMeta('picture'))
+                                        <img src="{{ $swimmer->getMeta('picture') }}" alt="">
+                                    @else
+                                        <img src="http://library.unn.edu.ng/wp-content/uploads/sites/42/2016/03/prifile-pic.png"
+                                             alt="">
+                                    @endif
+
+                                </div>
+                            </div>
 
                         </a>
                     </div>
@@ -120,11 +121,13 @@
     ]) }}" class="small"><i class="fa fa-plus"></i></a>
                 @endif
             </h2>
+            <div class="row">
             @foreach($coaches as $coach)
                 <div class="col-xs-12">
                     {{ $coach->first_name }} {{-- }}{{ $coach->last_name }}--}}
                 </div>
             @endforeach
+            </div>
             @if(Auth::user()->clearance_level > 0)
 
                 <h2>groep verwijderen</h2>

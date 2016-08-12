@@ -220,6 +220,13 @@ class StopwatchController extends Controller
             ]
         );
 
+        $stopwatch->recordsUrl = route('stopwatch.record.api', [
+            'id' => $stopwatch->id,
+        ]);
+        $stopwatch->clock = $clock;
+        $stopwatch->is_paused = $is_paused;
+        $stopwatch->lastTime = $lastTime;
+        $stopwatch->url = $storeUrl;
         $stopwatch->times = $stopwatch->times->sortByDesc('created_at');
 
         $data = [
@@ -239,6 +246,19 @@ class StopwatchController extends Controller
 //        dd($data);
 
         return view('stopwatches.show', $data);
+    }
+
+    public function recordApi($id)
+    {
+        $stopwatch = $this->stopwatch->find($id);
+
+        return json_encode([
+           'besttimes' =>$stopwatch->getBestTime(),
+            'swimmer' => $stopwatch->swimmer,
+            'stroke' => $stopwatch->distance->stroke,
+            'distance' => $stopwatch->distance,
+
+        ]);
     }
 
     private function makeFullTime($input)
