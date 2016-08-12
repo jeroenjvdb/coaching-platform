@@ -52,8 +52,9 @@ class TrainingController extends Controller
 
         $this->training = $training;
         $this->group = $group;
-        setLocale(LC_TIME, 'nl_NL.utf8');
+//        setLocale(LC_TIME, 'nl_NL.utf8');
         $this->stroke = $stroke;
+        Date::setLocale('nl');
     }
 
     /**
@@ -145,7 +146,9 @@ class TrainingController extends Controller
                 trans('trainings.permission')
             ]);
         }
+//        Date::setLocale('nl');
         $starttime = Date::parse($training->starttime);
+//        dd($starttime->format('l j F'));
 //        dd($starttime);
 
         $training->starttime = $starttime;
@@ -231,7 +234,7 @@ class TrainingController extends Controller
             'editable' => $editable,
             'stopwatches' => $stopwatches,
             'strokes'      => $this->stroke->all(),
-
+            'starttime' => $starttime,
         ];
 
         return view('trainings.show', $data);
@@ -253,7 +256,7 @@ class TrainingController extends Controller
                 'you aren\'t permitted to view this training',
             ]);
         }
-        $starttime = Date::parse($training->starttime);
+        $training->starttime = Date::parse($training->starttime);
 //        dd($starttime);
 
         $training->starttime = $starttime;

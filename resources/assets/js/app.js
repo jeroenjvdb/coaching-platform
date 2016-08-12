@@ -88,9 +88,9 @@ $(function () {
         $('#dtbox').DateTimePicker({
             'dateTimeFormat': 'yyyy-mm-dd hh:mm',
             'minuteInterval': 15,
-            'language' : 'nl',
-            'incrementButtonContent' : '<span class="increment"><i class="fa fa-angle-up"></i></span>',
-            decrementButtonContent: '<span class="increment"><i class="fa fa-angle-down"></i></span>',
+            'language': 'nl',
+            //'incrementButtonContent' : '<span class="increment"><i class="fa fa-angle-up"></i></span>',
+            //decrementButtonContent: '<span class="increment"><i class="fa fa-angle-down"></i></span>',
         });
     }
 
@@ -112,8 +112,7 @@ $(function () {
         //});
     }
 
-    function updateCharts(start, end)
-    {
+    function updateCharts(start, end) {
         console.log('update charts');
         console.log(start.toISOString());
         console.log(end);
@@ -156,7 +155,7 @@ $(function () {
     }
 
     function checkboxes() {
-        $('input[type=checkbox].line').each(function(){
+        $('input[type=checkbox].line').each(function () {
             var self = $(this),
                 label = self.next(),
                 label_text = label.text();
@@ -170,25 +169,24 @@ $(function () {
         });
 
         /*$('.input_change_checkbox').each(function () {
-            var checked = "";
-            if ($(this).is(':checked')) {
-                checked = "checked";
-            }
-            $(this).hide().after('<div class="change_checkbox ' + checked
-                + '"><img src="' + $(this).data('image') +
-                '" alt=""></div>');
+         var checked = "";
+         if ($(this).is(':checked')) {
+         checked = "checked";
+         }
+         $(this).hide().after('<div class="change_checkbox ' + checked
+         + '"><img src="' + $(this).data('image') +
+         '" alt=""></div>');
 
-        });*/
+         });*/
 
-        $('input[type=checkbox]').each(function() {
-            if($(this).data('all')) {
-                $(this).on('ifClicked', function(e)
-                {
+        $('input[type=checkbox]').each(function () {
+            if ($(this).data('all')) {
+                $(this).on('ifClicked', function (e) {
                     var source = this;
                     console.log($(source).is(':checked'));
                     var name = $(this).data('checkbox');
                     console.log($('input[type=checkbox][name=' + name + ']'));
-                    $('input[type=checkbox][data-name=' + name + ']').each(function() {
+                    $('input[type=checkbox][data-name=' + name + ']').each(function () {
                         this.checked = !source.checked;
                         console.log(this.checked);
                         $(this).iCheck('update');
@@ -225,15 +223,65 @@ $(function () {
                 $(window).trigger('resize');
             }, 250);
         });
-        $('.modal').on('show.bs.modal', function() {
-            setTimeout(function() {
+        $('.modal').on('show.bs.modal', function () {
+            setTimeout(function () {
                 $(window).trigger('resize');
             }, 250);
-        })
+        });
+
+        showStopwatchTimes();
     }
 
-    function swipeEvents()
-    {
+    function showStopwatchTimes() {
+        console.log('stopwatchHides');
+        var ListLengthHidingTrigger = 4;
+        var InitialListItems = 3;
+
+
+        $.each($('.splits'), function () {
+            var thisElem = $(this);
+            if (thisElem.find('li').length > ListLengthHidingTrigger) {
+                thisElem.find("li:gt(" + (InitialListItems - 1) + ")").hide(); // hide all but first N sections
+                thisElem.find('.toggle-more').html('meer');
+            }
+
+            $(this).find('.toggle-more').on('click', function () {
+                console.log($(this).data('collapse'));
+                if (! $(this).data('collapse')) {
+                    console.log('toggling');
+                    thisElem.find('li').show(); // hide all but first 2 sections
+                    thisElem.find('.toggle-more').html('minder');
+                    $(this).data('collapse', true);
+
+                } else {
+                    console.log('toggleback');
+                    thisElem.find("li:gt(" + (InitialListItems - 1) + ")").hide(); // hide all but first N sections
+                    $(this).data('collapse', false);
+                    thisElem.find('.toggle-more').html('meer');
+
+
+                }
+                // console.log('toggling');
+                //thisElem.find('li').show();
+                //thisElem.find('.toggle-more').html('Show Fewer Brands');*/
+            });
+            thisElem.find('.toggle-more:contains("Fewer")').on('click', function () {
+                console.log('toggleback');
+                thisElem.find("li:gt(" + (InitialListItems - 1) + ")").hide(); // hide all but first N sections
+            });
+
+        });
+        /*$('div#slidermenu-fbr:contains("All")').live('click',function() {
+         $('#facetvalues-fbr li').show(); // hide all but first 2 sections
+         $('#slidermenu-fbr').html('Show Fewer Brands');
+         });
+         $('div#slidermenu-fbr:contains("Fewer")').live('click',function() {
+         $("#facetvalues-fbr li:gt("+(InitialListItems-1)+")").hide(); // hide all but first N sections
+
+         }*/
+    }
+
+    function swipeEvents() {
         console.log('swipeEvents');
         var body = $('body');
         var page = $('.pages .page').first();
@@ -246,7 +294,7 @@ $(function () {
     function resize(e) {
         //delay(1000);
         console.log('resize');
-        $.each($('.swimmer-thumb'), function() {
+        $.each($('.swimmer-thumb'), function () {
             var cw = $(this).width();
             $(this).css('height', cw + 'px');
         });
@@ -260,7 +308,7 @@ $(function () {
         //console.log(e);
         //var nextPage = $(e.currentTarget).data('next');
         //console.log(nextPage);
-        var page =  $('#' + nextPage);
+        var page = $('#' + nextPage);
         page.trigger('click');
         //nextPage = page.data('next');
         //prevPage = page.data('prev');
@@ -270,7 +318,7 @@ $(function () {
         //console.log(e);
         //var nextPage = $(e.currentTarget).data('prev');
         console.log('right');
-        var page =  $('#' + prevPage);
+        var page = $('#' + prevPage);
         page.trigger('click');
         //nextPage = page.data('next');
         //prevPage = page.data('prev');
@@ -380,7 +428,6 @@ $(function () {
         var fileReader = new FileReader();
 
 
-
         readURL(this);
     }
 
@@ -398,16 +445,16 @@ $(function () {
 
                 console.log(exif);
 
-                switch(exif.Orientation){
+                switch (exif.Orientation) {
 
                     case 8:
-                        ctx.rotate(90*Math.PI/180);
+                        ctx.rotate(90 * Math.PI / 180);
                         break;
                     case 3:
-                        ctx.rotate(180*Math.PI/180);
+                        ctx.rotate(180 * Math.PI / 180);
                         break;
                     case 6:
-                        ctx.rotate(-90*Math.PI/180);
+                        ctx.rotate(-90 * Math.PI / 180);
                         break;
 
 
@@ -446,12 +493,11 @@ $(function () {
         }
     }
 
-    function get_exif_data(image_result)
-    {
+    function get_exif_data(image_result) {
         var data = image_result.replace("data:image/jpeg;base64,", "");
         var decoded_data = decode64(data);
 
-        getLongAt = function(iOffset, bBigEndian) {
+        getLongAt = function (iOffset, bBigEndian) {
             var iByte1 = decoded_data.charCodeAt(iOffset),
                 iByte2 = decoded_data.charCodeAt(iOffset + 1),
                 iByte3 = decoded_data.charCodeAt(iOffset + 2),
@@ -463,7 +509,7 @@ $(function () {
             return iLong;
         };
 
-        getSLongAt = function(iOffset, bBigEndian) {
+        getSLongAt = function (iOffset, bBigEndian) {
             var iULong = getLongAt(iOffset, bBigEndian);
             if (iULong > 2147483647)
                 return iULong - 4294967296;
@@ -472,16 +518,22 @@ $(function () {
         };
 
         var result = findEXIFinJPEG({
-            getByteAt: function(idx) { return decoded_data.charCodeAt(idx); },
-            getLength: function() { return decoded_data.length; },
-            getShortAt: function(iOffset, bBigEndian) {
+            getByteAt: function (idx) {
+                return decoded_data.charCodeAt(idx);
+            },
+            getLength: function () {
+                return decoded_data.length;
+            },
+            getShortAt: function (iOffset, bBigEndian) {
                 var iShort = bBigEndian ?
                 (decoded_data.charCodeAt(iOffset) << 8) + decoded_data.charCodeAt(iOffset + 1)
                     : (decoded_data.charCodeAt(iOffset + 1) << 8) + decoded_data.charCodeAt(iOffset)
                 if (iShort < 0) iShort += 65536;
                 return iShort;
             },
-            getStringAt: function(a, b) { return decoded_data.substring(a, a+b); },
+            getStringAt: function (a, b) {
+                return decoded_data.substring(a, a + b);
+            },
             getLongAt: getLongAt,
             getSLongAt: getSLongAt
         });
@@ -570,13 +622,11 @@ $(function () {
         }
     }
 
-    function createWithRecord($data)
-    {
+    function createWithRecord($data) {
 
     }
 
-    function createNewTimer(data)
-    {
+    function createNewTimer(data) {
         console.log(data);
         elem = $('#newStopwatch').prepend('<div class="stopwatch row"></div>');
         console.log(elem.find('.stopwatch')[0]);
@@ -628,6 +678,6 @@ $(function () {
         }
         return false;
     }
-
-
 });
+
+

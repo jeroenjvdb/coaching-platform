@@ -1,10 +1,10 @@
 @extends('layouts.master')
 
-@section('title', 'training ' . $training->starttime->formatLocalized('%A %d %B %P') )
+@section('title', 'Training ' . $training->starttime->formatLocalized('%A %d %B %P') )
 
 @section('content')
     {!! Breadcrumbs::render('{group}.training.show', $group, $training) !!}
-        <h1>Training {{ $training->starttime->formatLocalized('%A %d %B %P') }} <a href="#" data-toggle="modal" data-target="#edit">
+        <h1>Training {{ $starttime->format('l j F') }} <a href="#" data-toggle="modal" data-target="#edit">
                 <i class="fa fa-pencil"></i></a></h1>
         @include('trainings.edit')
 

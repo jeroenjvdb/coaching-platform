@@ -10,7 +10,7 @@
 
 <div class="row">
     <div class="col-sm-6">
-        <span id="splits" class="list-unstyled">
+        <span id="splits" class="splits list-unstyled">
         @foreach($stopwatch->times as $time)
             <li data-time="{{ $time->time }}">
                 @foreach($time->full_time->arr as $char)<div class="cell">{{ $char }}</div>@endforeach
@@ -20,6 +20,7 @@
                 </span>
             </li>
             @endforeach
+            <div class="toggle-more" data-collapse="false"></div>
             </span>
     </div>
 </div>
