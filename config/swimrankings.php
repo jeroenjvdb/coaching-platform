@@ -30,7 +30,7 @@ return [
             '100' => '100m vlinderslag',
             '200' => '200m vlinderslag',
         ],
-        'wissel'       => [
+        'wisselslag'       => [
             '100' => '100m wisselslag',
             '200' => '200m wisselslag',
             '400' => '400m wisselslag',
