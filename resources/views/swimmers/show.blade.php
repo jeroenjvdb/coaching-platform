@@ -27,12 +27,12 @@
 
 
                     @if(! $hasHeartRate)
-                        <div class="col-xs-6">
+                        <div class="col-sm-6">
                             @include('swimmers.show.heartRate')
                         </div>
                     @endif
                     @if(! $swimmer->checkWeights())
-                        <div class="col-xs-6">
+                        <div class="col-sm-6">
                             @include('swimmers.show.weight')
                         </div>
                     @endif

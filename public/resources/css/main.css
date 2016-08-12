@@ -8611,7 +8611,10 @@ img, video {
   display: none; }
 
 .row {
-  margin-bottom: 15px; }
+  margin-bottom: 20px; }
+
+div[class^="col-"] {
+  padding-bottom: 15px; }
 
 h1 {
   font-weight: 800;
