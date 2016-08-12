@@ -9264,6 +9264,11 @@ ul.wysihtml5-toolbar div[data-wysihtml5-command-value="orange"] {
     overflow: hidden;
     width: 50px; }
 
+.timeline-item .timeline-body .stopwatch-ui {
+  font-size: 3rem; }
+  .timeline-item .timeline-body .stopwatch-ui .cell {
+    width: 7px; }
+
 table {
   width: 100%; }
 

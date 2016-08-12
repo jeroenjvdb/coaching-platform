@@ -77,3 +77,14 @@
     width: 50px;
   }
 }
+
+.timeline-item {
+  .timeline-body {
+    .stopwatch-ui {
+      font-size: $fs-2;
+      .cell {
+        width: 7px;
+      }
+    }
+  }
+}
