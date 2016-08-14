@@ -3,6 +3,7 @@
     <div class="col-md-2 col-xs-3">
         <img src="{{ $contact['picture'] }}" alt="">
     </div>
+    @include('swimmers.show.pictureModal')
     <div class="col-md-10 col-xs-12 contact-form" data-is_form="false">
         <div class="row">
             <div class="col-md-6 col-xs-12">

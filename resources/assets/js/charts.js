@@ -1,4 +1,5 @@
 var ChartConfig = function (elem, data) {
+        var chart = null;
         var timeFormat = 'MM/DD/YYYY';
         //var url = $('.chart').first().data('url');
         console.log(data);
@@ -41,8 +42,15 @@ var ChartConfig = function (elem, data) {
 
             var ctx = elem.getContext("2d");
             window.myLine = new Chart(ctx, configData);
+            chart = window.myLine;
+
+            return this;
             //ctx.fillText(data.datatype + "%", ctx.canvas.width/2 - 20, ctx.canvas.width/2, 200);
         }
+
+        this.chart = function() {
+            return chart;
+        };
 
 
         function distance(data) {
@@ -188,7 +196,11 @@ var ChartConfig = function (elem, data) {
                     }]
                 },
                 options: {
+                    legend: {
+                        display: false,
+                    },
                     responsive: true,
+                    maintainAspectRatie: true,
                     title: {
                         display: false,
 //                    fontSize: 24,
@@ -199,13 +211,13 @@ var ChartConfig = function (elem, data) {
                     scales: {
                         yAxes: [{
                             scaleLabel: {
-                                display: true,
+                                display: false,
                                 labelString: data.label
                             },
                             ticks: {
 //                            beginAtZero: true,7
-                                suggestedMin: 40,
-                                suggestedMax: 60,
+//                                suggestedMin: 40,
+//                                suggestedMax: 60,
                                 stepsize: 5
                             },
                         }],
@@ -228,6 +240,7 @@ var ChartConfig = function (elem, data) {
                 }
             }
         }
+
     }
     ;
 

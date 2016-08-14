@@ -53,10 +53,10 @@
                 <div id="" data-role="page" class="page PR" data-next="chrono" data-prev="about">
                     @include('swimmers.show.PR')
                 </div>
-                <div id="" data-role="page" class="page chrono" data-next="contact" data-prev="PR" hidden>
+                <div id="" data-role="page" class="page chrono" data-next="contact" data-prev="PR">
                     @include('swimmers.show.chrono')
                 </div>
-                <div id="contact" data-role="page" class="page contact" data-prev="chrono" hidden>
+                <div id="" data-role="page" class="page contact" data-prev="chrono">
                     @include('swimmers.show.data')
                 </div>
             </div>

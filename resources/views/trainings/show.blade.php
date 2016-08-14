@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Training ' . $training->starttime->formatLocalized('%A %d %B %P') )
+@section('title', 'Training ' . $starttime->format('l j F') )
 
 @section('content')
     {!! Breadcrumbs::render('{group}.training.show', $group, $training) !!}

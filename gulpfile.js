@@ -43,6 +43,7 @@ elixir(function (mix) {
             'daterangepicker.js',
             'fullcalendar.min.js',
             paths.select2 + 'js/select2.full.min.js',
+            'jcrop.js',
             'Stopwatch.js',
             'app.js'
         ], 'public/resources/js/app.min.js')

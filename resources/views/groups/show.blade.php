@@ -54,7 +54,7 @@
                             @if($mySwimmer->getMeta('picture'))
                                 <img src="{{ $mySwimmer->getMeta('picture') }}" alt="">
                             @else
-                                <img src="http://library.unn.edu.ng/wp-content/uploads/sites/42/2016/03/prifile-pic.png"
+                                <img src="{{ config('profile.picture') }}"
                                      alt="">
                             @endif
                             <span class="center">
@@ -75,43 +75,57 @@
                 @endif
             </h2>
             <div class="row swimmers">
+                <ul class="users-list">
+
                 @foreach($swimmers as $key => $swimmer)
-                    @if($key > 0 && $key % 2 == 0)
+                    {{--@if($key > 0 && $key % 2 == 0)--}}
                         {{--<div class="clearfix visible-xs"></div>--}}
-                    @endif
-                    @if($key > 0 && $key % 4 == 0)
+                    {{--@endif--}}
+                    {{--@if($key > 0 && $key % 4 == 0)--}}
                         {{--<div class="clearfix visible-sm"></div>--}}
-                    @endif
-                    @if($key > 0 && $key % 6 == 0)
+                    {{--@endif--}}
+                    {{--@if($key > 0 && $key % 6 == 0)--}}
                         {{--<div class="clearfix visible-md"></div>--}}
-                    @endif
-                    @if($key > 0 && $key % 12 == 0)
+                    {{--@endif--}}
+                    {{--@if($key > 0 && $key % 12 == 0)--}}
                         {{--<div class="clearfix visible-lg"></div>--}}
-                    @endif
-                    <div class="center no-gutter cube">
-                        <a rel="external" href="{{ route('{group}.swimmer.show', [
-                    $swimmer->slug
-                ]) }}">
-                            <div class=" swimmer">
-                                <div class="thumbnail center swimmer-thumb" style="; ">
-                            <span class="center name">
-                     {{ $swimmer->first_name }} {{ $swimmer->last_name }}
-                    </span>
-                                    @if($swimmer->getMeta('picture'))
-                                        <img src="{{ $swimmer->getMeta('picture') }}" alt="">
-                                    @else
-                                        <img src="http://library.unn.edu.ng/wp-content/uploads/sites/42/2016/03/prifile-pic.png"
-                                             alt="">
-                                    @endif
+                    {{--@endif--}}
+                    {{--<div class="center no-gutter cube">--}}
+                        {{--<a rel="external" href="{{ route('{group}.swimmer.show', [--}}
+                    {{--$swimmer->slug--}}
+                {{--]) }}">--}}
+                            {{--<div class=" swimmer">--}}
+                                {{--<div class="thumbnail center swimmer-thumb" style="; ">--}}
+                            {{--<span class="center name">--}}
 
-                                </div>
-                            </div>
+                    {{--</span>--}}
 
+
+                                {{--</div>--}}
+                            {{--</div>--}}
+
+                        {{--</a>--}}
+                    {{--</div>--}}
+                    <li>
+                        <a href="{{ route('{group}.swimmer.show', $swimmer->slug) }}">
+                        @if($swimmer->getMeta('picture'))
+                        <img src="{{ $swimmer->getMeta('picture') }}" alt="">
+                        @else
+                        <img src="{{ config('profile.picture') }}"
+                        alt="">
+                        @endif
+                        <span class="users-list-name">
+                            {{ $swimmer->first_name }} {{ $swimmer->last_name }}
+                        </span>
                         </a>
-                    </div>
+                    </li>
+
+
 
 
                 @endforeach
+                </ul>
+
             </div>
 
             <h2>Coaches

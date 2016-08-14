@@ -115,3 +115,16 @@ input[type=checkbox]:checked + label
 input[type=checkbox] + label {
   background-color: white;
 }
+
+
+.users-list>li {
+  @media screen and (min-width: $screen-md) {
+    width: 20%;
+  }
+  @media screen and (min-width: $screen-lg) {
+    width: 12.5%;
+  }
+  @media screen and (max-width: $screen-sm-max / 2) {
+    width: 50%;
+  }
+}

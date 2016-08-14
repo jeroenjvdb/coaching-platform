@@ -6,28 +6,35 @@
         {{ $swimmer->presence * 100 }}%
     </div>
 </div>
-<h3>Ochtendpolsen</h3>
 <div class="row">
-    <div class="col-md-4 col-md-offset-8">
+    <div class="col-md-6 col-md-offset-6">
         <div id="daterangepicker" class="pull-right " style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
             <i class="fa fa-calendar"></i>&nbsp;
             <span></span> <b class="caret"></b>
         </div>
     </div>
 </div>
-<canvas id="canvas" class="chart"
-            data-url="{{ route('{group}.swimmer.heartRate', [
+<div class="row">
+    <div class="col-md-6">
+        <h3>Ochtendpolsen</h3>
+        <canvas id="canvas" class="chart" height="250"
+                                  data-url="{{ route('{group}.swimmer.heartRate', [
                 'group' => $group->slug,
                 'swimmer' => $swimmer->slug,
             ]) }}"
-></canvas>
-<h3>Gewicht</h3>
-<canvas id="canvas2" class="chart"
-        data-url="{{ route('{group}.swimmer.weights', [
+        ></canvas></div>
+    <div class="col-md-6">
+        <h3>Gewicht</h3>
+        <canvas id="canvas2" class="chart" height="250"
+                data-url="{{ route('{group}.swimmer.weights', [
                 'group' => $group->slug,
                 'swimmer' => $swimmer->slug,
             ]) }}"
-></canvas>
+        ></canvas>
+    </div>
+</div>
+
+
 
 @include('swimmers.show.contact')
 

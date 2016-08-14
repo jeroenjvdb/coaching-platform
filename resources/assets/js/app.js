@@ -1,6 +1,8 @@
 /*!
  * main javascript
  */
+var allCharts = [];
+
 $(function () {
     init();
     var nextPage, prevPage;
@@ -11,7 +13,7 @@ $(function () {
         });
 
 
-        $('.pages>div').hide().first().show();
+        $('.pages > div').hide().first().show();
         //paging();
         //$('.datetimepicker').datetimepicker();
         //$('#datetimepicker1').datetimepicker();
@@ -103,7 +105,8 @@ $(function () {
             $.getJSON(url, function (data) {
                 console.log(data);
                 console.log(chart);
-                new ChartConfig(chart, data)
+                thisChart = new ChartConfig(chart, data);
+                allCharts.push(thisChart);
             });
         });
         //$('.chart').each(function(elem)
@@ -298,6 +301,36 @@ $(function () {
             var cw = $(this).width();
             $(this).css('height', cw + 'px');
         });
+
+        console.log(window.innerWidth);
+
+        /*if(window.innerWidth < 400 ) {
+            console.log('in if');
+            $.each($('canvas.chart'), function() {
+                setTimeout(function() {
+                    console.log('change css');
+                    $(this).css('height', '300px');
+
+                }, 500);
+            });
+           /* for(var i = 0; i < allCharts.length; i++) {
+                allCharts[i].chart().chart.height = 250;
+                allCharts[i].chart().update();
+
+            }*/
+        /*} else if (window.innerWidth > 600) {
+            console.log('elsif');
+            console.log($(canvas));
+            $('canvas').each(function() {
+                $(this).css('height', '100px');
+                console.log($(this));
+            });
+           /* for(var i = 0; i < allCharts.length; i++) {
+                allCharts[i].chart().chart.height = 150;
+                allCharts[i].chart().update();
+
+            }*/
+        //}
         //var cw = $('.swimmer-thumb').width();
 
         //$('.swimmer-thumb').css({'height': cw + 'px'});
@@ -462,11 +495,35 @@ $(function () {
                 console.log($(input).data('img'));
                 if ($(input).data('img') == 'start') {
                     $('#image-start').attr('src', e.target.result);
+                } else if ($(input).data('img') == 'crop') {
+                    $('#croppingImg').attr('src', e.target.result);
+                    $('#pictures').modal();
+                        $('.otherinputfield').remove();
+                        $('#cropping').append(input);
+                    //input->getMimeType();
+                    $('#croppingImg').Jcrop({
+                        onSelect: updateCoords,
+                        aspectRatio: 1,
+                        boxWidth: 450,
+                        boxHeight: 450,
+                    })
                 } else {
                     $('#image-end').attr('src', e.target.result);
                 }
             };
 
+            function updateCoords(c) {
+                console.log(c);
+                // fix crop size: find ratio dividing current per real size
+                var ratioW = $('#croppingImg')[0].naturalWidth / $('#croppingImg').width();
+                var ratioH = $('#croppingImg')[0].naturalHeight / $('#croppingImg').height();
+                var currentRatio = Math.min(ratioW, ratioH);
+                $('#croppedImg').val($('.upload-image').val());
+                $('#x').val(Math.round(c.x));
+                $('#y').val(Math.round(c.y));
+                $('#w').val(Math.round(c.w));
+                $('#h').val(Math.round(c.h));
+            };
             /*reader.onloadend = function(e) {
              console.log(e);
              var exif = EXIF.readFromBinaryFile(new BinaryFile(this.result));

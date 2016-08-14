@@ -34,6 +34,8 @@ class ContactController extends Controller
     public function update(ContactRequest $request, Group $group, Swimmer $swimmer)
     {
 
+//        dd($request->all());
+
         $store = [
             'address' => [
                 'street' => $request->street,
@@ -49,9 +51,24 @@ class ContactController extends Controller
             'sEmail' => $request->sEmail,
         ];
 
-        if($request->picture && $request->picture->isValid()) {
-            $swimmer->updateMeta('picture', $this->storeImage($request->picture, $group, $swimmer));
+
+//        dd($request->picture);
+        if($request->picture && true) {
+            $quality = 90;
+            $src  = $request->picture;
+            $img  = imagecreatefromjpeg($src);
+            $dest = ImageCreateTrueColor($request->w,
+                                         $request->h);
+
+            imagecopyresampled($dest, $img, 0, 0, $request->x,
+                               $request->y, $request->w, $request->h,
+                               $request->w, $request->h);
+            imagejpeg($dest, $src, $quality);
+
+            $swimmer->updateMeta('picture', $this->storeImage($src, $group, $swimmer));
             return redirect()->back();
+        } else if ($request->picture && ! $request->picture->isValid()) {
+            return redirect()->back()->withErrors('Er is iets mis met deze afbeelding');
         }
 
         $swimmer->storeContact($store);
