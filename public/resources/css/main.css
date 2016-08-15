@@ -9815,9 +9815,6 @@ table {
   .swimmers .swimmer:hover .name {
     opacity: 1; }
 
-input[type=checkbox] {
-  display: none; }
-
 input[type=checkbox] + label {
   background: #999;
   padding: 0 0 0 0px;

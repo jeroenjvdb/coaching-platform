@@ -31,13 +31,13 @@ trait SwimmerProfile
      */
     public function get()
     {
-        $stopwatches = $this->getStopwatches();
+        $stopwatches = $this->getStopwatches(Carbon::now(), Carbon::now()->subYear());
 
         $data = [
             'swimmer'       => $this,
             'personalBests' => Cache::get('PB.' . $this->id),
             'stopwatches'   => $stopwatches,
-            'meta'          => $this->getSwimmerMeta($stopwatches),
+//            'meta'          => $this->getSwimmerMeta($stopwatches),
             'contact'       => $this->contact(),
             'hasHeartRate'  => $this->checkHeartRate(),
         ];
@@ -177,10 +177,12 @@ trait SwimmerProfile
      *
      * @return mixed
      */
-    private function getStopwatches()
+    private function getStopwatches($start, $end)
     {
         $stopwatches = $this->stopwatches()
-//            ->where('stopwatches.id', $id)
+//            ->where('stopwatches.id', $id)$sta
+            ->where('created_at', '>', $start )
+            ->where('created_at', '<', $end)
             ->with(
                 ['times' => function ($query) {
                     $query->orderedRev();
@@ -341,13 +343,20 @@ trait SwimmerProfile
         return $records;
     }
 
+    public function getTheMeta($page)
+    {
+        $stopwatches = $this->stopwatches();
+
+        return $this->getSwimmerMeta($stopwatches, $page);
+    }
+
     /**
      * get all the meta for this swimmer
      *
      * @param $stopwatches
      * @return \Illuminate\Support\Collection
      */
-    private function getSwimmerMeta($stopwatches)
+    private function getSwimmerMeta($stopwatches, $page)
     {
 //        $allMeta = $this->getAllMeta();
         $meta = collect([]);
@@ -355,6 +364,9 @@ trait SwimmerProfile
         $heartRate = [];
         $dateArr = [];
         $rateArr = [];
+
+        $startDate = Carbon::now()->subWeeks($page);
+        $endDate = Carbon::now()->subWeeks($page - 1);
 
 //        $allMeta = $allMeta->sortByDesc('date');
 
@@ -380,7 +392,10 @@ trait SwimmerProfile
 //                array_push($heartRate, $hr);
 //            }
 //        }
-        foreach ($this->data as $data) {
+//        dd($this->stopwatches);//()->where('created_at', '>', $startDate)->where('created_at', '<', $endDate)->get());7
+//        dd($endDate);
+//        dd($this->data()->where('created_at', '>', $startDate)->where('created_at', '<', $endDate)->get());
+        foreach ($this->data()->where('created_at', '>', $startDate)->where('created_at', '<', $endDate)->get() as $data) {
             $media = null;
             if ($data->media_url && $data->media_type) {
                 $collecting = [
@@ -402,7 +417,8 @@ trait SwimmerProfile
             $meta->push($item);
         }
 
-        foreach ($this->heartRates as $heartRate) {
+//        dd($this->heartRates()->where('date', '>', $startDate)->where('date', '<', $endDate)->get());
+        foreach ($this->heartRates()->where('date', '>', $startDate)->where('date', '<', $endDate)->get() as $heartRate) {
             $newMeta = [
                 'type'     => 'heartRate',
                 'message'  => $heartRate->heart_rate,
@@ -415,7 +431,8 @@ trait SwimmerProfile
             $meta->push($item);
         }
 
-        foreach ($stopwatches as $stopwatch) {
+//        dd($this->stopwatches()->where('created_at', '>', $startDate)->where('created_at', '<', $endDate)->get());
+        foreach ($this->getStopwatches($startDate, $endDate) as $stopwatch) {
             $newMeta = [
                 'type'     => 'chrono',
                 'message'  => $stopwatch,
@@ -438,6 +455,7 @@ trait SwimmerProfile
             $day = Date::parse($data->date)->startOfDay();
             if($day != $date) {
                 $date = $day;
+//                $date['asString'] = $day->format('F l');
                 if($item) {
                     $item->put('item', $allItems);
                     array_push($metaGrouped, $item);

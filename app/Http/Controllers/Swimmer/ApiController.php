@@ -88,4 +88,10 @@ class ApiController extends Controller
 
         return redirect()->back();
     }
+
+    public function data(Request $request, Swimmer $swimmer)
+    {
+        Log::info('page',[ $request->page ]);
+        return $swimmer->getTheMeta($request->page);
+    }
 }

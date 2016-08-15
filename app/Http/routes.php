@@ -137,6 +137,8 @@ Route::group(['middleware' => 'web'], function () {
                             'uses' => 'CategoryController@destroy'
                         ]);
 
+
+
                     });
                     Route::resource('training', 'TrainingController');
                     Route::resource('training.exercise', 'ExerciseController', [
@@ -178,6 +180,10 @@ Route::group(['middleware' => 'web'], function () {
                             Route::get('heartRate', [
                                 'as' => '{group}.swimmer.heartRate',
                                 'uses' => 'ApiController@getHeartRate'
+                            ]);
+                            Route::get('data', [
+                                'as' => 'swimmer.data.get',
+                                'uses' => 'ApiController@data',
                             ]);
 
                         });

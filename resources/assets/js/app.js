@@ -724,7 +724,59 @@ $(function () {
                 }
             });
         }
+        var page = $(e.currentTarget).data('load-page');
+        console.log(page);
+        if (page) {
 
+            e.preventDefault();
+            //alert('yay');
+            $.getJSON($(e.currentTarget).data('url'), {page: page}, addData);
+            //console.log(page + 1);
+            $(e.currentTarget).data('load-page', page + 1);
+        }
+
+    }
+
+    function addData(data)
+    {
+        if(! data.meta.length) {
+            elem = $('#read-more').find('a');
+            url = elem.data('url');
+            page = elem.data('load-page');
+            $.getJSON(url, {page: page}, addData);
+            elem.data('load-page', page + 1);
+        }
+        $.each(data.meta, function() {
+            console.log(this.date);
+            console.log(moment(this.date.date).format('DD MMMM')  );
+            var date = moment(this.date.date).format('DD MMMM');
+            $('<li class="time-label"><span class="bg-red">' + date + '</span></li>')
+                .insertBefore('#read-more');
+
+            $.each(this.item, function() {
+                console.log(this);
+                var element = '<li>';
+                switch(this.type) {
+                    case 'heartRate':
+                        element += '<i class="fa fa-heart bg-red"></i><div class="timeline-item">' +
+                            '<h3 class="timeline-header">ochtendpols</h3>' +
+                            '<div class="timeline-body">' +
+                            '55' +
+                            '</div>' +
+                            '</div></li>';
+
+                        break;
+                    case 'data':
+                        element += '<i class="fa fa-envelope bg-blue"></i><div class="timeline-item">' +
+                            '<h3 class="timeline-header">test</h3>' +
+                            '<div class="timeline-body">test</div>' +
+                            '</div></li>';
+                        break;
+                }
+
+                $(element).insertBefore('#read-more');
+            })
+        })
     }
 
     function isHTML(str) {

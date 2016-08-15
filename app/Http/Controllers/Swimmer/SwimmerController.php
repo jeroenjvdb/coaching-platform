@@ -125,8 +125,9 @@ class SwimmerController extends Controller
         }
 
         $data = $swimmer->get();
-        //dd($data['meta']['meta'][1]->media['type']);
-
+        $data['meta'] = $swimmer->getTheMeta(1);
+//        dd($data['meta']['meta']);
+//        dd($data);
         $data['group'] = $group;
         $data['myProfile'] = false;
         $data['strokes'] = $this->stroke->with('distances')->get();
