@@ -724,6 +724,9 @@ $(function () {
                 }
             });
         }
+        if(toggle && toggle == 'picture') {
+            e.preventDefault();
+        }
         var page = $(e.currentTarget).data('load-page');
         console.log(page);
         if (page) {

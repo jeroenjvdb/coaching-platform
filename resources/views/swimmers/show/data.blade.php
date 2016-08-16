@@ -121,11 +121,12 @@
                 </li>
             @endforeach
         @endforeach
-            <li id="read-more" class="time-label">
-        <span  class="bg-red">
-            <a href="#" data-load-page="2" data-url="{{ route('swimmer.data.get', [
+            <li id="read-more" class="time-label loading">
+        <span  class="bg-red loading">
+            <a href="#"  data-load-page="2" data-url="{{ route('swimmer.data.get', [
                 'swimmer' => $swimmer->slug
             ]) }}">Meer laden</a>
+
         </span>
             </li>
 

@@ -1,40 +1,49 @@
 <h2>Contact</h2>
 <div class="row swimmer">
-    <div class="col-xs-12">
+    <div class="col-xs-12  col-md-6">
         <div class="box box-danger">
             <div class="box-body box-profile">
-                <a href="#" data-toggle="picture">
-                    <img class="profile-user-img img-responsive img-circle" id="image-start"
-                         @if($contact['picture'])
-                         src="{{ $contact['picture'] }}"
-                         @else
-                         src="http://library.unn.edu.ng/wp-content/uploads/sites/42/2016/03/prifile-pic.png"
-                         @endif
-                         alt=""></a>
-                {!! Form::open([
-                    'route' => ['{group}.swimmer.contact.update',
-                    'group' => $group->slug,
-                    'swimmer' => $swimmer->slug,
-                    ],
-                    'class' => 'picture',
-                    'data-is_form' => 'true',
-                    'data-form' => 'picture',
-                    'data-ajax' => 'false',
-                    'files' => 'true',
-                    'hidden'
-                ]) !!}
-                <div class="form-group">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <a href="#" class="profile-img-edit" data-toggle="picture">
+                            <img class="profile-user-img img-responsive img-circle " id="image-start"
+                                 @if($contact['picture'])
+                                 src="{{ $contact['picture'] }}"
+                                 @else
+                                 src="http://library.unn.edu.ng/wp-content/uploads/sites/42/2016/03/prifile-pic.png"
+                                 @endif
+                                 alt=""></a>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        {!! Form::open([
+                            'route' => ['{group}.swimmer.contact.update',
+                            'group' => $group->slug,
+                            'swimmer' => $swimmer->slug,
+                            ],
+                            'class' => 'picture',
+                            'data-is_form' => 'true',
+                            'data-form' => 'picture',
+                            'data-ajax' => 'false',
+                            'files' => 'true',
+                            'hidden'
+                        ]) !!}
+                        <div class="form-group">
         <span class="btn btn-primary btn-full btn-file">
         <i class="fa fa-upload"></i> foto toevoegen {!! Form::file('picture', [
             'class' => 'upload-image',
             'data-img' => 'crop',
         ]) !!}
     </span>
+                        </div>
+                        {!! Form::submit('opslaan', [
+                            'class' => 'btn btn-primary btn-full',
+                        ]) !!}
+                        {!! Form::close() !!}
+                    </div>
                 </div>
-                {!! Form::submit('opslaan', [
-                    'class' => 'btn btn-primary btn-full',
-                ]) !!}
-                {!! Form::close() !!}
                 <div class="col-md-6">
                     <ul class="list-group list-group-unbordered">
                         <li class="list-group-item">
@@ -383,5 +392,5 @@
             </div>
         </div>
     </div>
-    @endif
-    {{--</div>--}}
+@endif
+{{--</div>--}}

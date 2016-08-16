@@ -74,3 +74,36 @@ table {
 canvas {
   //min-height: 250px;
 }
+
+.profile-img-edit {
+  //background-color: red;
+  border-radius: 5%;
+  &:hover:after {
+    content:"\f040";
+    font-family: FontAwesome;
+    text-align: center;
+    position: absolute;
+    left: 49%;
+    //bottom: 60px;
+    //color: ;
+
+
+  }
+}
+
+.loading::after {
+  content: " ";
+  display:block;
+  height: 30px;
+  width: 30px;
+  color: black;
+  background-image: url("resources/img/ring.svg");
+  background-size: 30px 30px;
+}
+
+//.profile-img-edit::after {
+//  content: "test";
+//  background-color: black;
+//
+//}
+

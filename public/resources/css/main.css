@@ -9668,6 +9668,24 @@ table {
 .progress-bar {
   background-color: #0e7287; }
 
+.profile-img-edit {
+  border-radius: 5%; }
+  .profile-img-edit:hover:after {
+    content: "\f040";
+    font-family: FontAwesome;
+    text-align: center;
+    position: absolute;
+    left: 49%; }
+
+.loading::after {
+  content: " ";
+  display: block;
+  height: 30px;
+  width: 30px;
+  color: black;
+  background-image: url("resources/img/ring.svg");
+  background-size: 30px 30px; }
+
 .timeline {
   margin-top: 15px; }
 
