@@ -72,12 +72,12 @@ class ContactController extends Controller
         }
 
         $swimmer->storeContact($store);
-        if($request->email) {
-            $swimmer->email = $request->email;
-        }
+//        if($request->email) {
+//            $swimmer->email = $request->email;
+//        }
 
-        $swimmer->save();
-
+//        $swimmer->save();
+        return redirect()->back();
 
         return json_encode([
             'type' => 'success',

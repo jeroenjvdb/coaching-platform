@@ -9670,23 +9670,22 @@ table {
 
 .profile-img-edit {
   border-radius: 5%; }
-  .profile-img-edit:after {
-    content: "\f040";
-    font-family: FontAwesome;
-    text-align: center;
-    position: relative;
-    background-color: #000;
-    width: 85px;
-    height: 43px;
-    border-bottom-left-radius: 2000px;
-    border-bottom-right-radius: 2000px;
-    bottom: 22px;
-    opacity: .5;
-    color: white;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    bottom: 50px; }
+
+.edit-profile {
+  text-align: center;
+  position: relative;
+  background-color: #000;
+  width: 85px;
+  height: 43px;
+  border-bottom-left-radius: 2000px;
+  border-bottom-right-radius: 2000px;
+  bottom: 22px;
+  opacity: .5;
+  color: white;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  bottom: 50px; }
 
 .loading::after {
   content: " ";
@@ -9791,7 +9790,6 @@ table {
   left: 45%; }
 
 .page .contact {
-  border-bottom: 1px solid black;
   padding: 5px 0; }
 
 .swimmers {

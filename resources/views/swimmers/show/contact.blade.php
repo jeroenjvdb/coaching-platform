@@ -12,7 +12,9 @@
                                  @else
                                  src="http://library.unn.edu.ng/wp-content/uploads/sites/42/2016/03/prifile-pic.png"
                                  @endif
-                                 alt=""></a>
+                                 alt="">
+                            <i class="fa fa-pencil edit-profile"></i>
+                        </a>
                     </div>
                 </div>
 
@@ -38,47 +40,127 @@
         ]) !!}
     </span>
                         </div>
-                        {!! Form::submit('opslaan', [
-                            'class' => 'btn btn-primary btn-full',
-                        ]) !!}
+                        {{--{!! Form::submit('opslaan', [--}}
+                        {{--'class' => 'btn btn-primary btn-full',--}}
+                        {{--]) !!}--}}
                         {!! Form::close() !!}
                     </div>
                 </div>
                 <div class="col-xs-12">
-                    <ul class="list-group list-group-unbordered">
-                        <li class="list-group-item">
-                            <b><i class="fa fa-phone"></i></b>
-                            <a class="pull-right" href="tel://{{ $contact['phone'] }}">{{ $contact['phone'] }}</a>
-                            {{--<div class="phone contact-form" data-is_form="false">--}}
-                            {{--<div class="col-xs-10 contact-data" data-contact="swimmer.phone">--}}
-                            {{--<a href="tel://{{ $contact['phone'] }}">{{ $contact['phone'] }}</a>--}}
-                            {{--</div>--}}
-                            {{--<div class="col-xs-1">--}}
-                            {{--<a href="#" data-toggle="phone"><i class="fa fa-pencil"></i></a>--}}
-                            {{--</div>--}}
-                            {{--</div>--}}
-                        </li>
-                        <li class="list-group-item clearfix">
-                            <b><i class="fa fa-home"></i></b>
+                    <div class="contact">
+
+                        <ul class="list-group list-group-unbordered">
+                            <li class="list-group-item">
+                                <b><i class="fa fa-phone"></i></b>
+                                <a class="pull-right" href="tel://{{ $contact['phone'] }}">{{ $contact['phone'] }}</a>
+                                {{--<div class="phone contact-form" data-is_form="false">--}}
+                                {{--<div class="col-xs-10 contact-data" data-contact="swimmer.phone">--}}
+                                {{--<a href="tel://{{ $contact['phone'] }}">{{ $contact['phone'] }}</a>--}}
+                                {{--</div>--}}
+                                {{--<div class="col-xs-1">--}}
+                                {{--<a href="#" data-toggle="phone"><i class="fa fa-pencil"></i></a>--}}
+                                {{--</div>--}}
+                                {{--</div>--}}
+                            </li>
+                            <li class="list-group-item clearfix">
+                                <b><i class="fa fa-home"></i></b>
                         <span class="pull-right">
                              @if($contact['address'])
+                                <a href="http://maps.google.com/maps?q={{ $contact['address']->street . " " . $contact['address']->number . ", "
+                                . $contact['address']->zipcode . " " .  $contact['address']->city }}" target="_blank">
                                 {{ $contact['address']->street }} {{ $contact['address']->number }}, <br>
                                 {{ $contact['address']->zipcode }} {{ $contact['address']->city }}
+                                </a>
                             @endif
                         </span>
-                        </li>
-                        <li class="list-group-item">
-                            <b><i class="fa fa-envelope"></i></b>
+                            </li>
+                            <li class="list-group-item">
+                                <b><i class="fa fa-envelope"></i></b>
                         <span class="pull-right">
                             <a href="mailto:{{$swimmer->email}}">{{ $swimmer->email }}</a>
                         </span>
-                        </li>
-                    </ul>
+                            </li>
+                        </ul>
+
+                        <a href="#" class="btn btn-primary btn-full" data-toggle="contact">
+                            <i class="fa fa-pencil"></i> Wijzigen
+                        </a>
+                    </div>
+                    <div class="contact" data-is_form="true" hidden>
+{{--                        {!! Form::open() !!}--}}
+                        {!! Form::open([
+                        'route' => ['{group}.swimmer.contact.update',
+                        'group' => $group->slug,
+                        'swimmer' => $swimmer->slug,
+                        ],
+                        ]) !!}
+                        <ul class="list-group list-group-unbordered">
+                            <li class="list-group-item form-group">
+                                {{--<b><i class="fa fa-phone"></i></b>--}}
+                                <label class="input-group">
+                                    <div class="input-group-addon"><b><i class="fa fa-phone"></i></b></div>
+                                    {!! Form::text('phone', $contact['phone'], [
+                                        'class' => 'pull-right form-control',
+                                        'placeholder' => 'telefoonnummer'
+
+                                    ]) !!}
+                                </label>
+                                {{--<a class="pull-right" href="tel://{{ $contact['phone'] }}">{{ $contact['phone'] }}</a>--}}
+                                {{--<div class="phone contact-form" data-is_form="false">--}}
+                                {{--<div class="col-xs-10 contact-data" data-contact="swimmer.phone">--}}
+                                {{--<a href="tel://{{ $contact['phone'] }}">{{ $contact['phone'] }}</a>--}}
+                                {{--</div>--}}
+                                {{--<div class="col-xs-1">--}}
+                                {{--<a href="#" data-toggle="phone"><i class="fa fa-pencil"></i></a>--}}
+                                {{--</div>--}}
+                                {{--</div>--}}
+                            </li>
+                            <li class="list-group-item clearfix">
+                                <label class="input-group">
+                                    <div class="input-group-addon"><b><i class="fa fa-home"></i></b></div>
+                                    {!! Form::text('street', $contact['address']->street, [
+                                        'class' => 'form-control',
+                                        'placeholder' => 'straatnaam'
+                                    ]) !!}
+                                    {!! Form::text('number', $contact['address']->number, [
+                                        'class' => 'form-control',
+                                        'placeholder' => 'huisnummer'
+                                    ]) !!} <br>
+                                    {!! Form::text('zipcode', $contact['address']->zipcode, [
+                                        'class' => 'form-control',
+                                        'placeholder' => 'postcode',
+                                    ]) !!}
+                                    {!! Form::text('city', $contact['address']->city, [
+                                        'class' => 'form-control',
+                                        'placeholder' => 'stad'
+                                    ]) !!}
+
+                                </label>
+                            </li>
+                            <li class="list-group-item">
+                                <label class="input-group">
+                                    <div class="input-group-addon"><b><i class="fa fa-envelope"></i></b></div>
+                                    {!! Form::email('email', $swimmer->email, [
+                                        'class' => 'pull-right form-control',
+                                        'placeholder' => 'email',
+                                        'readonly',
+                                    ]) !!}
+                                </label>
+                            </li>
+                        </ul>
+
+                        {!! Form::submit('Opslaan', [
+                            'class' => 'btn btn-primary btn-full',
+                        ]) !!}
+                        {!! Form::close() !!}
+                    </div>
+
+
                 </div>
                 {{--<div class="col-md-6">--}}
-                    {{--<ul class="list-group list-group-unbordered">--}}
-                        {{--<li class="list-group-item"></li>--}}
-                    {{--</ul>--}}
+                {{--<ul class="list-group list-group-unbordered">--}}
+                {{--<li class="list-group-item"></li>--}}
+                {{--</ul>--}}
                 {{--</div>--}}
 
             </div>
@@ -289,10 +371,13 @@
         @if(Auth::user()->clearance_level > 0)
 
             <div class="row">
+                <div class="col-xs-12">
+                    <h2>Verwijderen</h2>
+                </div>
                 <div class="col-md-4 col-md-offset-4 col-sm-8 col-sm-offset-2 col-xs-12">
                     <button type="button" class="btn btn-danger btn-lg btn-full" data-toggle="modal"
                             data-target="#delete">
-                        verwijderen
+                        Verwijderen
                     </button>
                 </div>
             </div>
