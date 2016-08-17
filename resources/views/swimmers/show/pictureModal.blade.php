@@ -5,7 +5,7 @@
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-                afbeelding bijsnijden
+                Afbeelding bijsnijden
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
@@ -23,12 +23,13 @@
                        'data-form' => 'picture',
                        'data-ajax' => 'false',
                        'files' => 'true',]) ?>
-<?//= Form::file('picture', ['id' => 'croppedImg']) ?>
 <?= Form::hidden('x', '', array('id' => 'x')) ?>
 <?= Form::hidden('y', '', array('id' => 'y')) ?>
 <?= Form::hidden('w', '', array('id' => 'w')) ?>
 <?= Form::hidden('h', '', array('id' => 'h')) ?>
-<?= Form::submit('Crop it!') ?>
+<?= Form::submit('Bijsnijden', [
+        'class' => 'btn btn-primary'
+    ]) ?>
 <?= Form::close() ?>
             </div>
         </div>

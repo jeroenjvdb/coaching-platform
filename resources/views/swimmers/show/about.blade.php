@@ -1,4 +1,4 @@
-<h2>About</h2>
+<h2>Over</h2>
 <h3>Aanwezigheden</h3>
 <div class="progress">
     <div class="progress-bar" role="progressbar" aria-valuenow="{{ $swimmer->presence * 100 }}%"

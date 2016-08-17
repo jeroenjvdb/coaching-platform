@@ -39,9 +39,8 @@ $(function () {
     }
 
     function daterangepicker() {
-        cb(moment().subtract(29, 'days'), moment());
+        cb(moment().subtract(90, 'days'), moment());
 
-        console.log($('#daterangepicker'));
         $('#daterangepicker').first().daterangepicker({
             ranges: {
                 //'Today': [moment(), moment()],
@@ -71,13 +70,8 @@ $(function () {
             });
             if (checkedChange) {
                 var checkbox = form.find('input[type=checkbox]');
-                console.log(form);
-                console.log(document.getElementById('test-form'));
                 checkbox.on('click', function () {
-                    console.log(form);
-                    console.log(form.find('input[type=submit]'));
                     form.find('input[type=submit]').trigger('click');
-                    console.log(form);
                 });
                 //console.log();
 
@@ -103,22 +97,16 @@ $(function () {
             var url = $(chart).data('url');
 
             $.getJSON(url, function (data) {
-                console.log(data);
-                console.log(chart);
                 thisChart = new ChartConfig(chart, data);
                 allCharts.push(thisChart);
             });
         });
         //$('.chart').each(function(elem)
         //{
-        //    console.log($(elem));
         //});
     }
 
     function updateCharts(start, end) {
-        console.log('update charts');
-        console.log(start.toISOString());
-        console.log(end);
         var charts = $('.chart');
 
         charts.each(function (index, chart) {
@@ -128,8 +116,6 @@ $(function () {
                 start: start.toISOString(),
                 end: end.toISOString(),
             }, function (data) {
-                console.log(data);
-                console.log(chart);
                 new ChartConfig(chart, data)
             });
         });
@@ -139,7 +125,6 @@ $(function () {
     function calendar() {
         $('.calendar').each(function () {
             var url = $(this).data('url');
-            console.log(url);
             $(this).fullCalendar({
                 header: {
                     left: 'prev,next',
@@ -186,12 +171,9 @@ $(function () {
             if ($(this).data('all')) {
                 $(this).on('ifClicked', function (e) {
                     var source = this;
-                    console.log($(source).is(':checked'));
                     var name = $(this).data('checkbox');
-                    console.log($('input[type=checkbox][name=' + name + ']'));
                     $('input[type=checkbox][data-name=' + name + ']').each(function () {
                         this.checked = !source.checked;
-                        console.log(this.checked);
                         $(this).iCheck('update');
                     })
 
@@ -211,7 +193,6 @@ $(function () {
         $('a').on('click', links);
         $('.sort-bars').on('touchstart mousedown', function (e) {
             $('.sortable').sortable('enable');
-            console.log(e);
         });
         $('.sort-bars').on('touchend mouseup', function (e) {
             $('.sortable').sortable('disable');
@@ -236,7 +217,6 @@ $(function () {
     }
 
     function showStopwatchTimes() {
-        console.log('stopwatchHides');
         var ListLengthHidingTrigger = 4;
         var InitialListItems = 3;
 
@@ -249,27 +229,22 @@ $(function () {
             }
 
             $(this).find('.toggle-more').on('click', function () {
-                console.log($(this).data('collapse'));
                 if (! $(this).data('collapse')) {
-                    console.log('toggling');
                     thisElem.find('li').show(); // hide all but first 2 sections
                     thisElem.find('.toggle-more').html('minder');
                     $(this).data('collapse', true);
 
                 } else {
-                    console.log('toggleback');
                     thisElem.find("li:gt(" + (InitialListItems - 1) + ")").hide(); // hide all but first N sections
                     $(this).data('collapse', false);
                     thisElem.find('.toggle-more').html('meer');
 
 
                 }
-                // console.log('toggling');
                 //thisElem.find('li').show();
                 //thisElem.find('.toggle-more').html('Show Fewer Brands');*/
             });
             thisElem.find('.toggle-more:contains("Fewer")').on('click', function () {
-                console.log('toggleback');
                 thisElem.find("li:gt(" + (InitialListItems - 1) + ")").hide(); // hide all but first N sections
             });
 
@@ -285,7 +260,6 @@ $(function () {
     }
 
     function swipeEvents() {
-        console.log('swipeEvents');
         var body = $('body');
         var page = $('.pages .page').first();
         nextPage = page.data('next');
@@ -296,13 +270,11 @@ $(function () {
 
     function resize(e) {
         //delay(1000);
-        console.log('resize');
         $.each($('.swimmer-thumb'), function () {
             var cw = $(this).width();
             $(this).css('height', cw + 'px');
         });
 
-        console.log(window.innerWidth);
 
         /*if(window.innerWidth < 400 ) {
             console.log('in if');
@@ -337,7 +309,6 @@ $(function () {
     }
 
     function swipePageLeft(e) {
-        console.log('left');
         //console.log(e);
         //var nextPage = $(e.currentTarget).data('next');
         //console.log(nextPage);
@@ -350,7 +321,6 @@ $(function () {
     function swipePageRight(e) {
         //console.log(e);
         //var nextPage = $(e.currentTarget).data('prev');
-        console.log('right');
         var page = $('#' + prevPage);
         page.trigger('click');
         //nextPage = page.data('next');
@@ -358,17 +328,11 @@ $(function () {
     }
 
     function sort(event, ui) {
-        console.log(sort);
         var id = ui.item.data('id');
         var tableClass = ui.item.data('class');
         var position = $('.' + tableClass).index(ui.item);
         var url = $('#' + ui.item.data('table')).data('url');
         $('.sortable').sortable('disable');
-        console.log(ui.item);
-        console.log('class ' + tableClass);
-        console.log('id ' + id);
-        console.log('position ' + position);
-        console.log('url ' + url);
 
         updatePosition(id, position, url);
     }
@@ -379,9 +343,6 @@ $(function () {
     }
 
     function updatePosition(id, position, url) {
-        console.log('update position');
-        console.log(url);
-
         $.post(url, {
             position: position,
             exercise_id: id,
@@ -391,12 +352,9 @@ $(function () {
     }
 
     function formRequest(e) {
-        console.log('form request');
-        console.log(e);
         if ($(e.target).data('ajax')) {
             e.preventDefault();
             var form = $(e.target);
-            console.log(form);
 
             $.post(form[0].action,
                 form.serialize(),
@@ -407,7 +365,6 @@ $(function () {
     }
 
     function formResponse(data) {
-        console.log(data);
         switch (data.form) {
             case "contact":
                 updateContact(data);
@@ -418,15 +375,10 @@ $(function () {
     }
 
     function updateContact(data) {
-        console.log(data);
-        //console.log($('.contact-data'));
         var elems = $('.contact-data');
 
         $.each(elems, function (index, value) {
             var elem = $(value);
-            console.log(elem);
-
-            //console.log(index);
             switch (elem.data('contact')) {
                 case 'swimmer.email':
                     elem.text(data.data.swimmer.email);
@@ -444,10 +396,8 @@ $(function () {
         });
 
         var forms = $('.contact-form');
-        console.log(forms)
         $.each(forms, function (index, value) {
             var elem = $(value);
-            console.log(elem);
             if (elem.data('is_form')) {
                 elem.hide();
             } else {
@@ -457,26 +407,18 @@ $(function () {
     }
 
     function renderImage() {
-        console.log(this);
         var fileReader = new FileReader();
-
 
         readURL(this);
     }
 
     function readURL(input) {
-        console.log('readURL')
         if (input.files && input.files[0]) {
             var reader = new FileReader;
-            console.log('input.files');
             reader.onload = function (e) {
-                console.log(reader);
                 //var arrayBufferView = new Uint8Array( this.result );
                 //var blob = new Blob( [ arrayBufferView ], { type: "image/jpeg" } );
-                console.log(input.files[0]);
                 var exif = get_exif_data(this.result)
-
-                console.log(exif);
 
                 switch (exif.Orientation) {
 
@@ -492,10 +434,10 @@ $(function () {
 
 
                 }
-                console.log($(input).data('img'));
                 if ($(input).data('img') == 'start') {
                     $('#image-start').attr('src', e.target.result);
                 } else if ($(input).data('img') == 'crop') {
+                    $(input).hide();
                     $('#croppingImg').attr('src', e.target.result);
                     $('#pictures').modal();
                         $('.otherinputfield').remove();
@@ -513,7 +455,6 @@ $(function () {
             };
 
             function updateCoords(c) {
-                console.log(c);
                 // fix crop size: find ratio dividing current per real size
                 var ratioW = $('#croppingImg')[0].naturalWidth / $('#croppingImg').width();
                 var ratioH = $('#croppingImg')[0].naturalHeight / $('#croppingImg').height();
@@ -525,10 +466,8 @@ $(function () {
                 $('#h').val(Math.round(c.h));
             };
             /*reader.onloadend = function(e) {
-             console.log(e);
              var exif = EXIF.readFromBinaryFile(new BinaryFile(this.result));
 
-             console.log(exif);
 
              switch(exif.Orientation){
 
@@ -598,7 +537,7 @@ $(function () {
     }
 
     function decode64(input) {
-        var keyStr = "ABCDEFGHIJKLMNOP" +
+        /*var keyStr = "ABCDEFGHIJKLMNOP" +
             "QRSTUVWXYZabcdef" +
             "ghijklmnopqrstuv" +
             "wxyz0123456789+/" +
@@ -634,7 +573,7 @@ $(function () {
             chr1 = chr2 = chr3 = "";
             enc1 = enc2 = enc3 = enc4 = "";
         } while (i < input.length);
-        return unescape(output);
+        return unescape(output);*/
     }
 
     function showPage(page) {
@@ -642,7 +581,6 @@ $(function () {
         pageName = $(page.target).data('page');
         //page.addClass('active');
         $(page.target).addClass('active');
-        console.log(page.target);
         $('.pages>div').hide();
         showPage = $('.pages>div.' + pageName);
         showPage.show();
@@ -652,7 +590,6 @@ $(function () {
 
     function createTimers() {
         var elems = $(".stopwatch");
-        console.log(elems);
         var stopwatches = [];
         var sWatch;
 
@@ -684,9 +621,7 @@ $(function () {
     }
 
     function createNewTimer(data) {
-        console.log(data);
         elem = $('#newStopwatch').prepend('<div class="stopwatch row"></div>');
-        console.log(elem.find('.stopwatch')[0]);
         var swOptions = {
             //stopwatch_id: elem.data('stopwatch_id'),// ? stopwatch_id : 0,
             //user_id: elem.data('user_id'), //||0,
@@ -706,18 +641,15 @@ $(function () {
     }
 
     function links(e) {
-        console.log($(e.currentTarget).data('toggle'));
         var toggle = $(e.currentTarget).data('toggle');
         if (toggle && toggle != 'dropdown') {
             e.preventDefault();
             //console.log($('.' + toggle));
             var elems = $('.' + toggle);
             $.each(elems, function (index, value) {
-                console.log($(value));
                 if ($(value).data('is_form')) {
                     //console.log('show');
                     $(value).show();
-                    console.log($(value).find('input')[0]);
                     $(value).find('input')[1].focus();
                 } else {
                     //console.log('hide');
@@ -729,13 +661,11 @@ $(function () {
             e.preventDefault();
         }
         var page = $(e.currentTarget).data('load-page');
-        console.log(page);
         if (page) {
 
             e.preventDefault();
             //alert('yay');
             $.getJSON($(e.currentTarget).data('url'), {page: page}, addData);
-            //console.log(page + 1);
             $(e.currentTarget).data('load-page', page + 1);
         }
 
@@ -751,14 +681,11 @@ $(function () {
             elem.data('load-page', page + 1);
         }
         $.each(data.meta, function() {
-            console.log(this.date);
-            console.log(moment(this.date.date).format('DD MMMM')  );
             var date = moment(this.date.date).format('DD MMMM');
             $('<li class="time-label"><span class="bg-red">' + date + '</span></li>')
                 .insertBefore('#read-more');
 
             $.each(this.item, function() {
-                console.log(this);
                 var element = '<li>';
                 switch(this.type) {
                     case 'heartRate':

@@ -121,16 +121,12 @@ canvas {
   bottom: 50px;
 }
 
-.loading::after {
-  content: " ";
-  display:block;
-  height: 30px;
-  width: 30px;
-  color: black;
-  background-image: url("resources/img/ring.svg");
-  background-size: 30px 30px;
+.loading a {
+  color: white;
+  &:hover {
+    color: white;
+  }
 }
-
 //.profile-img-edit::after {
 //  content: "test";
 //  background-color: black;

@@ -7,13 +7,13 @@
     <div class="nav-tabs-custom">
         <ul class="btn-pages nav-tabs nav"><!--
             -->
-            <li id="about" class="btn btn-page active col-xs-3 " data-page="about">About</li><!--
+            <li id="about" class="btn btn-page active col-xs-3 " data-page="about"><i class="fa fa-line-chart"></i> Over</li><!--
             -->
-            <li id="PR" class="btn btn-page col-xs-3" data-page="PR">PR</li><!--
+            <li id="PR" class="btn btn-page col-xs-3" data-page="PR"><img src="/resources/img/podium.svg" alt="" height="20px"> PR</li><!--
             -->
-            <li id="chrono" class="btn btn-page col-xs-3" data-page="chrono">SW</li><!--
+            <li id="chrono" class="btn btn-page col-xs-3" data-page="chrono"><i class="fa fa-clock-o"></i> SW</li><!--
             -->
-            <li id="contact" class="btn btn-page col-xs-3" data-page="contact">Contact</li><!--
+            <li id="contact" class="btn btn-page col-xs-3" data-page="contact"><i class="fa fa-exclamation-circle"></i> AP</li><!--
         --></ul>
     </div>
     </div>

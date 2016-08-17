@@ -9687,14 +9687,10 @@ table {
   margin-right: auto;
   bottom: 50px; }
 
-.loading::after {
-  content: " ";
-  display: block;
-  height: 30px;
-  width: 30px;
-  color: black;
-  background-image: url("resources/img/ring.svg");
-  background-size: 30px 30px; }
+.loading a {
+  color: white; }
+  .loading a:hover {
+    color: white; }
 
 .timeline {
   margin-top: 15px; }
