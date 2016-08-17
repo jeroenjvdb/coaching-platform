@@ -9648,7 +9648,21 @@ table {
   left: -60px;
   border-radius: 0;
   width: calc(100% + 120px);
-  top: 5px; }
+  top: 5px;
+  z-index: 1; }
+  .nav-tabs-custom.scrolling {
+    position: fixed;
+    width: 100%;
+    left: 0;
+    top: 0; }
+  @media (min-width: 768px) {
+    .nav-tabs-custom.scrolling {
+      width: calc(100% - 230px);
+      left: 230px; } }
+
+.sidebar-collapse #navigation-sticky.scrolling {
+  width: 100%;
+  left: 0; }
 
 @media (min-width: 768px) {
   .nav-tabs-custom {

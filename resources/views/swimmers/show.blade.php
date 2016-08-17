@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="pagebar">
-    <div class="nav-tabs-custom">
+    <div id="navigation-sticky" class="nav-tabs-custom">
         <ul class="btn-pages nav-tabs nav"><!--
             -->
             <li id="about" class="btn btn-page active col-xs-3 " data-page="about"><i class="fa fa-line-chart"></i> Over</li><!--

@@ -5,7 +5,7 @@ var allCharts = [];
 
 $(function () {
     init();
-    var nextPage, prevPage;
+    var nextPage, prevPage, extraNavPos;
 
     function init() {
         $.ajaxSetup({
@@ -212,6 +212,16 @@ $(function () {
                 $(window).trigger('resize');
             }, 250);
         });
+        extraNavPos = $('#navigation-sticky').offset();
+
+        $(window).scroll(function(){
+
+            if($(window).scrollTop() > extraNavPos.top){
+                $('#navigation-sticky').addClass('scrolling');
+            } else {
+                $('#navigation-sticky').removeClass('scrolling');
+            }
+        });
 
         showStopwatchTimes();
     }
@@ -269,6 +279,7 @@ $(function () {
     }
 
     function resize(e) {
+        extraNavPos = $('#navigation-sticky').offset();
         //delay(1000);
         $.each($('.swimmer-thumb'), function () {
             var cw = $(this).width();

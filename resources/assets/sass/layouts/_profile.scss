@@ -41,7 +41,28 @@ table {
   border-radius: 0;
   width: calc(100% + 120px);
   top: 5px;
+  z-index: 1;
+
+  &.scrolling {
+    position: fixed;
+    width: 100%;
+    left: 0;
+    top: 0;
+  }
+
+  @media(min-width: $screen-sm-min) {
+    &.scrolling {
+    width: calc(100% - 230px);
+    left: 230px;
+    }
+  }
 }
+
+.sidebar-collapse #navigation-sticky.scrolling {
+  width: 100%;
+  left: 0;
+}
+
 
 @media(min-width: $screen-sm-min) {
   .nav-tabs-custom {
