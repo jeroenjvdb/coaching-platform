@@ -676,6 +676,9 @@ $(function () {
 
             e.preventDefault();
             //alert('yay');
+            elem = $('#read-more').find('a');
+            elem.find('.spin-icon').show();
+
             $.getJSON($(e.currentTarget).data('url'), {page: page}, addData);
             $(e.currentTarget).data('load-page', page + 1);
         }
@@ -684,13 +687,17 @@ $(function () {
 
     function addData(data)
     {
+        elem = $('#read-more').find('a');
         if(! data.meta.length) {
-            elem = $('#read-more').find('a');
             url = elem.data('url');
             page = elem.data('load-page');
             $.getJSON(url, {page: page}, addData);
             elem.data('load-page', page + 1);
+
+            return true;    
         }
+        elem.find('.spin-icon').hide();
+
         $.each(data.meta, function() {
             var date = moment(this.date.date).format('DD MMMM');
             $('<li class="time-label"><span class="bg-red">' + date + '</span></li>')
@@ -718,7 +725,8 @@ $(function () {
 
                 $(element).insertBefore('#read-more');
             })
-        })
+        });
+
     }
 
     function isHTML(str) {

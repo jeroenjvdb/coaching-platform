@@ -122,10 +122,14 @@
             @endforeach
         @endforeach
             <li id="read-more" class="time-label loading">
-        <span  class="bg-red loading">
+        <span  class="bg-red loading text-center">
             <a href="#"  data-load-page="2" data-url="{{ route('swimmer.data.get', [
                 'swimmer' => $swimmer->slug
-            ]) }}">Meer laden</a>
+            ]) }}">Meer laden <br>
+                <span class="text-center spin-icon" hidden>
+            <i class="fa fa-refresh fa-spin"></i>
+                </span>
+            </a>
 
         </span>
             </li>
