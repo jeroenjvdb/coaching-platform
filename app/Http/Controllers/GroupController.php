@@ -182,6 +182,6 @@ class GroupController extends Controller
             Auth::user()->updateMeta('group', $group->id);
         }
 
-        return redirect()->back();
+        return redirect()->route('home');
     }
 }
