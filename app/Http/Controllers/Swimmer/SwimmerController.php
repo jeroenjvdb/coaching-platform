@@ -91,8 +91,10 @@ class SwimmerController extends Controller
      * @param Group $group
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request, Group $group)
+    public function store(Request $request)
     {
+        $group = Auth::user()->getGroup();
+
         $swimmer = $this->swimmer->fill([
                 'first_name'      => $request->first_name,
                 'last_name'       => $request->input('last_name'),
@@ -162,8 +164,9 @@ class SwimmerController extends Controller
 
     }
 
-    public function destroy(Group $group, Swimmer $swimmer)
+    public function destroy(Swimmer $swimmer)
     {
+        $group = Auth::user()->getGroup();
         if(! $group->swimmers()->find($swimmer->id)) {
             return redirect()->back()->withErrors('De zwemmer is niet gevonden.');
         }

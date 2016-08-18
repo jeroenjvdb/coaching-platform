@@ -32,6 +32,7 @@ class Swimmer extends Model
         'swimrankings_id',
         'email',
         'birthday',
+        'group_id',
     ];
 
     /**

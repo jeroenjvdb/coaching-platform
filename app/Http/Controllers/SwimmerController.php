@@ -11,6 +11,7 @@ use App\Http\Controllers\Controller;
 use App\Swimmer;
 
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class SwimmerController extends Controller
@@ -74,12 +75,19 @@ class SwimmerController extends Controller
      */
     public function store(Request $request, Group $group)
     {
+        $group = Auth::user()->getGroup();
+
+        dd($group);
+
         $swimmer = $this->swimmer->fill([
             'name' => $request->input('first_name') . ' ' . $request->input('last_name'),
             'profile_id' => $request->input('swimrankings'),
+            'group_id' => $group->id,
         ]);
 
-        $group->swimmers()->save($swimmer);
+        dd($swimmer);
+
+//        $group->swimmers()->save($swimmer);
 
         return redirect()->route('swimmers.index', ['group' => $group->slug]);
     }
