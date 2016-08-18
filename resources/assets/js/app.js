@@ -31,6 +31,18 @@ $(function () {
 
         $(window).trigger('resize');
         createTimers();
+        trainingTriggerEdit();
+    }
+
+    function trainingTriggerEdit()
+    {
+        var usersList = $('.users-list.training-presences');
+        console.log(usersList);
+        if(! usersList.children().length) {
+            modalSelector = usersList.data('modal');
+            console.log(modalSelector);
+            $(modalSelector).modal('show');
+        }
     }
 
     function cb(start, end) {
@@ -107,6 +119,20 @@ $(function () {
     }
 
     function updateCharts(start, end) {
+        var presences = $('#presences.progress-bar');
+        if(presences.first()) {
+            console.log('in presences');
+            console.log(presences);
+            url = presences.first().data('url');
+            console.log(url);
+            $.getJSON(url, {
+                start: start.toISOString(),
+                end: end.toISOString(),
+            }, function(data) {
+                console.log(data);
+                presences.first().css('width', ( data.presences ) * 100 + '%').text((data.presences*100) + '%');
+            })
+        }
         var charts = $('.chart');
 
         charts.each(function (index, chart) {
@@ -694,7 +720,7 @@ $(function () {
             $.getJSON(url, {page: page}, addData);
             elem.data('load-page', page + 1);
 
-            return true;    
+            return true;
         }
         elem.find('.spin-icon').hide();
 

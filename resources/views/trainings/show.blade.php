@@ -34,6 +34,8 @@
         {!! Form::submit('verzenden', [
             'hidden',
         ]) !!}
+        <p>Deel deze training met de zwemmers.</p>
+
         {!! Form::close() !!}
 
     @endif

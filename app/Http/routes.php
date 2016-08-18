@@ -181,6 +181,10 @@ Route::group(['middleware' => 'web'], function () {
                                 'as' => '{group}.swimmer.heartRate',
                                 'uses' => 'ApiController@getHeartRate'
                             ]);
+                            Route::get('presences', [
+                                'as' => 'swimmer.presences',
+                                'uses' => 'ApiController@presences',
+                            ]);
                             Route::get('data', [
                                 'as' => 'swimmer.data.get',
                                 'uses' => 'ApiController@data',

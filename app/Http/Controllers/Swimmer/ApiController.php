@@ -31,7 +31,7 @@ class ApiController extends Controller
         return json_encode([
             'type' => 'success',
             'datatype' => 'heartRate',
-            'label' => 'ochtendpols',
+            'label' => 'Slagen / Minuut',
             'data' => $hr,
         ]);
     }
@@ -66,7 +66,7 @@ class ApiController extends Controller
         return json_encode([
             'type' => 'success',
             'datatype' => 'weight',
-            'label' => 'gewicht',
+            'label' => 'Kilogram',
             'data' => $weights,
         ]);
     }
@@ -89,9 +89,37 @@ class ApiController extends Controller
         return redirect()->back();
     }
 
+    /**
+     * get data.
+     *
+     * @param Request $request
+     * @param Swimmer $swimmer
+     * @return \Illuminate\Support\Collection
+     */
     public function data(Request $request, Swimmer $swimmer)
     {
         Log::info('page',[ $request->page ]);
+
         return $swimmer->getTheMeta($request->page);
+    }
+
+    /**
+     * get presence percentage between two dates.
+     *
+     * @param Request $request
+     * @param Swimmer $swimmer
+     * @return string
+     */
+    public function presences(Request $request, Swimmer $swimmer)
+    {
+        $start = $request->start;
+        $end = $request->end;
+
+        $percentage = $swimmer->presences($start, $end);
+
+        return json_encode([
+            'type' => 'success',
+            'presences' => $percentage,
+                           ]);
     }
 }

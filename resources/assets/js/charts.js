@@ -2,7 +2,7 @@ var ChartConfig = function (elem, data) {
         var chart = null;
         var timeFormat = 'MM/DD/YYYY';
         //var url = $('.chart').first().data('url');
-        console.log(data);
+        //console.log(data);
         config(data);
 //$.getJSON(url, jsonData);
 
@@ -171,7 +171,7 @@ var ChartConfig = function (elem, data) {
 //    }
 
         function heartRate(data) {
-            console.log(data);
+            //console.log(data);
             var dataSet = [];
                 //console.log(data.data[i]);
                 for (var i = 0; i < data.data.length; i++) {
@@ -183,8 +183,8 @@ var ChartConfig = function (elem, data) {
 
                 }
 
-            console.log('dataSet');
-            console.log(dataSet);
+            //console.log('dataSet');
+            //console.log(dataSet);
             return {
                 type: 'line',
                 data: {
@@ -211,7 +211,7 @@ var ChartConfig = function (elem, data) {
                     scales: {
                         yAxes: [{
                             scaleLabel: {
-                                display: false,
+                                display: true,
                                 labelString: data.label
                             },
                             ticks: {

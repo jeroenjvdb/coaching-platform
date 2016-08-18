@@ -142,6 +142,29 @@ class Swimmer extends Model
         return false;
     }
 
+    public function presences($start, $end)
+    {
+        $trainings = $this
+            ->trainings()
+            ->where('starttime', '>', $start)
+            ->where('starttime', '<', $end)
+            ->get();
+        $trainingCount = $trainings->count();
+        $count = 0;
+        foreach($trainings as $training) {
+            if($training->pivot->is_present) {
+                $count++;
+            }
+        }
+        if( $count != 0 ) {
+            $presence = $count/$trainingCount;
+
+            return round($presence, 2);
+        }
+
+        return false;
+    }
+
     public function getFullNameAttribute()
     {
         return $this->first_name . ' ' . $this->last_name;

@@ -14,6 +14,11 @@
             <h2>Vandaag</h2>
 
             <div class="row">
+                <div class="col-xs-12">
+                    <p>
+                        Alle trainingen die vandaag vallen.
+                    </p>
+                </div>
                 @foreach($trainings as $key => $training)
                     @if(Auth::user()->clearance_level > 0 || $training->is_shared)
                         <div class="col-xs-12 col-md-6 col-lg-4">
@@ -75,55 +80,59 @@
                 @endif
             </h2>
             <div class="row swimmers">
+                <div class="col-xs-12">
+                    <p>Alle zwemmers van {{ $group->name }}</p>
+
+                </div>
                 <ul class="users-list">
 
-                @foreach($swimmers as $key => $swimmer)
-                    {{--@if($key > 0 && $key % 2 == 0)--}}
+                    @foreach($swimmers as $key => $swimmer)
+                        {{--@if($key > 0 && $key % 2 == 0)--}}
                         {{--<div class="clearfix visible-xs"></div>--}}
-                    {{--@endif--}}
-                    {{--@if($key > 0 && $key % 4 == 0)--}}
+                        {{--@endif--}}
+                        {{--@if($key > 0 && $key % 4 == 0)--}}
                         {{--<div class="clearfix visible-sm"></div>--}}
-                    {{--@endif--}}
-                    {{--@if($key > 0 && $key % 6 == 0)--}}
+                        {{--@endif--}}
+                        {{--@if($key > 0 && $key % 6 == 0)--}}
                         {{--<div class="clearfix visible-md"></div>--}}
-                    {{--@endif--}}
-                    {{--@if($key > 0 && $key % 12 == 0)--}}
+                        {{--@endif--}}
+                        {{--@if($key > 0 && $key % 12 == 0)--}}
                         {{--<div class="clearfix visible-lg"></div>--}}
-                    {{--@endif--}}
-                    {{--<div class="center no-gutter cube">--}}
+                        {{--@endif--}}
+                        {{--<div class="center no-gutter cube">--}}
                         {{--<a rel="external" href="{{ route('{group}.swimmer.show', [--}}
-                    {{--$swimmer->slug--}}
-                {{--]) }}">--}}
-                            {{--<div class=" swimmer">--}}
-                                {{--<div class="thumbnail center swimmer-thumb" style="; ">--}}
-                            {{--<span class="center name">--}}
+                        {{--$swimmer->slug--}}
+                        {{--]) }}">--}}
+                        {{--<div class=" swimmer">--}}
+                        {{--<div class="thumbnail center swimmer-thumb" style="; ">--}}
+                        {{--<span class="center name">--}}
 
-                    {{--</span>--}}
+                        {{--</span>--}}
 
 
-                                {{--</div>--}}
-                            {{--</div>--}}
+                        {{--</div>--}}
+                        {{--</div>--}}
 
                         {{--</a>--}}
-                    {{--</div>--}}
-                    <li>
-                        <a href="{{ route('{group}.swimmer.show', $swimmer->slug) }}">
-                        @if($swimmer->getMeta('picture'))
-                        <img src="{{ $swimmer->getMeta('picture') }}" alt="">
-                        @else
-                        <img src="{{ config('profile.picture') }}"
-                        alt="">
-                        @endif
-                        <span class="users-list-name">
+                        {{--</div>--}}
+                        <li>
+                            <a href="{{ route('{group}.swimmer.show', $swimmer->slug) }}">
+                                @if($swimmer->getMeta('picture'))
+                                    <img src="{{ $swimmer->getMeta('picture') }}" alt="">
+                                @else
+                                    <img src="{{ config('profile.picture') }}"
+                                         alt="">
+                                @endif
+                                <span class="users-list-name">
                             {{ $swimmer->first_name }} {{ $swimmer->last_name }}
                         </span>
-                        </a>
-                    </li>
+                            </a>
+                        </li>
 
 
 
 
-                @endforeach
+                    @endforeach
                 </ul>
 
             </div>
@@ -136,17 +145,20 @@
                 @endif
             </h2>
             <div class="row">
-            @foreach($coaches as $coach)
                 <div class="col-xs-12">
-                    {{ $coach->first_name }} {{-- }}{{ $coach->last_name }}--}}
+                    <p>Alle coaches van {{ $group->name }}</p>
                 </div>
-            @endforeach
+                @foreach($coaches as $coach)
+                    <div class="col-xs-12">
+                        {{ $coach->first_name }} {{-- }}{{ $coach->last_name }}--}}
+                    </div>
+                @endforeach
             </div>
             @if(Auth::user()->clearance_level > 0)
 
                 <h2>groep verwijderen</h2>
                 <div class="row">
-                    <div class="col-md-4 col-md-offset-4 col-sm-8 col-sm-offset-2 col-xs-12">
+                    <div class="col-md-4 col-xs-12">
                         <button type="button" class="btn btn-danger btn-lg btn-full" data-toggle="modal"
                                 data-target="#delete">
                             verwijderen

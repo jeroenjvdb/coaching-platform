@@ -1,17 +1,23 @@
 <h2>Over</h2>
-<h3>Aanwezigheden</h3>
-<div class="progress">
-    <div class="progress-bar" role="progressbar" aria-valuenow="{{ $swimmer->presence * 100 }}%"
-         aria-valuemin="0" aria-valuemax="100" style="width: {{ $swimmer->presence * 100 }}%">
-        {{ $swimmer->presence * 100 }}%
-    </div>
-</div>
 <div class="row">
     <div class="col-md-6 col-md-offset-6">
-        <div id="daterangepicker" class="pull-right " style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
+        <div id="daterangepicker" class="pull-right "
+
+             style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
             <i class="fa fa-calendar"></i>&nbsp;
             <span></span> <b class="caret"></b>
         </div>
+    </div>
+</div>
+<h3>Aanwezigheden</h3>
+<div class="progress">
+    <div id="presences" class="progress-bar" role="progressbar" aria-valuenow="{{ $swimmer->presence * 100 }}%"
+         aria-valuemin="0" aria-valuemax="100" style="width: {{ $swimmer->presence * 100 }}%;  min-width: 5%;"
+            data-url="{{ route('swimmer.presences', [
+                'swimmer' => $swimmer->slug,
+             ]) }}"
+             >
+        {{ $swimmer->presence * 100 }}%
     </div>
 </div>
 <div class="row">
