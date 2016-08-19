@@ -9683,7 +9683,8 @@ table {
   background-color: #0e7287; }
 
 .profile-img-edit {
-  border-radius: 5%; }
+  display: block;
+  z-index: 5; }
 
 .edit-profile {
   text-align: center;

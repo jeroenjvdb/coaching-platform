@@ -13,7 +13,7 @@
                                  src="http://library.unn.edu.ng/wp-content/uploads/sites/42/2016/03/prifile-pic.png"
                                  @endif
                                  alt="">
-                            <i class="fa fa-pencil edit-profile"></i>
+                            {{--<i class="fa fa-pencil edit-profile"></i>--}}
                         </a>
                     </div>
                 </div>
@@ -169,18 +169,18 @@
 
         </div>
     </div>
+    </div>
+<div class="row">
     @if(Auth::user()->clearance_level > 0)
 
-        <div class="row">
-            <div class="col-xs-12">
-                <h2>Verwijderen</h2>
-            </div>
-            <div class="col-md-6">
-                <button type="button" class="btn btn-danger btn-lg btn-full" data-toggle="modal"
-                        data-target="#delete">
-                    Verwijderen
-                </button>
-            </div>
+        <div class="col-xs-12">
+            <h2>Verwijderen</h2>
+        </div>
+        <div class="col-md-6">
+            <button type="button" class="btn btn-danger btn-lg btn-full" data-toggle="modal"
+                    data-target="#delete">
+                Verwijderen
+            </button>
         </div>
     @endif
 </div>
@@ -218,5 +218,5 @@
             </div>
         </div>
     </div>
-    @endif
-    {{--</div>--}}
+@endif
+{{--</div>--}}
