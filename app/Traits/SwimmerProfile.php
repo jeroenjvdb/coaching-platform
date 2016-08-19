@@ -395,7 +395,7 @@ trait SwimmerProfile
 //        dd($this->stopwatches);//()->where('created_at', '>', $startDate)->where('created_at', '<', $endDate)->get());7
 //        dd($endDate);
 //        dd($this->data()->where('created_at', '>', $startDate)->where('created_at', '<', $endDate)->get());
-        foreach ($this->data()->where('created_at', '>', $startDate)->where('created_at', '<', $endDate)->get() as $data) {
+        foreach ($this->data()->where('created_at', '>', $startDate)->where('created_at', '<=', $endDate)->get() as $data) {
             $media = null;
             if ($data->media_url && $data->media_type) {
                 $collecting = [

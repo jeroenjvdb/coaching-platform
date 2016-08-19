@@ -79,14 +79,14 @@ class ContactController extends Controller
 //        $swimmer->save();
         return redirect()->back();
 
-        return json_encode([
+        /*return json_encode([
             'type' => 'success',
             'form' => 'contact',
             'data' => [
                 'swimmer' => $swimmer,
                 'contact' => $swimmer->get()['contact'],
             ]
-        ]);
+        ]);*/
     }
 
     public function updatePicture(Request $request, Group $group, Swimmer $swimmer)

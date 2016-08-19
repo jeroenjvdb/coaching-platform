@@ -117,8 +117,21 @@ class CoachController extends Controller
      */
     public function show($id)
     {
+        $coach = $this->coach->findOrFail($id);
+
         $data = [
-            'coach' => $this->coach->findOrFail($id),
+            'coach' => $coach,
+            'contact' => [
+                'picture' => $coach->getMeta('picture'),
+                'phone' => '0491436631',
+                'address' => [
+                    'street' => 'Bernard de Pooterstraat',
+                    'number' => '9',
+                    'city' => 'Wilrijk',
+                    'zipcode' => '2610'
+                ],
+            ],
+            'group' => Auth::user()->getGroup(),
         ];
 
         return view('coach.show', $data);
@@ -145,9 +158,28 @@ class CoachController extends Controller
      * @param $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update($id)
+    public function update(Request $request, $id)
     {
+        $group = Auth::user()->getGroup();
         $coach = $this->coach->findOrFail($id);
+
+        if($request->picture && true) {
+            $quality = 90;
+            $src  = $request->picture;
+            $img  = imagecreatefromjpeg($src);
+            $dest = ImageCreateTrueColor($request->w,
+                                         $request->h);
+
+            imagecopyresampled($dest, $img, 0, 0, $request->x,
+                               $request->y, $request->w, $request->h,
+                               $request->w, $request->h);
+            imagejpeg($dest, $src, $quality);
+
+            $coach->updateMeta('picture', $this->storeImage($src, $group, $coach));
+            return redirect()->back();
+        } else if ($request->picture && ! $request->picture->isValid()) {
+            return redirect()->back()->withErrors('Er is iets mis met deze afbeelding');
+        }
 
         return redirect()->route('coach.show', [$id]);
     }
@@ -167,6 +199,28 @@ class CoachController extends Controller
         return redirect()->route('coach.index');
     }
 
+    protected function storeImage($img, Group $group, Coach $coach)
+    {
+        $destinationPath   = "uploads/profilePics/" . $group-> slug . '/';
+        $extension         = $img->getClientOriginalExtension();
+        $filename = createSlug($coach->first_name . ' ' . $coach->last_name);
+        $filename .= "." . $extension;
+        //fullpath = path to picture + filename + extension
+        $fullPath          = $destinationPath . $filename;
+        $img->move($destinationPath , $filename);
+
+        return '/' . $fullPath;
+    }
+
+
+
+    /**
+     * Send the login link to the user.
+     *
+     * @param $token
+     * @param $email
+     * @return bool
+     */
     private function sendLogin($token, $email)
     {
         $route = route(

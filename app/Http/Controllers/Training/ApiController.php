@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class ApiController extends Controller
 {
@@ -104,7 +105,11 @@ class ApiController extends Controller
      */
     public function shared(Request $request, Group $group, $training_id)
     {
+        $group = Auth::user()->getGroup();
+//        Log::info('group', [$group]);
+
         $training = $group->trainings()->find($training_id);
+//        Log::info('training', [$training]);
 
         $training-> is_shared = abs($training->is_shared - 1);
         $training->save();

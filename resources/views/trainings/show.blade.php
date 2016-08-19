@@ -16,7 +16,6 @@
         {!! Form::open([
             'route' => [
                 '{group}.training.shared',
-                'group' => $group->slug,
                 $training->id,
             ],
             'data-checked-submit' => 'true',

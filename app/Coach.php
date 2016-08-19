@@ -3,9 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Phoenix\EloquentMeta\MetaTrait;
+
 
 class Coach extends Model
 {
+    use MetaTrait;
+
     /**
      * The table associated with the model.
      *

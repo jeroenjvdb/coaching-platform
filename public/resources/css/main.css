@@ -9778,6 +9778,8 @@ table {
     color: white;
     font-weight: 800;
     text-transform: uppercase; }
+    .training .category .fa, .training .total .fa {
+      color: white; }
   .training table {
     width: 100%; }
     .training table tr {

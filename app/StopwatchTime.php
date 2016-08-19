@@ -16,16 +16,19 @@ class StopwatchTime extends Model
     ];
 
     protected $dates = [
-        ];
+    ];
 
     protected $casts = [
         'is_paused' => 'boolean',
         'full_time' => 'array',
+//        'ft'        => 'array',
     ];
 
     protected $appends = [
         //'time',
         'full_time',
+//        'ft',
+        'time_array',
     ];
 
     public function stopwatch()
@@ -67,15 +70,43 @@ class StopwatchTime extends Model
         $data->minutes = $input % 60;
         $input = floor($input / 60);
 
-        $data->hours = $input%24;
-        $input = floor($input/24);
+        $data->hours = $input % 24;
+        $input = floor($input / 24);
 
         $data->toText = //sprintf('%02d', $data->hours) . ':' .
-            sprintf('%02d', $data->minutes ) . ':' .
-            sprintf('%02d', $data->seconds ) . '.' .
+            sprintf('%02d', $data->minutes) . ':' .
+            sprintf('%02d', $data->seconds) . '.' .
             sprintf('%02d', $data->milliseconds / 10);
 
         $data->arr = str_split($data->toText);
+
+        return $data;
+    }
+
+    public function getTimeArrayAttribute()
+    {
+        $data = [];
+        $input = $this->attributes['time'];
+
+        $data['milliseconds'] = $input % 1000;
+        $data['hundredth'] = $input % 100;
+        $input = floor($input / 1000);
+
+        $data['seconds'] = $input % 60;
+        $input = floor($input / 60);
+
+        $data['minutes'] = $input % 60;
+        $input = floor($input / 60);
+
+        $data['hours'] = $input % 24;
+        $input = floor($input / 24);
+
+        $data['toText'] = //sprintf('%02d', $data->hours) . ':' .
+            sprintf('%02d', $data['minutes']) . ':' .
+            sprintf('%02d', $data['seconds']) . '.' .
+            sprintf('%02d', $data['milliseconds'] / 10);
+
+        $data['arr'] = str_split($data['toText']);
 
         return $data;
     }

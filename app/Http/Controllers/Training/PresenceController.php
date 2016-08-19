@@ -26,7 +26,7 @@ class PresenceController extends Controller
         $swimmers = $training->swimmers;
         foreach($swimmers as $swimmer) {
             $swimmer->pivot->is_present = false;
-            if(in_array($swimmer->id, $request->swimmers)) {
+            if($request->swimmers && in_array($swimmer->id, $request->swimmers)) {
                 $swimmer->pivot->is_present = true;
             }
             $swimmer->pivot->save();
@@ -35,6 +35,14 @@ class PresenceController extends Controller
         return redirect()->back();
     }
 
+    /**
+     * Store swimmers who have to go to the training.
+     *
+     * @param Request $request
+     * @param Group $group
+     * @param $training_id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function swimmers(Request $request, Group $group, $training_id)
     {
         $group = Auth::user()->getGroup();

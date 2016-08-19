@@ -248,6 +248,12 @@ class StopwatchController extends Controller
         return view('stopwatches.show', $data);
     }
 
+    /**
+     * Get the records
+     *
+     * @param $id
+     * @return string
+     */
     public function recordApi($id)
     {
         $stopwatch = $this->stopwatch->find($id);
@@ -261,6 +267,12 @@ class StopwatchController extends Controller
         ]);
     }
 
+    /**
+     * make readable time
+     *
+     * @param $input
+     * @return \Illuminate\Support\Collection
+     */
     private function makeFullTime($input)
     {
         $data = collect([]);

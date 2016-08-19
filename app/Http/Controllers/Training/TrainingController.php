@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Training;
 
 use App\Group;
+use App\Http\Requests\TrainingRequest;
 use App\Stroke;
 use App\Training;
 use Carbon\Carbon;
@@ -109,7 +110,7 @@ class TrainingController extends Controller
      * @param Group $group
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(TrainingRequest $request)
     {
         $group = Auth::user()->getGroup();
 
@@ -146,10 +147,7 @@ class TrainingController extends Controller
                 trans('trainings.permission')
             ]);
         }
-//        Date::setLocale('nl');
         $starttime = Date::parse($training->starttime);
-//        dd($starttime->format('l j F'));
-//        dd($starttime);
 
         $training->starttime = $starttime;
 
@@ -220,7 +218,6 @@ class TrainingController extends Controller
                 }
             }
         }
-//        dd($stopwatches);
         $editable = false;
         if(Auth::user()->clearance_level > 0) {
             $editable = true;
@@ -241,6 +238,8 @@ class TrainingController extends Controller
     }
 
     /**
+     * Edit the training.
+     *
      * @param $id
      */
     public function edit($id)
@@ -257,7 +256,6 @@ class TrainingController extends Controller
             ]);
         }
         $training->starttime = Date::parse($training->starttime);
-//        dd($starttime);
 
         $training->starttime = $starttime;
 
@@ -285,9 +283,11 @@ class TrainingController extends Controller
     }
 
     /**
+     * Update the training.
+     *
      * @param $id
      */
-    public function update(Request $request, Group $group, $id)
+    public function update(TrainingRequest $request, Group $group, $id)
     {
         $group = Auth::user()->getGroup();
 
@@ -333,9 +333,6 @@ class TrainingController extends Controller
             'training' => $training,
             'categories' => $categories,
         ];
-
-//        dd($training->starttime);
-//        return view('excel.training', $data);
 
         Excel::create('training', function($excel) use ($data) {
 

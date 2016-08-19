@@ -195,7 +195,7 @@ Route::group(['middleware' => 'web'], function () {
 
                     Route::resource('zwemmer', 'SwimmerController', [
                         'names' => [
-                            'index' => '{group}.swimmer.index',
+//                            'index' => '{group}.swimmer.index',
                             'store' => '{group}.swimmer.store',
                             'create' => '{group}.swimmer.create',
                             'show' => '{group}.swimmer.show',
@@ -207,6 +207,7 @@ Route::group(['middleware' => 'web'], function () {
                             'zwemmer' => 'swimmer',
                         ],
                         'except' => [
+                            'index'
                         ]
                     ]);
 

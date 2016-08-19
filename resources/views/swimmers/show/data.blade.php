@@ -11,14 +11,14 @@
         {!! Form::open(['route' => ['me.reaction.store', 'group' => $swimmer->group->slug], 'files' => true]) !!}
     @endif
     <fieldset class="form-group">
-        {!! Form::label('message') !!}
+        {!! Form::label('message', 'bericht') !!}
         {!! Form::textarea('message', null, [
             'class' => 'form-control'
         ]) !!}
     </fieldset>
     <fieldset class="form-group">
     <span class="btn btn-default btn-file">
-        <i class="fa fa-upload"></i> Upload media {!! Form::file('media') !!}
+        <i class="fa fa-upload"></i> Media Uploaden {!! Form::file('media') !!}
     </span>
 
     </fieldset>

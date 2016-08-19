@@ -47,6 +47,7 @@ class MetaController extends Controller
      */
     public function store(Request $request, Group $group, Swimmer $swimmer)
     {
+//        dd($request->all());
         $media_type = null;
         $media_url = null;
         if (isset($request->media)) {

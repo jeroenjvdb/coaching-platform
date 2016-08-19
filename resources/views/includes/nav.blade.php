@@ -15,7 +15,6 @@
                     ]) }}">Email</a></li>--}}
         <li {{ Request::is($group->slug . '/stopwatch*') ? ' class=active' : null }}>
             <a rel="external" href="{{ route('stopwatch.index',[
-                        'group' => $group->slug,
                     ]) }}">Stopwatch</a></li>
         @endif
         {{--<li {{ Request::is($group->slug . '/gym*') ? ' class=active' : null }}><a rel="external" href="{{ route('{group}.gym.index', [

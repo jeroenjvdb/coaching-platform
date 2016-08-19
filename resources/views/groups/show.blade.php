@@ -75,7 +75,6 @@
             <h2>Zwemmers
                 @if(Auth::user()->clearance_level > 0)
                     <a href="{{ route('{group}.swimmer.create', [
-        'group' => $group->slug,
     ]) }}" class="small"><i class="fa fa-plus"></i></a>
                 @endif
             </h2>
@@ -140,7 +139,6 @@
             <h2>Coaches
                 @if(Auth::user()->clearance_level > 0)
                     <a href="{{ route('coach.create', [
-        'group' => $group->slug,
     ]) }}" class="small"><i class="fa fa-plus"></i></a>
                 @endif
             </h2>
@@ -148,11 +146,27 @@
                 <div class="col-xs-12">
                     <p>Alle coaches van {{ $group->name }}</p>
                 </div>
-                @foreach($coaches as $coach)
-                    <div class="col-xs-12">
-                        {{ $coach->first_name }} {{-- }}{{ $coach->last_name }}--}}
-                    </div>
-                @endforeach
+                <ul class="users-list">
+                    @foreach($coaches as $coach)
+                        <li>
+                            <a href="{{ route('coach.show', [
+                                'id' => $coach->id,
+                            ]) }}">
+                                @if($coach->getMeta('picture'))
+                                    <img src="{{ $coach->getMeta('picture') }}" alt="">
+                                @else
+                                    <img src="{{ config('profile.picture') }}"
+                                         alt="">
+                                @endif
+                        <span class="users-list-name">
+                                                        {{ $coach->first_name }}  {{ $coach->last_name }}
+
+                        </span>
+                            </a>
+                        </li>
+                    @endforeach
+                </ul>
+
             </div>
             @if(Auth::user()->clearance_level > 0)
 

@@ -59,6 +59,8 @@ class SwimmerController extends Controller
      */
     public function create(Group $group)
     {
+        $group = Auth::user()->getGroup();
+
         $data = [
             'group' => $group
         ];
@@ -149,6 +151,14 @@ class SwimmerController extends Controller
 
     }
 
+    /**
+     * delete the swimmer.
+     *
+     * @param Group $group
+     * @param Swimmer $swimmer
+     * @return $this|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Exception
+     */
     public function destroy(Group $group, Swimmer $swimmer)
     {
         if(! $group->swimmers()->find($swimmer->id)) {

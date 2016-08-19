@@ -109,6 +109,8 @@ class CategoryController extends Controller
      */
     public function destroy(Request $request, Group $group, $training_id)
     {
+        $group = Auth::user()->getGroup();
+
         $training = $group
             ->trainings()
             ->find($training_id);

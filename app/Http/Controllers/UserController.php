@@ -25,11 +25,22 @@ class UserController extends Controller
         $this->authUser = Auth::user();
     }
 
+    /**
+     * get view for updating password.
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function getUpdatePassword()
     {
         return view('auth.passwords.update');
     }
 
+    /**
+     * update password
+     *
+     * @param PasswordRequest $request
+     * @return $this
+     */
     public function postUpdatePassword(PasswordRequest $request)
     {
         if(!Hash::check($request->old_password, $this->authUser->password)) {

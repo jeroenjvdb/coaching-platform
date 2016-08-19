@@ -61,6 +61,8 @@ class SwimmerController extends Controller
      */
     public function index(Group $group)
     {
+
+//        abort('404');
         $data = [
             'group'    => $group,
             'swimmers' => $group->swimmers,
@@ -75,8 +77,10 @@ class SwimmerController extends Controller
      * @param Group $group
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function create(Group $group)
+    public function create()
     {
+        $group = Auth::user()->getGroup();
+
         $data = [
             'group' => $group,
         ];
