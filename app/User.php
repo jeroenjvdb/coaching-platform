@@ -79,7 +79,9 @@ class User extends Authenticatable
             $group = $groups->first();
             if($this->getMeta('group')) {
                 $id = intval($this->getMeta('group'));
-                $group = $groups->where('id', $id)->first();
+                if($groups->where('id', $id)->count()) {
+                    $group = $groups->where('id', $id)->first();
+                }
             }
         }
 
