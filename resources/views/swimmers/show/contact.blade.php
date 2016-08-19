@@ -13,7 +13,7 @@
                                  src="http://library.unn.edu.ng/wp-content/uploads/sites/42/2016/03/prifile-pic.png"
                                  @endif
                                  alt="">
-                            {{--<i class="fa fa-pencil edit-profile"></i>--}}
+                            <i class="fa fa-pencil edit-profile"></i>
                         </a>
                     </div>
                 </div>
