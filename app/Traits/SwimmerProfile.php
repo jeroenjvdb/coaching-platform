@@ -367,6 +367,7 @@ trait SwimmerProfile
 
         $startDate = Carbon::now()->subWeeks($page);
         $endDate = Carbon::now()->subWeeks($page - 1);
+//        dd($endDate);
 
 //        $allMeta = $allMeta->sortByDesc('date');
 
@@ -417,6 +418,7 @@ trait SwimmerProfile
             $meta->push($item);
         }
 
+
 //        dd($this->heartRates()->where('date', '>', $startDate)->where('date', '<', $endDate)->get());
         foreach ($this->heartRates()->where('date', '>', $startDate)->where('date', '<', $endDate)->get() as $heartRate) {
             $newMeta = [
@@ -465,6 +467,10 @@ trait SwimmerProfile
                 $allItems = [];
             }
             array_push($allItems, $data);
+        }
+        if($item) {
+            $item->put('item', $allItems);
+            array_push($metaGrouped, $item);
         }
 
 

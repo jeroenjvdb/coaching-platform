@@ -9707,6 +9707,9 @@ table {
   .loading a:hover {
     color: white; }
 
+.timeline-body img {
+  width: 100%; }
+
 .timeline {
   margin-top: 15px; }
 

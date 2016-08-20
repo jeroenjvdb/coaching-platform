@@ -13,7 +13,8 @@
     <fieldset class="form-group">
         {!! Form::label('message', 'bericht') !!}
         {!! Form::textarea('message', null, [
-            'class' => 'form-control'
+            'class' => 'form-control',
+            'rows' => '2',
         ]) !!}
     </fieldset>
     <fieldset class="form-group">
