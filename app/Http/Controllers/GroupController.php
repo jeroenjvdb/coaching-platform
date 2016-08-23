@@ -75,12 +75,9 @@ class GroupController extends Controller
         $coach = $user->coach;
         $group->coaches()->attach($coach->id);
 
-        return redirect()->route(
-            'groups.show',
-            [
-                'group' => $group->slug,
-            ]
-        );
+        return redirect()->route('group.select', [
+            'group_id' => $group->id
+        ]);
     }
 
     /**

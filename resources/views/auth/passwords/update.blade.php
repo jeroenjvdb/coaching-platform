@@ -6,8 +6,8 @@
     <div class="col-md-4 col-md-offset-4">
 
         <div class="box box-danger login-box">
-            <div class="box-header">
-                <h3 class="text-center title-center">
+            <div class="panel-heading">
+                <h3>
                     Wachtwoord wijzigen
                 </h3>
                 <a href="/">

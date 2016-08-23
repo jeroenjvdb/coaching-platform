@@ -4,8 +4,8 @@
 
 @section('content')
     <div class="box box-danger login-box">
-        <div class="box-header">
-            <h3 class="text-center title-center">
+        <div class="panel-heading">
+            <h3>
                 Groep toevoegen
             </h3>
             <a href="/">

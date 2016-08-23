@@ -28,7 +28,7 @@
     top: -10px;
   }
 
-  .login-box {
+  .box {
     width: 100%;
     max-width: 350px;
     //margin: 150px auto;
@@ -36,6 +36,62 @@
     position: relative;
     overflow: hidden;
     box-shadow: 2px 0 10px 2px #333;
+
+    .panel-heading h3 {
+      margin-top: 0;
+      margin-left: 30px;
+    }
+
+    .return {
+
+
+      h3 {
+        margin-top: 10px;
+        margin-left: 0;
+        margin-bottom: 10px;
+      }
+    }
+
+
+    &.register {
+      max-width: 600px;
+    }
+  }
+
+  .register-part, .advantages {
+    h3 {
+      margin-top: 0;
+    }
+  }
+
+  .register-part {
+
+
+    @media screen and (min-width: $screen-sm) {
+      border-right: 1px solid #BBBBBB;
+      padding-right: 30px;
+    }
+    form {
+      overflow: hidden;
+    }
+
+  }
+
+  .advantages {
+    padding-left: 30px;
+  }
+
+  .register-part.advantages {
+    margin-top: 30px;
+  }
+
+  .advantage i
+  {
+    background-color: #d9534f;
+    color: white;
+    border-radius: 50%;
+    border: 1x solid grey;
+    padding:10px;
   }
 
   .login-box .in {
@@ -47,6 +103,12 @@
     float: left;
     margin: 10px 0 0 0;
   }
+
+  .face {
+    text-align: center;
+  }
+
+
 
   input[type=text], input[type=password], input[type=email], input[type=url], textarea {
     padding: 10px;

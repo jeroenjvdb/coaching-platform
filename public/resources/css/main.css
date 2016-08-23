@@ -5407,13 +5407,13 @@ tbody.collapse.in {
   bottom: 100%;
   margin-bottom: 2px; }
 
-@media (min-width: 768px) {
-  .navbar-right .dropdown-menu {
-    right: 0;
-    left: auto; }
-  .navbar-right .dropdown-menu-left {
-    left: 0;
-    right: auto; } }
+.navbar-right .dropdown-menu {
+  right: 0;
+  left: auto; }
+
+.navbar-right .dropdown-menu-left {
+  left: 0;
+  right: auto; }
 
 .btn-group,
 .btn-group-vertical {
@@ -5956,21 +5956,13 @@ tbody.collapse.in {
     padding-bottom: 10px;
     line-height: 20px; }
   @media (max-width: 767px) {
-    .navbar-nav .open .dropdown-menu {
-      position: static;
-      float: none;
-      width: auto;
-      margin-top: 0;
-      background-color: transparent;
-      border: 0;
-      box-shadow: none; }
-      .navbar-nav .open .dropdown-menu > li > a,
-      .navbar-nav .open .dropdown-menu .dropdown-header {
-        padding: 5px 15px 5px 25px; }
-      .navbar-nav .open .dropdown-menu > li > a {
-        line-height: 20px; }
-        .navbar-nav .open .dropdown-menu > li > a:hover, .navbar-nav .open .dropdown-menu > li > a:focus {
-          background-image: none; } }
+    .navbar-nav .open .dropdown-menu > li > a,
+    .navbar-nav .open .dropdown-menu .dropdown-header {
+      padding: 5px 15px 5px 25px; }
+    .navbar-nav .open .dropdown-menu > li > a {
+      line-height: 20px; }
+      .navbar-nav .open .dropdown-menu > li > a:hover, .navbar-nav .open .dropdown-menu > li > a:focus {
+        background-image: none; } }
   @media (min-width: 768px) {
     .navbar-nav {
       float: left;
@@ -8652,19 +8644,48 @@ h2, h3, h4, h5, h6 {
     margin-right: auto;
     position: relative;
     top: -10px; }
-  .variation .login-box {
+  .variation .box {
     width: 100%;
     max-width: 350px;
     background: #eaeaec;
     position: relative;
     overflow: hidden;
     box-shadow: 2px 0 10px 2px #333; }
+    .variation .box .panel-heading h3 {
+      margin-top: 0;
+      margin-left: 30px; }
+    .variation .box .return h3 {
+      margin-top: 10px;
+      margin-left: 0;
+      margin-bottom: 10px; }
+    .variation .box.register {
+      max-width: 600px; }
+  .variation .register-part h3, .variation .advantages h3 {
+    margin-top: 0; }
+  @media screen and (min-width: 768px) {
+    .variation .register-part {
+      border-right: 1px solid #BBBBBB;
+      padding-right: 30px; } }
+  .variation .register-part form {
+    overflow: hidden; }
+  .variation .advantages {
+    padding-left: 30px; }
+  .variation .register-part.advantages {
+    margin-top: 30px; }
+  .variation .advantage i {
+    background-color: #d9534f;
+    color: white;
+    border-radius: 50%;
+    border: 1x solid grey;
+    padding: 10px; }
   .variation .login-box .in {
     padding: 20px; }
   .variation .login-box .field {
     width: 100%;
     float: left;
     margin: 10px 0 0 0; }
+  .variation .face {
+    text-align: center; }
   .variation input[type=text], .variation input[type=password], .variation input[type=email], .variation input[type=url], .variation textarea {
     padding: 10px;
     height: 40px;

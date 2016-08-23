@@ -72,6 +72,9 @@ class HomeController extends Controller
         $swimmer = null;
 
 //        $groups = $this->group->where('id', $user->getMeta('swimmer_id'))->get();
+        if(! $group ) {
+            return redirect()->route('groups.create');
+        }
 
         $swimmers = $group
             ->swimmers()

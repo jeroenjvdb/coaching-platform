@@ -5,10 +5,10 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <h4 class="modal-title" id="myModalLabel">training aanpassen</h4>
+                <h4 class="modal-title" id="myModalLabel">Training aanpassen</h4>
             </div>
             <div class="modal-body">
-                <h2>tijdstip</h2>
+                <h2>Tijdstip</h2>
                 <p>Het begintijdstip aanpassen</p>
                 {!! Form::open(['route' => ['training.update',  'id' => $training->id],
                                 'data-ajax' => 'false',
@@ -37,7 +37,7 @@
                 {!! Form::close() !!}
                 <div class="row">
                     <div class="col-xs-12">
-                        <h2>zwemmers</h2>
+                        <h2>Zwemmers</h2>
                 <p>
                     Zwemmers toevoegen die deel moeten nemen aan deze training.
                 </p>
@@ -125,8 +125,7 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">sluiten</button>
             </div>
         </div>
     </div>
