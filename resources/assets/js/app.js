@@ -497,13 +497,17 @@ $(function () {
                 // fix crop size: find ratio dividing current per real size
                 var ratioW = $('#croppingImg')[0].naturalWidth / $('#croppingImg').width();
                 var ratioH = $('#croppingImg')[0].naturalHeight / $('#croppingImg').height();
-                var currentRatio = Math.min(ratioW, ratioH);
-                console.log(currentRatio);
+                //var currentRatio = Math.min(ratioW, ratioH);
+                //var currentRatio = ratioW;
+                //console.log(currentRatio);
+                console.log(ratioH);
+                console.log(ratioW);
+                console.log(c);
                 $('#croppedImg').val($('.upload-image').val());
-                $('#x').val(Math.round(c.x / currentRatio));
-                $('#y').val(Math.round(c.y / currentRatio));
-                $('#w').val(Math.round(c.w / currentRatio));
-                $('#h').val(Math.round(c.h / currentRatio));
+                $('#x').val(Math.round(c.x));
+                $('#y').val(Math.round(c.y));
+                $('#w').val(Math.round(c.w));
+                $('#h').val(Math.round(c.h));
             };
             /*reader.onloadend = function(e) {
              var exif = EXIF.readFromBinaryFile(new BinaryFile(this.result));
