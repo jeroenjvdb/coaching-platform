@@ -26,8 +26,8 @@ class HeartRateSeeder extends Seeder
         foreach($this->swimmer->all() as $swimmer) {
             $date = Carbon::today();
             $date->month = 7;
-            $date->day = 1;
-            for($i = 0; $i < 40; $i++) {
+            $date->day = 15;
+            for($i = 0; $i < 7; $i++) {
                 $swimmer->heartRates()->create([
                     'date' => $date,
                     'heart_rate' => rand(55, 60),
