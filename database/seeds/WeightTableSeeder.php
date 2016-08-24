@@ -25,7 +25,7 @@ class WeightTableSeeder extends Seeder
     {
         foreach($this->swimmer->all() as $swimmer) {
             $date = Carbon::today();
-            $date->month = 7;
+            $date->month = 8;
             $date->day = 15;
             for($i = 0; $i < 7; $i++) {
                 $swimmer->weights()->create([

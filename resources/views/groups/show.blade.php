@@ -48,29 +48,47 @@
             </div>
             @if($mySwimmer)
                 <h2>Mijn profiel</h2>
-
-                <div class="row swimmers">
-                    <div class="swimmer col-xs-6 col-sm-4 col-md-3 col-lg-2">
-                        <a rel="external" href="{{ route('me.profile', [
-                    'group' => $group->slug,
-                ]) }}">
-                        <span class="col-xs-12 col-sm-10 col-sm-offset-1">
-                        <div class="thumbnail center swimmer-thumb" style="; ">
-                            @if($mySwimmer->getMeta('picture'))
-                                <img src="{{ $mySwimmer->getMeta('picture') }}" alt="">
-                            @else
-                                <img src="{{ config('profile.picture') }}"
-                                     alt="">
-                            @endif
-                            <span class="center">
-                             {{ $mySwimmer->first_name }} {{ $mySwimmer->last_name }}
-                            </span>
-                        </div>
+            <div class="row swimmers">
+                <div class="">
+                    <ul class="users-list">
+                        <li>
+                            <a href="{{ route('{group}.swimmer.show', $mySwimmer->slug) }}">
+                                @if($mySwimmer->getMeta('picture'))
+                                    <img src="{{ $swimmer->getMeta('picture') }}" alt="">
+                                @else
+                                    <img src="{{ config('profile.picture') }}"
+                                         alt="">
+                                @endif
+                                <span class="users-list-name">
+                            {{ $mySwimmer->first_name }} {{ $mySwimmer->last_name }}
                         </span>
-
-                        </a>
-                    </div>
+                            </a>
+                        </li>
+                    </ul>
                 </div>
+            </div>
+                {{--<div class="row swimmers">--}}
+                    {{--<div class="swimmer col-xs-6 col-sm-4 col-md-3 col-lg-2">--}}
+                        {{--<a rel="external" href="{{ route('me.profile', [--}}
+                    {{--'group' => $group->slug,--}}
+                {{--]) }}">--}}
+                        {{--<span class="col-xs-12 col-sm-10 col-sm-offset-1">--}}
+                        {{--<div class="thumbnail center swimmer-thumb" style="; ">--}}
+                            {{--@if($mySwimmer->getMeta('picture'))--}}
+                                {{--<img src="{{ $mySwimmer->getMeta('picture') }}" alt="">--}}
+                            {{--@else--}}
+                                {{--<img src="{{ config('profile.picture') }}"--}}
+                                     {{--alt="">--}}
+                            {{--@endif--}}
+                            {{--<span class="center">--}}
+                             {{--{{ $mySwimmer->first_name }} {{ $mySwimmer->last_name }}--}}
+                            {{--</span>--}}
+                        {{--</div>--}}
+                        {{--</span>--}}
+
+                        {{--</a>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
             @endif
             <h2>Zwemmers
                 @if(Auth::user()->clearance_level > 0)

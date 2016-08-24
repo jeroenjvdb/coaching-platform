@@ -91,6 +91,10 @@ class HomeController extends Controller
 
         $user = Auth::user();
         $mySwimmer = null;
+        if ($user->getMeta('swimmer_id')) {
+            $is_swimmer = true;
+            $mySwimmer = $this->swimmer->find($user->getMeta('swimmer_id'));
+        }
 
 
         $data = [
