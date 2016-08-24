@@ -9,7 +9,7 @@
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
-                <img id="croppingImg" src="#" alt="">
+                <img id="croppingImg" src="#" alt="" style="width: 100%;">
             </div>
             <div class="modal-footer">
 <?= Form::open([

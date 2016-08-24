@@ -159,3 +159,8 @@ canvas {
 .timeline-body img {
   width: 100%;
 }
+
+#croppingImg, .jcrop-active {
+  width: 100% !important;
+  height: auto !important;;
+}

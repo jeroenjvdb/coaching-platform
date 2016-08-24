@@ -498,11 +498,12 @@ $(function () {
                 var ratioW = $('#croppingImg')[0].naturalWidth / $('#croppingImg').width();
                 var ratioH = $('#croppingImg')[0].naturalHeight / $('#croppingImg').height();
                 var currentRatio = Math.min(ratioW, ratioH);
+                console.log(currentRatio);
                 $('#croppedImg').val($('.upload-image').val());
-                $('#x').val(Math.round(c.x));
-                $('#y').val(Math.round(c.y));
-                $('#w').val(Math.round(c.w));
-                $('#h').val(Math.round(c.h));
+                $('#x').val(Math.round(c.x / currentRatio));
+                $('#y').val(Math.round(c.y / currentRatio));
+                $('#w').val(Math.round(c.w / currentRatio));
+                $('#h').val(Math.round(c.h / currentRatio));
             };
             /*reader.onloadend = function(e) {
              var exif = EXIF.readFromBinaryFile(new BinaryFile(this.result));
