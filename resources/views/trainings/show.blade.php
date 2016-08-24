@@ -3,7 +3,7 @@
 @section('title', 'Training ' . $starttime->format('l j F') )
 
 @section('content')
-    {!! Breadcrumbs::render('{group}.training.show', $group, $training) !!}
+    <div class="row">
         <h1>Training {{ $starttime->format('l j F') }}
             @if($editable)
             <a href="#" data-toggle="modal" data-target="#edit">
@@ -11,6 +11,7 @@
         @include('trainings.edit')
             @endif
     </h2>
+    </div>
 
         {{--<a rel="external" href="{{ route('{group}.training.download', [
        'group' => $group->slug,

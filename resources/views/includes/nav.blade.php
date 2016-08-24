@@ -4,7 +4,7 @@
 {{--        <li {{ Request::is($group->slug ) ? ' class=active' : null }}><a rel="external" href="{{ route('groups.show', [--}}
 {{--                        'group' => $group->slug,--}}
 {{--                    ]) }}">{{ $group->name }}</a></li>--}}
-        <li {{ Request::is($group->slug . '/training*') ? ' class=active' : null }}><a rel="external" href="{{ route('training.index', [
+        <li {{ Request::is('training*') ? ' class=active' : null }}><a rel="external" href="{{ route('training.index', [
                      ]) }}">Training</a></li>
         {{--<li><a rel="external" href="{{ route('swimmers.index', [--}}
         {{--'group' => $group->slug,--}}
@@ -13,7 +13,7 @@
         {{--<li {{ Request::is($group->slug . '/mail*') ? ' class=active' : null }}><a rel="external" href="{{ route('{group}.mail',[
                         'group' => $group->slug,
                     ]) }}">Email</a></li>--}}
-        <li {{ Request::is($group->slug . '/stopwatch*') ? ' class=active' : null }}>
+        <li {{ Request::is('stopwatch*') ? ' class=active' : null }}>
             <a rel="external" href="{{ route('stopwatch.index',[
                     ]) }}">Stopwatch</a></li>
         @endif

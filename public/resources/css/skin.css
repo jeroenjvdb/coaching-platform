@@ -1012,7 +1012,7 @@
 .skin-red .sidebar-menu > li.active > a {
     color: #ffffff;
     background: #073944;
-    border-left-color: #dd4b39;
+    border-left-color: #ddd;
 }
 .skin-red .sidebar-menu > li > .treeview-menu {
     margin: 0 1px;

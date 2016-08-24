@@ -27,19 +27,21 @@
                         </a>
 
                         <ul class="dropdown-menu">
-                            <li><a rel="external" href="{{ url('/logout') }}"><i
-                                            class="fa fa-btn fa-sign-out"></i> Uitloggen</a></li>
-                            <li><a href="{{ route('auth.password.update') }}">
-                                    <i class="fa fa-key"></i> Wachtwoord wijzigen
-                                </a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="{{ route('groups.create') }}"><i class="fa fa-plus"></i> Groep toevoegen</a></li>
-                            <li role="separator" class="divider"></li>
+
+
                             @foreach($groups as $groupItem)
                             <li><a href="{{ route('group.select', [
                                 'group_id' => $groupItem->id,
                             ]) }}"><i class="fa fa-user"></i> {{$groupItem->name}}</a></li>
                             @endforeach
+                                <li role="separator" class="divider"></li>
+                                <li><a href="{{ route('groups.create') }}"><i class="fa fa-plus"></i> Groep toevoegen</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="{{ route('auth.password.update') }}">
+                                    <i class="fa fa-key"></i> Wachtwoord wijzigen
+                                </a></li>
+                            <li><a rel="external" href="{{ url('/logout') }}"><i
+                                            class="fa fa-btn fa-sign-out"></i> Uitloggen</a></li>
                         </ul>
                     </li>
                 @endif

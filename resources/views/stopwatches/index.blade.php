@@ -3,8 +3,9 @@
 @section('title', 'alle stopwatches')
 
 @section('content')
-    {!! Breadcrumbs::render('stopwatch.index', $group) !!}
-    <h1>Stopwatches</h1>
+    <div class="row">
+        <h1>Stopwatches</h1>
+    </div>
     <h2>Slagenteller</h2>
     <div class="row">
         <div class="col-xs-12">
@@ -51,7 +52,7 @@
     </div>
     <div id="newStopwatch"></div>
     <div class="row">
-            <div class="stopwatch" data-base3="false" data-paused="true"></div>
+        <div class="stopwatch" data-base3="false" data-paused="true"></div>
     </div>
 @stop
 

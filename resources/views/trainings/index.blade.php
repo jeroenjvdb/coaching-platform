@@ -5,7 +5,6 @@
 @section('content')
     <div class="row">
 
-            {{--    {!! Breadcrumbs::render('trainings.index', $group) !!}--}}
             <h1>Trainingen</h1>
             <div class="row">
                 @if($editable)

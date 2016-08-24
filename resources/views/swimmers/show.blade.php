@@ -18,7 +18,6 @@
     </div>
     </div>
 
-    {!! Breadcrumbs::render('swimmer', $group, $swimmer) !!}
 
     <div class="row">
         <div class="col-sm-12 col-sm-offset-0">

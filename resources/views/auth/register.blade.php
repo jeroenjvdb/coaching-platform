@@ -5,15 +5,7 @@
 @section('content')
     <div class="login-box register box box-danger">
         <div class="in clearfix">
-            @if (count($errors) > 0)
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
+
             {!! Form::open(['url' => '/register']) !!}
             <div class="visual">
                 <div class="face front"><img src="/resources/img/launcher-icon-4x.png">
@@ -23,7 +15,15 @@
                     <img src="http://placehold.it/200x200">
                 </div>-->
             </div>
-
+            @if (count($errors) > 0)
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <div class="col-sm-6 register-part">
                 <h3>Registreren</h3>
                 {!! Form::hidden('terms', true) !!}
@@ -69,7 +69,7 @@
 
                 <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
                     <input type="password" class="form-control" name="password_confirmation"
-                           placeholder="Wachtwoord wijzigen">
+                           placeholder="Wachtwoord herhalen">
 
                     @if ($errors->has('password_confirmation'))
                         <span class="help-block">

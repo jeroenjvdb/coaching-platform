@@ -3,7 +3,6 @@
 @section('title', $group->name)
 
 @section('content')
-    {!! Breadcrumbs::render('group', $group) !!}
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
 
