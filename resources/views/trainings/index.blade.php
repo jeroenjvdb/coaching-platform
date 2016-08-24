@@ -26,6 +26,7 @@
                                         'class' => 'form-control datetimepicker datetime-box',
                                         'data-field' => "datetime",
                                         'read-only',
+                                        'autocomplete' => 'off',
                                     ]) !!}
                                     </div>
 

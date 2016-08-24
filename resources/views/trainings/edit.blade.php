@@ -24,7 +24,8 @@
                     {!! Form::input('text', 'starttime', $training->starttime->format('Y-m-d H:i'), [
                         'class' => 'form-control datetimepicker',
                         'data-field' => 'datetime',
-                        'readonly'
+                        'readonly',
+                        'autocomplete' => 'off',
                     ]) !!}
                     </div>
 
