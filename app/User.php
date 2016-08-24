@@ -59,6 +59,7 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Chat', 'chat_users');
     }
 
+
     public function setPasswordAttribute($password){
         $this->attributes['password'] = bcrypt($password);
     }
@@ -67,12 +68,13 @@ class User extends Authenticatable
     {
         $group = null;
 
-        /*if ($this->getMeta('swimmer_id')) {
+        if ($this->getMeta('swimmer_id')) {
             $is_swimmer = true;
-            $mySwimmer = $this->swimmer->find($user->getMeta('swimmer_id'));
-            $groups = $this->group->where('id', $user->getMeta('swimmer_id'))->get();
+            $mySwimmer = Swimmer::find($this->getMeta('swimmer_id'));
+            $groups = $mySwimmer->group;
+//            $groups = $this->group->where('id', $user->getMeta('swimmer_id'))->get();
             $group = $groups->first();
-        }*/
+        }
 
         if ($this->coach) {
             $groups = $this->coach->groups;
@@ -84,6 +86,8 @@ class User extends Authenticatable
                 }
             }
         }
+
+//        if($group )
 
         return $group;
     }

@@ -4,14 +4,18 @@
 
 @section('content')
     {!! Breadcrumbs::render('{group}.training.show', $group, $training) !!}
-        <h1>Training {{ $starttime->format('l j F') }} <a href="#" data-toggle="modal" data-target="#edit">
+        <h1>Training {{ $starttime->format('l j F') }}
+            @if($editable)
+            <a href="#" data-toggle="modal" data-target="#edit">
                 <i class="fa fa-pencil"></i></a></h1>
         @include('trainings.edit')
+            @endif
+    </h2>
 
         {{--<a rel="external" href="{{ route('{group}.training.download', [
        'group' => $group->slug,
        'training_id' => $training->id,
-   ]) }}"><i class="fa fa-download"></i></a>--}}</h2>
+   ]) }}"><i class="fa fa-download"></i></a>--}}
     @if($editable)
         {!! Form::open([
             'route' => [
@@ -124,6 +128,7 @@
              </div> --}}
         @endif
     </div>
+    @if($editable)
     <h2>Stopwatch</h2>
     <div class="row">
         <div class="col-sm-6">
@@ -181,6 +186,7 @@
             @include('trainings.show.presences')
         </div>
     </div>
+    @endif
 
 
 @stop
