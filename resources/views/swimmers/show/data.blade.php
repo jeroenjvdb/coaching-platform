@@ -59,7 +59,7 @@
 
 
                                 @if($data->media && isset($data->media['type']))
-                                    
+
                                     <hr>
                                     @if( $data->media['type'] == 'img')
                                         <img src="{{ $data->media['url'] }}" alt="">

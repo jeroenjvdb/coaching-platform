@@ -208,8 +208,10 @@ class ExerciseController extends Controller
      * @param $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(Group $group, $training_id, $id)
+    public function destroy($training_id, $id)
     {
+        $group = Auth::user()->getGroup();
+
         $training = $group
             ->trainings()
             ->find($training_id);
