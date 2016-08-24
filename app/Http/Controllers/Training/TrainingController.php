@@ -120,6 +120,8 @@ class TrainingController extends Controller
         ]);
         $training = $group->trainings()->save($training);
 
+        $training->swimmers()->sync($group->swimmers);
+
         return redirect()->route('training.show', [
             'group' => $group->slug,
             'training' => $training->id,
