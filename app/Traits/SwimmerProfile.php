@@ -129,7 +129,7 @@ trait SwimmerProfile
      */
     public function checkHeartRate()
     {
-        return $this->heartRates()->where('created_at', '>', Carbon::today())->exists();;
+        return $this->heartRates()->where('date', '>=', Carbon::today())->exists();
     }
 
     /**
