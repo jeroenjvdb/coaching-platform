@@ -54,7 +54,7 @@
                         <li>
                             <a href="{{ route('{group}.swimmer.show', $mySwimmer->slug) }}">
                                 @if($mySwimmer->getMeta('picture'))
-                                    <img src="{{ $swimmer->getMeta('picture') }}" alt="">
+                                    <img src="{{ $mySwimmer->getMeta('picture') }}" alt="">
                                 @else
                                     <img src="{{ config('profile.picture') }}"
                                          alt="">
